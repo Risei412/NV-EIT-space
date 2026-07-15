@@ -1,0 +1,5 @@
+quantity,value,conditions
+max |C_coh| (basis grid),3.34e-6,"ctrl=-1,Y/X,B_perp=1T,Bz=20mT,protocol A"
+sup C_coh (grid),-1.5e-11,216-point grid
+sup C_coh (continuous pol.),-1.8e-12,deterministic 4-angle optimization
+max |C| incl. control saturation,3.92e-6,Omega_c<=100 GHz (nonpert. indicative)
