@@ -1,0 +1,1018 @@
+\documentclass[11pt,a4paper]{article}
+
+% ------------------------------------------------------------------
+%  Lecture Notes: When Does EIT Fail? A No-Go/Go Theory for
+%  Arbitrary Materials  (undergraduate version)
+%  Based on: "Generalized EIT No-Go/Go Theory Applicable to
+%  Arbitrary Materials", v6.2 (2026-07-13)
+% ------------------------------------------------------------------
+
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black]{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+% ---------- theorem environments ----------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+
+% ---------- boxes ----------
+\newtcolorbox{keyidea}[1][Key idea]{
+  breakable,enhanced,colback=blue!4,colframe=blue!50!black,
+  title=#1,fonttitle=\bfseries}
+\newtcolorbox{warningbox}[1][Common misconception]{
+  breakable,enhanced,colback=red!4,colframe=red!55!black,
+  title=#1,fonttitle=\bfseries}
+\newtcolorbox{physbox}[1][Physical picture]{
+  breakable,enhanced,colback=green!4,colframe=green!35!black,
+  title=#1,fonttitle=\bfseries}
+
+% ---------- macros ----------
+\newcommand{\Hg}{\mathcal{H}_g}
+\newcommand{\He}{\mathcal{H}_e}
+\newcommand{\Hr}{\mathcal{H}_r}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\spann}{\operatorname{span}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\braket}[2]{\langle #1|#2\rangle}
+\newcommand{\kett}[1]{|#1\rangle\!\rangle}
+\newcommand{\braa}[1]{\langle\!\langle #1|}
+\newcommand{\dchi}{\delta\chi_{S}}
+\newcommand{\chifull}{\chi_{\mathrm{full}}}
+\newcommand{\chicut}{\chi^{(S)}_{\mathrm{cut}}}
+
+\title{\bfseries When Does Electromagnetically Induced Transparency Fail?\\[4pt]
+\Large A Rigorous No-Go/Go Theory for Arbitrary Materials\\[4pt]
+\large Lecture Notes for Undergraduates}
+\author{Quantum Sensing Group}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Electromagnetically induced transparency (EIT) is often introduced through the
+idealized three-level $\Lambda$ system, where a control laser renders an opaque
+medium transparent to a probe laser. In real materials --- color centers in
+diamond, alkali vapors, group-IV defects --- EIT sometimes works beautifully and
+sometimes fails completely, even when a $\Lambda$-shaped level scheme exists.
+These notes develop, at an undergraduate level but with full proofs, a general
+theory that decides \emph{when and why} EIT is forbidden (``no-go''), suppressed,
+or permitted (``go'') in an arbitrary finite-dimensional Markovian quantum
+emitter. The central lesson is that a no-go statement is \emph{not}
+``the susceptibility is zero''; it is the statement that a specific,
+physically chosen \emph{coherence pathway} contributes nothing to the probe
+response. We prove the main theorems (dark-state rank, stationary Lindblad dark
+states, the Schur-complement susceptibility, the moment/Krylov exact-zero
+criterion, and symmetry-protected transfer zeros) and apply them to three
+concrete platforms: the nitrogen-vacancy (NV$^-$) center in diamond, alkali
+atoms (Rb), and group-IV centers (SiV$^-$, SnV$^-$).
+\end{abstract}
+
+\tableofcontents
+
+% ==================================================================
+\section{Introduction: the textbook picture and why it is not enough}
+% ==================================================================
+
+\subsection{The three-level $\Lambda$ system}
+
+Consider two long-lived lower states $\ket{g_1},\ket{g_2}$ and one excited
+state $\ket{e}$. A weak \emph{probe} laser (Rabi frequency $\Omega_p$) couples
+$\ket{g_1}\leftrightarrow\ket{e}$ and a strong \emph{control} laser
+($\Omega_c$) couples $\ket{g_2}\leftrightarrow\ket{e}$. In the rotating frame,
+with probe detuning $\Delta_p$ and two-photon detuning $\delta_2$, the standard
+result for the probe optical coherence is
+\begin{equation}
+\rho^{(1)}_{eg_1}
+ = \frac{\im\Omega_p}{2}\,
+   \frac{\gamma_{21}-\im\delta_2}
+        {(\gamma_{31}-\im\Delta_p)(\gamma_{21}-\im\delta_2)+|\Omega_c|^2/4}.
+\label{eq:textbook}
+\end{equation}
+At exact two-photon resonance ($\delta_2=0$) and with an ideal ground
+coherence ($\gamma_{21}\to0$), the response vanishes: the medium becomes
+\emph{transparent}. The physical mechanism is destructive interference: the
+population is optically pumped into the \emph{dark state}
+\begin{equation}
+\ket{D}\propto \Omega_c\ket{g_1}-\Omega_p\ket{g_2},
+\qquad
+\bra{e}H_{\mathrm{drive}}\ket{D}=0 .
+\end{equation}
+
+\subsection{Why real materials are harder}
+
+In a real emitter there are many excited levels (fine structure, spin--orbit
+splitting, phonon sidebands), many dissipation channels (radiative decay,
+intersystem crossing, orbital hopping, spectral diffusion), and material-specific
+selection rules. Three questions then arise, and the textbook picture cannot
+answer any of them:
+
+\begin{enumerate}[label=(Q\arabic*)]
+\item Does an \emph{optically dark superposition} of the lower states even exist?
+\item If it exists, is it a \emph{stationary} state of the full dissipative
+      dynamics, or does dissipation destroy it?
+\item Even if no exact dark state survives, can a \emph{coherent Raman pathway}
+      through the excited manifold still produce a transparency feature ---
+      and how strongly is it suppressed by fast dissipation?
+\end{enumerate}
+
+\begin{keyidea}
+The theory in these notes classifies not \emph{materials} but
+\emph{configurations}: a tuple
+\[
+C=\bigl(\text{material},\,\Hg,\,\He,\,
+\text{lower-state pair},\,\text{polarizations},\,
+\text{fields},\,T,\,\text{observable},\,S\bigr),
+\]
+where $S$ is the targeted long-lived coherence sector. Within one and the same
+material (say NV$^-$), a spin-$\Lambda$ channel at zero field, a
+transverse-field spin-$\Lambda$ channel, and an orbital-$\Lambda$ channel are
+\emph{different} classification targets with different answers.
+\end{keyidea}
+
+\begin{warningbox}
+A common error is to define ``EIT is forbidden'' as ``the total probe
+susceptibility vanishes,'' $\chifull=0$. This is exactly backwards:
+Eq.~\eqref{eq:textbook} shows that $\chifull=0$ is what \emph{perfect EIT}
+looks like! We will define a no-go instead through a \emph{sector-resolved
+correction} $\dchi$ --- the part of the response mediated by the targeted
+ground-state coherence --- and say the channel is a no-go when
+$\dchi\equiv0$ identically over a parameter domain.
+\end{warningbox}
+
+\subsection{Assumptions and scope}
+
+Throughout, we assume:
+\begin{enumerate}[label=(A\arabic*)]
+\item \textbf{Finite dimensionality}: the Hilbert space (or the retained
+      Liouville response space) is finite dimensional.
+\item \textbf{Markovian GKSL dynamics}: the zeroth-order dynamics (control
+      field, static fields, dissipation) is generated by a time-independent
+      Lindblad (GKSL) generator $\mathcal{L}_c$ in a stationary rotating frame.
+\item \textbf{Weak probe}: the response is computed to first order in the
+      probe amplitude; the control is treated nonperturbatively.
+\item \textbf{Unique steady state / well-defined group inverse} on the
+      trace-zero subspace.
+\end{enumerate}
+Genuinely non-Markovian baths, strong-probe saturation, and
+propagation-dominated collective effects are outside the main theorems and
+require separate extensions.
+
+% ==================================================================
+\section{Open-system setup}
+% ==================================================================
+
+\subsection{Hilbert-space decomposition and the optical-coherence block}
+
+Split the total Hilbert space as
+\begin{equation}
+\mathcal{H}=\He\oplus\Hg\oplus\Hr,
+\end{equation}
+where $\He$ is the operative excited manifold, $\Hg$ the lower manifold, and
+$\Hr$ collects auxiliary states (singlets, other charge states, loss
+channels). The probe response lives in the rectangular
+\emph{optical-coherence block}
+\begin{equation}
+\sigma \;=\; P_e\,\rho\,P_g \;\in\; \mathcal{B}(\Hg,\He),
+\end{equation}
+where $P_{e},P_{g}$ are projectors onto $\He,\Hg$.
+
+\subsection{A crucial lemma: excited-state jumps damp optical coherences}
+
+\begin{lemma}[Excited-confined jumps act as pure damping on $\sigma$]
+\label{lem:jump}
+Let $L_\mu=P_e L_\mu P_e$ be a jump operator confined to the excited manifold.
+Then the Lindblad dissipator
+$\mathcal{D}[L_\mu](\rho)=L_\mu\rho L_\mu^\dagger
+ -\tfrac12\{L_\mu^\dagger L_\mu,\rho\}$
+acts on the optical-coherence block as
+\begin{equation}
+P_e\,\mathcal{D}[L_\mu](\rho)\,P_g
+ = -\tfrac12\,L_\mu^\dagger L_\mu\,\sigma .
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The recycling term gives
+$P_e L_\mu\rho L_\mu^\dagger P_g
+ = L_\mu (P_e\rho P_e) (P_e L_\mu^\dagger P_g)=0$,
+since $L_\mu^\dagger$ maps $\He\to\He$ and hence $P_e L_\mu^\dagger P_g=0$.
+Of the anticommutator, only the left action survives on the $e$--$g$ block:
+$P_e L_\mu^\dagger L_\mu \rho P_g=L_\mu^\dagger L_\mu\,\sigma$ and
+$P_e\rho L_\mu^\dagger L_\mu P_g=0$. 
+\end{proof}
+
+\begin{physbox}
+Even a jump that merely \emph{shuffles population} among excited branches
+(e.g.\ phonon-induced orbital hopping $\ket{E_x}\leftrightarrow\ket{E_y}$ in
+NV$^-$) acts on every optical coherence as \emph{loss}. There is no
+``recycling'' in the rectangular block. This is why fast phonon dynamics can
+kill EIT even without removing any population from the excited manifold ---
+and it is the microscopic origin of the fast-damping expansions in
+Section~\ref{sec:moments}.
+\end{physbox}
+
+\begin{example}[Rate mapping --- a frequent factor-of-4 trap]
+\label{ex:rates}
+For symmetric hopping $\ket{X}\leftrightarrow\ket{Y}$ at rate $k$ each way,
+the population imbalance obeys
+$\dot{(p_X-p_Y)}=-\Gamma_{XY}(p_X-p_Y)$ with $\Gamma_{XY}=2k$.
+But by Lemma~\ref{lem:jump}, each optical coherence $\sigma_{Xg}$ acquires
+damping $k/2=\Gamma_{XY}/4$. If a paper quotes ``the orbital relaxation rate
+$\Gamma_{XY}$,'' the number entering the optical-coherence equation is
+$\Gamma_{XY}/4$, not $\Gamma_{XY}$. Mixing these conventions changes every
+quantitative prediction by factors of 2--4.
+\end{example}
+
+\subsection{The generator of the optical coherence}
+
+Collecting the Hamiltonian commutator and Lemma~\ref{lem:jump}, the undriven
+optical coherence obeys
+\begin{equation}
+\dot\sigma
+ = -\im\bigl(H_e\sigma-\sigma H_g\bigr)
+   -\tfrac12 R_e\,\sigma + \text{(corrections)} + \text{sources},
+\qquad
+R_e=\sum_\mu L_\mu^\dagger L_\mu .
+\end{equation}
+Vectorizing with $\operatorname{vec}(AXB)=(B^{\mathsf T}\!\otimes A)
+\operatorname{vec}X$ gives a matrix generator $A(z)$ acting on
+$\operatorname{vec}\sigma$. When the lower index is not mixed (no ground-state
+relaxation into the block, no correlated jumps), the problem reduces to an
+excited-manifold resolvent equation
+\begin{equation}
+A_j(z)\,\ket{x_j}=\ket{s_j},
+\qquad G(z)=A(z)^{-1}.
+\end{equation}
+
+% ==================================================================
+\section{Dark states: two theorems that must not be confused}
+% ==================================================================
+
+\subsection{The optical dark subspace}
+
+In the rotating frame, the drive couples lower to excited states through
+\begin{equation}
+V_+ = P_e H_{\mathrm{drive}} P_g=\tfrac12\Omega,
+\qquad
+\Omega:\Hg\to\He,
+\qquad
+\Omega=(\Omega_1 d_1,\dots,\Omega_{N_g} d_{N_g}),
+\quad (d_a)_j=\bra{e_j}\bm{\epsilon}_a\!\cdot\!\hat{\bm d}\ket{g_a},
+\end{equation}
+where the \emph{complex} phases of the dipole vectors $d_a$ are retained.
+
+\begin{theorem}[1A: optical dark-subspace rank]
+\label{thm:1A}
+A lower-state vector $\ket{v}\in\Hg$ is instantaneously decoupled from optical
+excitation, $V_+\ket{v}=0$, if and only if $\Omega\ket{v}=0$. Hence the
+optical dark subspace is $\mathcal{D}_{\mathrm{opt}}=\ker\Omega$ with
+\begin{equation}
+\dim\mathcal{D}_{\mathrm{opt}} = N_g-\rank\Omega .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+$V_+=\Omega/2$ gives the equivalence; the dimension formula is the
+rank--nullity theorem. Note $\Omega\mapsto U_e\Omega U_g^\dagger$ under basis
+changes, so rank and nullity are basis invariant.
+\end{proof}
+
+\begin{corollary}
+For two lower states with both Rabi frequencies nonzero, a nontrivial dark
+vector exists iff $\rank(d_1,d_2)<2$, i.e.\ (for nonzero dipoles) iff the two
+dipole vectors are \emph{parallel} in $\He$: $d_1\parallel d_2$.
+\end{corollary}
+
+\begin{physbox}
+This is the first, purely geometric filter: EIT interference requires the two
+optical legs to reach the \emph{same} superposition of excited states. In an
+alkali atom driving both legs to a single hyperfine excited level, $d_1$ and
+$d_2$ are trivially parallel (both are scalars). In NV$^-$ or SiV$^-$, the two
+legs may reach \emph{different} excited orbitals, and the rank condition
+already becomes nontrivial.
+\end{physbox}
+
+\subsection{Stationary Lindblad dark states}
+
+An optical dark vector need not survive dissipation. The full condition is:
+
+\begin{theorem}[1B: stationary pure dark state of a Lindblad equation]
+\label{thm:1B}
+Let $\dot\rho=\mathcal{L}(\rho)=-\im[H,\rho]
++\sum_\mu\bigl(L_\mu\rho L_\mu^\dagger-\tfrac12\{L_\mu^\dagger L_\mu,\rho\}\bigr)$.
+For a normalized $\ket{D}$, the pure state $\rho_D=\ket{D}\bra{D}$ is
+stationary iff there exist $\lambda_\mu\in\mathbb C$ and $h\in\mathbb R$ with
+\begin{equation}
+L_\mu\ket{D}=\lambda_\mu\ket{D}\ \ (\forall\mu),
+\qquad
+\Bigl[H+\tfrac{\im}{2}\sum_\mu(\lambda_\mu^*L_\mu-\lambda_\mu L_\mu^\dagger)\Bigr]
+\ket{D}=h\ket{D}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+For a stationary pure state, the purity is constant. A direct computation
+gives
+\[
+\frac{\dd}{\dd t}\Tr(\rho_D^2)
+ = -2\sum_\mu\Bigl(\langle L_\mu^\dagger L_\mu\rangle_D
+   -|\langle L_\mu\rangle_D|^2\Bigr),
+\]
+a sum of nonnegative variances. Stationarity forces each variance to vanish,
+i.e.\ $\ket{D}$ is an eigenvector of \emph{every} jump operator:
+$L_\mu\ket{D}=\lambda_\mu\ket{D}$. Substituting back and projecting with
+$Q_D=I-\ket{D}\bra{D}$ yields
+$Q_D\bigl[H+\tfrac{\im}{2}\sum_\mu(\lambda_\mu^*L_\mu
+-\lambda_\mu L_\mu^\dagger)\bigr]\ket{D}=0$; the bracketed operator is
+Hermitian, so its action on $\ket{D}$ is parallel to $\ket{D}$ with a real
+eigenvalue $h$. Conversely, inserting both conditions into $\mathcal{L}(\rho_D)$
+kills all off-diagonal terms and, using trace preservation, gives
+$\mathcal{L}(\rho_D)=0$.
+\end{proof}
+
+For an \emph{EIT} dark state one additionally imposes $P_e\ket{D}=0$ and
+$\Omega\ket{D}=0$. Spontaneous emission from excited states satisfies
+$L_\mu\ket{D}=0$ automatically; but ground-state dephasing, ground-state
+relaxation, or microwave noise generically \emph{violate} the
+common-eigenvector condition. Then:
+
+\begin{warningbox}
+An optical dark vector can exist ($\ker\Omega\neq\{0\}$, Theorem~\ref{thm:1A})
+while \emph{no stationary dark state exists} (Theorem~\ref{thm:1B} fails). The
+two theorems answer different questions. Only the pair together, plus the
+response analysis below, decides observable EIT.
+\end{warningbox}
+
+\subsection{Fixed terminology}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Notion} & \textbf{Defining condition}\\
+\midrule
+optical dark capable & $\dim\ker\Omega>0$\\
+Hamiltonian dark eigenstate & $\Omega\ket{D}=0$ and $H_g^{\mathrm{(rot)}}\ket{D}=E_D\ket{D}$\\
+stationary Lindblad dark state & Theorem~\ref{thm:1B}\\
+observable EIT & narrow coherent transparency in the full response\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ==================================================================
+\section{The coherent-response kernel and the exact susceptibility}
+% ==================================================================
+
+\subsection{The kernel $K(z)=C^\dagger G(z)\,C$}
+
+With the dipole matrix $C=(d_1,\dots,d_{N_g})$ and the Green operator
+$G(z)=A(z)^{-1}$ of the optical-coherence generator, define
+\begin{equation}
+K_{ab}(z)=d_a^\dagger\,G(z)\,d_b .
+\end{equation}
+The diagonal $S_a=K_{aa}$ is the single-leg optical self-energy; the
+off-diagonal $K_{ab}$ is the \emph{coherent Raman vertex} mediated by the
+excited manifold. These are invariant under unitary basis changes in $\He$.
+For a non-normal generator, note $K_{21}\neq K_{12}^*$ in general --- both
+must be computed.
+
+\subsection{The exact weak-probe susceptibility}
+
+To first order in the probe, the full-Liouvillian response is
+\begin{equation}
+\rho^{(1)}=-\mathcal{L}_c^{\#}\,\mathcal{V}_p\,\rho^{(0)},
+\qquad
+\chi_p=-\chi_0\,\braa{O_p}\mathcal{L}_c^{\#}\kett{\mathcal{V}_p\rho^{(0)}},
+\label{eq:fullresp}
+\end{equation}
+where $\mathcal{L}_c^{\#}$ is the group inverse on the trace-zero subspace
+(the Liouvillian has a zero mode --- the steady state --- so an ordinary
+inverse does not exist; this is not a technicality, it is a definition).
+
+For a closed two-lower-state block the first-order variables are the optical
+coherence vector $x\in\He$ and the ground coherence
+$s=\rho^{(1)}_{g_2g_1}$, obeying
+\begin{equation}
+\begin{pmatrix}
+A & \im\Omega_c d_2/2\\
+\im\Omega_c^* d_2^\dagger/2 & \gamma_g
+\end{pmatrix}
+\begin{pmatrix} x\\ s\end{pmatrix}
+=
+\begin{pmatrix} \im\Omega_p d_1/2\\ 0\end{pmatrix},
+\qquad
+\gamma_g=\gamma_{12}-\im\delta_2 .
+\label{eq:block}
+\end{equation}
+
+\begin{theorem}[2A: reduced susceptibility as an exact Schur complement]
+\label{thm:2A}
+Let $G=A^{-1}$, $S_i=d_i^\dagger G d_i$, $K_{ij}=d_i^\dagger G d_j$,
+$\beta=|\Omega_c|^2/4$, and define the normalized probe response
+$\Xi=d_1^\dagger x/(\im\Omega_p/2)$. Then, whenever
+$\gamma_g+\beta S_2\neq0$,
+\begin{equation}
+\boxed{\;\Xi \;=\; S_1-\frac{\beta\,K_{12}K_{21}}{\gamma_g+\beta S_2}\;}
+\label{eq:Xi}
+\end{equation}
+with no adiabatic approximation.
+\end{theorem}
+
+\begin{proof}
+The first row of \eqref{eq:block} gives
+$x=G\,\tfrac{\im\Omega_p}{2}d_1-G\,\tfrac{\im\Omega_c}{2}d_2\,s$.
+Insert into the second row \emph{without dividing by $\gamma_g$}:
+\[
+(\gamma_g+\beta S_2)\,s
+ = -\frac{\im\Omega_c^*}{2}\,d_2^\dagger G\,\frac{\im\Omega_p}{2}\,d_1
+ = \frac{\Omega_c^*\Omega_p}{4}\,K_{21},
+\]
+so $s=\tfrac{\Omega_c^*\Omega_p}{4}K_{21}/(\gamma_g+\beta S_2)$. Substituting
+back into $x$, projecting with $d_1^\dagger$, and dividing by $\im\Omega_p/2$
+gives \eqref{eq:Xi}. This is precisely the Schur complement of the block matrix
+in \eqref{eq:block}; because we never divided by $\gamma_g$ itself, the ideal
+limit $\gamma_g\to0$ is included.
+\end{proof}
+
+\begin{example}[Sanity check: the textbook $\Lambda$ system]
+\label{ex:textbook}
+One excited state, scalar dipoles $d_1=d_2=1$, $A=\gamma_{31}-\im\Delta_p$,
+$\gamma_g=\gamma_{21}-\im\delta_2$. Then $S_1=S_2=K_{12}=K_{21}=A^{-1}$ and
+\[
+\Xi=\frac1A-\frac{\beta/A^2}{\gamma_g+\beta/A}
+   =\frac{\gamma_g}{A\gamma_g+\beta},
+\]
+which is exactly Eq.~\eqref{eq:textbook}. The general machinery contains the
+textbook result as a one-line special case.
+\end{example}
+
+\begin{example}[Multi-excited-state (Mishina-type) media]
+For $N_e$ resolved excited branches with diagonal generator
+$A=\operatorname{diag}(a_j)$, $a_j=\gamma_j-\im\Delta_j$,
+\[
+S_i=\sum_j\frac{|d_{ij}|^2}{a_j},
+\qquad
+K_{12}=\sum_j\frac{d_{1j}^*d_{2j}}{a_j},
+\]
+so the Raman vertex is a \emph{coherent sum of amplitudes} through all
+branches --- pathways can interfere destructively even when every individual
+dipole is nonzero. Inhomogeneous (Doppler, strain) broadening is applied
+\emph{after} computing the local response:
+$\bar\chi=\int\dd\lambda\,P(\lambda)\chi_\lambda$. Averaging the Hamiltonian
+first is generally wrong.
+\end{example}
+
+% ==================================================================
+\section{Defining the no-go correctly: the sector-resolved correction}
+% ==================================================================
+
+\subsection{Cutting the pathway, not the control}
+
+Fix a physically specified \emph{long-lived sector} $S$ (for us: the
+ground-state coherence $\rho_{g_2g_1}$) and its complement $X$ (the direct
+optical response). Writing the first-order block as
+\begin{equation}
+M=\begin{pmatrix} A & B\\ C & G_g\end{pmatrix},
+\qquad
+\kett{b_p}=\begin{pmatrix}b_p\\0\end{pmatrix},
+\qquad
+\braa{d_p}=(d^\dagger\ \ 0),
+\end{equation}
+define
+\begin{equation}
+\chifull=\chi_0\,d^\dagger x,
+\qquad
+\chicut=\chi_0\,d^\dagger A^{-1}b_p,
+\qquad
+\boxed{\;\dchi\equiv\chifull-\chicut\;}
+\end{equation}
+where the \emph{cut} sets $B=C=0$ while keeping $A$, $G_g$, source, detector
+and the zeroth-order state fixed. This is an \emph{algebraic counterfactual}:
+it is \emph{not} the control-off spectrum (switching the control off would
+also change optical pumping, light shifts, and the steady state).
+
+\begin{theorem}[2B: sector-resolved EIT no-go]
+\label{thm:2B}
+If $A$ and $S_g=G_g-CA^{-1}B$ are invertible at a regular point, then
+\begin{equation}
+\dchi=\chi_0\,d^\dagger A^{-1} B\, S_g^{-1} C A^{-1} b_p .
+\end{equation}
+If on a connected analytic parameter domain $\dchi(\theta)\equiv0$, the net
+$S$-mediated contribution to the response vanishes identically and the
+configuration is an \emph{exact $S$-sector EIT no-go}. For the scalar block
+\eqref{eq:block} with nonzero control and finite denominator,
+\begin{equation}
+\dchi=0\iff K_{12}K_{21}=0 .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From \eqref{eq:block}--\eqref{eq:Xi},
+$\delta\Xi_S=\Xi_{\mathrm{full}}-\Xi_{\mathrm{cut}}
+=-\beta K_{12}K_{21}/(\gamma_g+\beta S_2)$;
+with $\beta\neq0$ and a finite denominator this vanishes iff
+$K_{12}K_{21}=0$. The matrix form follows from the block inverse
+$x=A^{-1}b_p+A^{-1}BS_g^{-1}CA^{-1}b_p$ (derived exactly as in
+Theorem~\ref{thm:2A}, valid even for singular $G_g$).
+\end{proof}
+
+\subsection{Why $\chifull=0$ must never be the criterion}
+
+\begin{example}[The ideal $\Lambda$ counterexample]
+Take $A=1$, $d_1=d_2=1$, $\beta=1$, $\gamma_g=0$. Then
+$S_1=S_2=K_{12}=K_{21}=1$ and
+\[
+\Xi_{\mathrm{cut}}=1,\qquad
+\Xi_{\mathrm{full}}=1-\frac{1}{1}=0,\qquad
+\delta\Xi_S=-1\neq0 .
+\]
+The total response is zero --- \emph{perfect transparency}, ideal EIT --- while
+the sector correction is maximally nonzero. A zero of $\chifull$ is a
+\emph{go} signature, not a no-go.
+\end{example}
+
+\begin{warningbox}
+Three logically distinct kinds of ``zero'' must be reported separately:
+\begin{enumerate}
+\item \textbf{Symmetry-protected zero}: enforced by reducing projectors of the
+      full generator; robust against symmetry-preserving perturbations.
+\item \textbf{Krylov exact zero}: every finite transfer path is orthogonal to
+      the readout (Theorem~\ref{thm:krylov}); can occur without any explicit
+      symmetry.
+\item \textbf{Accidental parameter zero}: cancellation at one detuning or
+      field value; \emph{not} a domain-wide no-go.
+\end{enumerate}
+A numerical zero at finitely many frequencies proves nothing about an
+identically vanishing transfer.
+\end{warningbox}
+
+% ==================================================================
+\section{Fast damping: the moment hierarchy and exact Krylov zeros}
+\label{sec:moments}
+% ==================================================================
+
+\subsection{Setup}
+
+Decompose the optical-coherence generator as
+\begin{equation}
+A_\Gamma(z)=\Gamma D + A_0(z),
+\end{equation}
+where $\Gamma>0$ is the fast-rate scale (e.g.\ phonon-induced orbital hopping
+at elevated temperature), $D$ the dimensionless fast-generator shape, and
+$A_0$ collects detunings, fine structure, slow losses and fields.
+(Remember Example~\ref{ex:rates}: $\Gamma$ must be read off from the
+optical-coherence equation, not from a population-relaxation rate.)
+
+Define, assuming $D$ invertible,
+\begin{equation}
+X(z)=-D^{-1}A_0(z),
+\qquad
+\nu=D^{-1}c,
+\qquad
+K_\Gamma(z)=p^\dagger A_\Gamma^{-1}c
+          =p^\dagger(\Gamma I-X)^{-1}\nu .
+\end{equation}
+
+\subsection{The moment expansion}
+
+For $q=\|X\|/\Gamma<1$ the Neumann series gives
+\begin{equation}
+K_\Gamma=\sum_{n=0}^\infty\frac{M_n}{\Gamma^{n+1}},
+\qquad
+M_n=p^\dagger X^n\nu .
+\end{equation}
+
+\begin{theorem}[3: first nonzero moment fixes the suppression order]
+If $M_0=\dots=M_{m-1}=0$ and $M_m\neq0$, then as $\Gamma\to\infty$
+\begin{equation}
+K_\Gamma=\frac{M_m}{\Gamma^{m+1}}+O(\Gamma^{-m-2}).
+\end{equation}
+\end{theorem}
+
+\begin{physbox}
+Interpretation as a \emph{sector graph}: split the coherence space into
+sectors preserved by $D$ and the diagonal part of $A_0$, and treat the
+off-diagonal coupling $V$ as edges. If the minimal number of $V$-insertions
+connecting the source sector to the readout sector is $d$, then $M_n=0$ for
+$n<d$ and $K_\Gamma=O(\Gamma^{-1-d})$. Each ``hop'' across a sector boundary
+costs one power of $1/\Gamma$. Fast dissipation acts as a
+\emph{dissipative selection rule}.
+\end{physbox}
+
+\subsection{Exact zeros: the Krylov/Cayley--Hamilton theorem}
+
+\begin{theorem}[4: exact finite-dimensional transfer zero]
+\label{thm:krylov}
+Let the response space have dimension $N$ and let $D$ be invertible at fixed
+$z$. The following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+\item $M_n=p^\dagger X^n\nu=0$ for $n=0,\dots,N-1$;
+\item $p\perp\mathcal K_N(X,\nu)
+      =\spann\{\nu,X\nu,\dots,X^{N-1}\nu\}$;
+\item $p^\dagger q(X)\nu=0$ for every polynomial $q$;
+\item $K_\Gamma=0$ for every $\Gamma\notin\operatorname{spec}X$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(i)$\Leftrightarrow$(ii) is the definition of the Krylov space. By
+Cayley--Hamilton, $X^N$ is a polynomial in $I,X,\dots,X^{N-1}$; hence (i)
+implies inductively that \emph{all} moments vanish, giving (iii). For
+(iii)$\Rightarrow$(iv), use the adjugate representation
+\[
+(\Gamma I-X)^{-1}=\frac{\adj(\Gamma I-X)}{\det(\Gamma I-X)},
+\]
+where the adjugate is a polynomial in $X$ of degree $\le N-1$; by (iii) its
+matrix element between $p$ and $\nu$ vanishes. Conversely, if (iv) holds on an
+open set of large $\Gamma$, every Laurent coefficient in $1/\Gamma$ vanishes,
+which is (i).
+\end{proof}
+
+\begin{keyidea}
+Only \emph{finitely many} moments ($N$ of them) need to be checked to certify
+an \emph{all-orders exact zero}, and --- via the adjugate --- the conclusion
+is \emph{not} restricted to the convergence domain of the $1/\Gamma$ series.
+This turns ``EIT is exactly forbidden'' into a finite, machine-checkable
+computation.
+\end{keyidea}
+
+\begin{remark}[What $D>0$ is actually needed for]
+Theorem~\ref{thm:krylov} needs only $D$ \emph{invertible}. Positivity
+($\operatorname{Re}D\ge d_{\min}I>0$) is a separate, physical condition
+ensuring that large $\Gamma$ uniformly damps all modes. A non-accretive $D$
+can produce large finite-$\Gamma$ responses via pseudospectral amplification
+even when the asymptotic scaling holds --- check resolvent norms before
+claiming visibility bounds.
+\end{remark}
+
+\subsection{Singular damping: protected channels}
+
+If $D=D^\dagger\ge0$ is \emph{singular}, let $P=\operatorname{Proj}(\ker D)$
+and $Q_D=I-P$. The Schur complement on the slow subspace gives
+\begin{equation}
+K_\Gamma=p^\dagger P\,(PA_0P)^{-1}P c+O(\Gamma^{-1}) :
+\end{equation}
+an $O(1)$ channel survives arbitrary strong damping iff \emph{both} probe and
+control vectors have components in the genuine kernel of the damping operator
+(and the leading scalar does not cancel). Such \emph{protected channels} are
+one route to robust EIT in noisy solids.
+
+\subsection{Symmetry-protected transfer zeros}
+
+\begin{theorem}[5: reducing-symmetry transfer zero]
+\label{thm:symm}
+Suppose the response space admits orthogonal projectors $\{P_\alpha\}$,
+$\sum_\alpha P_\alpha=I$, with $[A(z),P_\alpha]=0$ for all $\alpha,z$. If the
+source and readout lie in different sectors, $P_\beta c=c$ and
+$p^\dagger P_\alpha=p^\dagger$ with $\alpha\neq\beta$, then
+$p^\dagger A(z)^{-1}c=0$ wherever $A$ is invertible.
+\end{theorem}
+
+\begin{proof}
+$[A,P_\alpha]=0\Rightarrow[A^{-1},P_\alpha]=0$, so
+$p^\dagger A^{-1}c
+=p^\dagger P_\alpha A^{-1}P_\beta c
+=p^\dagger A^{-1}P_\alpha P_\beta c=0$.
+\end{proof}
+
+The same statement lifts to the full Liouvillian with the group inverse
+$\mathcal{L}_c^{\#}$, provided the sector projectors commute with
+$\mathcal{L}_c$ \emph{and} with the steady-state projector. A sufficient
+microscopic condition: a unitary $U$ with $UH_cU^\dagger=H_c$ and
+$UL_\mu U^\dagger=\sum_\nu V_{\mu\nu}L_\nu$ ($V$ unitary, rates invariant).
+
+\begin{warningbox}[The symmetry audit]
+Before declaring a symmetry-protected no-go, one must audit \emph{every}
+block: lower Hamiltonian, excited Hamiltonian including spin--orbit,
+spin--spin, Zeeman and strain terms, the control Hamiltonian for the actual
+polarization, all jump operators (radiative decay, ISC, orbital hopping,
+ground dephasing), the steady state, the source, and the detector. If any one
+item breaks the sector, the exact zero fails, and the symmetry-breaking term
+must be reclassified as a perturbation $V$ feeding the moment hierarchy.
+\end{warningbox}
+
+% ==================================================================
+\section{Classification taxonomy}
+% ==================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{clp{8.6cm}}
+\toprule
+Class & Name & Defining condition\\
+\midrule
+0 & unspecified & inputs insufficient for classification\\
+I & optical dark capable & $\dim\ker\Omega>0$ (Thm.~\ref{thm:1A} only)\\
+II & \textbf{exact sector no-go} & $\dchi(\theta)\equiv0$ on the domain
+     (proved by symmetry, Krylov, or adjugate identity);
+     scalar case $\Leftrightarrow K_{12}K_{21}\equiv0$\\
+III & asymptotic suppression & first nonzero moments $m_{12},m_{21}$:
+     $K_{ij}=O(\Gamma^{-m_{ij}-1})$; e.g.\
+     $\delta\Xi_S=O(\Gamma^{-m_{12}-m_{21}-2})$ or $O(\Gamma^{-m_{12}-m_{21}-1})$
+     depending on $|\beta S_2/\gamma_g|$\\
+IV & leading-order kernel go & $K_{12},K_{21}=O(\Gamma^{-1})$ with nonzero
+     leading product\\
+V & protected go & $O(1)$ channel via $\ker D$ Schur complement\\
+VI & practical no-go & kernel nonzero but contrast below threshold
+     (SNR, power, ionization, optical depth)\\
+VII & observable go & narrow coherent transparency verified as EIT
+     (not ATS)\\
+VIII & tunable transition & fields/strain/polarization move the
+     configuration among II--VII\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{warningbox}[EIT vs Autler--Townes]
+A transparency dip alone identifies nothing. A strong control splits the
+excited line into an Autler--Townes doublet even with zero ground coherence.
+Discriminators: dependence on $\gamma_g$, control-power scaling of the dip
+width, pole/residue structure, two-photon linewidth, and the difference
+between $\chifull$ and $\chicut$.
+\end{warningbox}
+
+% ==================================================================
+\section{Worked platform examples}
+% ==================================================================
+
+\subsection{Alkali atoms (Rb): the canonical go}
+
+\paragraph{Configuration.}
+$^{87}$Rb D$_1$ line; lower states $\ket{g_1},\ket{g_2}$ = two hyperfine
+ground states ($F=1,2$, $5{}^2S_{1/2}$); operative excited manifold = one (or
+a few) hyperfine levels of $5{}^2P_{1/2}$; sector $S$ = the hyperfine
+ground coherence.
+
+\paragraph{Analysis.}
+\begin{itemize}
+\item \textbf{Thm.~\ref{thm:1A}}: with a single dominant excited level, both
+      dipole ``vectors'' are scalars, $\rank(d_1,d_2)=1<2$: an optical dark
+      state exists for any polarization pair that drives both legs.
+\item \textbf{Thm.~\ref{thm:1B}}: radiative decay starts in $\He$, so
+      $L_\mu\ket{D}=0$; ground-state decoherence (wall collisions, magnetic
+      noise) is slow, $\gamma_{21}/2\pi\sim\mathrm{kHz}$ or below in
+      buffer-gas/coated cells. The stationary-dark-state conditions are met to
+      excellent approximation.
+\item \textbf{Kernel}: $K_{12}=K_{21}=A^{-1}=O(\Gamma_{\mathrm{rad}}^{-1})$
+      --- Class IV at leading order, and in practice Class VII: this is the
+      textbook Example~\ref{ex:textbook}.
+\item \textbf{Real-world corrections}: Doppler averaging must be done at the
+      response level, $\bar\chi=\int\dd v\,P(v)\chi(v)$; with co-propagating
+      beams the two-photon detuning is nearly Doppler-free, which is why the
+      EIT window survives in hot vapor. Multiple excited hyperfine levels turn
+      $K_{12}$ into a coherent sum $\sum_j d_{1j}^*d_{2j}/a_j$ whose partial
+      cancellations modify (but do not kill) the contrast.
+\end{itemize}
+
+\paragraph{Verdict.} Class VII (observable go). Rb is the benchmark any
+correct theory must recover --- and Theorem~\ref{thm:2A} does, exactly.
+
+\subsection{NV$^-$ in diamond: the instructive no-go}
+
+\paragraph{Configuration 1: zero-field ZPL spin-$\Lambda$.}
+Lower states = two spin sublevels ($m_s=\pm1$ or $0,\pm1$ pairs) of the
+$^3A_2$ ground triplet; excited manifold = $^3E$; probe/control on the
+zero-phonon line; sector $S$ = the ground \emph{spin} coherence.
+
+\paragraph{Analysis.}
+\begin{itemize}
+\item \textbf{Spin-scalar dipole.} To leading order the electric dipole is
+      orbital: $\hat{\bm d}=\hat{\bm d}_{\mathrm{orb}}\otimes I_{\mathrm{spin}}$.
+      For a lower pair sharing the same orbital and differing by
+      \emph{orthogonal spin} states, the leading moment is a projected dipole
+      overlap
+      \[
+      M_0\propto p^\dagger c
+      =\bra{g_1}\hat d_p^\dagger\,\Pi_E\,\hat d_c\ket{g_2}
+      \;\propto\;\braket{s_1}{s_2}\;=\;0 .
+      \]
+      The Raman vertex vanishes at leading order: $M_0=0$.
+\item \textbf{Is this an exact no-go (Class II)?} Only in a simplified
+      sector-preserving model. In the physical six-level $^3E$ manifold,
+      transverse spin--orbit coupling, nonsecular spin--spin terms, and
+      hyperfine coupling generically break the spin sector. In fact, in the
+      reduced 6-level analysis the correct no-go criterion sharpens from the
+      naive overlap condition $\braket{s_1}{s_2}=0$ to a \emph{commutator}
+      condition $[\bar V_{\mathrm{spin}},H_g^{\mathrm{spin}}]=0$: the sector
+      must be preserved by the \emph{averaged} coupling, not merely orthogonal
+      at one instant.
+\item \textbf{Dissipative selection rule (Class III).} What survives
+      rigorously is the asymptotic statement: with phonon-induced orbital
+      hopping providing full-rank fast damping $\Gamma(T)$ on the
+      optical-coherence block (Lemma~\ref{lem:jump}, with the
+      $\Gamma_{XY}/4$ mapping of Example~\ref{ex:rates}),
+      \[
+      M_0=0,\qquad K=O(\Gamma^{-2}),\qquad
+      \delta\Xi_S=O(\Gamma^{-3})\ \text{or}\ O(\Gamma^{-4}),
+      \]
+      the branch depending on $|\beta S_2/\gamma_g|$. This is why NV spin-EIT
+      degrades so violently with temperature: raising $T$ increases
+      $\Gamma(T)$ and the sector-mediated correction collapses with a high
+      power of $1/\Gamma$ --- a \emph{thermal collapse law} that is directly
+      falsifiable by measuring the contrast against
+      $x(T)=\Gamma_{\mathrm{fast}}(T)/\Delta_{\mathrm{sel}}$.
+\end{itemize}
+
+\paragraph{Configuration 2: transverse-field escape channel (Class VIII).}
+Apply a small transverse magnetic field $B_\perp$. This is a sector-changing
+perturbation $V_{\mathrm{mix}}=\lambda V_1$ with $\lambda\propto B_\perp$. One
+insertion opens the source--readout path, so both kernels open at first order:
+\[
+K_{12},K_{21}=O(\lambda\Gamma^{-2}),
+\qquad
+K_{12}K_{21}=O(\lambda^2\Gamma^{-4}),
+\qquad
+C_{\mathrm{abs}}=O(B_\perp^2\Gamma^{-3})\ \text{or}\ O(B_\perp^2\Gamma^{-2}).
+\]
+The predicted signature $|K|^2\propto B_\perp^2$ is a clean experimental null
+test: at $B_\perp=0$ the channel is (asymptotically) closed; it opens
+\emph{quadratically} in the contrast as $B_\perp$ is turned on. (In the
+simplified model, the even channel has $M_1\neq0$ while the odd channel has
+$M_1\simeq0$; this is model-specific and must be re-audited with the full
+microscopic Hamiltonian.)
+
+\paragraph{Verdict.} Zero-field spin-$\Lambda$: Class III (asymptotic
+dissipative no-go), \emph{not} an unconditional exact no-go. Transverse-field
+channel: Class VIII, tunable escape with $B_\perp^2$ scaling.
+
+\subsection{Group-IV centers (SiV$^-$, SnV$^-$): the orbital go}
+
+\paragraph{Configuration.}
+Inversion-symmetric defects with ground manifold $^2E_g$ split by spin--orbit
+coupling into orbital branches (SiV: $\sim$46\,GHz; SnV: $\sim$850\,GHz), and
+excited manifold $^2E_u$. Two natural channels exist \emph{in the same
+material}:
+\begin{enumerate}
+\item \textbf{Same-spin orbital-$\Lambda$}: lower pair = two orbital branches
+      with the \emph{same} spin.
+\item \textbf{Spin-$\Lambda$}: lower pair = two spin states.
+\end{enumerate}
+
+\paragraph{Analysis of the orbital-$\Lambda$.}
+The dipole is orbital, so it acts \emph{within} the fixed spin sector: no
+spin-scalar obstruction. The leading criterion is
+\[
+d_1^\dagger D^{-1} d_2\neq0
+\;\Longrightarrow\;
+K_{12}=O(\Gamma^{-1}) :
+\]
+Class IV, a leading-order kernel go. Both legs connect to the same excited
+orbital doublet with symmetry-allowed, generally non-parallel polarization
+selection rules ($D_{3d}$ point group: check that
+$\Gamma(g_1)^*\otimes\Gamma(\hat O_{pc})\otimes\Gamma(g_2)$ contains the
+totally symmetric representation, with
+$\hat O_{pc}=\hat d_p^\dagger\Pi_E\hat d_c$ selected by
+$\bm\epsilon_p^*\otimes\bm\epsilon_c$).
+
+\paragraph{But kernel go $\neq$ observable go.}
+The orbital ground coherence is damped by single-phonon transitions between
+the branches: $\gamma_g$ is large at 4\,K in SiV (orbital $T_1\sim$~tens of ns)
+and the denominator $\gamma_g+\beta S_2$ eats the correction --- Class VI
+(practical no-go) unless one cools to millikelvin, strains the crystal to
+increase the branch splitting (suppressing the phonon density of states), or
+moves to SnV, whose larger spin--orbit splitting pushes the phonon process to
+higher energy and freezes it out at moderate temperatures. This is a textbook
+Class VIII story: temperature and strain move the same configuration along
+IV $\to$ VI $\to$ VII.
+
+\begin{warningbox}
+Orbital degeneracy alone does \emph{not} imply a go. One needs, cumulatively:
+symmetry-allowed transitions, the right polarization tensor, nonzero reduced
+matrix elements, nonzero spin overlap, correct manifold selection, \emph{and}
+damping/coherence budgets that permit practical visibility.
+\end{warningbox}
+
+\subsection{Comparison table}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lcccc}
+\toprule
+Configuration & dark rank & first moment & class & key knob\\
+\midrule
+Rb hyperfine $\Lambda$ & $\ge1$ & $M_0\neq0$ & VII & Doppler-free geometry\\
+NV$^-$ spin-$\Lambda$, $B=0$ & $\ge1$ & $M_0=0$ & III & temperature ($\Gamma(T)$)\\
+NV$^-$ spin-$\Lambda$, $B_\perp\!\neq\!0$ & $\ge1$ & $M_1\propto B_\perp$ & VIII & $|K|^2\propto B_\perp^2$\\
+SiV$^-$/SnV$^-$ orbital-$\Lambda$ & $\ge1$ & $M_0\neq0$ & IV/VI$\to$VII & $T$, strain, splitting\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ==================================================================
+\section{The classification algorithm (summary)}
+% ==================================================================
+
+\begin{enumerate}
+\item Fix the configuration tuple $C$, including the sector $S$.
+\item Build $H_g$, $H_e$, complex dipole vectors, all jump operators with
+      correct rate conventions (Example~\ref{ex:rates}).
+\item Solve $\mathcal L_c\rho^{(0)}=0$; restrict the first-order problem to
+      the trace-zero space.
+\item Compute $\dim\ker\Omega$ (Thm.~\ref{thm:1A}) and test
+      Thm.~\ref{thm:1B} for stationarity.
+\item Where valid, reduce to $A(z)$ and compute $S_1,S_2,K_{12},K_{21}$;
+      otherwise keep the Liouville-space kernel.
+\item Construct $\chifull$, $\chicut$, $\dchi$ (Thm.~\ref{thm:2B}).
+\item Test an exact zero of the \emph{targeted} cross-transfer, in order:
+      reducing symmetry (Thm.~\ref{thm:symm}, with the full audit),
+      finite Krylov moments (Thm.~\ref{thm:krylov}),
+      adjugate/analytic identity; at singular points use Laurent/Drazin
+      analysis --- never read $0/0$ as $0$.
+\item If not exact, decompose $A=\Gamma D+A_0$; if $D$ full rank, get the
+      suppression order from the first nonzero moment; if singular, compute
+      the protected-channel Schur complement.
+\item Ensemble-average static disorder \emph{at the response level};
+      convert to the measured observable; separate EIT from ATS;
+      compare contrast with the experimental threshold.
+\item Report: class, moment order, $K_{12},K_{21}$, $\dchi$, contrast,
+      margins, and \emph{all} assumptions and projectors used.
+\end{enumerate}
+
+% ==================================================================
+\section{Exercises}
+% ==================================================================
+
+\begin{exercise}
+Verify by direct substitution that Example~\ref{ex:textbook} reproduces
+Eq.~\eqref{eq:textbook}, and show that in the limit $\gamma_{21}=\delta_2=0$
+one has $\Xi_{\mathrm{full}}=0$ but $\delta\Xi_S=-A^{-1}\neq0$.
+\end{exercise}
+
+\begin{exercise}
+Prove Lemma~\ref{lem:jump} for the asymmetric case
+$k_{Y\leftarrow X}\neq k_{X\leftarrow Y}$ and show that the resulting damping
+matrix on the two optical coherences is
+$\tfrac12\operatorname{diag}(k_{Y\leftarrow X},k_{X\leftarrow Y})$ ---
+in general \emph{not} proportional to the identity. Why does this matter for
+choosing $D$ in the moment expansion?
+\end{exercise}
+
+\begin{exercise}
+Let $N=3$, $X$ nilpotent with $X^2\neq0$, $X^3=0$. Construct $p,\nu$ with
+$M_0=M_1=0$, $M_2\neq0$, and verify Theorem~\ref{thm:krylov} by computing
+$K_\Gamma$ explicitly from the adjugate.
+\end{exercise}
+
+\begin{exercise}
+For the two-branch sector graph with one coupling insertion $V$, show
+$M_0=0$ and $K_\Gamma=O(\Gamma^{-2})$, and derive the two visibility branches
+$C_{\mathrm{abs}}=O(\Gamma^{-3})$ ($|\beta S_2/\gamma_g|\ll1$) and
+$O(\Gamma^{-2})$ ($\gg1$).
+\end{exercise}
+
+\begin{exercise}[NV thermal collapse]
+Assume phonon-induced orbital hopping with $\Gamma(T)\propto T^5$ at low
+temperature. Using the Class III scaling of the NV spin-$\Lambda$, predict
+how the EIT contrast scales with $T$ in each visibility branch, and propose a
+plot (contrast vs $x(T)=\Gamma(T)/\Delta_{\mathrm{sel}}$) that would falsify
+the theory.
+\end{exercise}
+
+\begin{exercise}[Symmetry audit]
+Write down the audit table of Theorem~\ref{thm:symm} for the NV zero-field
+spin-$\Lambda$ and identify which physical terms (spin--orbit? hyperfine?
+strain?) break the spin sector. Conclude why the honest classification is
+Class III rather than Class II.
+\end{exercise}
+
+% ==================================================================
+\section*{Take-home messages}
+% ==================================================================
+
+\begin{keyidea}[Summary]
+\begin{enumerate}
+\item Classify \textbf{channels (configurations)}, not materials.
+\item An optical dark vector ($\ker\Omega$), a stationary Lindblad dark
+      state, a coherent pathway ($K_{12}K_{21}$), and observable EIT are
+      \textbf{four different things}.
+\item The correct no-go object is the sector-resolved correction
+      $\dchi\equiv0$; a zero of the \emph{total} susceptibility is
+      \textbf{perfect EIT}, not a no-go.
+\item Fast full-rank damping generates a \textbf{moment hierarchy}: the first
+      nonzero moment fixes the suppression power of $1/\Gamma$; finitely many
+      vanishing moments certify an all-orders exact zero
+      (Krylov/Cayley--Hamilton).
+\item Rb: go. NV zero-field spin-$\Lambda$: asymptotic dissipative no-go,
+      lifted quadratically by $B_\perp$. SiV/SnV orbital-$\Lambda$: kernel go
+      whose observability is a budget question ($T$, strain, splitting).
+\end{enumerate}
+\end{keyidea}
+
+\end{document}

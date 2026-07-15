@@ -1,0 +1,929 @@
+\documentclass[11pt,a4paper]{article}
+
+% ------------------------------------------------------------------
+%  Proofs of the Theorems of the EIT No-Go/Go Theory
+%  Undergraduate-level, self-contained proofs (linear algebra +
+%  basic algebra prerequisites only).
+%  Based on: "Generalized EIT No-Go/Go Theory Applicable to
+%  Arbitrary Materials", v6.2 (2026-07-13)
+% ------------------------------------------------------------------
+
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!60!black]{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newtcolorbox{strategy}[1][Proof strategy]{
+  breakable,enhanced,colback=blue!4,colframe=blue!50!black,
+  title=#1,fonttitle=\bfseries}
+\newtcolorbox{prereq}[1][What you need to know]{
+  breakable,enhanced,colback=green!4,colframe=green!35!black,
+  title=#1,fonttitle=\bfseries}
+
+\newcommand{\Hg}{\mathcal{H}_g}
+\newcommand{\He}{\mathcal{H}_e}
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\spann}{\operatorname{span}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\braket}[2]{\langle #1|#2\rangle}
+\newcommand{\dchi}{\delta\chi_{S}}
+
+\title{\bfseries Proofs of the Theorems of the EIT No-Go/Go Theory\\[4pt]
+\large A self-contained exposition for undergraduates}
+\author{Quantum Sensing Group}
+\date{July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document collects complete, elementary proofs of the theorems that
+constitute the generalized EIT no-go/go theory. Every proof uses only tools
+from a first course in linear algebra (rank--nullity, block matrices,
+eigenvectors, determinants and the adjugate, the Cayley--Hamilton theorem)
+together with elementary calculus (geometric series). Each theorem is preceded
+by a short list of prerequisites and a statement of the proof strategy, so
+that a reader can verify every step independently.
+\end{abstract}
+
+\tableofcontents
+
+% ==================================================================
+\section{Notation and standing assumptions}
+% ==================================================================
+
+All vector spaces are finite-dimensional complex inner-product spaces. For an
+operator $A$, $A^\dagger$ is the adjoint (conjugate transpose). Projectors are
+orthogonal unless stated otherwise: $P^2=P=P^\dagger$. The lower (ground)
+manifold is $\Hg$ with $\dim\Hg=N_g$, the excited manifold is $\He$. The
+Lindblad (GKSL) master equation is
+\begin{equation}
+\dot\rho=\mathcal L(\rho)
+ =-\im[H,\rho]
+ +\sum_\mu\Bigl(L_\mu\rho L_\mu^\dagger
+ -\tfrac12\{L_\mu^\dagger L_\mu,\rho\}\Bigr),
+\label{eq:GKSL}
+\end{equation}
+with Hamiltonian $H=H^\dagger$ and jump operators $L_\mu$. Throughout,
+$\{A,B\}=AB+BA$ and $[A,B]=AB-BA$.
+
+% ==================================================================
+\section{Theorem 1A: optical dark-subspace rank}
+% ==================================================================
+
+\begin{prereq}
+Kernel (null space) and rank of a linear map; the rank--nullity theorem;
+invariance of rank under multiplication by invertible matrices.
+\end{prereq}
+
+The rotating-frame drive couples the manifolds through
+$V_+=P_e H_{\mathrm{drive}}P_g=\tfrac12\Omega$ with a linear map
+$\Omega:\Hg\to\He$ whose columns are $\Omega_a d_a$, where
+$(d_a)_j=\bra{e_j}\bm\epsilon_a\!\cdot\!\hat{\bm d}\ket{g_a}$.
+
+\begin{theorem}[1A]
+A vector $\ket{v}\in\Hg$ satisfies $V_+\ket{v}=0$ if and only if
+$\Omega\ket{v}=0$. The optical dark subspace
+$\mathcal D_{\mathrm{opt}}=\ker\Omega$ has
+\[
+\dim\mathcal D_{\mathrm{opt}}=N_g-\rank\Omega,
+\]
+and this number is invariant under unitary basis changes
+$\Omega\mapsto U_e\,\Omega\,U_g^\dagger$.
+\end{theorem}
+
+\begin{proof}
+\emph{Equivalence.} Since $V_+=\tfrac12\Omega$ and $\tfrac12\neq0$, we have
+$V_+\ket v=0\iff\Omega\ket v=0$. This is the definition of $\ker\Omega$.
+
+\emph{Dimension.} $\Omega$ is a linear map from an $N_g$-dimensional space to
+$\He$. The rank--nullity theorem states
+$\dim\ker\Omega+\rank\Omega=N_g$, which rearranges to the claim.
+
+\emph{Invariance.} Let $U_e,U_g$ be unitary (in particular invertible). For
+any matrices, $\rank(U_e\Omega U_g^\dagger)=\rank\Omega$ because multiplying
+by an invertible matrix on either side is a composition with a bijective
+linear map, which changes neither the image dimension nor the kernel
+dimension. Hence both $\rank$ and the nullity $N_g-\rank\Omega$ are basis
+independent.
+\end{proof}
+
+\begin{corollary}
+Let $N_g=2$ with both Rabi frequencies $\Omega_1,\Omega_2\neq0$. A nonzero
+dark vector exists iff $\rank(d_1,d_2)<2$; if moreover $d_1,d_2\neq0$, this
+means $\rank(d_1,d_2)=1$, i.e.\ $d_2=\lambda d_1$ for some
+$\lambda\in\mathbb C^\times$. Explicitly,
+$\ket D\propto \Omega_2\lambda\ket{g_1}-\Omega_1\ket{g_2}$
+(up to normalization) satisfies $\Omega\ket D=0$.
+\end{corollary}
+
+\begin{proof}
+$\Omega$ has the two columns $\Omega_1 d_1$ and $\Omega_2 d_2$. Since the
+scalars are nonzero, the column space equals $\spann\{d_1,d_2\}$, so
+$\rank\Omega=\rank(d_1,d_2)$. By Theorem 1A a nonzero kernel exists iff this
+rank is $<2$. If both vectors are nonzero the rank is at least $1$, hence
+exactly $1$, i.e.\ the vectors are proportional. Finally, with
+$d_2=\lambda d_1$,
+$\Omega\bigl(\Omega_2\lambda\ket{g_1}-\Omega_1\ket{g_2}\bigr)
+ =\Omega_2\lambda\,\Omega_1 d_1-\Omega_1\,\Omega_2\lambda d_1=0$.
+\end{proof}
+
+% ==================================================================
+\section{Theorem 1B: stationary pure Lindblad dark state}
+% ==================================================================
+
+\begin{prereq}
+Trace and its cyclic property $\Tr(ABC)=\Tr(BCA)$; expectation values
+$\langle A\rangle_D=\bra D A\ket D$; the Cauchy--Schwarz-type fact that a
+variance $\langle A^\dagger A\rangle-|\langle A\rangle|^2\ge0$ vanishes iff
+$A\ket D\parallel\ket D$; Hermitian operators have real eigenvalues.
+\end{prereq}
+
+\begin{strategy}
+Two steps. (1) \emph{Necessity of the jump condition}: for a stationary state
+the purity $\Tr\rho^2$ is constant; we compute its time derivative for a pure
+state and find a sum of variances, each of which must vanish. (2)
+\emph{Hamiltonian condition}: insert the jump condition into the master
+equation; what remains is generated by an effective \emph{Hermitian} operator,
+whose action on $\ket D$ must be parallel to $\ket D$.
+\end{strategy}
+
+\begin{lemma}[Variance identity]
+\label{lem:variance}
+Let $\rho_D=\ket D\bra D$ with $\braket DD=1$. Then
+\[
+\frac{\mathrm d}{\mathrm dt}\Tr(\rho^2)\Big|_{\rho=\rho_D}
+ =-2\sum_\mu\Bigl(\langle L_\mu^\dagger L_\mu\rangle_D
+   -|\langle L_\mu\rangle_D|^2\Bigr)\;\le\;0 .
+\]
+\end{lemma}
+
+\begin{proof}
+By the product rule and cyclicity,
+$\frac{\mathrm d}{\mathrm dt}\Tr(\rho^2)=2\Tr\bigl(\rho\,\mathcal L(\rho)\bigr)$.
+Evaluate each term of \eqref{eq:GKSL} at $\rho=\rho_D$, using
+$\rho_D^2=\rho_D$:
+\begin{itemize}[nosep]
+\item Hamiltonian: $\Tr\bigl(\rho_D(-\im)[H,\rho_D]\bigr)
+ =-\im\Tr\bigl(\rho_D H\rho_D-\rho_D\rho_D H\bigr)
+ =-\im\bigl(\langle H\rangle_D-\langle H\rangle_D\bigr)=0$,
+ again by cyclicity and $\rho_D^2=\rho_D$.
+\item Recycling: $\Tr\bigl(\rho_D L_\mu\rho_D L_\mu^\dagger\bigr)
+ =\bra D L_\mu\ket D\bra D L_\mu^\dagger\ket D
+ =|\langle L_\mu\rangle_D|^2$.
+\item Anticommutator: $-\tfrac12\Tr\bigl(\rho_D\{L_\mu^\dagger L_\mu,\rho_D\}\bigr)
+ =-\Tr\bigl(\rho_D L_\mu^\dagger L_\mu\bigr)
+ =-\langle L_\mu^\dagger L_\mu\rangle_D$,
+ using $\rho_D^2=\rho_D$ and cyclicity to combine the two halves.
+\end{itemize}
+Summing and multiplying by 2 gives the identity. Each bracket is the variance
+of $L_\mu$ in the state $\ket D$: writing
+$\ket\psi=L_\mu\ket D-\langle L_\mu\rangle_D\ket D$, one checks directly
+$\braket\psi\psi=\langle L_\mu^\dagger L_\mu\rangle_D
+-|\langle L_\mu\rangle_D|^2\ge0$, with equality iff
+$L_\mu\ket D=\langle L_\mu\rangle_D\ket D$.
+\end{proof}
+
+\begin{theorem}[1B]
+$\rho_D=\ket D\bra D$ satisfies $\mathcal L(\rho_D)=0$ if and only if there
+exist $\lambda_\mu\in\mathbb C$ and $h\in\mathbb R$ with
+\begin{align}
+&\text{(i)}\quad L_\mu\ket D=\lambda_\mu\ket D\quad(\forall\mu),\\
+&\text{(ii)}\quad
+\widetilde H\ket D=h\ket D,
+\qquad
+\widetilde H:=H+\frac{\im}{2}\sum_\mu
+\bigl(\lambda_\mu^* L_\mu-\lambda_\mu L_\mu^\dagger\bigr).
+\end{align}
+\end{theorem}
+
+\begin{proof}
+\emph{Necessity.}
+If $\mathcal L(\rho_D)=0$ then $\rho(t)=\rho_D$ for all $t$, so
+$\Tr\rho^2$ is constant and Lemma~\ref{lem:variance} forces every variance to
+vanish; by the equality case of the lemma, (i) holds with
+$\lambda_\mu=\langle L_\mu\rangle_D$.
+
+Now substitute (i) into $\mathcal L(\rho_D)$. Using
+$L_\mu\rho_D=\lambda_\mu\rho_D$ and its adjoint
+$\rho_D L_\mu^\dagger=\lambda_\mu^*\rho_D$:
+\[
+L_\mu\rho_D L_\mu^\dagger=|\lambda_\mu|^2\rho_D,
+\qquad
+L_\mu^\dagger L_\mu\rho_D=\lambda_\mu L_\mu^\dagger\rho_D,
+\qquad
+\rho_D L_\mu^\dagger L_\mu=\lambda_\mu^*\rho_D L_\mu .
+\]
+Hence
+\[
+0=\mathcal L(\rho_D)
+ =-\im[H,\rho_D]
+ +\sum_\mu\Bigl(|\lambda_\mu|^2\rho_D
+ -\tfrac{\lambda_\mu}{2}L_\mu^\dagger\rho_D
+ -\tfrac{\lambda_\mu^*}{2}\rho_D L_\mu\Bigr).
+\]
+A short rearrangement shows this equals
+$-\im\bigl(\widetilde H\rho_D-\rho_D\widetilde H^\dagger\bigr)
+ +c\,\rho_D$ for a real constant $c$ that must vanish by taking the trace
+(the trace of $\mathcal L(\rho)$ is always $0$, and
+$\Tr(-\im(\widetilde H\rho_D-\rho_D\widetilde H^\dagger))
+ =-\im(\langle\widetilde H\rangle_D-\langle\widetilde H\rangle_D^{*})
+ =2\operatorname{Im}\langle\widetilde H\rangle_D$;
+note $\widetilde H$ is Hermitian --- check:
+$(\im(\lambda^*L-\lambda L^\dagger))^\dagger
+ =-\im(\lambda L^\dagger-\lambda^* L)
+ =\im(\lambda^* L-\lambda L^\dagger)$ --- so
+$\langle\widetilde H\rangle_D$ is real and $c=0$).
+Thus $\widetilde H\rho_D=\rho_D\widetilde H$: $\widetilde H$ commutes with
+the rank-one projector $\ket D\bra D$. Apply both sides to $\ket D$:
+$\widetilde H\ket D=\rho_D\widetilde H\ket D
+ =\bigl(\bra D\widetilde H\ket D\bigr)\ket D$,
+so $\ket D$ is an eigenvector of the Hermitian operator $\widetilde H$ with
+real eigenvalue $h=\langle\widetilde H\rangle_D$. This is (ii).
+
+\emph{Sufficiency.}
+Assume (i) and (ii). Reverse the computation: with (i), the dissipator
+collapses as above, and with (ii),
+$[\widetilde H,\rho_D]=h\rho_D-\rho_D h=0$; unwinding the rearrangement gives
+$\mathcal L(\rho_D)=0$ term by term.
+\end{proof}
+
+\begin{remark}
+For an \emph{EIT} dark state one additionally requires $P_e\ket D=0$ and
+$\Omega\ket D=0$ (Theorem 1A). Spontaneous-emission jumps annihilate any
+state supported in $\Hg$, so (i) holds with $\lambda_\mu=0$; but a
+ground-state dephasing jump such as $L\propto\ket{g_1}\bra{g_1}$ has
+$\ket D=\alpha\ket{g_1}+\beta\ket{g_2}$ ($\alpha\beta\neq0$) as an
+eigenvector for \emph{no} eigenvalue, so (i) fails: an optical dark vector
+exists while no stationary pure dark state exists.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 2A: the reduced susceptibility as a Schur complement}
+% ==================================================================
+
+\begin{prereq}
+Solving $2\times2$ block linear systems by substitution; matrix inverse.
+\end{prereq}
+
+The first-order (in the probe) variables are the optical-coherence vector
+$x\in\He$ and the ground coherence $s\in\mathbb C$, obeying
+\begin{equation}
+\begin{pmatrix}
+A & \frac{\im\Omega_c}{2}d_2\\[2pt]
+\frac{\im\Omega_c^*}{2}d_2^\dagger & \gamma_g
+\end{pmatrix}
+\begin{pmatrix}x\\ s\end{pmatrix}
+=
+\begin{pmatrix}\frac{\im\Omega_p}{2}d_1\\ 0\end{pmatrix}.
+\label{eq:block2A}
+\end{equation}
+
+\begin{theorem}[2A]
+Assume $A$ is invertible, set $G=A^{-1}$, $S_i=d_i^\dagger G d_i$,
+$K_{ij}=d_i^\dagger G d_j$, $\beta=|\Omega_c|^2/4$, and assume
+$\gamma_g+\beta S_2\neq0$. Then the normalized probe response
+$\Xi:=d_1^\dagger x\,/\,(\im\Omega_p/2)$ equals
+\[
+\Xi=S_1-\frac{\beta\,K_{12}K_{21}}{\gamma_g+\beta S_2}.
+\]
+\end{theorem}
+
+\begin{proof}
+From the first row of \eqref{eq:block2A},
+\begin{equation}
+x=G\,\frac{\im\Omega_p}{2}\,d_1-G\,\frac{\im\Omega_c}{2}\,d_2\,s .
+\label{eq:xrow}
+\end{equation}
+Insert \eqref{eq:xrow} into the second row
+$\frac{\im\Omega_c^*}{2}d_2^\dagger x+\gamma_g s=0$:
+\[
+\frac{\im\Omega_c^*}{2}\,d_2^\dagger G\,\frac{\im\Omega_p}{2}\,d_1
+-\frac{\im\Omega_c^*}{2}\,d_2^\dagger G\,\frac{\im\Omega_c}{2}\,d_2\,s
++\gamma_g s=0 .
+\]
+Using $\im\cdot\im=-1$, $d_2^\dagger Gd_1=K_{21}$,
+$d_2^\dagger Gd_2=S_2$, and $\frac{|\Omega_c|^2}{4}=\beta$:
+\[
+-\frac{\Omega_c^*\Omega_p}{4}K_{21}+\beta S_2\,s+\gamma_g s
+ =-\frac{\Omega_c^*\Omega_p}{4}K_{21}+(\gamma_g+\beta S_2)\,s=0 .
+\]
+\emph{We never divided by $\gamma_g$}; only the combination
+$\gamma_g+\beta S_2$ was assumed nonzero. Hence
+\begin{equation}
+s=\frac{\Omega_c^*\Omega_p}{4}\,\frac{K_{21}}{\gamma_g+\beta S_2}.
+\label{eq:ssol}
+\end{equation}
+Insert \eqref{eq:ssol} back into \eqref{eq:xrow}, multiply from the left by
+$d_1^\dagger$, and divide by $\im\Omega_p/2$:
+\[
+\Xi=d_1^\dagger Gd_1
+ -\frac{\im\Omega_c/2}{\im\Omega_p/2}\,d_1^\dagger Gd_2\;
+   \frac{\Omega_c^*\Omega_p}{4}\,\frac{K_{21}}{\gamma_g+\beta S_2}
+ =S_1-\frac{|\Omega_c|^2}{4}\,
+   \frac{K_{12}K_{21}}{\gamma_g+\beta S_2},
+\]
+which is the claim. (The reader should track the scalars:
+$\frac{\Omega_c}{\Omega_p}\cdot\frac{\Omega_c^*\Omega_p}{4}
+=\frac{|\Omega_c|^2}{4}=\beta$.)
+\end{proof}
+
+\begin{remark}[Consistency check: the textbook $\Lambda$ system]
+With one excited state, $d_1=d_2=1$, $A=\gamma_{31}-\im\Delta_p$,
+$\gamma_g=\gamma_{21}-\im\delta_2$, all four kernel entries equal $A^{-1}$
+and
+\[
+\Xi=\frac1A-\frac{\beta/A^2}{\gamma_g+\beta/A}
+   =\frac{\gamma_g+\beta/A-\beta/A}{A\gamma_g+\beta}
+   =\frac{\gamma_g}{A\gamma_g+\beta},
+\]
+the standard three-level EIT susceptibility.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 2B: sector-resolved no-go and the block formula}
+% ==================================================================
+
+\begin{prereq}
+Block Gaussian elimination (the same substitution as Theorem 2A, in matrix
+form).
+\end{prereq}
+
+Let the first-order response block, source and detector be
+\[
+M=\begin{pmatrix}A&B\\ C&G_g\end{pmatrix},
+\qquad
+b=\begin{pmatrix}b_p\\0\end{pmatrix},
+\qquad
+d^\dagger_{\mathrm{tot}}=(d^\dagger\ \ 0),
+\]
+where the second row/column is the targeted long-lived sector $S$. Define
+$\chi_{\mathrm{full}}=\chi_0\,d^\dagger x$ where $Mx_{\mathrm{tot}}=b$ with
+$x_{\mathrm{tot}}=(x,s)^{\mathsf T}$, and the pathway-cut counterfactual
+$\chi^{(S)}_{\mathrm{cut}}=\chi_0\,d^\dagger A^{-1}b_p$
+(i.e.\ $B,C\to0$ with everything else fixed).
+
+\begin{theorem}[2B]
+Assume $A$ and the Schur complement $S_g=G_g-CA^{-1}B$ are invertible. Then
+\[
+\dchi:=\chi_{\mathrm{full}}-\chi^{(S)}_{\mathrm{cut}}
+ =\chi_0\,d^\dagger A^{-1}B\,S_g^{-1}\,C A^{-1}b_p .
+\]
+For the scalar block of Theorem 2A (with $\beta\neq0$ and
+$\gamma_g+\beta S_2\neq0$),
+\[
+\delta\Xi_S=-\frac{\beta K_{12}K_{21}}{\gamma_g+\beta S_2},
+\qquad\text{hence}\qquad
+\delta\Xi_S=0\iff K_{12}K_{21}=0 .
+\]
+\end{theorem}
+
+\begin{proof}
+Write the two block rows of $Mx_{\mathrm{tot}}=b$:
+\[
+Ax+Bs=b_p,\qquad Cx+G_g s=0 .
+\]
+From the first row, $x=A^{-1}b_p-A^{-1}Bs$. Insert into the second:
+\[
+CA^{-1}b_p-CA^{-1}Bs+G_g s=0
+\;\Longrightarrow\;
+\underbrace{(G_g-CA^{-1}B)}_{=\,S_g}\,s=-CA^{-1}b_p
+\;\Longrightarrow\;
+s=-S_g^{-1}CA^{-1}b_p .
+\]
+Note that only $S_g$, not $G_g$ itself, was inverted; the ideal
+ground-coherence limit $G_g\to0$ is included. Substituting back,
+\[
+x=A^{-1}b_p+A^{-1}B\,S_g^{-1}CA^{-1}b_p .
+\]
+Multiplying by $\chi_0 d^\dagger$ and subtracting
+$\chi^{(S)}_{\mathrm{cut}}=\chi_0 d^\dagger A^{-1}b_p$ gives the first
+formula. The scalar case is Theorem 2A with $B=\frac{\im\Omega_c}{2}d_2$,
+$C=\frac{\im\Omega_c^*}{2}d_2^\dagger$, $G_g=\gamma_g$:
+$S_g=\gamma_g-\bigl(\tfrac{\im\Omega_c^*}{2}\bigr)
+\bigl(\tfrac{\im\Omega_c}{2}\bigr)d_2^\dagger Gd_2
+=\gamma_g+\beta S_2$, and the product
+$d^\dagger A^{-1}B\,S_g^{-1}\,CA^{-1}b_p$ evaluates (same scalar bookkeeping
+as before) to $-\beta K_{12}K_{21}/(\gamma_g+\beta S_2)$ after
+normalization. Since $\beta\neq0$ and the denominator is finite and nonzero,
+the fraction vanishes iff its numerator $K_{12}K_{21}$ does.
+\end{proof}
+
+\begin{remark}[Why $\chi_{\mathrm{full}}=0$ is not a no-go]
+Take $A=1$, $d_1=d_2=1$, $\beta=1$, $\gamma_g=0$. Then
+$\Xi_{\mathrm{full}}=1-\frac{1\cdot1\cdot1}{0+1\cdot1}=0$ (perfect
+transparency), while $\delta\Xi_S=-1\neq0$. The total response vanishing is
+the \emph{signature of ideal EIT}; the correct no-go object is
+$\dchi\equiv0$.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 3: the moment expansion and the first nonzero moment}
+% ==================================================================
+
+\begin{prereq}
+Geometric (Neumann) series for matrices: if $\|Y\|<1$ for a submultiplicative
+norm, then $I-Y$ is invertible and $(I-Y)^{-1}=\sum_{n\ge0}Y^n$, with
+$\|\sum_{n>m}Y^n\|\le\|Y\|^{m+1}/(1-\|Y\|)$.
+\end{prereq}
+
+Decompose the generator as $A_\Gamma(z)=\Gamma D+A_0(z)$ with $D$ invertible,
+and define
+\[
+X(z)=-D^{-1}A_0(z),\qquad \nu=D^{-1}c,\qquad
+K_\Gamma=p^\dagger A_\Gamma^{-1}c .
+\]
+
+\begin{lemma}
+\label{lem:neumann}
+If $q:=\|X\|/\Gamma<1$, then
+\[
+K_\Gamma=\sum_{n=0}^\infty\frac{M_n}{\Gamma^{n+1}},
+\qquad M_n=p^\dagger X^n\nu,
+\]
+and the truncation error after order $m$ obeys
+$\bigl|K_\Gamma-\sum_{n=0}^m M_n\Gamma^{-n-1}\bigr|
+ \le\frac{\|p\|\,\|D^{-1}\|\,\|c\|}{\Gamma}\cdot\frac{q^{m+1}}{1-q}$.
+\end{lemma}
+
+\begin{proof}
+Factor $A_\Gamma=\Gamma D+A_0=D(\Gamma I-X)$, so wherever both factors are
+invertible,
+\[
+K_\Gamma=p^\dagger(\Gamma I-X)^{-1}D^{-1}c
+ =p^\dagger(\Gamma I-X)^{-1}\nu .
+\]
+Write $(\Gamma I-X)^{-1}=\frac1\Gamma\bigl(I-\frac X\Gamma\bigr)^{-1}$ and
+apply the Neumann series with $Y=X/\Gamma$, $\|Y\|=q<1$:
+$(\Gamma I-X)^{-1}=\frac1\Gamma\sum_{n\ge0}\frac{X^n}{\Gamma^n}$. Multiplying
+by $p^\dagger$ and $\nu$ gives the series; the error bound follows from the
+tail bound of the geometric series and
+$|p^\dagger Y\nu|\le\|p\|\|Y\|\|\nu\|$, $\|\nu\|\le\|D^{-1}\|\|c\|$.
+\end{proof}
+
+\begin{theorem}[3]
+If $M_0=\dots=M_{m-1}=0$ and $M_m\neq0$, then as $\Gamma\to\infty$,
+\[
+K_\Gamma=\frac{M_m}{\Gamma^{m+1}}+O(\Gamma^{-m-2}).
+\]
+\end{theorem}
+
+\begin{proof}
+For $\Gamma>\|X\|$ Lemma~\ref{lem:neumann} applies. The vanishing of the
+first $m$ moments removes all terms up to $\Gamma^{-m}$; the leading
+surviving term is $M_m\Gamma^{-m-1}$, and the tail bound with truncation at
+order $m$ shows the remainder is bounded by
+$\mathrm{const}\times\Gamma^{-1}q^{m+1}/(1-q)=O(\Gamma^{-m-2})$, since
+$q=\|X\|/\Gamma$.
+\end{proof}
+
+\begin{remark}[Sector-graph interpretation]
+Suppose the space splits into orthogonal sectors preserved by $D$ and by the
+diagonal part of $A_0=A_{\mathrm{diag}}+V$, and let $d$ be the minimal number
+of $V$-insertions connecting the source sector to the readout sector. Each
+$M_n=p^\dagger X^n\nu$ expands into words in $D^{-1}A_{\mathrm{diag}}$ and
+$D^{-1}V$; a word with fewer than $d$ factors of $V$ cannot move $\nu$'s
+sector to $p$'s sector and therefore has vanishing overlap with $p$. Hence
+$M_n=0$ for $n<d$ and $K_\Gamma=O(\Gamma^{-1-d})$: this is the dissipative
+selection rule.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 4: exact transfer zero (Krylov / Cayley--Hamilton)}
+% ==================================================================
+
+\begin{prereq}
+The Cayley--Hamilton theorem: a matrix satisfies its own characteristic
+polynomial, so $X^N$ (for $N\times N$ $X$) is a linear combination of
+$I,X,\dots,X^{N-1}$. The adjugate identity
+$A\,\adj A=(\det A)\,I$, and the fact that the entries of
+$\adj(\Gamma I-X)$ are polynomials in $\Gamma$ of degree $\le N-1$ whose
+matrix coefficients are polynomials in $X$. Laurent series uniqueness for
+scalar rational functions.
+\end{prereq}
+
+\begin{theorem}[4]
+Let $\dim=N$ and $D$ invertible at fixed $z$. The following are equivalent:
+\begin{enumerate}[label=(\roman*),nosep]
+\item $M_n=p^\dagger X^n\nu=0$ for $n=0,1,\dots,N-1$;
+\item $p\perp\mathcal K_N(X,\nu):=\spann\{\nu,X\nu,\dots,X^{N-1}\nu\}$;
+\item $p^\dagger q(X)\nu=0$ for every polynomial $q$;
+\item $K_\Gamma=p^\dagger(\Gamma I-X)^{-1}\nu=0$ for every
+      $\Gamma\notin\operatorname{spec}X$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i)$\Leftrightarrow$(ii).}
+$p\perp\spann\{X^n\nu\}_{n<N}$ means precisely $p^\dagger X^n\nu=0$ for
+$n<N$.
+
+\emph{(i)$\Rightarrow$(iii).}
+By Cayley--Hamilton there are scalars $c_0,\dots,c_{N-1}$ with
+$X^N=\sum_{k=0}^{N-1}c_kX^k$. Assume (i). Then
+\[
+M_N=p^\dagger X^N\nu=\sum_{k=0}^{N-1}c_k\,p^\dagger X^k\nu
+ =\sum_k c_k M_k=0 .
+\]
+Multiplying the Cayley--Hamilton relation by $X$ and iterating, induction on
+$n$ gives $M_n=0$ for \emph{all} $n\ge0$. Any polynomial $q$ is a finite
+linear combination of powers, so $p^\dagger q(X)\nu=\sum_n q_n M_n=0$.
+
+\emph{(iii)$\Rightarrow$(iv).}
+For $\Gamma\notin\operatorname{spec}X$, $\det(\Gamma I-X)\neq0$ and
+\[
+(\Gamma I-X)^{-1}=\frac{\adj(\Gamma I-X)}{\det(\Gamma I-X)} .
+\]
+We claim $\adj(\Gamma I-X)$ is a polynomial in $X$ (with
+$\Gamma$-dependent scalar coefficients) of degree $\le N-1$. Indeed, write
+the characteristic polynomial
+$\chi(t)=\det(tI-X)=t^N+a_{N-1}t^{N-1}+\dots+a_0$ and define
+\[
+B(\Gamma):=\sum_{k=0}^{N-1}\Bigl(\sum_{j=k+1}^{N}a_j\,\Gamma^{\,j-k-1}\Bigr)X^{k},
+\qquad a_N:=1 .
+\]
+A direct multiplication, using telescoping and Cayley--Hamilton
+($\chi(X)=0$), verifies $(\Gamma I-X)\,B(\Gamma)=\chi(\Gamma)\,I
+=\det(\Gamma I-X)\,I$; by uniqueness of the inverse,
+$B(\Gamma)=\adj(\Gamma I-X)$. Hence, by (iii),
+\[
+K_\Gamma=\frac{p^\dagger B(\Gamma)\,\nu}{\det(\Gamma I-X)}
+ =\frac{0}{\det(\Gamma I-X)}=0 .
+\]
+Note this argument makes \emph{no} use of the Neumann series and is therefore
+valid for every $\Gamma$ outside the spectrum, not only for large $\Gamma$.
+
+\emph{(iv)$\Rightarrow$(i).}
+For $\Gamma>\|X\|$, expand $K_\Gamma$ by Lemma~\ref{lem:neumann}:
+$0=K_\Gamma=\sum_{n\ge0}M_n\Gamma^{-n-1}$ on an open interval of
+$\Gamma$-values. A convergent Laurent (power) series in $1/\Gamma$ that
+vanishes identically on an open set has all coefficients zero (uniqueness of
+power-series coefficients), so $M_n=0$ for all $n$, in particular for
+$n<N$.
+\end{proof}
+
+\begin{remark}
+The practical content: to certify an \emph{all-orders exact} zero of a
+transfer function it suffices to check the \emph{finitely many} numbers
+$M_0,\dots,M_{N-1}$ --- a computation any student can implement in ten lines
+of Python. Conversely, a numerical zero at finitely many parameter points
+certifies nothing: an identity must be established via (i)--(iii) or via a
+symmetry (Theorem 5).
+\end{remark}
+
+% ==================================================================
+\section{Theorem 5: symmetry-protected transfer zero}
+% ==================================================================
+
+\begin{prereq}
+Commuting operators; the fact that if $B$ is invertible and $[B,P]=0$ then
+$[B^{-1},P]=0$ (proof below); orthogonal projectors $P_\alpha P_\beta
+=\delta_{\alpha\beta}P_\alpha$.
+\end{prereq}
+
+\begin{theorem}[5]
+Let $\{P_\alpha\}$ be orthogonal projectors with $\sum_\alpha P_\alpha=I$ and
+$[A(z),P_\alpha]=0$ for all $\alpha$ and all $z$ in the domain. If the
+source and readout lie in different sectors,
+\[
+P_\beta c=c,\qquad p^\dagger P_\alpha=p^\dagger,\qquad \alpha\neq\beta,
+\]
+then $p^\dagger A(z)^{-1}c=0$ at every point where $A(z)$ is invertible.
+\end{theorem}
+
+\begin{proof}
+First, commutation passes to the inverse: from $AP_\alpha=P_\alpha A$,
+multiply by $A^{-1}$ on both sides:
+$P_\alpha A^{-1}=A^{-1}(AP_\alpha)A^{-1}=A^{-1}(P_\alpha A)A^{-1}
+=A^{-1}P_\alpha$. Then
+\[
+p^\dagger A^{-1}c
+ =(p^\dagger P_\alpha)\,A^{-1}\,(P_\beta c)
+ =p^\dagger A^{-1}\,P_\alpha P_\beta\,c
+ =p^\dagger A^{-1}\cdot 0\cdot c=0,
+\]
+using $P_\alpha P_\beta=0$ for $\alpha\neq\beta$.
+\end{proof}
+
+\begin{corollary}[Full-Liouvillian version]
+Let $\mathcal L_c$ have a unique steady state $\rho_0$, let
+$\Pi_0=|\rho_0\rangle\!\rangle\langle\!\langle\mathbb1|$ and
+$Q_0=I-\Pi_0$, and suppose sector projectors $\mathcal P_\alpha$ commute with
+both $\mathcal L_c$ and $Q_0$. If the probe source
+$|b_p\rangle\!\rangle$ lies in sector $\beta$ and the detector
+$\langle\!\langle d_p|$ in sector $\alpha\neq\beta$, then the group-inverse
+transfer $\chi_p=-\langle\!\langle d_p|\mathcal L_c^{\#}|b_p\rangle\!\rangle$
+vanishes.
+\end{corollary}
+
+\begin{proof}
+The group inverse $\mathcal L_c^{\#}$ is, by definition, the inverse of
+$\mathcal L_c$ restricted to the range of $Q_0$, extended by $0$ on the
+steady-state direction: $\mathcal L_c^{\#}
+=(Q_0\mathcal L_cQ_0)^{-1}_{\mathrm{on\ Ran}\,Q_0}\,Q_0$. Since
+$\mathcal P_\alpha$ commutes with both $Q_0$ and $\mathcal L_c$, it commutes
+with the restricted operator and (by the argument of Theorem 5) with its
+inverse, hence with $\mathcal L_c^{\#}$. The sector-orthogonality argument of
+Theorem 5 then gives $\langle\!\langle d_p|\mathcal L_c^{\#}
+|b_p\rangle\!\rangle=0$.
+\end{proof}
+
+\begin{remark}[Microscopic sufficient condition]
+Let $U$ be unitary with (a) $UH_cU^\dagger=H_c$ and (b)
+$UL_\mu U^\dagger=\sum_\nu V_{\mu\nu}L_\nu$ with $V$ unitary and rates
+invariant. Then the superoperator $\mathcal U(\rho)=U\rho U^\dagger$ commutes
+with $\mathcal L_c$: the Hamiltonian part is immediate from (a); for the
+dissipator, substitute (b) and use unitarity of $V$,
+$\sum_\mu V_{\mu\nu}^*V_{\mu\nu'}=\delta_{\nu\nu'}$, to show the transformed
+jump sum reproduces the original. The spectral projectors of $\mathcal U$
+then furnish the $\mathcal P_\alpha$. If the steady state is unique it is
+automatically invariant: $\mathcal L_c(\mathcal U\rho_0)
+=\mathcal U\mathcal L_c(\rho_0)=0$ and uniqueness gives
+$\mathcal U\rho_0=\rho_0$.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 6: singular damping and protected channels}
+% ==================================================================
+
+\begin{prereq}
+Block matrices and the Schur complement (as in Theorem 2B); Neumann series
+(as in Theorem 3); for $D=D^\dagger\ge0$: $\ker D\perp\operatorname{Ran}D$
+and $D$ restricted to $(\ker D)^\perp$ is invertible with
+positive eigenvalues.
+\end{prereq}
+
+\begin{theorem}[6]
+Let $D=D^\dagger\ge0$ be singular, $P=\operatorname{Proj}(\ker D)$,
+$Q=I-P$. Write $A_\Gamma=\Gamma D+A_0$ and suppose $PA_0P$ (as an operator on
+$\ker D$) is invertible. Then, for large $\Gamma$,
+\[
+K_\Gamma=p^\dagger P\,(PA_0P)^{-1}P\,c\;+\;O(\Gamma^{-1}) .
+\]
+In particular, an $O(1)$ channel survives arbitrarily strong damping iff the
+leading scalar $p^\dagger P(PA_0P)^{-1}Pc$ is nonzero.
+\end{theorem}
+
+\begin{proof}
+In the orthogonal decomposition $\mathbb C^N=\ker D\oplus(\ker D)^\perp$
+write everything in $2\times2$ block form (first block $=\ker D$):
+\[
+D=\begin{pmatrix}0&0\\0&D_{QQ}\end{pmatrix},\quad
+A_0=\begin{pmatrix}A_{PP}&A_{PQ}\\A_{QP}&A_{QQ}\end{pmatrix},\quad
+A_\Gamma=\begin{pmatrix}A_{PP}&A_{PQ}\\A_{QP}&\Gamma D_{QQ}+A_{QQ}\end{pmatrix},
+\]
+where $D_{QQ}>0$ is invertible on $(\ker D)^\perp$ (spectral theorem for the
+Hermitian positive-semidefinite $D$: its kernel block vanishes and the
+off-diagonal blocks vanish because $D$ is Hermitian and maps into
+$\operatorname{Ran}D\perp\ker D$).
+
+Solve $A_\Gamma\binom{x_P}{x_Q}=\binom{c_P}{c_Q}$ by eliminating $x_Q$
+exactly as in Theorem 2B. The lower-right block
+$\Gamma D_{QQ}+A_{QQ}=\Gamma D_{QQ}\bigl(I+\Gamma^{-1}D_{QQ}^{-1}A_{QQ}\bigr)$
+is invertible for $\Gamma>\|D_{QQ}^{-1}A_{QQ}\|$, with
+\[
+(\Gamma D_{QQ}+A_{QQ})^{-1}
+ =\frac1\Gamma D_{QQ}^{-1}+O(\Gamma^{-2})
+\qquad\text{(Neumann series)} .
+\]
+The Schur complement on the kernel block is therefore
+\[
+S_P(\Gamma)=A_{PP}-A_{PQ}\,(\Gamma D_{QQ}+A_{QQ})^{-1}A_{QP}
+ =A_{PP}+O(\Gamma^{-1}) .
+\]
+Since $A_{PP}=PA_0P$ is invertible by hypothesis, $S_P(\Gamma)$ is
+invertible for large $\Gamma$ and
+$S_P(\Gamma)^{-1}=A_{PP}^{-1}+O(\Gamma^{-1})$ (expand
+$S_P^{-1}=(A_{PP}(I+A_{PP}^{-1}\,O(\Gamma^{-1})))^{-1}$ by a Neumann series).
+The block solution gives
+\[
+x_P=S_P^{-1}\bigl(c_P-A_{PQ}(\Gamma D_{QQ}+A_{QQ})^{-1}c_Q\bigr)
+   =A_{PP}^{-1}c_P+O(\Gamma^{-1}),
+\qquad
+x_Q=O(\Gamma^{-1}).
+\]
+Hence
+$K_\Gamma=p^\dagger x=p_P^\dagger x_P+p_Q^\dagger x_Q
+ =p^\dagger P(PA_0P)^{-1}Pc+O(\Gamma^{-1})$.
+\end{proof}
+
+\begin{remark}
+Physically: only the components of probe and control vectors lying in the
+\emph{genuine kernel} of the damping operator can carry an $O(1)$ response
+through arbitrarily fast dissipation --- and even then, the leading scalar
+can cancel. Both projections nonzero is necessary, not sufficient.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 7: adjugate identity, analytic domains, singular points}
+% ==================================================================
+
+\begin{prereq}
+Cramer's rule / the adjugate; the identity theorem for holomorphic (or
+real-analytic) functions of one or several variables: if an analytic function
+vanishes on a nonempty open subset of a connected domain, it vanishes
+identically. (This is the only ingredient beyond linear algebra; we use it as
+a black box.)
+\end{prereq}
+
+\begin{theorem}[7A]
+Let $A(\theta)$ be a matrix family, holomorphic (or real-analytic) on a
+connected domain $U$, and let
+$U_{\mathrm{reg}}=\{\theta:\det A(\theta)\neq0\}$. Define
+$N(\theta)=p^\dagger\adj A(\theta)\,c$ and $\Delta(\theta)=\det A(\theta)$,
+so that $K(\theta)=N(\theta)/\Delta(\theta)$ on $U_{\mathrm{reg}}$. Then:
+\begin{enumerate}[label=(\alph*),nosep]
+\item If $N\equiv0$ on $U$, then $K(\theta)=0$ for every
+      $\theta\in U_{\mathrm{reg}}$.
+\item Conversely, if $K$ vanishes on a nonempty open subset of
+      $U_{\mathrm{reg}}$, then $N\equiv0$ on all of $U$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Entries of $\adj A(\theta)$ are (up to sign) $(N-1)\times(N-1)$ minors of
+$A(\theta)$, i.e.\ polynomials in the entries of $A(\theta)$; likewise
+$\Delta$. Compositions of analytic functions with polynomials are analytic,
+so $N$ and $\Delta$ are analytic on $U$. By Cramer's rule,
+$A^{-1}=\adj A/\det A$ on $U_{\mathrm{reg}}$, giving $K=N/\Delta$ there.
+
+(a) Immediate: the numerator vanishes and the denominator is nonzero.
+
+(b) On the open subset, $N=K\Delta=0$. The analytic function $N$ vanishes on
+a nonempty open subset of the connected domain $U$; by the identity theorem,
+$N\equiv0$ on $U$.
+\end{proof}
+
+\begin{theorem}[7B: semisimple singular point and pole cancellation]
+Suppose $A$ has a semisimple eigenvalue $0$ (i.e.\
+$\ker A\cap\operatorname{Ran}A=\{0\}$, equivalently
+$\mathbb C^N=\ker A\oplus\operatorname{Ran}A$), and let $P_0$ be the
+projector onto $\ker A$ along $\operatorname{Ran}A$. Then for small
+$s\neq0$,
+\[
+(A+sI)^{-1}=\frac{P_0}{s}+A^{D}+O(s),
+\]
+where $A^{D}$ is the inverse of $A$ restricted to $\operatorname{Ran}A$,
+extended by $0$ on $\ker A$ (the Drazin/group inverse). Consequently
+\[
+K(s)=\frac{p^\dagger P_0c}{s}+p^\dagger A^{D}c+O(s):
+\]
+the pole cancels iff $p^\dagger P_0c=0$, and in that case the finite value at
+the singular point is $p^\dagger A^{D}c$.
+\end{theorem}
+
+\begin{proof}
+Work in the decomposition $\mathbb C^N=\ker A\oplus\operatorname{Ran}A$; both
+subspaces are $A$-invariant ($A\ker A=0\subset$ both;
+$A\operatorname{Ran}A\subset\operatorname{Ran}A$), and semisimplicity says
+the decomposition is direct. In block form
+$A=\begin{pmatrix}0&0\\0&A_1\end{pmatrix}$ with $A_1$ invertible on
+$\operatorname{Ran}A$. Then
+\[
+A+sI=\begin{pmatrix}sI&0\\0&A_1+sI\end{pmatrix},
+\qquad
+(A+sI)^{-1}
+ =\begin{pmatrix}s^{-1}I&0\\0&(A_1+sI)^{-1}\end{pmatrix}.
+\]
+The first block is $P_0/s$. For the second, expand
+$(A_1+sI)^{-1}=A_1^{-1}(I+sA_1^{-1})^{-1}=A_1^{-1}-sA_1^{-2}+O(s^2)$
+(Neumann series, valid for $|s|<\|A_1^{-1}\|^{-1}$); its $s^0$ term is
+$A_1^{-1}$ on $\operatorname{Ran}A$ and $0$ on $\ker A$, i.e.\ $A^{D}$.
+Sandwiching between $p^\dagger$ and $c$ gives $K(s)$; the $1/s$ coefficient
+is $p^\dagger P_0c$, which must vanish for the limit $s\to0$ to exist, and
+then $\lim_{s\to0}K(s)=p^\dagger A^Dc$.
+\end{proof}
+
+\begin{remark}
+Operational rules that follow: (1) at regular points use $K=N/\Delta$;
+(2) at a Liouvillian zero mode the probe source is trace-free, so it has no
+$P_0$ component and the group inverse defines the response; (3) at a
+\emph{non}-semisimple singular point (Jordan block), higher poles
+$s^{-2},\dots$ appear and every Laurent coefficient must be inspected
+separately; (4) never report a numerical $0/0$ as zero --- decide first
+whether the singularity is removable by checking the pole coefficients.
+\end{remark}
+
+% ==================================================================
+\section{Corollary: the hopping-rate map $\gamma_{\mathrm{oc}}=\Gamma_{XY}/4$}
+% ==================================================================
+
+\begin{prereq}
+Direct computation with $2\times2$ / rank-one matrices; the Lindblad
+dissipator \eqref{eq:GKSL}.
+\end{prereq}
+
+\begin{lemma}[Excited-confined jumps damp optical coherences]
+\label{lem:jump2}
+Let $L=\sqrt k\,\ket Y\bra X$ with $\ket X,\ket Y\in\He$. Then, for any
+$\ket g\in\Hg$, the dissipator acts on the optical coherences
+$\sigma_{Xg}=\bra X\rho\ket g$, $\sigma_{Yg}=\bra Y\rho\ket g$ as
+\[
+\dot\sigma_{Xg}\big|_{\mathrm{hop}}=-\frac k2\,\sigma_{Xg},
+\qquad
+\dot\sigma_{Yg}\big|_{\mathrm{hop}}=0 .
+\]
+\end{lemma}
+
+\begin{proof}
+Compute the three dissipator terms sandwiched as
+$\bra{X}\cdot\ket{g}$ and $\bra{Y}\cdot\ket{g}$:
+\begin{itemize}[nosep]
+\item Recycling: $\bra{X}L\rho L^\dagger\ket g
+ =k\braket XY\bra X\rho\ket Y\!\cdot\!\braket Xg\cdots=0$ since
+ $\braket XY=0$; similarly
+ $\bra YL\rho L^\dagger\ket g=k\,\bra X\rho\underbrace{\ket X\braket Xg}_{}=0$
+ because $L^\dagger\ket g=\sqrt k\ket X\braket Yg=0$
+ ($\ket g\perp\He$). In fact $L^\dagger$ maps $\Hg\to0$, so the recycling
+ term never contributes to any $e$--$g$ matrix element.
+\item Anticommutator: $L^\dagger L=k\ket X\bra X$, so
+ $-\tfrac12\bra X\{L^\dagger L,\rho\}\ket g
+ =-\tfrac k2\bra X\rho\ket g-\tfrac12\bra X\rho\,(L^\dagger L)\ket g
+ =-\tfrac k2\sigma_{Xg}$,
+ the second piece vanishing because $L^\dagger L\ket g=0$. For the $Y$ row,
+ $\bra YL^\dagger L=k\braket YX\bra X=0$, so no damping.
+\end{itemize}
+Adding the two nonzero contributions gives the claim.
+\end{proof}
+
+\begin{corollary}[Rate map]
+For symmetric two-way hopping, $L_1=\sqrt k\ket Y\bra X$,
+$L_2=\sqrt k\ket X\bra Y$:
+\begin{enumerate}[label=(\alph*),nosep]
+\item the population imbalance obeys
+      $\frac{\mathrm d}{\mathrm dt}(p_X-p_Y)=-\Gamma_{XY}(p_X-p_Y)$ with
+      $\Gamma_{XY}=2k$;
+\item every optical coherence $\sigma_{Xg},\sigma_{Yg}$ acquires the damping
+      $k/2=\Gamma_{XY}/4$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(a) The populations obey $\dot p_X=-kp_X+kp_Y$, $\dot p_Y=+kp_X-kp_Y$
+(standard rate equations, obtained by sandwiching \eqref{eq:GKSL} with
+$\bra X\cdot\ket X$ etc.). Subtracting:
+$\dot{(p_X-p_Y)}=-2k(p_X-p_Y)$, so $\Gamma_{XY}=2k$.
+
+(b) Apply Lemma~\ref{lem:jump2} to $L_1$ (damps $\sigma_{Xg}$ by $k/2$) and
+to $L_2$ with $X\leftrightarrow Y$ (damps $\sigma_{Yg}$ by $k/2$). Each
+coherence is damped by exactly one of the two jumps, at rate
+$k/2=\Gamma_{XY}/4$.
+\end{proof}
+
+\begin{remark}
+If the hopping is asymmetric, $k_{Y\leftarrow X}\neq k_{X\leftarrow Y}$, the
+same computation gives the damping matrix
+$\tfrac12\operatorname{diag}(k_{Y\leftarrow X},k_{X\leftarrow Y})$, which is
+\emph{not} proportional to the identity; the two rates must be entered
+separately in $D$.
+\end{remark}
+
+% ==================================================================
+\section*{Dependency chart}
+% ==================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{lll}
+\toprule
+Theorem & Main tool & Depends on\\
+\midrule
+1A & rank--nullity & ---\\
+1B & purity/variance argument & Lemma \ref{lem:variance}\\
+2A & block substitution & ---\\
+2B & block Schur complement & 2A (scalar case)\\
+3 & Neumann series & Lemma \ref{lem:neumann}\\
+4 & Cayley--Hamilton, adjugate & 3 (for (iv)$\Rightarrow$(i))\\
+5 & commuting projectors & ---\\
+6 & Schur complement + Neumann & 2B, 3 (techniques)\\
+7A & Cramer's rule + identity thm.\ & ---\\
+7B & invariant-subspace block form & Neumann series\\
+Rate map & rank-one algebra & Lemma \ref{lem:jump2}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent
+Every proof above is complete at the level of a first course in linear
+algebra, with two black boxes flagged explicitly: the identity theorem for
+analytic functions (Theorem 7A) and the uniqueness of power-series
+coefficients (Theorem 4, step (iv)$\Rightarrow$(i)) --- both standard results
+quoted from a first analysis course.
+
+\end{document}
