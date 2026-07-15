@@ -1,0 +1,4641 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  10pt,
+  a4paper,
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[top=22mm,bottom=24mm,left=22mm,right=22mm]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{american}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% Additional layout and mathematical packages for the EIT theory documents.
+\usepackage{mathtools}
+\usepackage{enumitem}
+\setlist{nosep}
+\allowdisplaybreaks[3]
+\setlength{\emergencystretch}{3em}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{}
+\urlstyle{same}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Generalized EIT No-Go/Go Theory Applicable to Arbitrary Materials},
+  pdflang={en-US},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Generalized EIT No-Go/Go Theory Applicable to Arbitrary
+Materials}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\textbf{Integrated version:} v6.2 --- sector-resolved finite-dimensional
+Markovian weak-probe formulation\\
+\textbf{Updated:} 2026-07-13\\
+\textbf{Objective:} To determine whether a specified EIT channel in a
+finite-dimensional Markovian quantum system---including multiple excited
+levels, internal-state mixing, phonons, dissipation, external fields,
+polarization, and static inhomogeneity---belongs to the exact
+sector-resolved no-go, asymptotic-suppression, kernel-go,
+practical-no-go, or observable-go class in the stationary rotating-frame
+weak-probe regime.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{0. Executive summary}\label{executive-summary}
+
+This theory does not classify EIT from the material name alone. The
+object to be classified is, at minimum,
+
+\[
+\boxed{
+\mathfrak C=
+\{\text{material},\ \mathcal H_g,\ \mathcal H_e,\ \text{lower-state pair},\
+\text{probe/control polarization},\ \text{external fields},\ T,\ \text{observable},\ \mathbb S\}
+}
+\]
+
+a \textbf{material- and channel-resolved configuration} specified by the
+above tuple. Even within the same material, a spin-\(\Lambda\) channel,
+an orbital-\(\Lambda\) channel, different polarizations, and different
+magnetic-field or strain conditions are distinct classification targets.
+
+The theory rigorously separates the following four concepts.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Optical dark subspace}\\
+  Instantaneous optical decoupling is determined by the nullspace of the
+  coupling map \(\Omega\).
+\item
+  \textbf{Stationary Lindblad dark state}\\
+  For a pure dark state to be stationary, additional conditions on the
+  lower-manifold dynamics and on every Lindblad jump operator are
+  required.
+\item
+  \textbf{Coherent EIT pathway}\\
+  In the reduced model, the excited-manifold resolvent kernel \[
+  \mathbf K(z)=C^\dagger A(z)^{-1}C
+  \] has off-diagonal elements that determine the feedback between the
+  probe optical sector and the long-lived coherence sector.
+\item
+  \textbf{Observable EIT}\\
+  This is determined by the response including the full Liouvillian,
+  ground-state coherence, populations, control power, optical depth,
+  inhomogeneous broadening, propagation, and the detection scheme.
+\end{enumerate}
+
+In this version, a no-go condition in the full Liouvillian is not
+defined as a zero of the total susceptibility. We fix a physically
+specified long-lived sector \(\mathbb S\) and its complementary
+direct-response sector \(\mathbb X\). Let
+\(\chi_{\rm cut}^{(\mathbb S)}\) denote the counterfactual response
+obtained by cutting only the cross-feedback with \(\mathbb S\), and let
+\(\chi_{\rm full}\) denote the complete response. We then define
+
+\[
+\boxed{
+\delta\chi_{\mathbb S}
+\equiv
+\chi_{\rm full}-\chi_{\rm cut}^{(\mathbb S)}
+}
+\]
+
+as the \textbf{\(\mathbb S\)-sector-mediated response modification}.
+When \(\mathbb S\) is a long-lived off-diagonal coherence sector and the
+cross-coupling is generated by the control Hamiltonian, this quantity
+may be interpreted as the coherent EIT correction. A generic Liouvillian
+block can also contain dissipative coupling, so in that case it should
+not be called merely a coherent correction.
+
+A structural exact EIT no-go condition is that, for the specified sector
+partition and parameter domain,
+
+\[
+\boxed{
+\delta\chi_{\mathbb S}(\theta)\equiv0
+}
+\]
+
+holds identically. This is not an unconditional scalar label intrinsic
+to the system; it is a sector-resolved statement about the sector
+\(\mathbb S\) included in the configuration tuple. By contrast,
+
+\[
+\chi_{\rm full}=0
+\]
+
+may represent complete transparency, i.e., ideal EIT, and therefore is
+not a no-go condition.
+
+For a closed two-lower-state weak-probe block, taking
+\(\mathbb S=\operatorname{span}\{\rho_{g_2g_1}^{(1)}\}\), one obtains at
+a regular point
+
+\[
+\delta\Xi_{\mathbb S}
+=-\frac{\beta K_{12}K_{21}}
+{\gamma_g+\beta S_2}.
+\]
+
+In this scalar block, the cross-coupling originates from the control
+Hamiltonian, so \(\delta\Xi_{\mathbb S}\) coincides with the coherent
+EIT correction.
+
+Therefore, for nonzero control and a finite denominator,
+
+\[
+\boxed{K_{12}K_{21}=0}
+\]
+
+is the necessary and sufficient zero condition for the targeted
+coherence feedback.
+
+Furthermore,
+
+\begin{itemize}
+\tightlist
+\item
+  Under strong full-rank damping, the first nonzero resolvent moment
+  determines the suppression exponent.
+\item
+  An exact zero results if all moments vanish, or if a
+  generator-preserving reducing symmetry separates the target transfer.
+\item
+  If the damping operator is singular, an \(O(1)\) channel protected in
+  \(\ker D\) may remain.
+\item
+  If the ground-state index is mixed, the full Liouville-space response
+  operator must be used instead of a Hilbert-space kernel.
+\item
+  Exact \(\mathbb S\)-sector no-go, asymptotic suppression, practical
+  visibility, and observable EIT must be reported separately.
+\end{itemize}
+
+Accordingly, the present theory does not mean that ``all arbitrary
+materials have already been classified automatically.'' Its scope is an
+\textbf{EIT channel that possesses a Markovian GKSL generator on a
+finite-dimensional Hilbert/Liouville space and admits a weak-probe
+linear response in a stationary rotating frame}. Infinite-dimensional
+continua, genuinely non-Markovian memory, strong-probe nonlinear
+response, and propagation-dominated collective EIT lie outside the scope
+of the main theorem.
+
+\section{1. Scope and Unit of the
+Claim}\label{scope-and-unit-of-the-claim}
+
+\subsection{1.1 Classifying channels rather than
+materials}\label{classifying-channels-rather-than-materials}
+
+The no-go/go classification is defined for each configuration tuple
+below.
+
+\[
+\mathfrak C=
+(M,G,E,a,b,\epsilon_p,\epsilon_c,\mathbf F,T,\mathcal O,\mathbb S),
+\]
+
+Here,
+
+\begin{itemize}
+\tightlist
+\item
+  \(M\): material or emitter
+\item
+  \(G\subset\mathcal H_g\): lower manifold used in the channel
+\item
+  \(E\subset\mathcal H_e\): operative excited manifold
+\item
+  \(a,b\): lower-state pair
+\item
+  \(\epsilon_p,\epsilon_c\): probe/control polarization
+\item
+  \(\mathbf F\): magnetic field, electric field, strain, cavity, etc.
+\item
+  \(T\): temperature or bath condition
+\item
+  \(\mathcal O\): observable such as absorption, transmission, or
+  fluorescence
+\item
+  \(\mathbb S\): targeted long-lived coherence sector for the no-go/go
+  classification
+\end{itemize}
+
+Thus,
+
+the following are distinct classification targets.
+
+\begin{itemize}
+\tightlist
+\item
+  zero-field ZPL spin-\(\Lambda\) and transverse-field spin-\(\Lambda\)
+  channels in the same NV center
+\item
+  spin-\(\Lambda\) and orbital-\(\Lambda\) channels in the same group-IV
+  center
+\item
+  parallel and cross polarizations for the same lower-state pair
+\item
+  a resolved manifold and a thermally merged manifold in the same
+  material
+\end{itemize}
+
+\subsection{1.2 Meaning of ``applicable to arbitrary
+materials''}\label{meaning-of-applicable-to-arbitrary-materials}
+
+The claim that the theory is material independent means the following.
+
+\begin{quote}
+Given the material-specific Hamiltonian, dipole matrix elements, jump
+operators, bath rates, and external-field conditions, the same
+mathematical classifier can evaluate the exact zero, asymptotic order,
+coherent-pathway permission, and observable visibility of an EIT
+channel.
+\end{quote}
+
+It does not mean the following.
+
+\begin{itemize}
+\tightlist
+\item
+  A no-go/go result can be returned from the material name alone.
+\item
+  \(K\neq0\) guarantees observable EIT.
+\item
+  Orbital degeneracy necessarily implies a go result.
+\item
+  The response automatically becomes scalar when the linewidth exceeds
+  the fine-structure splitting.
+\item
+  The finite-dimensional moment theorem applies without modification to
+  every non-Markovian continuum.
+\end{itemize}
+
+\subsection{1.3 Assumptions of the main
+theorems}\label{assumptions-of-the-main-theorems}
+
+The exact theorems and solver validation in this framework are
+restricted to the following assumptions.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Finite dimensionality}\\
+  The Hilbert space, or the adopted Liouville response space, is finite
+  dimensional. When a large vibronic manifold is truncated, convergence
+  of both the observable and the kernel must be checked separately.
+\item
+  \textbf{Markovian GKSL dynamics}\\
+  The zeroth-order dynamics, including the control field, external
+  fields, and dissipation, is represented in a stationary rotating frame
+  by a time-independent GKSL generator \(\mathcal L_c\).
+\item
+  \textbf{Weak-probe linear response}\\
+  The response is retained to \(O(\epsilon)\) in the probe amplitude
+  \(\epsilon\). The control may be treated nonperturbatively, but
+  probe-induced saturation and population redistribution are not
+  included in the main theorem.
+\item
+  \textbf{Stationary response problem}\\
+  The system has a unique steady state and a finite gap, or a
+  group/Drazin inverse can be specified uniquely on a compatible
+  trace-zero subspace.
+\item
+  \textbf{Physically fixed sector partition}\\
+  Before a no-go statement is made, the long-lived sector \(\mathbb S\),
+  direct-response sector \(\mathbb X\), source, and detector are
+  physically specified.
+\item
+  \textbf{Analytic-domain claim}\\
+  If an identically vanishing transfer is claimed over an entire
+  parameter domain, the matrix family and source/detector must be real
+  analytic, or holomorphic after an appropriate complexification.
+\end{enumerate}
+
+The following cases are outside the scope of the main theorem.
+
+\begin{itemize}
+\tightlist
+\item
+  Systems with a genuinely non-Markovian memory kernel for which a
+  finite-dimensional Markovian embedding has not converged
+\item
+  arbitrary strong-probe、saturation、bistability
+\item
+  Systems in which propagation, cavity self-consistency, or many-body
+  interactions cannot be separated from the local response
+\item
+  Time-periodic drives that have not been reduced to a
+  finite-dimensional Floquet--Liouville generator
+\end{itemize}
+
+These cases can be treated by separate extensions, but they are not
+included in the present claim of applicability to arbitrary materials.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{2. General Open-System
+Formulation}\label{general-open-system-formulation}
+
+\subsection{2.1 Hilbert-space
+decomposition}\label{hilbert-space-decomposition}
+
+Decompose the total Hilbert space as
+
+\[
+\mathcal H=\mathcal H_e\oplus\mathcal H_g\oplus\mathcal H_r
+\]
+
+where \(\mathcal H_e\) is the selected excited manifold,
+\(\mathcal H_g\) is the lower manifold, and \(\mathcal H_r\) is an
+auxiliary space containing singlets, charge states, and other loss
+channels.
+
+Define the optical-coherence block of the density operator by
+
+\[
+\sigma=P_e\rho P_g\in\mathcal B(\mathcal H_g,\mathcal H_e)
+\]
+
+.
+
+\subsection{2.2 Action of excited-confined jumps on optical
+coherence}\label{action-of-excited-confined-jumps-on-optical-coherence}
+
+When a jump operator is confined to the excited manifold,
+
+\[
+L_\mu=P_eL_\mu P_e,
+\]
+
+the Lindblad dissipator acts on the optical-coherence block as
+
+\[
+P_e\mathcal D[L_\mu](\rho)P_g
+=-\frac12L_\mu^\dagger L_\mu\,\sigma
+\]
+
+. The recycling term \(L_\mu\rho L_\mu^\dagger\) vanishes in the
+rectangular \(e-g\) block.
+
+Thus, even a jump that generates exchange among excited-state
+populations acts in general as left-loss damping on an optical
+coherence. This is why the present theory does not use fixed-point
+projection as a general rule and instead centers the analysis on
+full-rank damping and inverse-rate expansions.
+
+\subsection{2.3 Liouville-space
+generator}\label{liouville-space-generator}
+
+The undriven optical-coherence equation can generally be written as
+
+\[
+\dot\sigma
+=-i(H_e\sigma-\sigma H_g)
+-\frac12R_e\sigma
++\mathcal J_{eg}[\sigma]
++\text{sources},
+\]
+
+\[
+R_e=\sum_\mu L_\mu^\dagger L_\mu,
+\]
+
+. Upon vectorization,
+
+\[
+\operatorname{vec}(AXB)=(B^{\mathsf T}\otimes A)\operatorname{vec}X
+\]
+
+and hence
+
+\[
+\mathbb A_{eg}
+=I_g\otimes\left(\frac12R_e+iH_e\right)
+-iH_g^{\mathsf T}\otimes I_e
++\mathbb A_{\rm corr}
+\]
+
+is obtained. Here \(\mathbb A_{\rm corr}\) includes ground-state mixing,
+correlated jumps, spectral-diffusion models, and related corrections.
+
+\subsection{2.4 Conditions for a Hilbert-space
+reduction}\label{conditions-for-a-hilbert-space-reduction}
+
+If the lower state \(|g_j\rangle\) is an eigenstate of \(H_g\) and the
+ground-state index \(j\) is not mixed in the linear-response
+optical-coherence block,
+
+\[
+\sigma=|x_j\rangle\langle g_j|
+\]
+
+the corresponding subspace is invariant, and the problem reduces exactly
+to the excited-manifold Hilbert-space resolvent
+
+\[
+A_j(z)|x_j\rangle=|s_j\rangle
+\]
+
+.
+
+The full Liouville-space operator must be retained in the following
+cases.
+
+\begin{itemize}
+\tightlist
+\item
+  Ground-state relaxation mixes the right index.
+\item
+  Correlated jumps act on both the excited and ground manifolds.
+\item
+  The control field strongly couples several ground-state coherences.
+\item
+  Population redistribution cannot be neglected.
+\item
+  A drive other than the probe is treated nonperturbatively.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{3. Optical coupling、optical dark subspace、stationary dark
+state}\label{optical-couplingoptical-dark-subspacestationary-dark-state}
+
+\subsection{3.1 Coupling map}\label{coupling-map}
+
+Define the lower-to-excited optical coupling in the rotating frame by
+
+\[
+V_+=P_eH_{\rm drive}P_g=\frac12\Omega,
+\qquad
+\Omega:\mathcal H_g\rightarrow\mathcal H_e
+\]
+
+. For a lower basis \(\{|g_a\rangle\}_{a=1}^{N_g}\),
+
+\[
+\Omega=(\Omega_1d_1,\ldots,\Omega_{N_g}d_{N_g}),
+\]
+
+\[
+(d_a)_j
+=\langle e_j|\epsilon_a\cdot\hat{\mathbf d}|g_a\rangle.
+\]
+
+The complex phases of the dipole vectors are retained. Under the basis
+transformation \(U_e\) on \(\mathcal H_e\) and \(U_g\) on
+\(\mathcal H_g\),
+
+\[
+\Omega\mapsto U_e\Omega U_g^\dagger
+\]
+
+so the rank and nullity are basis invariant.
+
+\subsection{3.2 Theorem 1A --- Optical dark-subspace
+rank}\label{theorem-1a-optical-dark-subspace-rank}
+
+\textbf{Theorem.} A lower-state vector \(|v\rangle\in\mathcal H_g\) is
+instantaneously decoupled from optical excitation, namely,
+
+\[
+V_+|v\rangle=0
+\]
+
+if and only if
+
+\[
+\Omega|v\rangle=0
+\]
+
+. Therefore, the optical dark subspace
+
+\[
+\mathcal D_{\rm opt}=\ker\Omega
+\]
+
+has dimension
+
+\[
+\boxed{
+\dim\mathcal D_{\rm opt}
+=N_g-\operatorname{rank}\Omega
+}
+\]
+
+.
+
+\textbf{Proof.} Since \(V_+=\Omega/2\), the first equivalence follows
+directly from the definition. The dimension formula follows from the
+rank--nullity theorem for finite-dimensional linear maps. \(\square\)
+
+For a two-lower-state system with both field amplitudes nonzero, a
+nontrivial optical dark vector exists if and only if
+
+\[
+\operatorname{rank}(d_1,d_2)<2.
+\]
+
+In particular, if both dipole vectors are nonzero,
+
+\[
+\operatorname{rank}(d_1,d_2)=1
+\]
+
+.
+
+\subsection{3.3 Distinction between an optical dark vector and a
+Hamiltonian dark
+eigenstate}\label{distinction-between-an-optical-dark-vector-and-a-hamiltonian-dark-eigenstate}
+
+Even when \(|D\rangle\in\ker\Omega\), it is not a stationary dark state
+if the lower-manifold Hamiltonian rotates the state from the dark
+subspace into the bright subspace.
+
+Write the rotating-frame Hamiltonian as
+
+\[
+H=
+\begin{pmatrix}
+H_e & \Omega/2\\
+\Omega^\dagger/2 & H_g^{(\rm rot)}
+\end{pmatrix}
+\]
+
+. A pure state \(|D\rangle\) fully supported in the lower manifold is a
+Hamiltonian eigenstate if and only if
+
+\[
+\boxed{
+\Omega|D\rangle=0,
+\qquad
+H_g^{(\rm rot)}|D\rangle=E_D|D\rangle
+}
+\]
+
+.
+
+More generally, the entire dark subspace is invariant under the
+Hamiltonian if and only if, with \(P_D\) denoting the orthogonal
+projector onto \(\ker\Omega\),
+
+\[
+\boxed{
+(I-P_D)H_g^{(\rm rot)}P_D=0
+}
+\]
+
+. In the usual two-lower-state \(\Lambda\) system, this condition
+incorporates two-photon resonance and lower-state energy matching.
+
+\subsection{3.4 Theorem 1B --- Full Lindblad stationary pure dark
+state}\label{theorem-1b-full-lindblad-stationary-pure-dark-state}
+
+Let the full master equation be
+
+\[
+\dot\rho=\mathcal L(\rho)
+=-i[H,\rho]
++\sum_\mu\left(
+L_\mu\rho L_\mu^\dagger
+-\frac12\{L_\mu^\dagger L_\mu,\rho\}
+\right)
+\]
+
+.
+
+\textbf{Theorem.} For a normalized vector \(|D\rangle\), the pure state
+\(\rho_D=|D\rangle\langle D|\) is stationary, i.e.,
+\(\mathcal L(\rho_D)=0\), if and only if there exist complex numbers
+\(\lambda_\mu\) and a real number \(h\) such that
+
+\[
+\boxed{
+L_\mu|D\rangle=\lambda_\mu|D\rangle
+\quad(\forall\mu)
+}
+\]
+
+and
+
+\[
+\boxed{
+\left[
+H+\frac{i}{2}\sum_\mu
+\left(\lambda_\mu^*L_\mu-
+\lambda_\mu L_\mu^\dagger\right)
+\right]|D\rangle
+=h|D\rangle
+}
+\]
+
+hold.
+
+\textbf{Proof sketch.} For a stationary pure state, the time derivative
+of the purity vanishes. For the Lindblad equation,
+
+\[
+\frac{d}{dt}\operatorname{Tr}(\rho_D^2)
+=-2\sum_\mu
+\left(
+\langle L_\mu^\dagger L_\mu\rangle_D
+-|\langle L_\mu\rangle_D|^2
+\right)
+\]
+
+and each term is a nonnegative variance. Therefore, for every jump
+operator, \(L_\mu|D\rangle=\lambda_\mu|D\rangle\) is necessary.
+Substituting this condition into the master equation and projecting from
+the left with \(Q_D=I-|D\rangle\langle D|\), one obtains
+
+\[
+Q_D\left[
+H+\frac{i}{2}\sum_\mu
+(\lambda_\mu^*L_\mu-
+\lambda_\mu L_\mu^\dagger)
+\right]|D\rangle=0
+\]
+
+. The operator in square brackets is Hermitian, so its action is
+parallel to \(|D\rangle\) and has a real eigenvalue \(h\). Conversely,
+substituting the two conditions into the master equation eliminates all
+off-diagonal components; trace preservation and Hermiticity then give
+\(\mathcal L(\rho_D)=0\). \(\square\)
+
+\textbf{Application.} If the EIT dark state is required to lie in the
+lower manifold, impose additionally
+
+\[
+P_e|D\rangle=0,
+\qquad
+\Omega|D\rangle=0
+\]
+
+. When a spontaneous-emission jump starts in an excited state, one
+normally has \(L_\mu|D\rangle=0\). By contrast, if ground-state
+dephasing, ground-state relaxation, microwave noise, or another process
+violates the common-eigenvector condition for \(|D\rangle\), an optical
+dark vector may exist while no stationary pure dark state exists.
+
+\subsection{3.5 Fixed terminology for
+classification}\label{fixed-terminology-for-classification}
+
+This theory distinguishes the following notions.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{optical dark capable}: \(\dim\ker\Omega>0\)
+\item
+  \textbf{Hamiltonian dark eigenstate}: \(\Omega|D\rangle=0\) and
+  \(H_g^{(\rm rot)}|D\rangle=E_D|D\rangle\)
+\item
+  \textbf{stationary Lindblad dark state}: satisfies Theorem 1B
+\item
+  \textbf{observable EIT}: a narrow coherent transparency feature
+  appears in the full linear response
+\end{enumerate}
+
+Accordingly, neither stationary EIT nor observable EIT is inferred from
+the rank theorem alone.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{4. Basis-invariant coherent-response
+kernel}\label{basis-invariant-coherent-response-kernel}
+
+\subsection{4.1 Reduced Hilbert-space
+kernel}\label{reduced-hilbert-space-kernel}
+
+Let the optical-coherence generator be \(A(z)\), and define the Green
+operator by
+
+\[
+G(z)=A(z)^{-1}
+\]
+
+. For the multichannel coupling matrix
+
+\[
+C=(d_1,\ldots,d_{N_g})
+\]
+
+, define
+
+\[
+\boxed{
+\mathbf K(z)=C^\dagger G(z)C
+}
+\]
+
+as the coherent-response matrix kernel.
+
+Its components are
+
+\[
+K_{ab}(z)=d_a^\dagger G(z)d_b.
+\]
+
+The elements \(K_{ab}\) are invariant under a unitary change of basis in
+the excited manifold,
+
+\[
+A\mapsto UAU^\dagger,
+\qquad
+d_a\mapsto Ud_a
+\]
+
+.
+
+\subsection{4.2 Physical meaning}\label{physical-meaning}
+
+\begin{itemize}
+\tightlist
+\item
+  diagonal element \[
+  S_a=K_{aa}=d_a^\dagger Gd_a
+  \] represents the single-leg optical response or self-energy.
+\item
+  off-diagonal element \[
+  K_{ab}=d_a^\dagger Gd_b
+  \] represents the coherent Raman/interference vertex mediated by the
+  excited manifold.
+\end{itemize}
+
+When adiabatic elimination is valid, the effective coherent Hamiltonian
+in the lower manifold contains, schematically,
+
+\[
+\langle g_a|H_{\rm eff}|g_b\rangle
+\propto-\Omega_a^*\Omega_bK_{ab}
+\]
+
+. The sign and numerical prefactor depend on the rotating-frame
+convention.
+
+\subsection{4.3 Full Liouville-space
+kernel}\label{full-liouville-space-kernel}
+
+When a Hilbert-space reduction is not possible, introduce a source
+superoperator \(\mathbb B_b\) and a detection functional
+\(\mathbb D_a\), and define
+
+\[
+\boxed{
+\mathbb K_{ab}(z)
+=\langle\!\langle \mathbb D_a|
+\mathbb A(z)^{-1}
+|\mathbb B_b\rangle\!\rangle
+}
+\]
+
+. This transfer function is a generic source-to-detector kernel for an
+arbitrary finite-dimensional Liouvillian. If it is chosen to represent
+the total probe susceptibility, however, its zero may correspond to
+complete transparency. The EIT-specific no-go object is the
+sector-resolved correction \(\delta\chi_{\mathbb S}\) defined in Section
+10.
+
+Moment, Krylov, sector-symmetry, and adjugate tests are applied to the
+factors of the targeted cross-transfer, or to an augmented
+finite-dimensional transfer realization representing the full/cut
+response difference. A zero of the total susceptibility is not called an
+EIT no-go directly.
+
+\subsection{4.4 A kernel zero is not equivalent to a dark
+state}\label{a-kernel-zero-is-not-equivalent-to-a-dark-state}
+
+In general,
+
+\[
+K_{12}=0
+\quad\not\Leftrightarrow\quad
+\ker\Omega\neq\{0\}.
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  Even when the coupling vectors are linearly independent, cancellation
+  among resolvent pathways can yield \(K_{12}=0\).
+\item
+  Even when an exact dark state exists, dissipation or population
+  dynamics may render the narrow EIT feature unobservable.
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{5. Fast damping、rate mapping、moment
+hierarchy}\label{fast-dampingrate-mappingmoment-hierarchy}
+
+\subsection{5.1 Standard decomposition}\label{standard-decomposition}
+
+Decompose the generator on the selected finite-dimensional response
+space as
+
+\[
+A_\Gamma(z)=\Gamma D+A_0(z)
+\]
+
+.
+
+\begin{itemize}
+\tightlist
+\item
+  \(\Gamma>0\): selected fast-rate scale
+\item
+  \(D\): dimensionless fast-generator shape
+\item
+  \(A_0(z)\): detuning, fine structure, slow loss, fields, strain, and
+  related terms
+\end{itemize}
+
+\textbf{Important:} \(\Gamma\) is not in general identical to a
+population-relaxation rate quoted in the literature. The term
+\(\Gamma D\) must be defined from the matrix that actually appears in
+the optical-coherence equation.
+
+\subsection{5.2 Microscopic mapping from population hopping to
+optical-coherence
+damping}\label{microscopic-mapping-from-population-hopping-to-optical-coherence-damping}
+
+Define incoherent hopping between the excited branches \(|X\rangle\) and
+\(|Y\rangle\) by
+
+\[
+L_{Y\leftarrow X}
+=\sqrt{k_{Y\leftarrow X}}|Y\rangle\langle X|,
+\qquad
+L_{X\leftarrow Y}
+=\sqrt{k_{X\leftarrow Y}}|X\rangle\langle Y|
+\]
+
+.
+
+The population equations are
+
+\[
+\dot p_X
+=-k_{Y\leftarrow X}p_X
++k_{X\leftarrow Y}p_Y,
+\]
+
+\[
+\dot p_Y
+=k_{Y\leftarrow X}p_X
+-k_{X\leftarrow Y}p_Y.
+\]
+
+The population mode measured relative to equilibrium relaxes at the rate
+
+\[
+\Gamma_{\rm pop}
+=k_{Y\leftarrow X}+k_{X\leftarrow Y}
+\]
+
+.
+
+By contrast, for the optical coherences associated with an arbitrary
+lower state \(|g\rangle\),
+
+\[
+\sigma_{Xg}=\langle X|\rho|g\rangle,
+\qquad
+\sigma_{Yg}=\langle Y|\rho|g\rangle
+\]
+
+the recycling term does not contribute, and
+
+\[
+\boxed{
+\dot\sigma_{Xg}\big|_{\rm hop}
+=-\frac{k_{Y\leftarrow X}}{2}\sigma_{Xg}
+}
+\]
+
+\[
+\boxed{
+\dot\sigma_{Yg}\big|_{\rm hop}
+=-\frac{k_{X\leftarrow Y}}{2}\sigma_{Yg}
+}
+\]
+
+.
+
+\textbf{Proof.} For example, for \(L_{Y\leftarrow X}\),
+
+\[
+P_eL\rho L^\dagger P_g=0,
+\qquad
+L^\dagger L=k_{Y\leftarrow X}|X\rangle\langle X|,
+\]
+
+so only the left action of the anticommutator remains in the \(X-g\)
+block, with coefficient \(-k_{Y\leftarrow X}/2\). \(\square\)
+
+\subsubsection{Symmetric two-branch
+convention}\label{symmetric-two-branch-convention}
+
+\[
+k_{Y\leftarrow X}=k_{X\leftarrow Y}=k
+\]
+
+and suppose the literature or model defines
+
+\[
+\dot{(p_X-p_Y)}=-\Gamma_{XY}(p_X-p_Y)
+\]
+
+. Then
+
+\[
+\Gamma_{XY}=2k
+\]
+
+. Consequently, the additional damping of each optical coherence is
+
+\[
+\boxed{
+\gamma_{\rm oc}^{(XY)}
+=\frac{k}{2}
+=\frac{\Gamma_{XY}}{4}
+}
+\]
+
+.
+
+Thus, if \(D=I\) is chosen on two equivalent branches, the scale used in
+the moment expansion must be
+
+\[
+\boxed{
+\Gamma=\gamma_{\rm oc}^{(XY)}=\Gamma_{XY}/4
+}
+\]
+
+. Alternatively, if one sets \(\Gamma=\Gamma_{XY}\), then one must use
+\(D=I/4\). These two conventions must not be mixed.
+
+\subsubsection{Asymmetric or detailed-balance
+hopping}\label{asymmetric-or-detailed-balance-hopping}
+
+If \(k_{Y\leftarrow X}\neq k_{X\leftarrow Y}\),
+
+\[
+A_{\rm hop}
+=\frac12
+\begin{pmatrix}
+k_{Y\leftarrow X}&0\\
+0&k_{X\leftarrow Y}
+\end{pmatrix}
+\]
+
+and in general this is not \(\Gamma_{\rm pop}/4\) times the identity.
+Material-specific calculations must input the upward and downward rates
+separately rather than replacing them by an inaccurate scalar rate.
+
+More generally, define the total incoherent escape rate from an excited
+state \(|e_j\rangle\) by
+
+\[
+r_j^{\rm out}=\sum_{m\neq j}k_{m\leftarrow j}
++\sum_{r\notin E}k_{r\leftarrow j}
+\]
+
+. The corresponding optical coherence then acquires the damping
+contribution
+
+\[
+\frac12r_j^{\rm out}
+\]
+
+. Pure dephasing must be derived separately from the adopted
+jump-operator normalization.
+
+\subsection{5.3 Algebraic resolvent
+reduction}\label{algebraic-resolvent-reduction}
+
+For the exact algebraic result in this section, assume initially only
+that \(D\) is invertible. With the definitions
+
+\[
+X(z)=-D^{-1}A_0(z),
+\qquad
+\nu=D^{-1}c
+\]
+
+,
+
+\[
+A_\Gamma
+=D(\Gamma I-X)
+\]
+
+so, at every point where \(A_\Gamma\) is invertible,
+
+\[
+\boxed{
+K_\Gamma(z)
+=p^\dagger A_\Gamma(z)^{-1}c
+=p^\dagger(\Gamma I-X(z))^{-1}\nu
+}
+\]
+
+.
+
+\subsection{5.4 Controlled large-rate
+expansion}\label{controlled-large-rate-expansion}
+
+Under the condition
+
+\[
+q(z)=\frac{\|X(z)\|}{\Gamma}
+=\frac{\|D^{-1}A_0(z)\|}{\Gamma}<1
+\]
+
+,
+
+\[
+(\Gamma I-X)^{-1}
+=\frac1\Gamma
+\sum_{n=0}^{\infty}\frac{X^n}{\Gamma^n}
+\]
+
+. Therefore,
+
+\[
+\boxed{
+K_\Gamma(z)
+=\sum_{n=0}^{\infty}
+\frac{M_n(z)}{\Gamma^{n+1}}
+}
+\]
+
+\[
+\boxed{
+M_n(z)=p^\dagger X(z)^n\nu,
+\qquad
+\nu=D^{-1}c
+}
+\]
+
+. The former notation mixed \(u\) and \(\nu\); this version consistently
+uses \(\nu\).
+
+The remainder after truncation at order \(m\),
+
+\[
+R_m
+=K_\Gamma-
+\sum_{n=0}^{m}\frac{M_n}{\Gamma^{n+1}}
+\]
+
+, satisfies
+
+\[
+\boxed{
+|R_m|
+\le
+\frac{\|p\|\,\|D^{-1}\|\,\|c\|}{\Gamma}
+\frac{q^{m+1}}{1-q}
+}
+\]
+
+.
+
+\subsection{5.5 Theorem 3 --- First nonzero
+moment}\label{theorem-3-first-nonzero-moment}
+
+\[
+M_0=\cdots=M_{m-1}=0,
+\qquad
+M_m\neq0
+\]
+
+then, as \(\Gamma\to\infty\),
+
+\[
+\boxed{
+K_\Gamma
+=\frac{M_m}{\Gamma^{m+1}}
++O(\Gamma^{-m-2})
+}
+\]
+
+. This follows directly from the Neumann expansion.
+
+\subsection{5.6 Theorem 4 --- Exact finite-dimensional transfer zero:
+complete
+equivalence}\label{theorem-4-exact-finite-dimensional-transfer-zero-complete-equivalence}
+
+Let the response-space dimension be \(N\), and assume that \(D\) is
+invertible at fixed \(z\). The following statements are equivalent.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(M_n=p^\dagger X^n\nu=0\) for \(n=0,\ldots,N-1\)
+\item
+  \(p\) is orthogonal to the finite Krylov space \[
+  \mathcal K_N(X,\nu)
+  =\operatorname{span}\{\nu,X\nu,\ldots,X^{N-1}\nu\}
+  \] .
+\item
+  For every polynomial \(q\), \[
+  p^\dagger q(X)\nu=0
+  \]
+\item
+  For every \(\Gamma\notin\operatorname{spec}X\), \[
+  \boxed{K_\Gamma=0}
+  \]
+\end{enumerate}
+
+\textbf{Proof.} Statements 1 and 2 are equivalent by definition. By the
+Cayley--Hamilton theorem, \(X^N\) is a linear combination of
+\(I,X,\ldots,X^{N-1}\). Hence statement 1 implies inductively that every
+\(M_n\) vanishes, which yields statement 3.
+
+Next, for \(\Gamma\notin\operatorname{spec}X\),
+
+\[
+(\Gamma I-X)^{-1}
+=\frac{\operatorname{adj}(\Gamma I-X)}
+{\det(\Gamma I-X)}.
+\]
+
+The adjugate \(\operatorname{adj}(\Gamma I-X)\) can be expressed as a
+polynomial in \(X\) of degree at most \(N-1\). Statement 3 therefore
+implies
+
+\[
+p^\dagger(\Gamma I-X)^{-1}\nu=0
+\]
+
+which gives statement 4.
+
+Conversely, if statement 4 holds on an open set of sufficiently large
+\(\Gamma\), every coefficient in the Laurent expansion in \(1/\Gamma\)
+vanishes. Thus all \(M_n=0\), and in particular statement 1 holds.
+\(\square\)
+
+\textbf{Important:} This exact theorem is not restricted to the
+convergence domain of the Neumann series. The Cayley--Hamilton/adjugate
+representation extends it to the entire region in which \(A_\Gamma\) is
+invertible.
+
+To claim an exact transfer zero over an entire domain in \(z\), the
+equivalent conditions above must hold at every \(z\). Numerical zeros at
+finitely many frequencies do not prove an identically vanishing
+transfer.
+
+\subsection{5.7 Sector graph and suppression
+order}\label{sector-graph-and-suppression-order}
+
+Decompose the coherence space into orthogonal sectors,
+
+\[
+\mathcal V=\bigoplus_a\mathcal V_a
+\]
+
+and suppose that \(D\) and \(A_{\rm diag}\) preserve each sector, with
+
+\[
+A_0=A_{\rm diag}+V
+\]
+
+. Regard one action of \(V\) as one edge in the sector graph, and let
+\(d\) be the minimum number of \(V\)-insertions required to connect the
+source sector to the readout sector. Then
+
+\[
+M_n=0\quad(n<d),
+\]
+
+\[
+\boxed{
+K_\Gamma=O(\Gamma^{-1-d})
+}
+\]
+
+. If several paths undergo phase cancellation, the actual order can be
+still higher.
+
+\subsection{5.8 Finite-rate bound}\label{finite-rate-bound}
+
+\[
+B_\Gamma=\Gamma D+A_{\rm diag},
+\qquad
+A_\Gamma=B_\Gamma+V
+\]
+
+and assume \(p^\dagger B_\Gamma^{-1}c=0\). The resolvent identity gives
+
+\[
+K_\Gamma
+=-p^\dagger B_\Gamma^{-1}VA_\Gamma^{-1}c.
+\]
+
+\[
+r_d=\frac{\|D^{-1}A_{\rm diag}\|}{\Gamma}<1,
+\qquad
+r=\frac{\|D^{-1}(A_{\rm diag}+V)\|}{\Gamma}<1
+\]
+
+then
+
+\[
+\boxed{
+|K_\Gamma|
+\le
+\frac{\|p\|\|c\|\|D^{-1}\|^2\|V\|}
+{\Gamma^2(1-r_d)(1-r)}
+}
+\]
+
+.
+
+\subsection{\texorpdfstring{5.9 Precise scope of the condition
+\(D>0\)}{5.9 Precise scope of the condition D\textgreater0}}\label{precise-scope-of-the-condition-d0}
+
+The earlier statement that ``the moment theorem requires \(D>0\)'' is
+corrected as follows.
+
+\subsubsection{(A) Exact algebraic transfer
+zero}\label{a-exact-algebraic-transfer-zero}
+
+Theorem 4 requires only that
+
+\[
+\boxed{D\ \text{is invertible}}
+\]
+
+. Hermitian positivity is unnecessary.
+
+\subsubsection{(B) Neumann asymptotic
+expansion}\label{b-neumann-asymptotic-expansion}
+
+The required conditions are
+
+\[
+D\ \text{is invertible},
+\qquad
+\|D^{-1}A_0\|/\Gamma<1.
+\]
+
+. Positivity is unnecessary.
+
+\subsubsection{(C) Physical interpretation as fast damping and uniform
+stability}\label{c-physical-interpretation-as-fast-damping-and-uniform-stability}
+
+A clean sufficient condition ensuring that large \(\Gamma\) damps every
+mode is
+
+\[
+\boxed{
+\operatorname{Re}D
+=\frac{D+D^\dagger}{2}
+\ge d_{\min}I>0
+}
+\]
+
+. In particular, \(D=D^\dagger>0\) is sufficient. In this case,
+\(\Gamma d_{\min}\) provides a coercive damping scale.
+
+\subsubsection{(D) Hermitian metric
+overlap}\label{d-hermitian-metric-overlap}
+
+\[
+H_A=(A_\Gamma+A_\Gamma^\dagger)/2>0
+\]
+
+The bounded geometry proxy \(\eta_H\) defined using
+
+\subsubsection{(E) Singular-damping protected-channel
+theorem}\label{e-singular-damping-protected-channel-theorem}
+
+For the present Schur-complement theorem using the orthogonal projector
+\(P=\operatorname{Proj}(\ker D)\), assume
+
+\[
+\boxed{D=D^\dagger\ge0}
+\]
+
+. A non-normal singular \(D\) requires a Riesz projector and a
+generalized nullspace, and is outside the scope of the present main
+theorem.
+
+\subsubsection{(F) Nonnormal fast
+generator}\label{f-nonnormal-fast-generator}
+
+Even when \(D\) is invertible, a non-accretive \(D\) can produce a large
+finite-\(\Gamma\) response through pseudospectral amplification.
+Algebraic scaling may still be used, but monotonic damping suppression
+or a simple visibility bound must not be claimed without checking the
+relevant resolvent norm.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{6. Exact symmetry transfer zero on the full
+generator}\label{exact-symmetry-transfer-zero-on-the-full-generator}
+
+\subsection{6.1 Reduced-space projector
+theorem}\label{reduced-space-projector-theorem}
+
+Suppose the response space on which \(A(z)\) acts admits orthogonal
+projectors
+
+\[
+P_\alpha P_\beta=\delta_{\alpha\beta}P_\alpha,
+\qquad
+\sum_\alpha P_\alpha=I
+\]
+
+such that
+
+\[
+\boxed{[A(z),P_\alpha]=0\quad(\forall\alpha,z)}
+\]
+
+. If the source and readout lie in different sectors,
+
+\[
+P_\beta c=c,
+\qquad
+p^\dagger P_\alpha=p^\dagger,
+\qquad
+\alpha\neq\beta
+\]
+
+then, at every point where \(A(z)\) is invertible,
+
+\[
+\boxed{p^\dagger A(z)^{-1}c=0}
+\]
+
+.
+
+\textbf{Proof.} If \([A,P_\alpha]=0\), then \([A^{-1},P_\alpha]=0\).
+Therefore,
+
+\[
+p^\dagger A^{-1}c
+=p^\dagger P_\alpha A^{-1}P_\beta c
+=p^\dagger A^{-1}P_\alpha P_\beta c=0.
+\]
+
+\(\square\)
+
+The earlier formulation in terms of a Hermitian symmetry operator
+\(Q=Q^\dagger\) is a special case of this theorem, obtained from its
+spectral projectors \(P_\alpha\).
+
+\subsection{6.2 Full-Liouvillian transfer-zero
+theorem}\label{full-liouvillian-transfer-zero-theorem}
+
+Let \(\mathcal L_c\) be the zeroth-order Liouvillian including the
+control but excluding the probe. Let \(\rho_0\) be the unique steady
+state and \(\langle\!\langle\mathbb 1|\) the trace functional, and
+define
+
+\[
+\Pi_0=|\rho_0\rangle\!\rangle
+\langle\!\langle\mathbb 1|,
+\qquad
+Q_0=I-\Pi_0
+\]
+
+.
+
+Suppose the Liouville space admits orthogonal sector projectors
+\(\mathbb P_\alpha\) satisfying
+
+\[
+[\mathcal L_c,\mathbb P_\alpha]=0,
+\qquad
+[Q_0,\mathbb P_\alpha]=0
+\]
+
+. Define the probe source and detector by
+
+\[
+|b_p\rangle\!\rangle
+=\mathcal V_p|\rho_0\rangle\!\rangle,
+\qquad
+\langle\!\langle d_p|
+\]
+
+and assume
+
+\[
+\mathbb P_\beta|b_p\rangle\!\rangle=|b_p\rangle\!\rangle,
+\qquad
+\langle\!\langle d_p|\mathbb P_\alpha
+=\langle\!\langle d_p|,
+\qquad
+\alpha\neq\beta
+\]
+
+. Then the source-to-detector transfer defined through the group/Drazin
+inverse,
+
+\[
+\chi_p
+=-\langle\!\langle d_p|
+\mathcal L_c^\#
+|b_p\rangle\!\rangle
+\]
+
+vanishes exactly.
+
+\textbf{Proof.} Since \(\mathcal L_c\), \(Q_0\), and
+\(\mathbb P_\alpha\) commute, the inverse on \(Q_0\), and hence the
+group inverse \(\mathcal L_c^\#\), preserves every sector. The same
+orthogonality argument as in the reduced-space theorem makes the
+transfer vanish. \(\square\)
+
+\textbf{Interpretive caution.} This theorem directly proves a zero of
+the specified source-to-detector transfer. If it is applied to the total
+probe susceptibility and yields \(\chi_p=0\), that result may represent
+complete transparency and therefore is not, by itself, an EIT no-go. To
+obtain an EIT no-go statement, apply the theorem to the targeted sector
+correction \(\delta\chi_{\mathbb S}\) defined in Section 10 or to a
+cross-sector transfer required to construct it.
+
+\subsection{6.3 Microscopic sufficient condition for Lindblad
+symmetry}\label{microscopic-sufficient-condition-for-lindblad-symmetry}
+
+Let \(U\) be a unitary operator on the Hilbert space, and define
+
+\[
+\mathscr U(\rho)=U\rho U^\dagger
+\]
+
+.
+
+\[
+[\mathcal L_c,\mathscr U]=0
+\]
+
+The following conditions are sufficient for
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The full Hamiltonian, including the control, satisfies \[
+  U H_cU^\dagger=H_c
+  \] .
+\item
+  The jump operators are closed under unitary mixing: \[
+  UL_\mu U^\dagger
+  =\sum_\nu V_{\mu\nu}L_\nu,
+  \] where \(V\) is unitary on the jump-index space, and the Kossakowski
+  matrix/rates are invariant under this transformation.
+\item
+  If the steady state is unique, then automatically \[
+  U\rho_0U^\dagger=\rho_0.
+  \] . If the steady state is nonunique, choose a symmetry-invariant
+  zeroth-order state.
+\end{enumerate}
+
+These conditions include not only Hamiltonian symmetry but also
+radiative decay, intersystem crossing, orbital hopping, ground-state
+relaxation, dephasing, and correlated jumps.
+
+\subsection{6.4 Full-generator symmetry
+audit}\label{full-generator-symmetry-audit}
+
+Before declaring an exact symmetry-protected transfer zero, inspect all
+of the following items.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+block
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+required test
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+lower Hamiltonian & Does it preserve the symmetry sector? \\
+excited Hamiltonian & Does it preserve the sector after including
+spin--orbit, spin--spin, Zeeman, and strain terms? \\
+control Hamiltonian & Does it preserve the sector for the selected
+polarization and phase? \\
+excited-state jumps & Are the jump set and rates symmetry covariant? \\
+radiative/ISC loss & Does it avoid mixing the sectors? \\
+ground-state dephasing/relaxation & Does it avoid mixing the dark/source
+sector? \\
+zeroth-order steady state & Is it symmetry invariant? \\
+probe source & Does it belong to one well-defined sector? \\
+detector & Does it belong to an orthogonal sector different from the
+source? \\
+\end{longtable}
+
+If any one of these conditions fails, an exact symmetry-protected
+transfer zero does not follow. The symmetry-breaking term should then be
+treated as \(V\), and the moment hierarchy or perturbative opening
+should be evaluated.
+
+\subsection{6.5 Symmetry-protected zero、Krylov zero、accidental
+zero}\label{symmetry-protected-zerokrylov-zeroaccidental-zero}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Symmetry-protected transfer zero:} enforced by reducing
+  projectors of the full generator and robust against
+  symmetry-preserving perturbations.
+\item
+  \textbf{Krylov exact transfer zero:} every finite transfer path is
+  orthogonal to the readout. This can occur even without an explicit
+  symmetry.
+\item
+  \textbf{Accidental parameter zero:} pathway cancellation occurs only
+  at a particular detuning or field value; it is not a domain-wide zero.
+\end{itemize}
+
+These are called EIT no-go results only when the vanishing transfer is
+the targeted sector correction of Section 10 or a cross-channel required
+for that correction. They must be reported separately from a zero of the
+total susceptibility.
+
+\section{7. Singular Damping and Protected
+Channels}\label{singular-damping-and-protected-channels}
+
+The orthogonal protected-subspace theorem in this section assumes
+
+\[
+D=D^\dagger\ge0
+\]
+
+. If \(D\) is singular, define
+
+\[
+P=\operatorname{Proj}(\ker D),
+\qquad
+Q_D=I-P
+\]
+
+. On the fast subspace, define
+
+\[
+A_{QQ}
+=\Gamma Q_DDQ_D+Q_DA_0Q_D
+\]
+
+and introduce the Schur complement for the slow/protected sector,
+
+\[
+S_P(\Gamma)
+=PA_0P-PA_0Q_DA_{QQ}^{-1}Q_DA_0P
+\]
+
+.
+
+If \(PA_0P\) is invertible on the spectral domain of interest,
+
+\[
+S_P(\Gamma)=PA_0P+O(\Gamma^{-1})
+\]
+
+and
+
+\[
+\boxed{
+K_\Gamma
+=p^\dagger P(PA_0P)^{-1}Pc
++O(\Gamma^{-1})
+}
+\]
+
+.
+
+Consequently, an \(O(1)\) coherent channel can survive strong damping
+only if both the probe and control vectors have projections onto the
+genuine kernel of the optical-coherence damping operator.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{8. Extension to Arbitrary Materials with Multiple Dissipation
+Rates}\label{extension-to-arbitrary-materials-with-multiple-dissipation-rates}
+
+\subsection{8.1 Fixed-ratio fast-rate
+limit}\label{fixed-ratio-fast-rate-limit}
+
+For a generic material,
+
+\[
+A=A_0+\sum_{r=1}^{R}\Gamma_rD_r
+\]
+
+. If all fast rates grow along a common scale \(\Gamma\),
+
+\[
+\Gamma_r=\Gamma\lambda_r
+\]
+
+with fixed \(\lambda_r\), define
+
+\[
+D(\boldsymbol\lambda)=\sum_r\lambda_rD_r
+\]
+
+. If \(D(\boldsymbol\lambda)\) is invertible on a given ray, the
+algebraic moment hierarchy can be applied. If, in addition,
+
+\[
+\operatorname{Re}D(\boldsymbol\lambda)>0
+\]
+
+, that ray can be interpreted as a uniform fast-damping limit.
+
+If the suppression exponent depends on \(\boldsymbol\lambda\), the
+no-go/go classification should be displayed as a phase diagram in
+bath-rate space.
+
+\subsection{8.2 Independent-rate
+asymptotics}\label{independent-rate-asymptotics}
+
+If the \(\Gamma_r\) vary independently, the leading term can depend on
+the path taken toward the asymptotic limit. One should therefore
+evaluate the result separately for
+
+\begin{itemize}
+\tightlist
+\item
+  dominant-rate sector
+\item
+  fixed-ratio rays
+\item
+  experimentally relevant trajectory \(\Gamma_r(T)\)
+\end{itemize}
+
+rather than assigning a single ``universal exponent.''
+
+\subsection{8.3 General finite-dimensional transfer-zero criterion and
+singular
+points}\label{general-finite-dimensional-transfer-zero-criterion-and-singular-points}
+
+Let \(\theta\) be a parameter vector and consider a finite-dimensional
+matrix family \(A(\theta)\). Assume one of the following.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(\theta\) is complex and \(A(\theta)\) is holomorphic on a connected
+  complex domain \(\mathcal U\).
+\item
+  \(\theta\) is real and \(A(\theta)\) is real analytic on a connected
+  open real domain \(\mathcal U\).
+\end{enumerate}
+
+The identity theorem is not invoked for merely smooth parameter
+dependence.
+
+regular set
+
+\[
+\mathcal U_{\rm reg}
+=\{\theta\in\mathcal U:\det A(\theta)\neq0\}
+\]
+
+one has
+
+\[
+K(\theta)
+=p^\dagger A(\theta)^{-1}c
+=
+\frac{N(\theta)}{\Delta(\theta)},
+\]
+
+\[
+N(\theta)=p^\dagger\operatorname{adj}A(\theta)c,
+\qquad
+\Delta(\theta)=\det A(\theta).
+\]
+
+\subsubsection{Theorem 7A --- Regular-domain exact transfer
+zero}\label{theorem-7a-regular-domain-exact-transfer-zero}
+
+On a connected analytic domain \(\mathcal U\), if
+
+\[
+\boxed{N(\theta)\equiv0}
+\]
+
+then, for every \(\theta\in\mathcal U_{\rm reg}\),
+
+\[
+\boxed{K(\theta)=0}
+\]
+
+. Conversely, if \(K\) vanishes on a nonempty open subset of
+\(\mathcal U_{\rm reg}\), then \(N=0\) on that subset, and the
+holomorphic or real-analytic identity theorem gives \(N\equiv0\).
+
+\textbf{Caution:} The condition \(\operatorname{adj}A=0\) at a singular
+point does not by itself imply that the response is finite or zero. If
+the rank deficiency is at least two, the adjugate can vanish
+automatically.
+
+\subsubsection{8.3.1 Isolated singularity and Laurent
+test}\label{isolated-singularity-and-laurent-test}
+
+Suppose \(\theta_0\) is an isolated singular point and, along a
+one-dimensional regularization parameter \(s\),
+
+\[
+A(s)^{-1}
+=\sum_{j=-\nu}^{\infty}R_j s^j
+\]
+
+admits the Laurent expansion above. The transfer is
+
+\[
+K(s)=\sum_{j=-\nu}^{\infty}
+\left(p^\dagger R_jc\right)s^j.
+\]
+
+\begin{itemize}
+\tightlist
+\item
+  The necessary and sufficient condition for pole cancellation is \[
+  p^\dagger R_jc=0
+  \quad(j=-\nu,\ldots,-1)
+  \]
+\item
+  Laurent finite part： \[
+  \boxed{
+  \operatorname{FP}_{s=0}K(s)
+  =p^\dagger R_0c
+  }
+  \]
+\item
+  If every negative-power coefficient vanishes, the scalar-transfer
+  singularity is removable, and the analytic continuation is defined by
+  \[
+  \boxed{
+  K_{\rm cont}(0)=p^\dagger R_0c
+  }
+  \] .
+\item
+  The continued transfer vanishes at the singular point if all pole
+  coefficients vanish and \[
+  p^\dagger R_0c=0
+  \] .
+\end{itemize}
+
+Because the original matrix inverse \(A(0)^{-1}\) does not exist, one
+must not write \(K(0)=p^\dagger R_0c\) without explicitly specifying the
+regularization.
+
+\subsubsection{8.3.2 Semisimple zero and Drazin/group
+inverse}\label{semisimple-zero-and-drazingroup-inverse}
+
+Suppose the zero eigenvalue of \(A\) is semisimple, and let \(P_0\) be
+the spectral projector onto its nullspace. Under a shift regularization,
+
+\[
+(A+sI)^{-1}
+=\frac{P_0}{s}+A^D+O(s),
+\]
+
+where \(A^D\) is the Drazin inverse. Hence
+
+\[
+K(s)
+=\frac{p^\dagger P_0c}{s}
++p^\dagger A^Dc+O(s).
+\]
+
+Therefore,
+
+\[
+\boxed{p^\dagger P_0c=0}
+\]
+
+is the pole-cancellation condition, and
+
+\[
+\boxed{
+\operatorname{FP}_{s=0}K(s)
+=p^\dagger A^Dc
+}
+\]
+
+. When the pole cancels, this finite part is also the value of the
+removable continuation.
+
+For the unique steady-state zero mode of a full Liouvillian, the probe
+source is trace zero and therefore normally has no component along the
+steady-state projector. The linear response is then defined by the group
+inverse on the trace-zero response space.
+
+\subsubsection{8.3.3 Operational rule}\label{operational-rule}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  At regular points, use the adjugate-numerator identity.
+\item
+  For a Liouvillian zero mode, use the trace-zero subspace or group
+  inverse.
+\item
+  At an exceptional point or nonsemisimple singularity, inspect every
+  Laurent pole coefficient.
+\item
+  Distinguish the finite part, removable continuation, and ordinary
+  inverse.
+\item
+  Do not treat \(0/0\) as a numerical zero.
+\end{enumerate}
+
+\section{9. Weak-probe susceptibility: full Liouvillian derivation and
+reduced
+kernel}\label{weak-probe-susceptibility-full-liouvillian-derivation-and-reduced-kernel}
+
+\subsection{9.1 Full linear-response
+formula}\label{full-linear-response-formula}
+
+Let the probe amplitude be a small complex parameter \(\epsilon\), and
+write
+
+\[
+\mathcal L(\epsilon)
+=\mathcal L_c
++\epsilon\mathcal V_p
++\epsilon^*\widetilde{\mathcal V}_p
++O(|\epsilon|^2)
+\]
+
+. Here \(\mathcal L_c\) contains the control, all dissipation, and the
+external fields. Let the zeroth-order steady state satisfy
+
+\[
+\mathcal L_c\rho^{(0)}=0,
+\qquad
+\operatorname{Tr}\rho^{(0)}=1
+\]
+
+and expand
+
+\[
+\rho
+=\rho^{(0)}
++\epsilon\rho^{(1)}
++\epsilon^*\widetilde\rho^{(1)}
++O(|\epsilon|^2)
+\]
+
+. The coefficient of \(\epsilon\) satisfies
+
+\[
+\mathcal L_c\rho^{(1)}
+=-\mathcal V_p\rho^{(0)},
+\qquad
+\operatorname{Tr}\rho^{(1)}=0
+\]
+
+.
+
+Assuming a unique stationary state and a finite Liouvillian gap, define
+the group inverse \(\mathcal L_c^\#\) on the trace-zero subspace. Then
+
+\[
+\boxed{
+\rho^{(1)}
+=-\mathcal L_c^\#
+\mathcal V_p\rho^{(0)}
+}
+\]
+
+. Apart from the normalization constant \(\chi_0\), the linear
+susceptibility of an observable \(O_p\) is
+
+\[
+\boxed{
+\chi_p
+=-\chi_0
+\langle\!\langle O_p|
+\mathcal L_c^\#
+|\mathcal V_p\rho^{(0)}\rangle\!\rangle
+}
+\]
+
+. This is the reference formula for the full-Liouvillian susceptibility;
+the zero eigenvalue of the Liouvillian is not handled with an ordinary
+inverse.
+
+\subsection{9.2 Closed two-lower-state first-order
+block}\label{closed-two-lower-state-first-order-block}
+
+Among the first-order variables, let \(x\in\mathcal H_e\) be the probe
+optical-coherence vector and let the lower-state coherence be
+
+\[
+s=\rho_{g_2g_1}^{(1)}
+\]
+
+. Assume that the remaining first-order variables either decouple or
+have been eliminated exactly by a Schur complement.
+
+Fix the sign convention as
+
+\[
+\begin{pmatrix}
+A & i\Omega_c d_2/2\\
+i\Omega_c^*d_2^\dagger/2 & \gamma_g
+\end{pmatrix}
+\begin{pmatrix}x\\s\end{pmatrix}
+=
+\begin{pmatrix}i\Omega_p d_1/2\\0\end{pmatrix}
+\]
+
+. Here,
+
+\begin{itemize}
+\tightlist
+\item
+  \(A\): effective optical-coherence generator excluding the control; it
+  may include self-energies from other blocks when necessary.
+\item
+  \(\gamma_g=\gamma_{12}-i\delta_2\): lower-coherence complex
+  generator。
+\item
+  \(d_1,d_2\): probe/control dipole vectors。
+\end{itemize}
+
+Assume \(A\) is invertible and set \(G=A^{-1}\). The first row gives
+
+\[
+x
+=G\frac{i\Omega_p}{2}d_1
+-G\frac{i\Omega_c}{2}d_2s.
+\]
+
+Substituting this into the second row, without dividing by \(\gamma_g\)
+itself, gives
+
+\[
+\left(\gamma_g+\beta S_2\right)s
+=-\frac{i\Omega_c^*}{2}
+ d_2^\dagger G\frac{i\Omega_p}{2}d_1,
+\qquad
+\beta=\frac{|\Omega_c|^2}{4},
+\]
+
+\[
+S_2=d_2^\dagger Gd_2
+\]
+
+. Therefore, the ideal limit \(\gamma_g=0\) is covered by the same
+expression provided that the combined denominator
+\(\gamma_g+\beta S_2\neq0\).
+
+\subsection{9.3 Theorem 2A --- Reduced susceptibility as an exact block
+Schur
+complement}\label{theorem-2a-reduced-susceptibility-as-an-exact-block-schur-complement}
+
+\[
+S_i=d_i^\dagger Gd_i,
+\qquad
+K_{ij}=d_i^\dagger Gd_j
+\]
+
+Define the normalized probe response by
+
+\[
+\Xi
+=\frac{d_1^\dagger x}{i\Omega_p/2}
+\]
+
+. Then
+
+\[
+\boxed{
+\Xi
+=S_1-
+\frac{\beta K_{12}K_{21}}
+{\gamma_g+\beta S_2}
+}
+\]
+
+.
+
+\textbf{Proof.} The lower-coherence equation above gives
+
+\[
+s=
+\frac{\Omega_c^*\Omega_p}{4}
+\frac{K_{21}}
+{\gamma_g+\beta S_2}
+\]
+
+. Substituting this into
+
+\[
+x
+=G\frac{i\Omega_p}{2}d_1
+-G\frac{i\Omega_c}{2}d_2s
+\]
+
+, acting from the left with \(d_1^\dagger\), and dividing by
+\(i\Omega_p/2\) yields the result. This is the Schur complement of the
+first-order Liouvillian block and requires no additional adiabatic
+approximation. \(\square\)
+
+The control-induced coherent correction is
+
+\[
+\boxed{
+\Delta\Xi
+=\frac{\beta K_{12}K_{21}}
+{\gamma_g+\beta S_2}
+}
+\]
+
+. At a regular point with nonzero control \(\beta\neq0\) and a finite
+denominator,
+
+\[
+\boxed{K_{12}K_{21}=0}
+\]
+
+is the necessary and sufficient zero condition for the complex coherent
+correction \(\Delta\Xi\). If the denominator vanishes, use the
+Laurent/Drazin analysis of Section 8.3.
+
+\subsection{9.4 Conditions for agreement with the full
+Liouvillian}\label{conditions-for-agreement-with-the-full-liouvillian}
+
+The reduced expression above agrees with the full formula under the
+following conditions.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The response is first order in the probe.
+\item
+  The zeroth-order state \(\rho^{(0)}\), including the control, has been
+  solved correctly.
+\item
+  The first-order source reduces to the selected probe vector \(d_1\).
+\item
+  First-order variables other than \((x,s)\) either decouple or are
+  absorbed into \(A,\gamma_g,d_i\) through a Schur complement.
+\item
+  Population saturation and probe-induced redistribution are
+  \(O(|\Omega_p|^2)\) and therefore do not enter at first order.
+\item
+  The detector corresponds to \(d_1^\dagger x\).
+\end{enumerate}
+
+If these conditions fail, promote the scalar \(s\) to a ground-coherence
+vector and use the full block-matrix Schur complement or
+\(\mathcal L_c^\#\) directly.
+
+\subsection{9.5 General matrix ground-coherence
+version}\label{general-matrix-ground-coherence-version}
+
+For several ground-state coherences \(s\in\mathbb C^m\), write the
+first-order block as
+
+\[
+\begin{pmatrix}
+A&B\\
+C&G_g
+\end{pmatrix}
+\begin{pmatrix}x\\s\end{pmatrix}
+=
+\begin{pmatrix}b_p\\0\end{pmatrix}
+\]
+
+. Here the source and detector are assumed to belong to the
+optical-response sector \(x\).
+
+If \(A\) is invertible, the first row gives
+
+\[
+x=A^{-1}b_p-A^{-1}Bs
+\]
+
+and, using the ground-coherence Schur complement
+
+\[
+\boxed{
+S_g=G_g-CA^{-1}B
+}
+\]
+
+, one obtains
+
+\[
+S_gs=-CA^{-1}b_p
+\]
+
+. If \(S_g\) is invertible,
+
+\[
+\boxed{
+s=-S_g^{-1}CA^{-1}b_p
+}
+\]
+
+and
+
+\[
+\boxed{
+x=A^{-1}b_p
++A^{-1}BS_g^{-1}CA^{-1}b_p
+}
+\]
+
+. This form does not require \(G_g\) itself to be invertible and
+therefore includes the ideal ground-coherence limit.
+
+Only when \(G_g\) is also invertible may one use the equivalent
+alternative Schur complement
+
+\[
+\boxed{
+x=(A-BG_g^{-1}C)^{-1}b_p
+}
+\]
+
+.
+
+For an optical detector \(d\),
+
+\[
+\chi_{\rm full}
+=\chi_0d^\dagger x,
+\qquad
+\chi_{\rm cut}^{(\mathbb S)}
+=\chi_0d^\dagger A^{-1}b_p,
+\]
+
+and therefore the response modification mediated by the specified sector
+\(\mathbb S\) is
+
+\[
+\boxed{
+\delta\chi_{\mathbb S}
+=\chi_{\rm full}-\chi_{\rm cut}^{(\mathbb S)}
+=\chi_0d^\dagger A^{-1}B
+S_g^{-1}CA^{-1}b_p
+}
+\]
+
+. The quantity \(\chi_{\rm cut}^{(\mathbb S)}\) is not the control-off
+response; it is an algebraic counterfactual obtained by retaining the
+same diagonal blocks, source, detector, and zeroth-order state while
+cutting only the targeted \(x\leftrightarrow s\) feedback. The cut
+generator need not define an independent CPTP dynamics. Once the sector
+\(\mathbb S\) is fixed, we abbreviate it as \(\chi_{\rm cut}\).
+
+If the source or detector also has a direct component in the
+ground-coherence sector, define the counterfactual difference using the
+full block inverse rather than the expression above. For singular \(A\)
+or \(S_g\), use the Laurent/Drazin prescription of Section 8.3.
+
+\subsection{\texorpdfstring{9.6 Recovery of the textbook three-level
+\(\Lambda\)
+model}{9.6 Recovery of the textbook three-level \textbackslash Lambda model}}\label{recovery-of-the-textbook-three-level-lambda-model}
+
+Consider the standard \(\Lambda\) system with one excited state
+\(|e\rangle\) and two lower states \(|g_1\rangle,|g_2\rangle\). Choose
+the dipole normalization
+
+\[
+d_1=d_2=1
+\]
+
+and set
+
+\[
+A=\gamma_{31}-i\Delta_p,
+\qquad
+\gamma_g=\gamma_{21}-i\delta_2,
+\qquad
+\beta=\frac{|\Omega_c|^2}{4}
+\]
+
+. Then
+
+\[
+S_1=S_2=K_{12}=K_{21}=A^{-1}.
+\]
+
+Substitution into Theorem 2A gives
+
+\[
+\begin{aligned}
+\Xi
+&=\frac1A-
+\frac{\beta/A^2}{\gamma_g+\beta/A}\\
+&=\boxed{
+\frac{\gamma_g}{A\gamma_g+\beta}
+}.
+\end{aligned}
+\]
+
+Therefore, the probe optical coherence is
+
+\[
+\boxed{
+\rho_{eg_1}^{(1)}
+=\frac{i\Omega_p}{2}
+\frac{\gamma_{21}-i\delta_2}
+{(\gamma_{31}-i\Delta_p)(\gamma_{21}-i\delta_2)+|\Omega_c|^2/4}
+}
+\]
+
+. This is the standard three-level EIT susceptibility in the adopted
+rotating-frame sign convention.
+
+\begin{itemize}
+\tightlist
+\item
+  control off \((\beta=0)\): \(\Xi=A^{-1}\)
+\item
+  exact two-photon resonance and ideal ground coherence
+  \((\delta_2=0,\gamma_{21}\to0)\): \(\Xi\to0\)
+\item
+  in the same limit,
+  \(\delta\Xi_{\mathbb S}=\Xi_{\rm full}-\Xi_{\rm cut}=-A^{-1}\neq0\)
+\end{itemize}
+
+Thus, a zero of the total susceptibility represents perfect EIT and
+differs from a zero of the sector-mediated correction. This recovery
+shows that the framework contains the textbook \(\Lambda\) response as a
+special case.
+
+\subsection{9.7 Recovery of a Mishina-type multi-excited-state
+model}\label{recovery-of-a-mishina-type-multi-excited-state-model}
+
+Consider an operative excited manifold consisting of \(N_e\) resolved
+branches, with an optical-coherence generator diagonal in the selected
+basis. Let \(\lambda\) label an inhomogeneous class, velocity class, or
+static detuning class, and write
+
+\[
+A_\lambda
+=\operatorname{diag}
+\left(a_1(\lambda),\ldots,a_{N_e}(\lambda)\right),
+\qquad
+a_j(\lambda)=\gamma_j-i\Delta_j(\lambda)
+\]
+
+. For the probe and control dipole vectors
+
+\[
+d_1=(d_{11},\ldots,d_{1N_e})^{\mathsf T},
+\qquad
+d_2=(d_{21},\ldots,d_{2N_e})^{\mathsf T}
+\]
+
+, one obtains
+
+\[
+\boxed{
+S_{1,\lambda}
+=\sum_{j=1}^{N_e}
+\frac{|d_{1j}|^2}{a_j(\lambda)}
+},
+\qquad
+\boxed{
+S_{2,\lambda}
+=\sum_{j=1}^{N_e}
+\frac{|d_{2j}|^2}{a_j(\lambda)}
+}
+\]
+
+and
+
+\[
+\boxed{
+K_{12,\lambda}
+=\sum_{j=1}^{N_e}
+\frac{d_{1j}^*d_{2j}}{a_j(\lambda)}
+},
+\qquad
+\boxed{
+K_{21,\lambda}
+=\sum_{j=1}^{N_e}
+\frac{d_{2j}^*d_{1j}}{a_j(\lambda)}
+}
+\]
+
+. Hence the response of each class is
+
+\[
+\boxed{
+\Xi_\lambda
+=S_{1,\lambda}
+-
+\frac{\beta K_{12,\lambda}K_{21,\lambda}}
+{\gamma_g+\beta S_{2,\lambda}}
+}.
+\]
+
+This is the diagonal-resolvent structure of a Mishina-type multilevel
+susceptibility, containing the coherent sum of Raman amplitudes through
+multiple excited levels and the self-energy of each optical leg. Static
+Doppler or inhomogeneous broadening is incorporated only after the local
+response has been calculated, by averaging
+
+\[
+\boxed{
+\overline\chi
+=\int d\lambda\,P(\lambda)\chi_\lambda
+}
+\]
+
+. When optical pumping is included, the zeroth-order populations enter
+\(\rho^{(0)}\) and the source \(b_p\), so they must first be solved with
+the full Liouvillian. Thus, the present theory contains the
+\textbf{multi-excited-state Green-function interference structure} of
+Mishina-type theories; it does not unconditionally identify its
+approximations with the propagation, velocity-changing collisions, or
+pumping approximations of any particular experiment.
+
+\subsection{9.8 Observable dictionary}\label{observable-dictionary}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+object
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+definition
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+role
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(K_{12},K_{21}\) & off-diagonal resolvent & coherent Raman/interference
+vertex \\
+\(S_1,S_2\) & diagonal resolvent & optical response/self-energy \\
+\(\chi\) & \(\chi_0\Xi\) & local linear susceptibility \\
+\(C_{\rm abs}\) & normalized absorption contrast & specified
+observable \\
+\(T\) & \(\exp[-L\alpha]\) & propagated transmission \\
+\end{longtable}
+
+For a non-normal generator, in general,
+
+\[
+K_{21}\neq K_{12}^*.
+\]
+
+so the two quantities must be computed independently.
+
+Hermitian part
+
+\[
+H_A=(A+A^\dagger)/2>0
+\]
+
+Only when
+
+\[
+\eta_H=
+\frac{|d_1^\dagger H_A^{-1}d_2|^2}
+{(d_1^\dagger H_A^{-1}d_1)
+(d_2^\dagger H_A^{-1}d_2)}
+\]
+
+does the bounded geometry proxy satisfy \(0\le\eta_H\le1\).
+
+\subsection{9.9 Relative absorption contrast and visibility
+branches}\label{relative-absorption-contrast-and-visibility-branches}
+
+As one example, define
+
+\[
+C_{\rm abs}
+=\frac{\operatorname{Im}S_1-
+\operatorname{Im}\Xi}
+{\operatorname{Im}S_1}
+=\frac{\operatorname{Im}\Delta\Xi}
+{\operatorname{Im}S_1}
+\]
+
+. The observable and sign convention must be fixed consistently in
+material-to-material comparisons.
+
+For a one-insertion channel, suppose
+
+\[
+K_{12},K_{21}=O(\Gamma^{-2}),
+\qquad
+S_1,S_2=O(\Gamma^{-1})
+\]
+
+and define
+
+\[
+y=\left|\frac{\beta S_2}{\gamma_g}\right|
+\]
+
+.
+
+\begin{itemize}
+\tightlist
+\item
+  \(y\ll1\): \[
+  \Delta\Xi=O(\Gamma^{-4}),
+  \qquad
+  C_{\rm abs}=O(\Gamma^{-3}).
+  \]
+\item
+  \(y\gg1\): \[
+  \Delta\Xi=O(\Gamma^{-3}),
+  \qquad
+  C_{\rm abs}=O(\Gamma^{-2}).
+  \]
+\end{itemize}
+
+For fixed \(\gamma_g\neq0\) and fixed \(\Omega_c\), one ultimately has
+\(y\to0\), so the strict \(\Gamma\to\infty\) limit is the former branch.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{10. Full-Liouvillian EIT no-go and observable
+criterion}\label{full-liouvillian-eit-no-go-and-observable-criterion}
+
+\subsection{10.1 Pathway-resolved response
+operator}\label{pathway-resolved-response-operator}
+
+For a weak-probe problem with a unique steady state, define on the
+trace-zero response space
+
+\[
+\mathbb M=-Q_0\mathcal L_cQ_0
+\]
+
+as the response generator, so that
+
+\[
+\mathbb M|u^{(1)}\rangle\!\rangle
+=|b_p\rangle\!\rangle
+\]
+
+. Let \(\mathbb S\) be the long-lived coherence sector responsible for
+the target EIT mechanism, and let \(\mathbb X\) be the complementary
+direct optical-response sector. Partition the response problem as
+
+\[
+\mathbb M=
+\begin{pmatrix}
+A&B\\
+C&G_g
+\end{pmatrix},
+\qquad
+|b_p\rangle\!\rangle=
+\begin{pmatrix}b_p\\0\end{pmatrix},
+\qquad
+\langle\!\langle d_p|=
+\begin{pmatrix}d^\dagger&0\end{pmatrix}
+\]
+
+.
+
+Define the full response and the counterfactual response obtained by
+cutting only the targeted cross-feedback as
+
+\[
+\chi_{\rm full}
+=\chi_0d^\dagger x,
+\qquad
+\chi_{\rm cut}^{(\mathbb S)}
+=\chi_0d^\dagger A^{-1}b_p
+\]
+
+. The cut operation sets \(B=C=0\) while holding \(A,G_g,b_p,d\) and the
+zeroth-order state fixed. It is therefore generally different from
+switching the control field off.
+
+\subsection{10.2 Theorem 2B --- Targeted full-Liouvillian
+sector-resolved EIT
+no-go}\label{theorem-2b-targeted-full-liouvillian-sector-resolved-eit-no-go}
+
+If \(A\) and
+
+\[
+S_g=G_g-CA^{-1}B
+\]
+
+are invertible at a regular point,
+
+\[
+\boxed{
+\delta\chi_{\mathbb S}
+\equiv
+\chi_{\rm full}-\chi_{\rm cut}^{(\mathbb S)}
+=
+\chi_0d^\dagger A^{-1}B
+S_g^{-1}CA^{-1}b_p
+}
+\]
+
+.
+
+On a specified connected analytic parameter domain \(\mathcal U\), if
+
+\[
+\boxed{
+\delta\chi_{\mathbb S}(\theta)\equiv0
+\quad(\theta\in\mathcal U_{\rm reg})
+}
+\]
+
+then the net \(\mathbb S\)-mediated contribution to the specified
+source-to-detector response vanishes, and the configuration is an
+\textbf{exact \(\mathbb S\)-sector EIT no-go}. This does not require the
+internal block couplings \(B\) and \(C\) to vanish individually;
+complete cancellation at the detector is also included.
+
+Conversely, \(\delta\chi_{\mathbb S}\neq0\) establishes permission for a
+net pathway through the specified sector, but it is not sufficient for a
+narrow transparency feature, positive contrast, or experimental
+visibility. Only when \(\mathbb S\) is a long-lived coherence sector and
+\(B,C\) originate from the control Hamiltonian is this called coherent
+EIT-pathway permission.
+
+For a closed scalar block with two lower states,
+
+\[
+\delta\Xi_{\mathbb S}
+=\Xi_{\rm full}-\Xi_{\rm cut}
+=-\frac{\beta K_{12}K_{21}}
+{\gamma_g+\beta S_2}.
+\]
+
+At a regular point with nonzero control and a finite denominator,
+
+\[
+\boxed{
+\delta\Xi_{\mathbb S}=0
+\Longleftrightarrow
+K_{12}K_{21}=0
+}
+\]
+
+.
+
+\textbf{Structural zeros versus pointwise zeros.} A value
+\(\delta\chi_{\mathbb S}=0\) at one detuning or field value is not a
+domain-wide no-go. An exact no-go must be established as an identity
+using a reducing symmetry, finite Krylov orthogonality, an
+adjugate-numerator identity, or an analytic identity theorem.
+
+The quantity \(\delta\chi_{\mathbb S}\) is the difference between the
+full response and the \(\mathbb S\)-cut response and is therefore a
+finite-dimensional rational transfer. When using a Krylov/moment
+theorem, apply it either to required cross-transfers such as
+\(d^\dagger A^{-1}B\) and \(CA^{-1}b_p\), or construct an augmented
+realization that represents the full/cut difference as a single
+transfer.
+
+\subsection{10.3 Sector dependence, invariance, and
+interpretation}\label{sector-dependence-invariance-and-interpretation}
+
+\subsubsection{\texorpdfstring{10.3.1 Physical dependence on
+\(\mathbb S\)}{10.3.1 Physical dependence on \textbackslash mathbb S}}\label{physical-dependence-on-mathbb-s}
+
+The quantity \(\delta\chi_{\mathbb S}\) depends on the specified
+projector pair
+
+\[
+P_X+P_S=I,
+\qquad
+P_XP_S=0,
+\qquad
+\operatorname{Ran}P_S=\mathbb S
+\]
+
+. In projector form,
+
+\[
+\mathbb M_{\rm cut}^{(\mathbb S)}
+=P_X\mathbb MP_X+P_S\mathbb MP_S
+\]
+
+and
+
+\[
+\boxed{
+\delta\chi_{\mathbb S}
+=\chi_0\langle\!\langle d_p|
+\left(\mathbb M^{-1}-(\mathbb M_{\rm cut}^{(\mathbb S)})^{-1}\right)
+|b_p\rangle\!\rangle
+}
+\]
+
+. Therefore, every no-go statement is a statement about
+
+\[
+(\mathfrak C,\mathbb S,\mathbb X,b_p,d_p)
+\]
+
+and is not a system-wide scalar label independent of the sector choice.
+
+\subsubsection{10.3.2 Block-preserving basis
+invariance}\label{block-preserving-basis-invariance}
+
+Let \(U=U_X\oplus U_S\) be an invertible basis transformation that does
+not mix \(\mathbb X\) and \(\mathbb S\). If the generator, source, and
+detector are transformed consistently,
+
+\[
+\boxed{
+\delta\chi_{\mathbb S}'=\delta\chi_{\mathbb S}
+}
+\]
+
+. Hence the result is independent of the basis chosen within either
+sector.
+
+By contrast, if one performs a transformation that mixes \(\mathbb X\)
+and \(\mathbb S\) and then redefines the same coordinate cut, one has
+generally selected a different projector, and \(\delta\chi\) changes.
+This is not basis dependence; it is a \textbf{change in the physical
+pathway definition}.
+
+\subsubsection{10.3.3 Algebraic
+counterfactual}\label{algebraic-counterfactual}
+
+The operator \(\mathbb M_{\rm cut}^{(\mathbb S)}\) is an algebraic
+counterfactual used for pathway attribution and need not itself be an
+independent trace-preserving completely positive generator. Accordingly,
+
+\begin{itemize}
+\tightlist
+\item
+  do not identify \(\chi_{\rm cut}^{(\mathbb S)}\) with the control-off
+  spectrum;
+\item
+  do not identify \(\delta\chi_{\mathbb S}\) unconditionally with a
+  directly measurable observable;
+\item
+  for experimental comparison, use \(\chi_{\rm full}\), control scans,
+  two-photon dependence, ground-coherence dependence, and pole/residue
+  analysis.
+\end{itemize}
+
+\subsubsection{10.3.4 Additional conditions for a coherent
+interpretation}\label{additional-conditions-for-a-coherent-interpretation}
+
+Generic blocks \(B,C\) can contain dissipative transfer as well as
+Hamiltonian coupling. The quantity \(\delta\chi_{\mathbb S}\) is called
+a coherent EIT correction only if the following conditions hold.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(\mathbb S\) is a long-lived off-diagonal density-matrix sector
+  between the selected lower states.
+\item
+  The EIT-relevant leading terms in \(B,C\) originate from the control
+  Hamiltonian.
+\item
+  Population pumping and dissipative cross-transfer have been separated
+  and audited in the full Liouvillian.
+\end{enumerate}
+
+\subsection{10.4 Total susceptibility zero is not an EIT
+no-go}\label{total-susceptibility-zero-is-not-an-eit-no-go}
+
+For an ideal scalar \(\Lambda\) block, take
+
+\[
+A=1,
+\qquad
+d_1=d_2=1,
+\qquad
+\beta=1,
+\qquad
+\gamma_g=0
+\]
+
+. Then
+
+\[
+S_1=S_2=K_{12}=K_{21}=1,
+\]
+
+and hence
+
+\[
+\Xi_{\rm cut}=1,
+\qquad
+\Xi_{\rm full}
+=1-\frac{1}{1}=0.
+\]
+
+On the other hand, define the transparency correction by
+
+\[
+\Delta\Xi_{\rm tr}
+\equiv
+\Xi_{\rm cut}-\Xi_{\rm full}
+\]
+
+. Then
+
+\[
+\Delta\Xi_{\rm tr}=1\neq0.
+\]
+
+Therefore,
+
+\[
+\boxed{
+\Xi_{\rm full}=0
+}
+\]
+
+can represent perfect transparency. It must not be defined as a no-go
+condition.
+
+\subsection{10.5 General projector and singular
+formulation}\label{general-projector-and-singular-formulation}
+
+If explicit \((x,s)\) coordinates cannot be chosen, use response-space
+projectors \(P_X,P_S\) and define
+
+\[
+\mathbb M_{\rm cut}^{(\mathbb S)}
+=P_X\mathbb MP_X+P_S\mathbb MP_S
+\]
+
+. When the source and detector belong to the \(X\) sector,
+
+\[
+\chi_{\rm full}
+=\chi_0\langle\!\langle d_p|
+\mathbb M^{-1}
+|b_p\rangle\!\rangle,
+\]
+
+\[
+\chi_{\rm cut}^{(\mathbb S)}
+=\chi_0\langle\!\langle d_p|
+(\mathbb M_{\rm cut}^{(\mathbb S)})^{-1}
+|b_p\rangle\!\rangle.
+\]
+
+If zero modes or isolated singularities occur, do not use an ordinary
+inverse. Use a group/Drazin inverse on the compatible trace-zero
+subspace, or a Laurent finite part/removable continuation.
+
+The partition \(X\oplus S\) must be physically specified. Choosing a
+different coherence sector means classifying a different targeted EIT
+channel.
+
+\subsection{10.6 Observable EIT
+criterion}\label{observable-eit-criterion}
+
+Even when the configuration is not an exact \(\mathbb S\)-sector no-go,
+at least the following must be verified before claiming observable EIT.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \(\delta\chi_{\mathbb S}\neq0\) for the physically specified sector
+  \(\mathbb S\).
+\item
+  There is an absorption reduction, or a corresponding transmission
+  increase, near two-photon resonance.
+\item
+  The feature depends on the ground-coherence decay rate.
+\item
+  Control-power scans, pole/residue analysis, linewidth scaling, or
+  equivalent tests show that the feature cannot be explained solely by
+  Autler--Townes splitting.
+\item
+  The signal exceeds the threshold after including ensemble averaging,
+  propagation, background, and signal-to-noise ratio.
+\end{enumerate}
+
+A control-on/off difference alone also contains population pumping,
+power broadening, and saturation. Use the pathway cut together with
+\(\gamma_g\) dependence, two-photon dependence, and pole tracking to
+isolate the coherent EIT component.
+
+\subsection{10.7 Validation tests}\label{validation-tests}
+
+At minimum, compare the following on the same parameter grid.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A trace-zero constrained solve of the full GKSL Liouvillian and a
+  group/Drazin solve
+\item
+  The full first-order Liouvillian response and the exact Schur-reduced
+  formula
+\item
+  \(\chi_{\rm full}\)、\(\chi_{\rm cut}^{(\mathbb S)}\)、\(\delta\chi_{\mathbb S}\)
+\item
+  In the textbook \(\Lambda\) limit, \[
+  \chi_{\rm full}=0,
+  \qquad
+  \delta\chi_{\mathbb S}\neq0
+  \]
+\item
+  Agreement between the Mishina-type sum formula and direct block
+  inversion for a diagonal multi-excited-state block
+\item
+  Validity of the \(S_g\) formulation even when \(G_g\) is singular
+\item
+  Invariance of \(\delta\chi_{\mathbb S}\) under block-preserving basis
+  transformations
+\item
+  The generic change in \(\delta\chi\) when the projector is redefined
+  after an \(X\)-\(S\) mixing transformation
+\end{enumerate}
+
+The numerical tests in Section 21.3 are fixed as core solver regression
+tests.
+
+\section{11. Symmetry and group-theoretical
+criterion}\label{symmetry-and-group-theoretical-criterion}
+
+\subsection{11.1 Leading moment as projected dipole
+overlap}\label{leading-moment-as-projected-dipole-overlap}
+
+If \(D\propto I\), or is scalar within the sector,
+
+\[
+M_0\propto p^\dagger c
+\]
+
+. For a complete operative manifold \(E\),
+
+\[
+p^\dagger c
+=\langle g_1|
+\hat d_p^\dagger\Pi_E\hat d_c
+|g_2\rangle.
+\]
+
+Thus, the leading-order go/no-go result is determined by the
+lower-manifold matrix element of the effective tensor operator
+
+\[
+\hat O_{pc}=\hat d_p^\dagger\Pi_E\hat d_c
+\]
+
+.
+
+\subsection{11.2 Point-group selection
+rule}\label{point-group-selection-rule}
+
+A nonzero matrix element requires
+
+\[
+\Gamma(g_1)^*\otimes
+\Gamma(\hat O_{pc})\otimes
+\Gamma(g_2)
+\]
+
+to contain the totally symmetric representation. The representation
+\(\Gamma(\hat O_{pc})\) is selected by the polarization tensor
+\(\epsilon_p^*\otimes\epsilon_c\), the operative manifold, and any
+cavity projection.
+
+\subsection{11.3 Spin-scalar dipole}\label{spin-scalar-dipole}
+
+If the electric dipole operator is spin scalar to leading order,
+
+\[
+\hat{\mathbf d}=\hat{\mathbf d}_{\rm orb}\otimes I_{\rm spin}
+\]
+
+. For a lower-state pair that shares the same orbital state and differs
+only by orthogonal spin states, the scalar leading moment tends to
+vanish.
+
+However, a finite higher-order moment can open in the presence of
+
+\begin{itemize}
+\tightlist
+\item
+  transverse spin-orbit coupling
+\item
+  nonsecular spin-spin coupling
+\item
+  hyperfine mixing
+\item
+  transverse magnetic field
+\item
+  spin-dependent electric-dipole correction
+\item
+  incomplete manifold selection
+\item
+  branch-dependent damping
+\end{itemize}
+
+Therefore, an exact no-go and asymptotic suppression must be
+distinguished in a physical system.
+
+\subsection{11.4 Caution concerning orbital
+degeneracy}\label{caution-concerning-orbital-degeneracy}
+
+An orbital-degenerate lower manifold is not sufficient for a go result.
+The following are required.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The lower-state symmetry permits the transition.
+\item
+  The polarization tensor contains the required irreducible
+  representation.
+\item
+  The reduced dipole matrix element is nonzero.
+\item
+  The relevant spin overlap is nonzero.
+\item
+  The operative excited manifold has been selected correctly.
+\item
+  Damping and ground-state coherence permit practical visibility.
+\end{enumerate}
+
+.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{12. Classification taxonomy}\label{classification-taxonomy}
+
+Classify an arbitrary configuration \(\mathfrak C\) as follows.
+
+\subsection{Class 0 --- Unspecified /
+underdetermined}\label{class-0-unspecified-underdetermined}
+
+The required Hamiltonian, dipoles, jump operators, rates, or observable
+are insufficient, so no classification can be made.
+
+\subsection{Class I --- Optical dark-subspace
+capable}\label{class-i-optical-dark-subspace-capable}
+
+\[
+\dim\ker\Omega>0.
+\]
+
+This establishes only the existence of an instantaneous optical dark
+superposition. A stationary dark state additionally requires the full
+Lindblad conditions of Section 3.4, and observable EIT is not
+guaranteed.
+
+\subsection{Class II --- Exact sector-resolved EIT
+no-go}\label{class-ii-exact-sector-resolved-eit-no-go}
+
+On the target domain,
+
+\[
+\boxed{
+\delta\chi_{\mathbb S}(\theta)\equiv0
+}
+\]
+
+is proved by the finite Krylov criterion, an adjugate identity, or a
+reducing symmetry of the full generator that separates the targeted
+cross-transfer.
+
+For a regular closed block with two lower states, this is equivalent to
+
+\[
+K_{12}K_{21}\equiv0
+\]
+
+. A zero of the total susceptibility, \(\chi_{\rm full}=0\), is not the
+definition of this class.
+
+\subsection{Class III --- Asymptotic sector-mediated
+suppression}\label{class-iii-asymptotic-sector-mediated-suppression}
+
+Let the first nonzero moments of the relevant cross-transfers be
+\(m_{12}\) and \(m_{21}\), respectively, so that
+
+\[
+K_{12}=O(\Gamma^{-m_{12}-1}),
+\qquad
+K_{21}=O(\Gamma^{-m_{21}-1}).
+\]
+
+At finite \(\Gamma\) the response is not exactly zero, but fast damping
+suppresses the targeted \(\mathbb S\)-sector correction systematically.
+For example, in a scalar block with \(S_2=O(\Gamma^{-1})\),
+
+\[
+\delta\Xi_{\mathbb S}=
+\begin{cases}
+O(\Gamma^{-m_{12}-m_{21}-2}), & |\beta S_2/\gamma_g|\ll1,\\
+O(\Gamma^{-m_{12}-m_{21}-1}), & |\beta S_2/\gamma_g|\gg1.
+\end{cases}
+\]
+
+When classifying only one transfer, record \(K=O(\Gamma^{-m-1})\), where
+\(m\) is its first nonzero moment.
+
+\subsection{Class IV --- Leading-order sector-kernel
+go}\label{class-iv-leading-order-sector-kernel-go}
+
+In the regular full-rank damping limit,
+
+\[
+K_{12}=O(\Gamma^{-1}),
+\qquad
+K_{21}=O(\Gamma^{-1})
+\]
+
+and the product of the leading coefficients is nonzero, the targeted
+\(\mathbb S\)-sector pathway is permitted at leading order. It is
+interpreted as a coherent pathway when \(\mathbb S\) is a long-lived
+coherence and the cross-coupling is Hamiltonian in origin. This is still
+not sufficient for observable EIT.
+
+\subsection{Class V --- Protected go}\label{class-v-protected-go}
+
+Under singular damping, if the leading protected-subspace transfer
+satisfies
+
+\[
+\boxed{
+p^\dagger P(PA_0P)^{-1}Pc\neq0
+}
+\]
+
+then an \(O(1)\) channel remains. Nonzero source and detector
+projections alone do not exclude phase cancellation.
+
+\subsection{Class VI --- Practical
+no-go}\label{class-vi-practical-no-go}
+
+\[
+K_{12}K_{21}\neq0
+\]
+
+Even if the kernel is nonzero, the full observable response may satisfy
+
+\[
+|C_{\rm EIT}|<C_{\rm min}
+\]
+
+or fail the constraints imposed by signal-to-noise ratio, laser power,
+ionization, heating, or optical depth.
+
+\subsection{Class VII --- Observable go}\label{class-vii-observable-go}
+
+A narrow coherent transparency feature identifiable as EIT is obtained
+for the specified observable, normalization, and detection threshold.
+
+\subsection{Class VIII --- Tunable
+transition}\label{class-viii-tunable-transition}
+
+Fields, strain, polarization, cavities, or temperature move the
+configuration among Classes II--VII.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{13. Standard Procedure for Applying the Theory to an Arbitrary
+Material}\label{standard-procedure-for-applying-the-theory-to-an-arbitrary-material}
+
+\subsection{Step 1 --- Fix the
+configuration}\label{step-1-fix-the-configuration}
+
+Specify the following uniquely.
+
+\begin{itemize}
+\tightlist
+\item
+  lower-state pair or lower manifold
+\item
+  operative excited manifold
+\item
+  probe/control frequencies and polarizations
+\item
+  field、strain、cavity orientation
+\item
+  temperature and bath condition
+\item
+  measured observable
+\item
+  targeted long-lived coherence sector \(\mathbb S\)
+\end{itemize}
+
+\subsection{Step 2 --- Construct the microscopic
+input}\label{step-2-construct-the-microscopic-input}
+
+The required inputs are listed below.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+category
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+required data
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+coherent structure & \(H_g,H_e\)、fine
+structure、Zeeman、Stark、strain、hyperfine \\
+optical coupling & complex dipole matrix elements、selection
+rules、polarization geometry \\
+excited dissipation & radiative decay、ISC、pure dephasing、orbital/spin
+relaxation \\
+ground dissipation & \(T_1,T_2,T_2^*\)、population exchange \\
+disorder & strain distribution、spectral diffusion、orientation
+distribution \\
+experimental & \(\Omega_c\)、optical depth、sample length、detection
+noise \\
+\end{longtable}
+
+Retain the complex phases, not only the absolute oscillator strengths.
+
+\subsection{Step 3 --- Define the full master
+equation}\label{step-3-define-the-full-master-equation}
+
+\[
+\dot\rho=\mathcal L(\rho)
+\]
+
+Construct the equation and distinguish, for every jump operator,
+
+\begin{itemize}
+\tightlist
+\item
+  jumps within a manifold
+\item
+  loss out of the manifold
+\item
+  correlated jump
+\item
+  quasi-static disorder
+\end{itemize}
+
+.
+
+\subsection{Step 4 --- Determine whether a reduced kernel is
+valid}\label{step-4-determine-whether-a-reduced-kernel-is-valid}
+
+If the fixed-ground optical-coherence block is invariant, use
+\(A_j^{-1}\). Otherwise, use the full Liouville-space resolvent.
+
+\subsection{Step 5 --- Compute the dark-state
+rank}\label{step-5-compute-the-dark-state-rank}
+
+\[
+\dim\mathcal D_{\rm dark}
+=N_g-\operatorname{rank}\Omega.
+\]
+
+\subsection{Step 6 --- Compute the matrix
+kernel}\label{step-6-compute-the-matrix-kernel}
+
+\[
+\mathbf K(z,T,\mathbf F)
+=C^\dagger A^{-1}C
+\]
+
+or its Liouville-space counterpart.
+
+At minimum, save
+
+\[
+S_1,S_2,K_{12},K_{21}
+\]
+
+on the same grid.
+
+\subsection{Step 7 --- Test the targeted sector
+zero}\label{step-7-test-the-targeted-sector-zero}
+
+Define the target sector \(\mathbb S\), and construct
+\(\chi_{\rm cut}^{(\mathbb S)}\) and \(\delta\chi_{\mathbb S}\). Test an
+exact no-go in the following order.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A reducing symmetry that separates the targeted cross-transfer
+\item
+  finite Krylov moments
+\item
+  adjugate numerator identity
+\item
+  symbolic group-theory selection rule
+\item
+  A numerical zero scan only as supporting evidence
+\end{enumerate}
+
+Do not use a zero of the total susceptibility as the no-go criterion.
+
+\subsection{Step 8 --- Determine the strong-damping
+order}\label{step-8-determine-the-strong-damping-order}
+
+\[
+M_0,M_1,\ldots
+\]
+
+Compute the moments and identify the first nonzero one. For multiple
+rates, use the experimentally relevant trajectory \(\Gamma_r(T)\).
+
+\subsection{Step 9 --- Compute the full response and the sector-resolved
+correction}\label{step-9-compute-the-full-response-and-the-sector-resolved-correction}
+
+At minimum, compute
+
+\[
+\chi_{\rm full},
+\quad
+\chi_{\rm cut}^{(\mathbb S)},
+\quad
+\delta\chi_{\mathbb S},
+\quad
+C_{\rm abs},
+\quad
+T
+\]
+
+and convert them to the experimental observable, such as fluorescence,
+when necessary.
+
+\subsection{Step 10 --- Distinguish EIT from
+ATS}\label{step-10-distinguish-eit-from-ats}
+
+Do not identify EIT from a transparency dip alone. At minimum, inspect
+
+\begin{itemize}
+\tightlist
+\item
+  ground-coherence dependence
+\item
+  control-power dependence
+\item
+  pole/eigenmode structure
+\item
+  two-photon linewidth
+\item
+  the difference from the pathway-cut response
+\item
+  the difference from the control-off response
+\end{itemize}
+
+. Autler--Townes splitting generated by a strong control must be
+reported separately from coherent dark-state EIT.
+
+\subsection{Step 11 --- Perform ensemble averaging
+correctly}\label{step-11-perform-ensemble-averaging-correctly}
+
+For a quasi-static parameter \(\xi\),
+
+\[
+\bar\chi(\omega)
+=\int d\xi\,P(\xi)\chi(\omega;\xi)
+\]
+
+and average the observable response. A simple substitution of an average
+Hamiltonian or average linewidth can be invalid.
+
+\subsection{Step 12 --- Report the classification and
+uncertainty}\label{step-12-report-the-classification-and-uncertainty}
+
+At minimum, output
+
+\[
+\{\text{class},m,K_{12},K_{21},\delta\chi_{\mathbb S},C_{\rm EIT},\text{threshold margin},\text{uncertainty}\}
+\]
+
+.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{14. Separation of the Markovian Main Scope, Static Broadening,
+and Out-of-Scope
+Extensions}\label{separation-of-the-markovian-main-scope-static-broadening-and-out-of-scope-extensions}
+
+\subsection{14.1 Fast Markovian dynamics}\label{fast-markovian-dynamics}
+
+When the system has the finite-dimensional time-independent GKSL
+generator and finite spectral gap assumed in the main theory, use
+resolvent, moment, and Schur-complement analyses.
+
+\subsection{14.2 Quasi-static disorder}\label{quasi-static-disorder}
+
+Slow strain fluctuations, orientation distributions, and static spectral
+diffusion are not ergodic fast damping. Compute the response for each
+configuration and then perform the ensemble average.
+
+Even for the same total linewidth,
+
+\begin{itemize}
+\tightlist
+\item
+  fast homogeneous exchange
+\item
+  static inhomogeneous broadening
+\end{itemize}
+
+can exhibit different EIT survival.
+
+\subsection{14.3 Frequency-dependent self-energy --- outside the main
+theorem}\label{frequency-dependent-self-energy-outside-the-main-theorem}
+
+A genuinely non-Markovian bath lies outside the main theorem of this
+version. For formal comparison, write
+
+\[
+A(z)=z-H_e-\Sigma(z)
+\]
+
+and retain the transfer-kernel definition
+
+\[
+K(z)=p^\dagger A(z)^{-1}c
+\]
+
+.
+
+However, to use the finite-moment theorem, one needs, for example, on
+the target band,
+
+\[
+\Sigma(z)=\Gamma D+\Sigma_0(z)
+\]
+
+and
+
+\[
+\operatorname{Re}D\ge d_{\min}I>0,
+\qquad
+\|D^{-1}\Sigma_0(z)\|/\Gamma<1
+\]
+
+or another uniformly accretive factorization. In a Hermitian model,
+\(D>0\) is a special case.
+
+Do not apply the finite-dimensional Cayley--Hamilton criterion without
+modification to an arbitrary non-Markovian bath, branch cut, or
+continuum.
+
+\subsection{14.4 Continuum excited manifolds --- controlled
+approximations
+only}\label{continuum-excited-manifolds-controlled-approximations-only}
+
+For a continuum or a very large vibronic manifold, use
+
+\begin{itemize}
+\tightlist
+\item
+  controlled truncation
+\item
+  tensor-network/open-system solver
+\item
+  spectral-density integral equation
+\item
+  operator-valued transfer function
+\end{itemize}
+
+. Apply the finite-dimensional classification only as a controlled
+approximation after demonstrating convergence with respect to
+truncation.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{15. Lifting a No-Go Condition by External
+Control}\label{lifting-a-no-go-condition-by-external-control}
+
+\subsection{15.1 Generic perturbation}\label{generic-perturbation}
+
+Add a sector-changing perturbation
+
+\[
+V_{\rm mix}=\lambda V_1+O(\lambda^2)
+\]
+
+to a system with an exact or leading-order no-go condition.
+
+If one insertion opens a path between the source and readout sectors and
+the reciprocal kernels \(K_{12}\) and \(K_{21}\) open at the same order,
+
+\[
+K_{12},K_{21}=O(\lambda\Gamma^{-2}),
+\qquad
+K_{12}K_{21}=O(\lambda^2\Gamma^{-4}).
+\]
+
+For a non-normal or nonreciprocal model, determine the orders of the two
+kernels separately.
+
+The canonical relative absorption contrast therefore scales as
+
+\[
+C_{\rm abs}=
+\begin{cases}
+O(\lambda^2\Gamma^{-3}), & y\ll1,\\
+O(\lambda^2\Gamma^{-2}), & y\gg1.
+\end{cases}
+\]
+
+\subsection{15.2 Control knobs}\label{control-knobs}
+
+Candidate controls for lifting a no-go condition or enhancing a go
+channel include
+
+\begin{itemize}
+\tightlist
+\item
+  transverse magnetic field
+\item
+  spin-orbit mixing
+\item
+  polarization rotation
+\item
+  strain-induced eigenvector mixing
+\item
+  cavity-selected submanifold
+\item
+  spectral selection
+\item
+  a Raman pathway through another manifold
+\end{itemize}
+
+.
+
+\subsection{15.3 General treatment of
+strain}\label{general-treatment-of-strain}
+
+Spin-scalar strain does not by itself generate a spin-changing first
+moment. It can nevertheless change
+
+\begin{itemize}
+\tightlist
+\item
+  detuning
+\item
+  orbital eigenvectors
+\item
+  spin-orbit admixture
+\item
+  branch linewidth
+\item
+  selected manifold
+\end{itemize}
+
+and therefore enhance or suppress an existing channel. No universal sign
+should be assigned to the effect of strain.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{16. Status of Representative Channels in the Present
+Theory}\label{status-of-representative-channels-in-the-present-theory}
+
+\subsection{\texorpdfstring{16.1 NV\(^{-}\) zero-field ZPL
+spin-\(\Lambda\)}{16.1 NV\^{}\{-\} zero-field ZPL spin-\textbackslash Lambda}}\label{nv--zero-field-zpl-spin-lambda}
+
+In a simplified parity- or sector-preserving model, a spin-scalar dipole
+and a common spin basis can produce an exact sector zero.
+
+In the physical full \(^{3}E\) model, transverse spin--orbit coupling,
+nonsecular spin--spin coupling, hyperfine coupling, and related terms
+can break the sector. The defensible statement is therefore the
+asymptotic dissipative selection rule
+
+\[
+M_0=0,
+\qquad
+K=O(\Gamma^{-2})
+\]
+
+. An all-orders exact no-go requires either a reducing symmetry of the
+full generator or the vanishing of every moment.
+
+\subsection{16.2 NV transverse-field
+channel}\label{nv-transverse-field-channel}
+
+If a weak transverse field is parameterized by
+\(\lambda\propto B_\perp\), the simplified model gives
+
+\[
+K_{\rm even}=O(B_\perp\Gamma^{-2}),
+\qquad
+|K_{\rm even}|^2=O(B_\perp^2\Gamma^{-4})
+\]
+
+. Even when an odd channel vanishes in a parity-preserving model, the
+residual generated by realistic perturbations must be evaluated
+separately.
+
+The numerical result currently obtained in the simplified model is
+
+\begin{itemize}
+\tightlist
+\item
+  \(M_0=0\)
+\item
+  even channel: \(M_1\simeq139\,\mathrm{MHz}\)
+\item
+  odd channel: \(M_1\simeq0\)
+\item
+  \(|K|\propto B_\perp\)
+\item
+  \(K\propto\Gamma^{-2}\)
+\end{itemize}
+
+. This is a model-specific result that has not yet been verified with
+the full microscopic NV Hamiltonian and is therefore not part of the
+universal theorem.
+
+\subsection{\texorpdfstring{16.3 Same-spin
+orbital-\(\Lambda\)}{16.3 Same-spin orbital-\textbackslash Lambda}}\label{same-spin-orbital-lambda}
+
+Within the same internal-spin sector, if
+
+\[
+d_1^\dagger D^{-1}d_2\neq0
+\]
+
+then
+
+\[
+K_{12}=O(\Gamma^{-1})
+\]
+
+and the channel is a leading-order kernel go. Candidate platforms such
+as group-IV centers, orbital doublets, and rare-earth crystal-field
+states require their own dipole tensors, phonon relaxation, and
+ground-coherence parameters before a practical-go classification can be
+made.
+
+\subsection{16.4 Atomic、rare-earth、molecular、quantum-dot
+systems}\label{atomicrare-earthmolecularquantum-dot-systems}
+
+The same framework can be used, although the dominant physics differs.
+
+\begin{itemize}
+\tightlist
+\item
+  atomic vapor: Doppler average、collisions、Zeeman manifold
+\item
+  rare-earth ion: crystal-field/hyperfine states、inhomogeneous
+  broadening、long optical lifetime
+\item
+  molecule: vibronic continuum、Franck--Condon phases、non-Markovian
+  bath
+\item
+  quantum dot: fine-structure splitting、charge noise、cavity and
+  polarization selection
+\end{itemize}
+
+These systems are classified by configuration tuple rather than by
+material name.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{17. Algorithmic decision tree}\label{algorithmic-decision-tree}
+
+The following is the standard classification algorithm.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{INPUT:}
+\NormalTok{  H\_g, H\_e, dipole vectors C, jump operators \{L\_mu\},}
+\NormalTok{  field/strain/polarization, temperature{-}dependent rates,}
+\NormalTok{  probe/control parameters, observable definition}
+
+\NormalTok{1. Build the full zeroth{-}order Liouvillian L\_c and solve rho\^{}(0).}
+\NormalTok{2. Restrict the first{-}order problem to the compatible trace{-}zero response space.}
+\NormalTok{3. Define the targeted long{-}lived coherence sector S and complementary response sector X.}
+\NormalTok{4. Test whether fixed{-}ground optical{-}coherence blocks are invariant.}
+\NormalTok{   {-} YES: construct reduced A\_j(z).}
+\NormalTok{   {-} NO: retain the full Liouville{-}space block.}
+\NormalTok{5. Compute optical dark{-}state dimension: N\_g {-} rank(Omega).}
+\NormalTok{6. Compute S\_i and K\_ij where the reduced kernel is valid.}
+\NormalTok{7. Construct chi\_full, pathway{-}cut chi\_cut, and delta\_chi\_S.}
+\NormalTok{8. Test exact targeted zero:}
+\NormalTok{   a. reducing symmetry of the targeted cross{-}transfer;}
+\NormalTok{   b. finite Krylov moments;}
+\NormalTok{   c. adjugate numerator identity;}
+\NormalTok{   d. Laurent/Drazin test at singular points.}
+\NormalTok{9. If not exact zero, decompose A = Gamma D + A\_0.}
+\NormalTok{10. Determine whether D is full rank.}
+\NormalTok{    {-} full rank: compute moment hierarchy and suppression order.}
+\NormalTok{    {-} singular: compute protected{-}subspace Schur complement.}
+\NormalTok{11. For multiple rates, follow the physical trajectory Gamma\_r(T).}
+\NormalTok{12. Compute observable absorption/transmission/fluorescence.}
+\NormalTok{13. Distinguish EIT from ATS and population/saturation effects.}
+\NormalTok{14. Ensemble{-}average static disorder at the response level.}
+\NormalTok{15. Compare contrast/SNR with the experimental threshold.}
+
+\NormalTok{OUTPUT:}
+\NormalTok{  optical dark{-}state rank,}
+\NormalTok{  exact/asymptotic targeted{-}kernel class and order,}
+\NormalTok{  K\_12, K\_21, S\_1, S\_2,}
+\NormalTok{  chi\_full, chi\_cut, delta\_chi\_S,}
+\NormalTok{  observable EIT contrast,}
+\NormalTok{  EIT/ATS label,}
+\NormalTok{  parameter margin and uncertainty,}
+\NormalTok{  exact assumptions and projectors used.}
+\end{Highlighting}
+\end{Shaded}
+
+A zero of the total response is not used as a no-go criterion. A no-go
+is identified as an identically vanishing targeted coherence feedback.
+
+\section{18. Final theorem package --- corrected finite-dimensional
+version}\label{final-theorem-package-corrected-finite-dimensional-version}
+
+\subsection{Theorem 1A --- Optical dark-subspace
+rank}\label{theorem-1a-optical-dark-subspace-rank-1}
+
+\[
+\mathcal D_{\rm opt}=\ker\Omega,
+\qquad
+\dim\mathcal D_{\rm opt}
+=N_g-\operatorname{rank}\Omega.
+\]
+
+This theorem concerns instantaneous optical decoupling and does not by
+itself guarantee stationary EIT.
+
+\subsection{Theorem 1B --- Stationary pure Lindblad dark
+state}\label{theorem-1b-stationary-pure-lindblad-dark-state}
+
+A pure state \(|D\rangle\langle D|\) is stationary if and only if it is
+a common eigenvector of every jump operator and an eigenvector of the
+shifted Hamiltonian. An EIT dark state additionally requires
+\(\Omega|D\rangle=0\).
+
+\subsection{Theorem 2A --- Full-to-reduced weak-probe
+susceptibility}\label{theorem-2a-full-to-reduced-weak-probe-susceptibility}
+
+The full linear response is
+
+\[
+\rho^{(1)}
+=-\mathcal L_c^\#\mathcal V_p\rho^{(0)}.
+\]
+
+. For a closed two-lower-state block, the Schur complement gives
+
+\[
+\Xi=S_1-
+\frac{\beta K_{12}K_{21}}
+{\gamma_g+\beta S_2}.
+\]
+
+\subsection{Theorem 2B --- Targeted full-Liouvillian sector-resolved EIT
+no-go}\label{theorem-2b-targeted-full-liouvillian-sector-resolved-eit-no-go-1}
+
+Write the first-order response block as
+
+\[
+\mathbb M=
+\begin{pmatrix}A&B\\C&G_g\end{pmatrix},
+\qquad
+S_g=G_g-CA^{-1}B
+\]
+
+. At a regular point,
+
+\[
+\delta\chi_{\mathbb S}
+=\chi_{\rm full}-\chi_{\rm cut}^{(\mathbb S)}
+=\chi_0d^\dagger A^{-1}BS_g^{-1}CA^{-1}b_p.
+\]
+
+If \(\delta\chi_{\mathbb S}\equiv0\) on the specified domain, the net
+source-to-detector contribution of the sector \(\mathbb S\) vanishes and
+the configuration is an exact \(\mathbb S\)-sector EIT no-go. The
+condition \(\chi_{\rm full}=0\) is not a no-go condition and may
+represent perfect EIT.
+
+\subsection{Theorem 3 --- Dissipative moment
+hierarchy}\label{theorem-3-dissipative-moment-hierarchy}
+
+If \(A_\Gamma=\Gamma D+A_0\), \(D\) is invertible, and the large-rate
+expansion converges, then a first nonzero moment \(M_m\) gives
+
+\[
+K_\Gamma
+=M_m\Gamma^{-m-1}
++O(\Gamma^{-m-2}).
+\]
+
+\subsection{Theorem 4 --- Exact finite-dimensional transfer
+zero}\label{theorem-4-exact-finite-dimensional-transfer-zero}
+
+For response dimension \(N\),
+
+\[
+M_0=\cdots=M_{N-1}=0
+\]
+
+is equivalent to finite Krylov orthogonality and to
+
+\[
+K_\Gamma=0
+\quad
+(\Gamma\notin\operatorname{spec}X)
+\]
+
+. This conclusion is not restricted to the Neumann-series convergence
+domain. For an EIT no-go application, choose \(K_\Gamma\) to be the
+targeted sector cross-transfer.
+
+\subsection{Theorem 5 --- Full-generator reducing-symmetry transfer
+zero}\label{theorem-5-full-generator-reducing-symmetry-transfer-zero}
+
+If the full Liouvillian or reduced generator has orthogonal reducing
+sectors and the source and detector lie in different sectors, the
+group-inverse/resolvent transfer vanishes exactly. To obtain an EIT
+no-go, define the source and detector for the targeted
+coherence-feedback transfer.
+
+\subsection{Theorem 6 --- Singular-damping protected
+channel}\label{theorem-6-singular-damping-protected-channel}
+
+Under \(D=D^\dagger\ge0\), the Schur complement on \(\ker D\) determines
+the leading response.
+
+\[
+K_\Gamma
+=p^\dagger P(PA_0P)^{-1}Pc+O(\Gamma^{-1}).
+\]
+
+If the leading scalar is nonzero, an \(O(1)\) protected channel remains.
+
+\subsection{Theorem 7 --- Adjugate, analytic identity, and singular
+transfer
+criterion}\label{theorem-7-adjugate-analytic-identity-and-singular-transfer-criterion}
+
+On the regular set of a connected holomorphic or real-analytic domain,
+
+\[
+p^\dagger\operatorname{adj}A(\theta)c\equiv0
+\]
+
+gives an exact transfer zero. At a singular point, distinguish Laurent
+pole coefficients, finite parts, removable continuations, and the Drazin
+inverse; do not interpret \(0/0\) as zero.
+
+\subsection{Corollary --- Symmetric two-branch hopping-rate
+map}\label{corollary-symmetric-two-branch-hopping-rate-map}
+
+\[
+\dot{(p_X-p_Y)}=-\Gamma_{XY}(p_X-p_Y)
+\]
+
+For the symmetric hopping model defined by
+
+\[
+\boxed{\gamma_{\rm oc}=\Gamma_{XY}/4}.
+\]
+
+\subsection{Corollary --- Weak sector-breaking
+control}\label{corollary-weak-sector-breaking-control}
+
+the additional damping of each optical coherence is
+
+\[
+K_{12},K_{21}=O(\lambda\Gamma^{-2})
+\]
+
+If reciprocal kernels open at the same order through one sector-changing
+insertion,
+
+\[
+O(\lambda^2\Gamma^{-3})
+\quad\text{or}\quad
+O(\lambda^2\Gamma^{-2})
+\]
+
+. In a nonreciprocal model, evaluate \(K_{12}\) and \(K_{21}\)
+separately.
+
+\section{19. Falsifiable predictions and standard
+outputs}\label{falsifiable-predictions-and-standard-outputs}
+
+To make the theory experimentally falsifiable, output the following
+quantities for every material.
+
+\subsection{19.1 Thermal/damping
+collapse}\label{thermaldamping-collapse}
+
+\[
+K_{12}(T),\quad K_{21}(T),\quad
+\delta\chi_{\mathbb S}(T),\quad C_{\rm EIT}(T)
+\]
+
+as functions of the material-specific fast-rate ratio
+
+\[
+x(T)=\Gamma_{\rm fast}(T)/\Delta_{\rm sel}
+\]
+
+. Use a single universal crossover function only within the model class
+for which it has been derived.
+
+\subsection{19.2 External-field opening}\label{external-field-opening}
+
+At small field, measure scaling laws such as
+
+\[
+|K|^2\propto B_\perp^2
+\]
+
+and the exponent associated with the relevant visibility branch.
+
+\subsection{19.3 Polarization null test}\label{polarization-null-test}
+
+Compare a polarization for which symmetry enforces a zero with one for
+which the response is nonzero.
+
+\subsection{19.4 Fast exchange vs static
+broadening}\label{fast-exchange-vs-static-broadening}
+
+Test whether two conditions with the same observed linewidth exhibit
+different EIT survival.
+
+\subsection{19.5 Material comparison
+table}\label{material-comparison-table}
+
+For each configuration, construct
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1429}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1905}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1905}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1429}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1905}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1429}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+configuration
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+dark rank
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+first nonzero moment
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+targeted sector class
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+predicted contrast
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+evidence status
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+material/channel A & & & exact/asymptotic/go & & measured/predicted \\
+\end{longtable}
+
+.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{20. Current Theoretical
+Limitations}\label{current-theoretical-limitations}
+
+The following lie outside the integrated theory or require additional
+proof.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  A finite-moment exact theorem for an arbitrary infinite-dimensional
+  non-Markovian bath
+\item
+  A simple kernel formula under arbitrary strong-probe saturation
+\item
+  Collective EIT for which propagation, cavity feedback, or many-body
+  interactions cannot be neglected
+\item
+  Inferring an all-orders exact zero from a numerical zero
+\item
+  Inferring observable EIT directly from \(K\neq0\)
+\item
+  Classifying EIT, CPT, STIRAP, Raman transfer, and quantum memory under
+  one identical condition
+\item
+  Assigning one go/no-go label to an entire material family
+\item
+  Defining a unique full-Liouvillian EIT no-go without specifying the
+  coherence-sector partition
+\item
+  Interpreting a zero of the total susceptibility as an EIT no-go
+\end{enumerate}
+
+STIRAP requires not only a nonzero Raman kernel but also a
+time-dependent dark eigenstate, a counterintuitive pulse sequence, and
+an adiabatic gap.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{21. Theory-completion audit and remaining validation
+tasks}\label{theory-completion-audit-and-remaining-validation-tasks}
+
+\subsection{21.1 Completion status}\label{completion-status}
+
+The term ``completed'' in this version refers only to the stated
+assumptions of finite dimensionality, Markovian GKSL dynamics, a
+stationary rotating frame, weak probing, and an analytic parameter
+domain.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+requested item
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+status in v6.2
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+exact scope
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Dark-state theorem & \textbf{completed} & Separates optical nullity from
+a stationary Lindblad dark state and gives necessary and sufficient
+conditions \\
+Exact finite-dimensional transfer-zero proof & \textbf{completed} &
+Extended to every invertible \(\Gamma\) using Cayley--Hamilton, Krylov,
+and adjugate arguments \\
+Full-Liouvillian EIT no-go definition & \textbf{completed} & Defined as
+the sector-resolved condition \(\delta\chi_{\mathbb S}\equiv0\), not as
+a zero of the total susceptibility \\
+Adjugate singularities & \textbf{completed} & Separates the regular
+domain, Laurent poles, finite parts, removable continuations, and Drazin
+treatment \\
+Weak-probe susceptibility & \textbf{completed} & Derived from the
+full-Liouvillian group inverse and proved in scalar/matrix
+Schur-complement form \\
+Singular ground block & \textbf{completed} & Uses \(S_g=G_g-CA^{-1}B\)
+without requiring \(G_g^{-1}\) \\
+\(\Gamma_{XY}\) mapping & \textbf{completed for the stated convention} &
+For a symmetric population-imbalance rate,
+\(\gamma_{\rm oc}=\Gamma_{XY}/4\) \\
+Scope of \(D>0\) & \textbf{completed} & Separates invertibility, strict
+accretivity, and the Hermitian singular theorem \\
+Full-generator symmetry & \textbf{completed as a transfer theorem} &
+Audits every jump operator, the steady-state projector, source, and
+detector, not only the Hamiltonian \\
+Analytic identity condition & \textbf{completed} & Restricted to
+holomorphic or real-analytic domains, without overextending to smooth
+dependence \\
+Sector dependence & \textbf{completed} & States the \(\mathbb S\)
+dependence, block-preserving basis invariance, and dependence under
+sector mixing \\
+Textbook \(\Lambda\) recovery & \textbf{completed} & Recovers the
+standard three-level susceptibility exactly \\
+Mishina-type recovery & \textbf{completed} & Recovers the diagonal
+multi-excited resolvent sum and inhomogeneous averaging \\
+Full/reduced unit test & \textbf{completed} & Compares a physical
+three-level GKSL Liouvillian with the Schur formula to machine
+precision \\
+\end{longtable}
+
+\subsection{21.2 Theoretical conditions for proceeding to numerical
+calculations}\label{theoretical-conditions-for-proceeding-to-numerical-calculations}
+
+The present version satisfies the following conditions.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Optical dark states and stationary dark states are not conflated.
+\item
+  An exact transfer zero does not depend on the convergence domain of
+  the large-rate series.
+\item
+  An ordinary inverse is not used for a singular Liouvillian.
+\item
+  The reduced susceptibility is identified as the Schur complement of
+  the full first-order response.
+\item
+  A Schur complement valid for singular \(G_g\) is used.
+\item
+  The coefficient relating a population-hopping rate to an
+  optical-coherence damping rate is derived from the jump convention.
+\item
+  The use of positivity assumptions is restricted to the locations where
+  they are required.
+\item
+  The symmetry theorem is formulated as a reducing-sector transfer
+  theorem for the full generator.
+\item
+  A zero of the total response is separated from an EIT no-go.
+\item
+  The targeted sector \(\mathbb S\), \(\chi_{\rm cut}^{(\mathbb S)}\),
+  and \(\delta\chi_{\mathbb S}\) are explicitly specified.
+\item
+  The sector dependence and block-preserving basis invariance of
+  \(\delta\chi_{\mathbb S}\) are stated explicitly.
+\item
+  The textbook \(\Lambda\) model and a Mishina-type diagonal multilevel
+  response are recovered as special cases.
+\item
+  Unit tests comparing the full GKSL Liouvillian and reduced formula
+  have been completed to machine precision.
+\end{enumerate}
+
+Accordingly, there is no need to prioritize further abstract
+generalization before proceeding to material-specific numerical
+calculations.
+
+\subsection{21.3 Completed full-Liouvillian and reduced-formula unit
+tests}\label{completed-full-liouvillian-and-reduced-formula-unit-tests}
+
+The core regression script \texttt{eit\_unit\_tests\_v6\_2.py}
+independently verifies the following results using double-precision
+complex arithmetic.
+
+\subsubsection{\texorpdfstring{Test U1 --- Physical three-level GKSL
+Liouvillian vs reduced \(\Lambda\)
+formula}{Test U1 --- Physical three-level GKSL Liouvillian vs reduced \textbackslash Lambda formula}}\label{test-u1-physical-three-level-gksl-liouvillian-vs-reduced-lambda-formula}
+
+Using the basis \((|g_1\rangle,|g_2\rangle,|e\rangle)\),
+
+\[
+\gamma_{31}=0.73,
+\quad
+\gamma_{21}=0.041,
+\quad
+\Delta_p=0.37,
+\quad
+\delta_2=-0.083,
+\quad
+\Omega_c=1.16
+\]
+
+was adopted. A full GKSL Liouvillian containing excited-state decay
+jumps and a \(|g_2\rangle\to|g_1\rangle\) relaxation jump was
+constructed, and the zeroth-order steady state and trace-zero
+first-order response were solved directly.
+
+\[
+\rho_{eg_1,\rm full}^{(1)}
+=-0.09734305655387952
++0.06276778568576767i,
+\]
+
+\[
+\rho_{eg_1,\rm reduced}^{(1)}
+=-0.09734305655387981
++0.06276778568576774i.
+\]
+
+\[
+\boxed{
+\varepsilon_{\rm rel}=2.996\times10^{-16}
+}
+\]
+
+Thus, the full-Liouvillian weak-probe solution and the reduced formula
+of Section 9.6 agree to machine precision.
+
+\subsubsection{Test U2 --- Textbook perfect-EIT
+limit}\label{test-u2-textbook-perfect-eit-limit}
+
+\[
+\gamma_{21}=\delta_2=0,
+\qquad
+\beta>0
+\]
+
+one obtains
+
+\[
+\Xi_{\rm full}=0,
+\qquad
+\Xi_{\rm cut}=A^{-1},
+\qquad
+\delta\Xi_{\mathbb S}=-A^{-1}\neq0.
+\]
+
+For the numerical example \(A=0.9-0.2i\),
+
+\[
+\Xi_{\rm cut}=1.0588235294+0.2352941176i.
+\]
+
+This fixes the convention so that a zero of the total susceptibility is
+not misidentified as a no-go.
+
+\subsubsection{Test U3 --- Mishina-type diagonal multi-excited-state
+recovery}\label{test-u3-mishina-type-diagonal-multi-excited-state-recovery}
+
+For a random complex diagonal generator with four excited branches, the
+kernel sum of Section 9.7 was compared with direct inversion of the
+\((N_e+1)\)-dimensional block.
+
+\[
+\Xi_{\rm kernel}
+=1.9240573122129712-0.06390491266120876i,
+\]
+
+\[
+\Xi_{\rm direct}
+=1.9240573122129716-0.06390491266120868i,
+\]
+
+\[
+\boxed{
+\varepsilon_{\rm rel}=2.347\times10^{-16}
+}.
+\]
+
+\subsubsection{Test U4 --- Block-preserving basis
+invariance}\label{test-u4-block-preserving-basis-invariance}
+
+For a random \(3\oplus2\) block system, independent unitaries
+\(U_X\oplus U_S\) were applied.
+
+\[
+\boxed{
+\frac{|\delta\chi_{\mathbb S}'-\delta\chi_{\mathbb S}|}
+{\max(1,|\delta\chi_{\mathbb S}|)}
+=2.734\times10^{-16}
+}.
+\]
+
+\subsubsection{Test U5 --- Sector-mixing
+dependence}\label{test-u5-sector-mixing-dependence}
+
+After a unitary transformation mixing \(X\) and \(S\), the coordinate
+cut was redefined, yielding
+
+\[
+\delta\chi_{\rm before}
+=-0.0049367+0.1224286i,
+\]
+
+\[
+\delta\chi_{\rm after\ recut}
+=-0.2348257-0.0281825i,
+\]
+
+\[
+|\Delta|=0.2748321.
+\]
+
+This numerically confirms that \(\delta\chi_{\mathbb S}\) is invariant
+under basis changes within the sectors but depends on the physical
+definition of the sector.
+
+\subsubsection{Existing algebraic regression
+tests}\label{existing-algebraic-regression-tests}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4286}}
+  >{\raggedleft\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5714}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+test
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+result
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+exact Krylov transfer zero & residual \(0\) \\
+one-insertion hierarchy & fitted slope \(-2.0000000000000004\) \\
+symmetric hopping map & \(\gamma_{\rm oc}-\Gamma_{XY}/4=0\) \\
+scalar weak-probe Schur complement & relative residual
+\(1.62\times10^{-16}\) \\
+matrix Schur complement with singular \(G_g\) & residual \(0\) \\
+Drazin finite part & regularization error \(2.50\times10^{-4}\) at
+finite shift \\
+symmetry-projector transfer zero & residual \(0\) \\
+\end{longtable}
+
+These tests are consistency checks of the finite-dimensional theorems
+and solver architecture; they do not replace validation of the
+material-specific Hamiltonian, jump set, rate convention, or observable
+model.
+
+\subsection{21.4 Remaining material-specific numerical and model
+validation}\label{remaining-material-specific-numerical-and-model-validation}
+
+\subsubsection{Priority A --- Material-solver regression and observable
+validation}\label{priority-a-material-solver-regression-and-observable-validation}
+
+The core full/reduced unit tests are complete. When moving to a material
+model, maintain the following as regression tests for every parameter
+set.
+
+\begin{itemize}
+\tightlist
+\item
+  Domain of agreement between the full-Liouvillian group/Drazin solve
+  and the reduced block
+\item
+  Reconstruction error among \(\chi_{\rm full}\),
+  \(\chi_{\rm cut}^{(\mathbb S)}\), and \(\delta\chi_{\mathbb S}\)
+\item
+  Krylov exact-zero and Laurent/singular-point tests
+\item
+  Nonnormal resolvent norm and condition number
+\item
+  EIT/ATS pole-residue classifier
+\item
+  Audit of truncation dimension, steady-state uniqueness, and trace
+  preservation
+\end{itemize}
+
+\subsubsection{Priority B --- NV microscopic
+audit}\label{priority-b-nv-microscopic-audit}
+
+\begin{itemize}
+\tightlist
+\item
+  full six-level \(^{3}E\) Hamiltonian
+\item
+  physical complex dipole vectors
+\item
+  Mapping of \(k_{X\leftrightarrow Y}(T)\) from the jump convention
+\item
+  full-generator symmetry audit table
+\item
+  Verification of \(M_0,M_1\) and the predicted suppression order
+\item
+  transverse-field／strain symmetry breaking
+\item
+  Comparison of
+  \(\chi_{\rm full},\chi_{\rm cut}^{(\mathbb S)},\delta\chi_{\mathbb S}\)
+\end{itemize}
+
+\subsubsection{Priority C --- Cross-material
+validation}\label{priority-c-cross-material-validation}
+
+Using the same solver and observable normalization, demonstrate
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  exact targeted no-go case
+\item
+  asymptotic no-go case
+\item
+  a leading-order or protected go case
+\item
+  experimentally established EIT benchmark
+\item
+  field/polarization tunable escape case
+\end{enumerate}
+
+.
+
+\textbf{Assessment:} Within the stated assumptions, the principal
+mathematical inconsistencies in the general theory have been corrected.
+The main remaining work is not the addition of further abstract
+theorems, but the validation of microscopic inputs and solvers and the
+production of material-specific numerical predictions.
+
+\section{22. Recommended Central Claim of the
+Paper}\label{recommended-central-claim-of-the-paper}
+
+\subsection{English}\label{english}
+
+\begin{quote}
+For any finite-dimensional Markovian open quantum emitter admitting a
+stationary rotating-frame weak-probe response, and for a physically
+specified long-lived sector S, the S-mediated probe-response
+modification is a finite-dimensional transfer function. Exact S-sector
+no-go corresponds to an identically vanishing sector-resolved
+correction, not to a vanishing total susceptibility. The framework
+recovers the textbook three-level Lambda susceptibility and the diagonal
+multi-excited-state Mishina-type response. Fast full-rank damping
+produces a hierarchy whose suppression order is fixed by the first
+nonvanishing resolvent moment, while observable EIT requires the full
+Liouvillian visibility budget.
+\end{quote}
+
+\subsection{Japanese version}\label{japanese-version}
+
+\begin{quote}
+For a finite-dimensional Markovian open quantum emitter admitting a
+weak-probe response in a stationary rotating frame, the probe-response
+modification mediated by a physically specified long-lived sector \(S\)
+is a finite-dimensional transfer function. If this sector-resolved
+correction vanishes identically, the system is an exact \(S\)-sector
+no-go; a zero of the total susceptibility is not a no-go condition. The
+framework recovers the textbook three-level \(\Lambda\) susceptibility
+and a Mishina-type diagonal multi-excited-state response as special
+cases. Under strong full-rank damping, the first nonzero resolvent
+moment determines the suppression order, while observable EIT requires a
+separate visibility condition based on the full Liouvillian.
+\end{quote}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{23. Final Conclusion}\label{final-conclusion}
+
+The theory has been extended from an NV-specific no-go argument to a
+material-independent framework containing the following elements.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Hilbert-space dark-state rank
+\item
+  basis-invariant matrix resolvent kernel
+\item
+  full Liouville-space pathway-resolved response correction
+\item
+  a moment hierarchy for full-rank damping
+\item
+  exact Krylov/adjugate/symmetry transfer-zero criteria
+\item
+  protected channels under singular damping
+\item
+  multiple-rate and external-field phase diagram
+\item
+  observable-specific EIT visibility
+\item
+  separation of static broadening from fast dynamics
+\item
+  a channel-resolved taxonomy
+\end{enumerate}
+
+The theory can therefore be applied to arbitrary materials. The final
+classification, however, is performed not by material name but for each
+configuration after fixing the material, lower-state pair, excited
+manifold, polarizations, external fields, temperature, observable, and
+targeted coherence sector. An exact EIT no-go is
+\(\delta\chi_{\mathbb S}\equiv0\), not \(\chi_{\rm full}=0\). This is
+the strongest generalization that does not overstate the theory.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Appendix A. Notation}\label{appendix-a.-notation}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+symbol
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+meaning
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(\mathcal H_g,\mathcal H_e\) & lower and excited manifolds \\
+\(\Omega\) & instantaneous optical coupling map \\
+\(C\) & matrix of dipole coupling vectors \\
+\(A(z)\) & optical-coherence generator \\
+\(G=A^{-1}\) & resolvent/Green operator \\
+\(K_{ab}\) & off-diagonal coherent-response kernel \\
+\(S_a\) & diagonal optical response \\
+\(D\) & fast damping-shape operator \\
+\(\Gamma\) & fast optical-coherence damping scale \\
+\(M_n=p^\dagger X^n\nu\) & resolvent moment \\
+\(Q\) & reducing symmetry operator \\
+\(P=\operatorname{Proj}(\ker D)\) & protected-subspace projector \\
+\(\gamma_g\) & complex lower-coherence decay/detuning \\
+\(\beta=|\Omega_c|^2/4\) & control intensity parameter \\
+\(\Xi\) & normalized full local probe response \\
+\(\chi_{\rm cut}^{(\mathbb S)}\) & algebraic counterfactual response
+obtained by cutting the cross-feedback with the specified sector \\
+\(\delta\chi_{\mathbb S}\) &
+\(\chi_{\rm full}-\chi_{\rm cut}^{(\mathbb S)}\), sector-mediated
+response modification \\
+\(C_{\rm abs}\) & specified relative absorption contrast \\
+\end{longtable}
+
+\section{Appendix B. Proof-repair
+ledger}\label{appendix-b.-proof-repair-ledger}
+
+The principal points corrected and fixed in this version are as follows.
+
+\begin{itemize}
+\tightlist
+\item
+  The dark-state rank is restricted to an optical-nullity theorem, while
+  the full Lindblad necessary and sufficient conditions for a stationary
+  pure state are retained.
+\item
+  The moment symbol is standardized as \(\nu=D^{-1}c\).
+\item
+  An exact transfer zero is proved through the Krylov/Cayley--Hamilton
+  equivalence.
+\item
+  The adjugate criterion is restricted to an analytic regular domain.
+\item
+  At singular points, finite parts, removable continuations, and
+  ordinary inverses are distinguished.
+\item
+  The weak-probe formula is derived from the full-Liouvillian
+  group-inverse response.
+\item
+  The formulation is corrected to use \(S_g=G_g-CA^{-1}B\), without
+  requiring the inverse of the scalar ground block.
+\item
+  The full-Liouvillian EIT no-go is corrected from \(\chi_{\rm full}=0\)
+  to \(\delta\chi_{\mathbb S}\equiv0\).
+\item
+  The ideal \(\Lambda\) system is added as a counterexample, confirming
+  that a zero total response may represent perfect EIT.
+\item
+  The \(\Gamma_{XY}/4\) mapping is verified explicitly for symmetric
+  two-branch hopping.
+\item
+  The locations requiring \(D>0\) are separated from those requiring
+  only invertibility or strict accretivity.
+\item
+  The symmetry theorem is positioned as a generic transfer-zero theorem,
+  and its use for an EIT no-go is restricted to the targeted
+  cross-transfer.
+\item
+  Reciprocal and nonreciprocal kernels are distinguished in weak
+  sector-breaking scaling.
+\end{itemize}
+
+\section{Appendix C. Provenance and integration
+status}\label{appendix-c.-provenance-and-integration-status}
+
+This integrated version is based on the v6.0 theory package and
+incorporates into the v6.1 proof-corrected formulation the sector
+dependence, recovery of standard models, Markovian scope, and
+full/reduced unit tests.
+
+The main integrated elements are as follows.
+
+\begin{itemize}
+\tightlist
+\item
+  Excited-confined jumps in the optical-coherence block are treated as
+  full-rank damping.
+\item
+  Exact dark states, coherent pathways, and observable EIT are
+  separated.
+\item
+  Exact transfer zeros are classified by finite moments, Krylov
+  orthogonality, adjugate identities, and reducing symmetries.
+\item
+  An EIT no-go is defined as an identically vanishing pathway-cut
+  correction \(\delta\chi_{\mathbb S}\) for a physically specified
+  sector \(\mathbb S\).
+\item
+  A zero of the total susceptibility is excluded from the no-go
+  condition.
+\item
+  A singular ground-coherence block is handled by the \(A\)-side Schur
+  complement.
+\item
+  Multiple rates, singular damping, and static disorder are treated
+  within the main scope, while non-Markovian extensions are stated
+  explicitly to be outside it.
+\item
+  No-go/go classifications are made at the configuration/channel level
+  rather than the material level.
+\end{itemize}
+
+\textbf{Integration status:} Within the stated finite-dimensional
+Markovian stationary weak-probe assumptions, the theory has been
+corrected into an integrated form suitable for numerical calculations.
+Material-specific conclusions must be finalized only after numerical
+validation of each Hamiltonian, dipole operator, jump operator, rate,
+and observable model.
+
+\end{document}
