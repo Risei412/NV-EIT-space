@@ -1,0 +1,180 @@
+{
+  "primary_claim": "Transverse-field brightening of a shared excited branch extends observable NV spin-Lambda EIT to approximately 90 K, followed by a dissipation-driven sign reversal at 101.44 K and room-temperature practical no-go.",
+  "candidate": {
+    "T": 70.0,
+    "Bx": 0.23226114680059184,
+    "Bz": 0.005,
+    "Oc": 0.1,
+    "j": 3,
+    "z": 0.26283146149918846,
+    "pp": 0.11262551378825135,
+    "cc": 0.42372620549465234,
+    "joint": 0.21845452982115385,
+    "C": 0.013600149740747292,
+    "Acut": 0.008676964579288187,
+    "dA": 0.00011800801757347968
+  },
+  "excited_manifold_spread_GHz": 18.739621659233123,
+  "thresholds": {
+    "0.01": [
+      71.31455440980206
+    ],
+    "0.001": [
+      80.96239255277767
+    ],
+    "0.0001": [
+      90.27853899530386
+    ],
+    "0.0": [
+      101.44123823846583
+    ],
+    "dA_0.0001": [
+      70.64755353922347
+    ],
+    "dA_1e-05": [
+      79.14682335244399
+    ],
+    "dA_1e-06": [
+      87.19917981001866
+    ]
+  },
+  "threshold_rows": [
+    {
+      "quantity": "0.01",
+      "T_K": 71.31455440980206,
+      "gamma_oc_GHz": 79.01443334804547,
+      "gamma_over_excited_spread": 4.216436958273093
+    },
+    {
+      "quantity": "0.001",
+      "T_K": 80.96239255277767,
+      "gamma_oc_GHz": 143.85320291744185,
+      "gamma_over_excited_spread": 7.676419808964741
+    },
+    {
+      "quantity": "0.0001",
+      "T_K": 90.27853899530386,
+      "gamma_oc_GHz": 236.35821112830445,
+      "gamma_over_excited_spread": 12.612752563862427
+    },
+    {
+      "quantity": "0.0",
+      "T_K": 101.44123823846583,
+      "gamma_oc_GHz": 393.2377879276355,
+      "gamma_over_excited_spread": 20.984297072715176
+    },
+    {
+      "quantity": "dA_0.0001",
+      "T_K": 70.64755353922347,
+      "gamma_oc_GHz": 75.53053916731696,
+      "gamma_over_excited_spread": 4.030526364981473
+    },
+    {
+      "quantity": "dA_1e-05",
+      "T_K": 79.14682335244399,
+      "gamma_oc_GHz": 129.43377161873917,
+      "gamma_over_excited_spread": 6.906957566828271
+    },
+    {
+      "quantity": "dA_1e-06",
+      "T_K": 87.19917981001866,
+      "gamma_oc_GHz": 202.18089554233183,
+      "gamma_over_excited_spread": 10.788952905178643
+    }
+  ],
+  "room_temperature_common_branch_scan": {
+    "min_C": {
+      "T": 300.0,
+      "Bx": 0.25,
+      "Bz": 0.02,
+      "Oc": 10.0,
+      "j": 0,
+      "z": -10.065902953762572,
+      "pp": 0.8632634556956444,
+      "cc": 0.102129760266617,
+      "joint": 0.29692573107955383,
+      "C": -3.3008457372094514e-06,
+      "Acut": 7.490861231627572e-05,
+      "dA": -2.4726177364445413e-10,
+      "ctrl": "-1",
+      "polarization": "YX"
+    },
+    "max_C": {
+      "T": 300.0,
+      "Bx": 0.07500000000000001,
+      "Bz": 0.0425,
+      "Oc": 0.01,
+      "j": 2,
+      "z": -1.890589925035361,
+      "pp": 0.3608827750083038,
+      "cc": 0.3401568296718159,
+      "joint": 0.3503665803554783,
+      "C": -4.4007689186053595e-14,
+      "Acut": 7.490865825671572e-05,
+      "dA": -3.2965569499058527e-18,
+      "ctrl": "+1",
+      "polarization": "YY"
+    },
+    "max_abs": {
+      "T": 300.0,
+      "Bx": 0.25,
+      "Bz": 0.02,
+      "Oc": 10.0,
+      "j": 0,
+      "z": -10.065902953762572,
+      "pp": 0.8632634556956444,
+      "cc": 0.102129760266617,
+      "joint": 0.29692573107955383,
+      "C": -3.3008457372094514e-06,
+      "Acut": 7.490861231627572e-05,
+      "dA": -2.4726177364445413e-10,
+      "ctrl": "-1",
+      "polarization": "YX"
+    },
+    "n": 1348
+  },
+  "candidate_moments_angular": [
+    {
+      "n": 0,
+      "real": 1.9050458902250786e-16,
+      "imag": -8.294032884890455e-33,
+      "abs": 1.9050458902250786e-16
+    },
+    {
+      "n": 1,
+      "real": 2.0683080164525416,
+      "imag": -1.9721522630525295e-31,
+      "abs": 2.0683080164525416
+    },
+    {
+      "n": 2,
+      "real": -763.5762428464881,
+      "imag": 2.524354896707238e-29,
+      "abs": 763.5762428464881
+    },
+    {
+      "n": 3,
+      "real": 11531.669476883844,
+      "imag": -2.4233807008389483e-27,
+      "abs": 11531.669476883844
+    }
+  ],
+  "candidate_kernel_high_gamma_slope": -2.000182411949565,
+  "two_photon_resonance_70K": {
+    "center_MHz": 0.025000000000000716,
+    "FWHM_MHz": 0.3904845858163839,
+    "maximum_depth": 0.00012042310610136525,
+    "maximum_relative_depth": 0.013878483080225289
+  },
+  "conditions": {
+    "channel": "ms=0 to ms=+1",
+    "probe_polarization": "Y linear",
+    "control_polarization": "Y linear",
+    "Omega_c_GHz": 0.1,
+    "Bz_T": 0.005,
+    "Bx_T": 0.23226114680059184,
+    "strain_GHz": 1.683,
+    "branch_index": 3,
+    "branch_rule": "exact excited eigenenergy; probe and control oscillator weights each >= 0.1"
+  }
+}
