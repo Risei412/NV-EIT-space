@@ -1,0 +1,33 @@
+{
+  "phaseA_self_check": {
+    "max_err_full": 3.7238012298709097e-16,
+    "max_err_cut": 1.5700924586837752e-16
+  },
+  "gate3_eit_ats_background_separation": {
+    "EIT_typical": {
+      "Omega_c_over_g31": 0.3,
+      "gamma21_over_g31": 0.005,
+      "classified_as": "EIT-dominant",
+      "W_S": 0.01971681012791917,
+      "peak_sep_ratio": 0.0,
+      "eta_S(0)": 4.499975250136123
+    },
+    "ATS_typical": {
+      "Omega_c_over_g31": 4.0,
+      "gamma21_over_g31": 0.005,
+      "classified_as": "ATS-dominant",
+      "W_S": 1.4533668089784002,
+      "peak_sep_ratio": 1.0,
+      "eta_S(0)": 799.3597128699912
+    },
+    "background_typical": {
+      "Omega_c_over_g31": 0.05,
+      "gamma21_over_g31": 0.9,
+      "classified_as": "background-dominant",
+      "W_S": 1.8922396310969193e-07,
+      "peak_sep_ratio": 0.0,
+      "eta_S(0)": 0.0006944437495184536
+    },
+    "passes": true
+  }
+}

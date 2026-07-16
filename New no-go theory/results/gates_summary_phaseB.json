@@ -1,0 +1,67 @@
+{
+  "gate1_classifier_consistency": {
+    "class_I": {
+      "max_abs_moment": 0.0,
+      "certificate": "Class I (exact, machine precision)",
+      "max_abs_F_over_gammas": 0.0
+    },
+    "class_II_nu1": {
+      "nu_moment_method": 1,
+      "nu_direct_fit": 0.9991350585295854,
+      "match": true
+    },
+    "class_II_nu2": {
+      "nu_moment_method": 2,
+      "nu_direct_fit": 1.9991139582255197,
+      "match": true
+    },
+    "class_II_nu4": {
+      "nu_moment_method": 4,
+      "nu_direct_fit": 3.997348250723515,
+      "match": true
+    },
+    "class_III": {
+      "F0_protected_coefficient": [
+        -0.06874272802202631,
+        0.35405828726466515
+      ],
+      "F_at_Gamma_max": [
+        -0.06874098853573757,
+        0.35405834473353665
+      ],
+      "relative_plateau_error": 4.8255620290195625e-06,
+      "match": true
+    }
+  },
+  "gate2_hidden_transition": {
+    "lambda_c": 0.7002192725870418,
+    "r0_at_lambda_c": [
+      -5.551115123125783e-17,
+      0.0
+    ],
+    "at_lambda_c": {
+      "lambda": 0.7002192725870418,
+      "nu_R_S_direct_fit": 0.999603563680295,
+      "nu_chi_full_direct_fit": -0.0001585616683298471,
+      "chi_full_plateau": 0.34852349512534886
+    },
+    "off_lambda_c": {
+      "lambda": 1.0002192725870418,
+      "nu_R_S_direct_fit": 8.456928782309226e-05,
+      "nu_chi_full_direct_fit": -0.00014323853766809853,
+      "chi_full_plateau": 0.3800699252304678
+    },
+    "passes": true
+  },
+  "gate4_scaling_collapse": {
+    "gammas_used": [
+      1000.0,
+      3000.0,
+      10000.0,
+      30000.0,
+      100000.0
+    ],
+    "relative_collapse_spread": 0.0006266950036818864,
+    "passes": true
+  }
+}
