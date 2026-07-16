@@ -53,3 +53,67 @@ Overall: **PASS**
 
 Requires human judgement per the priorities document; the numerical evidence above (Gates 1-4) is the input to that judgement.
 
+---
+
+# Metrological (QFI) extension: x_S, F_Q,S ~ Gamma^-2nu
+
+Tests the candidate prediction that the tangent-vector difference x_S = d(rho_full)/dtheta - d(rho_cut)/dtheta obeys ||x_S|| ~ Gamma^-nu, and that the sector-mediated quantum Fisher information F_Q,S = x_S^dagger G_rho x_S ~ Gamma^-2nu, translating the three-tier response classification into a three-tier metrological classification.
+
+## Gate M1: vector-valued readout preserves nu
+
+Overall: **PASS**
+
+- Class I (vector) floor: 0.00e+00
+- Class II d=0: nu = 0.9990 (expect 1)
+- Class II d=1: nu = 1.9991 (expect 2)
+- Class II d=3: nu = 3.9974 (expect 4)
+
+## Gate M2: exact vector hidden class transition (abstract, rank-1 cut)
+
+Overall: **PASS**
+
+- lambda_c0 = -1.564961 (closed-form leading-order root, no search needed)
+- at lambda_c: nu = 0.9990
+- off lambda_c: nu = -0.0001
+- scaling collapse relative spread: 1.13e-03
+
+The rank-1 (non-Hermitian, Sherman-Morrison) sector cut gives the difference x_S the fixed-direction-times-scalar structure needed for the *whole vector* to vanish together at a single real control value, confirming the vector generalization of the hidden class transition exactly, within the abstract scope of Theorem III (no Hermiticity assumed there).
+
+## Gate M3: nu -> 2nu QFI translation (physical 3-level Lindblad model)
+
+Overall: **PASS**
+
+- nu[x_S] (direct fit) = 1.9962
+- nu[F_Q,S] (direct fit, should be ~2*nu[x_S]) = 3.9954
+- ratio nu_F / (2 nu_x) = 1.0007
+- SLD minimum-eigenvalue range over the Gamma sweep: [2.4999998150299976e-08, 2.5018338732348353e-05]
+
+This is the core numerical confirmation of the user's prediction: in a genuine 3-level Lindblad master equation with a Gamma-scaled singular dissipator, the sector-mediated QFI decays exactly twice as fast (in the Gamma^-nu sense) as the tangent-vector norm itself.
+
+## Gate M4: physical (Hermitian-coupling) interior transition search
+
+Interior transition found: **False**
+
+- generic-point norm: 2.121e-12
+- best found (2D search) norm: 7.071e-13
+- suppression ratio vs. generic: 3.00
+
+No interior (non-trivial) exact or near-exact vector transition was found with a 2-real-parameter (amplitude, phase) physical Hermitian coupling cut; the leading-order response x_{S,0} lives in the 3-real-dimensional traceless-Hermitian slice of the protected block, so codimension counting predicts an interior zero generically requires 3 independent real controls. This is consistent with (not a failure of) the theory: it correctly predicts when a hidden transition is and is not achievable with a given control budget. The exact vector transition IS realized with a rank-1 (non-Hermitian) abstract cut in Gate M2.
+
+## Gate M5: rank-deficiency negative control
+
+Overall: **PASS**
+
+- normal_epsilon (epsilon=0.01): nu_x=1.9962, nu_F=3.9954, ratio=1.0007, min eigenvalue at Gamma_max = 2.50e-08
+- tiny_epsilon (epsilon=1e-06): nu_x=1.0126, nu_F=3.0138, ratio=1.4881, min eigenvalue at Gamma_max = 2.50e-12
+
+As epsilon -> 0 the steady state approaches a near-pure (rank-deficient) state, the SLD metric approaches singularity, and the clean nu_F = 2*nu_x relation degrades -- confirming that the 'full rank / non-singular SLD metric' assumption in the prediction is load-bearing, not decorative.
+
+## Phase M figures
+
+- `figures/figM1_vector_unit_test.png`
+- `figures/figM2_abstract_vector_transition.png`
+- `figures/figM3_qfi_translation.png`
+- `figures/figM4_physical_lambda_phi_scan.png`
+- `figures/figM5_rank_deficiency_control.png`
+

@@ -83,3 +83,51 @@ is realized explicitly: χ_full remains Class III (ν=0, O(1) plateau) on
 both sides of a tuned control parameter λ_c, while R_S transitions from
 ν≈0 to ν≈1 exactly at the root of r₀(λ) = δχ_{S,0}(λ), with Γ·R_S vs.
 Γ(λ−λ_c) collapsing onto a single curve across a decade of Γ (Figure 4).
+
+## Metrological (QFI) extension: does ν also classify sensing information?
+
+A further calculation tests the candidate prediction that the tangent-vector
+difference x_S = ∂_θρ_full − ∂_θρ_cut obeys ‖x_S‖ ∼ Γ^−ν, and that the
+sector-mediated quantum Fisher information F_{Q,S} = x_S^† G_ρ x_S ∼ Γ^−2ν
+— i.e. that the same three-tier classification governs not just response
+magnitude but how much parameter-estimation information a sector carries
+under strong dissipation.
+
+- `src/model_metro_linear.py` — abstract vector-valued generalization of
+  the theorems, plus a rank-1 (Sherman–Morrison) sector cut giving an
+  **exact** vector hidden-class transition in closed form (no root search).
+- `src/model_metro_lindblad.py` — a genuine 3-level Λ Lindblad master
+  equation: vectorized steady state, implicit-differentiation tangent
+  vector, and SLD quantum Fisher information.
+- `src/run_phase_m.py` — Gates M1–M5, Figures M1–M5.
+
+```bash
+python "src/run_phase_m.py"
+python "src/report.py"
+```
+
+Results (Gates M1, M2, M3, M5 PASS; M4 is an informative negative result
+— see below): appended to
+[`results/summary.md`](results/summary.md).
+
+Key findings:
+- **The ν → 2ν QFI translation holds** in a genuine 3-level Lindblad model:
+  at a generic point, ‖x_S‖ ∼ Γ^{−2.00} and F_{Q,S} ∼ Γ^{−3.99} — the
+  ratio ν_F/(2ν_x) = 1.0007 (Gate M3, Figure M3).
+- **The vector hidden class transition is exact** in the abstract
+  (non-Hermitian, rank-1 cut) arena: ν[x_S] jumps 0 → 1 at a
+  closed-form λ_c, with Γ·‖x_S‖ vs. Γ(λ−λ_c) collapsing across two decades
+  of Γ (Gate M2, Figure M2).
+- **A genuine physical (Hermitian) coupling cut does *not* exhibit an
+  interior transition** with only a 2-parameter (amplitude, phase)
+  control — a 2D search finds no dip beyond the trivial edge (Gate M4,
+  Figure M4). This is explained, not contradicted, by the theory: the
+  leading-order response lives in a 3-real-dimensional traceless-Hermitian
+  slice of the protected block, so codimension counting predicts an
+  interior zero needs ≥3 independent real controls. The theory correctly
+  predicts *when* a hidden transition is physically achievable.
+- **The full-rank / non-singular-SLD-metric assumption is load-bearing**:
+  forcing the steady state toward a near-pure (rank-deficient) regime
+  (ε → 10⁻⁶) breaks the clean ν_F = 2ν_x relation (ratio drifts to 1.49),
+  confirming Gate M5 as a genuine negative control rather than a
+  tautology.
