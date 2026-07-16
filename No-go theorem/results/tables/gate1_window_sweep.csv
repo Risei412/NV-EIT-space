@@ -1,0 +1,6 @@
+window_factor,half_MHz,delta_aic,verdict,best_model,frac_robust_eit_boot
+0.5,10.0,4266.7850844336135,robust EIT,Fano,1.0
+0.75,15.0,2911.5621825266753,robust EIT,Fano,1.0
+1.0,20.0,1902.159018821134,robust EIT,Fano,1.0
+1.5,30.0,834.1260372555953,robust EIT,Lorentzian,1.0
+2.0,40.0,419.76862283798255,robust EIT,Fano,1.0

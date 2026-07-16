@@ -1,0 +1,117 @@
+{
+  "seed": 20260716,
+  "n_samples": 500,
+  "priors": null,
+  "baseline": {
+    "T_1pct": 71.31455440980206,
+    "T_0.1pct": 80.9623925527777,
+    "T_0.01pct": 90.27853899530373,
+    "T_sign": 101.44123823846584
+  },
+  "sensitivity": {
+    "T_1pct": {
+      "spearman": {
+        "scale_orb": -0.9953186372745491,
+        "scale_rad": 0.06318802875211502,
+        "d_GHz": 0.0380565682262729,
+        "Bx_T": -0.04516443665774663,
+        "Bz_T": 0.046449785799143196,
+        "gg_GHz": -0.08239876159504637,
+        "Oc_GHz": 0.010200328801315205,
+        "pol_p_deg": 0.00609122436489746,
+        "pol_c_deg": 0.014593402373609492
+      },
+      "dominant": "scale_orb",
+      "ranking": [
+        "scale_orb",
+        "gg_GHz",
+        "scale_rad",
+        "Bz_T",
+        "Bx_T",
+        "d_GHz",
+        "pol_c_deg",
+        "Oc_GHz",
+        "pol_p_deg"
+      ]
+    },
+    "T_0.1pct": {
+      "spearman": {
+        "scale_orb": -0.9919132156528625,
+        "scale_rad": 0.06327702110808442,
+        "d_GHz": 0.04077405109620439,
+        "Bx_T": -0.0434001416005664,
+        "Bz_T": 0.046650042600170395,
+        "gg_GHz": -0.11075650702602807,
+        "Oc_GHz": 0.019653198612794447,
+        "pol_p_deg": 0.006080856323425293,
+        "pol_c_deg": 0.013785367141468566
+      },
+      "dominant": "scale_orb",
+      "ranking": [
+        "scale_orb",
+        "gg_GHz",
+        "scale_rad",
+        "Bz_T",
+        "Bx_T",
+        "d_GHz",
+        "Oc_GHz",
+        "pol_c_deg",
+        "pol_p_deg"
+      ]
+    },
+    "T_0.01pct": {
+      "spearman": {
+        "scale_orb": -0.9888312193248774,
+        "scale_rad": 0.06469033876135505,
+        "d_GHz": 0.0448438913755655,
+        "Bx_T": -0.04349431797727191,
+        "Bz_T": 0.04706975627902511,
+        "gg_GHz": -0.13065172260689042,
+        "Oc_GHz": 0.027972879891519566,
+        "pol_p_deg": 0.00635944943779775,
+        "pol_c_deg": 0.012792243168972676
+      },
+      "dominant": "scale_orb",
+      "ranking": [
+        "scale_orb",
+        "gg_GHz",
+        "scale_rad",
+        "Bz_T",
+        "d_GHz",
+        "Bx_T",
+        "Oc_GHz",
+        "pol_c_deg",
+        "pol_p_deg"
+      ]
+    },
+    "T_sign": {
+      "spearman": {
+        "scale_orb": -0.9978581354325416,
+        "scale_rad": 0.061864183456733814,
+        "d_GHz": 0.0660126480505922,
+        "Bx_T": -0.037122772491089966,
+        "Bz_T": 0.051095436381745525,
+        "gg_GHz": -0.036125616502466006,
+        "Oc_GHz": -0.010166344665378663,
+        "pol_p_deg": 0.007824703298813195,
+        "pol_c_deg": 0.019380845523382095
+      },
+      "dominant": "scale_orb",
+      "ranking": [
+        "scale_orb",
+        "d_GHz",
+        "scale_rad",
+        "Bz_T",
+        "Bx_T",
+        "gg_GHz",
+        "pol_c_deg",
+        "Oc_GHz",
+        "pol_p_deg"
+      ]
+    }
+  },
+  "gate4_pass": {
+    "all_thresholds_are_intervals": true,
+    "dominant_identified": true
+  }
+}

@@ -1,0 +1,15 @@
+parameter,value,unit,source,uncertainty
+lambda_nm,637,nm,NV- ZPL,exact
+n_refr,2.41,-,diamond @637 nm,<1%
+debye_waller,0.035,-,Santori 2010 / Doherty review (3-5%),+-0.01
+gamma_rad_GHz,0.0668,GHz,repo GRAD (Happacher convention),+-20%
+gamma_h_GHz,72.2597,GHz,"nv_model.gamma_oc_GHz(70 K, d=1.683)",model
+gamma_inh_GHz,30,GHz,ensemble ZPL strain broadening (typ. 10-100),x/ 3
+f_orient,0.25,-,one of four NV orientations,exact
+f_spin,0.333333,-,unpolarized ground spin (no MW init),up to ~0.9 with init
+eta,0.1,-,collection+detector efficiency,x/ 3
+power_W,1e-06,W,"weak probe, below sector saturation",design
+sigma_tech,1e-06,-,relative technical noise per sqrt(sample),x/ 10
+L_cm,0.05,cm,0.5 mm sample,design
+n_nv_max_cm3,1.76e+17,cm^-3,1 ppm (coherence-preserving upper end),x/ 3
+tau_max_s,3600,s,one hour practical integration,design

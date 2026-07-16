@@ -1,0 +1,92 @@
+{
+  "candidate": {
+    "T_K": 70.0,
+    "Bx_T": 0.23226114680059184,
+    "Bz_T": 0.005,
+    "Oc_GHz": 0.1,
+    "branch": 3
+  },
+  "reduced": {
+    "Cmax": 0.013816079875835488,
+    "center_MHz": 0.041666666666666415,
+    "fwhm_MHz": 0.33333333333333304
+  },
+  "rows": [
+    {
+      "config": "base",
+      "C_full": 0.013835679552592212,
+      "C_red": 0.013816079875835488,
+      "ratio_full_red": 1.0014186134513454,
+      "fwhm_full_MHz": 0.33333333333333304,
+      "fwhm_red_MHz": 0.33333333333333304,
+      "fwhm_ratio": 1.0,
+      "center_full_MHz": -0.04166666666666728,
+      "center_red_MHz": 0.041666666666666415,
+      "sign_preserved": true,
+      "exc_pop": 2.2408122045315243e-05,
+      "singlet_pop": 0.0,
+      "rho_cp_over_Op": 0.4828721070060131,
+      "res_steady": 1.8896374385998116e-14,
+      "res_full": 1.1964203726770278e-13
+    },
+    {
+      "config": "isc",
+      "C_full": 0.013865604862238206,
+      "C_red": 0.013816079875835488,
+      "ratio_full_red": 1.0035845903358838,
+      "fwhm_full_MHz": 0.33333333333333304,
+      "fwhm_red_MHz": 0.33333333333333304,
+      "fwhm_ratio": 1.0,
+      "center_full_MHz": -0.04166666666666728,
+      "center_red_MHz": 0.041666666666666415,
+      "sign_preserved": true,
+      "exc_pop": 1.1227783874794213e-05,
+      "singlet_pop": 0.0002869991919855425,
+      "rho_cp_over_Op": 0.5135606136906995,
+      "res_steady": 3.741482883976449e-15,
+      "res_full": 3.006037799195021e-09
+    },
+    {
+      "config": "hyperfine",
+      "C_full": 0.01194387297069376,
+      "C_red": 0.013816079875835488,
+      "ratio_full_red": 0.8644907295001787,
+      "fwhm_full_MHz": 0.45833333333333315,
+      "fwhm_red_MHz": 0.33333333333333304,
+      "fwhm_ratio": 1.3750000000000007,
+      "center_full_MHz": 0.0,
+      "center_red_MHz": 0.041666666666666415,
+      "sign_preserved": true,
+      "exc_pop": 2.2408117267201384e-05,
+      "singlet_pop": 0.0,
+      "rho_cp_over_Op": 0.3903496772178078,
+      "res_steady": 2.931882838260709e-14,
+      "res_full": 8.480461887846193e-14
+    },
+    {
+      "config": "isc+hyperfine",
+      "C_full": 0.011966807154107627,
+      "C_red": 0.013816079875835488,
+      "ratio_full_red": 0.8661506926460186,
+      "fwhm_full_MHz": 0.45833333333333315,
+      "fwhm_red_MHz": 0.33333333333333304,
+      "fwhm_ratio": 1.3750000000000007,
+      "center_full_MHz": 0.0,
+      "center_red_MHz": 0.041666666666666415,
+      "sign_preserved": true,
+      "exc_pop": 1.122781429272512e-05,
+      "singlet_pop": 0.00028699995441293504,
+      "rho_cp_over_Op": 0.4151511998439014,
+      "res_steady": 6.633558705667894e-16,
+      "res_full": 2.0973275321292855e-09
+    }
+  ],
+  "gate2_pass": {
+    "contrast_same_order": true,
+    "linewidth_same_order": true,
+    "no_sign_flip": true,
+    "survives_all_toggles": true
+  },
+  "gate2_all_passed": true,
+  "quick": false
+}

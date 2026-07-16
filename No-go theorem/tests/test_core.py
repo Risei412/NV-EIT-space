@@ -76,6 +76,92 @@ def test_eit_ats_classifier_sanity():
     assert r_eit['verdict']=='robust EIT'
     assert r_ats['verdict']=='robust ATS'
 
+# ---- SIMULATION_PLAN.md Sec. 7: CPTP audits, limits, finite-difference
+# response, grid convergence, signal-chain units, seed reproducibility ------
+def _candidate_chi(**kw):
+    import gate2_candidate_full_vs_reduced as g2
+    return g2.chi_pair(70.0,g2.rp.BX0,g2.rp.BZ0,0.0,**kw)
+
+def _candidate_steady(**kw):
+    import gate2_candidate_full_vs_reduced as g2
+    from liouvillian_core import liouvillian,steady_state
+    H,Ls,Vp,dp,meta=g2.build_full(70.0,g2.rp.BX0,g2.rp.BZ0,0.0,**kw)
+    L=liouvillian(H,Ls); rho0,res,gap=steady_state(L)
+    return rho0.reshape(meta['N'],meta['N']),res
+
+def test_steady_state_trace_hermiticity_positivity():
+    for kw in (dict(),dict(isc=True)):
+        rho,res=_candidate_steady(**kw)
+        assert abs(np.trace(rho)-1.0)<1e-10
+        assert np.max(np.abs(rho-rho.conj().T))<1e-10
+        assert float(np.min(np.linalg.eigvalsh(rho)))>=-1e-10  # positivity audit
+        assert res<1e-8
+
+def test_zero_control_limit():
+    # Oc=0: cutting the ground-coherence sector must not change chi
+    chif,chic,_=_candidate_chi(Oc=0.0)
+    assert abs(chif-chic)/abs(chic)<1e-9
+
+def test_zero_field_limit():
+    # Bx=0: spin-Lambda channel closed up to the residual excited-state
+    # mixing (Dperp/Lperp); contrast must be <<1e-3 of the opened candidate
+    def C_at(Bx):
+        w,U=nm.dressed_ground((Bx,0,0.005)); H=nm.Hes((Bx,0,0.005))
+        dp=np.kron(np.array([1.,0],complex),U[:,1])
+        dc=np.kron(np.array([1.,0],complex),U[:,2])
+        z=float(np.linalg.eigvalsh(H)[3])
+        return nm.response(H,dp,dc,z,nm.gamma_oc_GHz(70,1.683),0.1)['C']
+    import run_prl_prediction as rp
+    assert abs(C_at(0.0))<1e-3*abs(C_at(rp.BX0))
+
+def test_cut_sector_limit():
+    # cutting the sector removes the whole transparency feature
+    chif,chic,_=_candidate_chi()
+    assert abs(chif-chic)>0  # finite delta_chi_S at the candidate
+    import gate1_candidate_aic_bootstrap as g1
+    d,A,Acut=g1.probe_scan(n=41)
+    assert np.max(Acut-A)>0  # dA>0 somewhere in the window
+
+def test_finite_difference_response():
+    import gate2_candidate_full_vs_reduced as g2
+    from liouvillian_core import liouvillian,steady_state,first_order,vec
+    H,Ls,Vp,dp,meta=g2.build_full(70.0,g2.rp.BX0,g2.rp.BZ0,0.0)
+    N=meta['N']; L=liouvillian(H,Ls); rho0,_,_=steady_state(L)
+    Hp=2*np.pi*0.5*g2.OP*(Vp+Vp.conj().T); I=np.eye(N)
+    V=-1j*(np.kron(I,Hp)-np.kron(Hp.T,I))
+    x,_=first_order(L,V,rho0)
+    rho_eps,_,_=steady_state(L+V)          # exact steady state with drive
+    diff=rho_eps-rho0
+    det=np.zeros(N*N,complex)
+    for e,a in enumerate(dp): det[meta['p_idx']*N+(3+e)]=np.conj(a)
+    a1=det.conj()@x; a2=det.conj()@diff
+    assert abs(a1-a2)/max(abs(a1),1e-300)<1e-3  # linear response = FD limit
+
+def test_frequency_grid_convergence():
+    import gate1_candidate_aic_bootstrap as g1
+    _,A1,c1=g1.probe_scan(n=401); _,A2,c2=g1.probe_scan(n=801)
+    C1=np.max((c1-A1)/c1); C2=np.max((c2-A2)/c2)
+    assert abs(C1-C2)/abs(C2)<1e-2  # halving the grid changes Cmax <1%
+
+def test_signal_chain_units():
+    import signal_chain as sc
+    assert abs(sc.photon_energy_J(637.0)-3.12e-19)/3.12e-19<5e-3
+    assert sc.transmission(0.0)==1.0
+    assert abs(sc.delta_T_over_T(1e-6)-1e-6)/1e-6<1e-3
+    assert sc.spectral_fraction(100.0,30.0)==1.0
+    kw=dict(od_total=1.0,power_W=1e-6,lambda_nm=637.0,eta=0.1,sigma_tech=1e-7)
+    tau=sc.required_tau_s(5.0,1e-4,**kw)
+    assert abs(sc.snr(1e-4,tau_s=tau,**kw)-5.0)<1e-6  # round trip
+    assert sc.required_tau_s(5.0,1e-9,**kw)==float('inf')  # below tech floor
+
+def test_model_comparison_reproducibility():
+    import gate1_candidate_aic_bootstrap as g1
+    d,A,_=g1.probe_scan(n=201)
+    noisy=A+np.random.default_rng(g1.SEED).normal(0,1e-4*np.max(A),A.size)
+    r1=g1.fit_all(d,noisy); r2=g1.fit_all(d,noisy)
+    assert r1['delta_aic_ats_eit']==r2['delta_aic_ats_eit']  # deterministic
+    assert r1['verdict']==r2['verdict']
+
 if __name__=='__main__':
     for f in [v for k,v in list(globals().items()) if k.startswith('test_')]:
         f(); print('PASS',f.__name__)

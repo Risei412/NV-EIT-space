@@ -1,0 +1,82 @@
+{
+  "seed": 20260716,
+  "quick": false,
+  "rows": [
+    {
+      "scenario": "single",
+      "n_draws": 1,
+      "sigma_B_G": 0.0,
+      "sigma_opt_GHz": 0.0,
+      "sigma_d_GHz": 0.0,
+      "sigma_Oc_rel": 0.0,
+      "opt_cut_GHz": null,
+      "n_orientations": 1,
+      "Cmax": 0.01360014974074735,
+      "fwhm_MHz": 0.37500000000000033,
+      "center_MHz": 0.0,
+      "washout_factor": 1.0
+    },
+    {
+      "scenario": "low_density",
+      "n_draws": 60,
+      "sigma_B_G": 0.1,
+      "sigma_opt_GHz": 5.0,
+      "sigma_d_GHz": 0.1,
+      "sigma_Oc_rel": 0.05,
+      "opt_cut_GHz": null,
+      "n_orientations": 4,
+      "Cmax": 0.0005721492074293866,
+      "fwhm_MHz": 0.37500000000000033,
+      "center_MHz": 0.0,
+      "washout_factor": 0.04206933146590091
+    },
+    {
+      "scenario": "high_density",
+      "n_draws": 60,
+      "sigma_B_G": 1.0,
+      "sigma_opt_GHz": 30.0,
+      "sigma_d_GHz": 0.3,
+      "sigma_Oc_rel": 0.1,
+      "opt_cut_GHz": null,
+      "n_orientations": 4,
+      "Cmax": 0.00012895685598832745,
+      "fwhm_MHz": 4.25,
+      "center_MHz": 2.125,
+      "washout_factor": 0.009482017363526548
+    },
+    {
+      "scenario": "post_selected",
+      "n_draws": 60,
+      "sigma_B_G": 1.0,
+      "sigma_opt_GHz": 30.0,
+      "sigma_d_GHz": 0.3,
+      "sigma_Oc_rel": 0.1,
+      "opt_cut_GHz": 5.0,
+      "n_orientations": 1,
+      "Cmax": 0.0009451684220583797,
+      "fwhm_MHz": 6.625000000000001,
+      "center_MHz": -0.4375000000000004,
+      "washout_factor": 0.06949691290725754
+    },
+    {
+      "scenario": "post_selected_shimmed",
+      "n_draws": 60,
+      "sigma_B_G": 0.1,
+      "sigma_opt_GHz": 30.0,
+      "sigma_d_GHz": 0.3,
+      "sigma_Oc_rel": 0.1,
+      "opt_cut_GHz": 5.0,
+      "n_orientations": 1,
+      "Cmax": 0.0026330768063651836,
+      "fwhm_MHz": 1.1250000000000002,
+      "center_MHz": 0.0,
+      "washout_factor": 0.19360645702864826
+    }
+  ],
+  "gate5_pass": {
+    "post_selection_survives": true,
+    "washout_quantified": true,
+    "regimes_distinguished": true
+  },
+  "gate5_all_passed": true
+}

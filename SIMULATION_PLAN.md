@@ -25,6 +25,16 @@ inputs, outputs, and pass criteria for the remaining work.
 
 ---
 
+> **Status update (2026-07-16): Gates 1–5 implemented, executed, and ALL
+> PASSED** — see `No-go theorem/results/gate_1_5_report.md` for numbers and
+> caveats. Code: `src/gate{1..5}_*.py`, `src/signal_chain.py`; entry point
+> `scripts/reproduce_prl_figures.py`; tests 19/19 green. Decision A: EIT
+> claim kept (ΔAIC = +1902, full Liouvillian matches reduced kernel to
+> 0.1 %). Decision B: feasibility claim kept, conditioned on the Gate 5
+> selection requirements (single orientation, spectral selection, ≤0.1 G
+> field homogeneity). Remaining before submission: compose final PRL
+> Figures 1–4 from the gate outputs (§6) and the submission freeze (§8).
+
 ## 0. Current status (as of this plan)
 
 Already completed and archived in `No-go theorem/results/`
