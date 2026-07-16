@@ -1,0 +1,16 @@
+{
+  "candidate_contrast": 0.013600149740747292,
+  "gamma_h_GHz": 72.25969464371656,
+  "sigma_zpl_cm2": 1.0792810473406987e-14,
+  "spectral_fraction": 1.0,
+  "od_sector_at_1ppm": 7.914727680498458,
+  "delta_od_at_1ppm": 0.10764148161201652,
+  "tau_required_s_at_1ppm": 1.652240014692109e-05,
+  "target_snr": 5.0,
+  "gate3_pass": {
+    "conditions_listed_all_targets": true,
+    "realistic_detection_region": true,
+    "candidate_feasible": true
+  },
+  "gate3_all_passed": true
+}

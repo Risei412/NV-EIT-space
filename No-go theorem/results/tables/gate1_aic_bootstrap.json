@@ -1,0 +1,189 @@
+{
+  "candidate": {
+    "T_K": 70.0,
+    "Bx_T": 0.23226114680059184,
+    "Bz_T": 0.005,
+    "branch": 3,
+    "Oc_GHz": 0.1,
+    "seed": 20260716,
+    "quick": false
+  },
+  "baseline": {
+    "models": {
+      "EIT": {
+        "rss": 0.0009064295260621717,
+        "k": 5,
+        "aic": -23019.393959686033,
+        "aicc": -23019.356342131174,
+        "bic": -22992.50204112105,
+        "params": [
+          0.998690833415981,
+          0.054742986055262996,
+          0.26249024707479013,
+          0.058514331684240944,
+          0.24476316843621573
+        ],
+        "akaike_weight": 0.1297904991702997
+      },
+      "ATS": {
+        "rss": 0.002977589392689893,
+        "k": 4,
+        "aic": -21117.2349408649,
+        "aicc": -21117.209878208258,
+        "bic": -21095.72140601291,
+        "params": [
+          0.9902083094777366,
+          1.5411518353727363,
+          18.50327203027747,
+          16.45600973600108
+        ],
+        "akaike_weight": 0.0
+      },
+      "Lorentzian": {
+        "rss": 0.0009074212917059893,
+        "k": 3,
+        "aic": -23021.643190616793,
+        "aicc": -23021.62816243896,
+        "bic": -23005.5080394778,
+        "params": [
+          0.9986965949172,
+          -0.0005056835251228051,
+          0.1909772994015159
+        ],
+        "akaike_weight": 0.399629181568607
+      },
+      "Fano": {
+        "rss": 0.0009061034229160979,
+        "k": 4,
+        "aic": -23021.970049784468,
+        "aicc": -23021.944987127827,
+        "bic": -23000.45651493248,
+        "params": [
+          0.9848385087449012,
+          0.013860225750096643,
+          0.01202679861385538,
+          0.19122280368407815
+        ],
+        "akaike_weight": 0.4705803192610933
+      }
+    },
+    "delta_aic_ats_eit": 1902.159018821134,
+    "verdict": "robust EIT",
+    "used_aicc": false,
+    "scale": 0.00868832283378736,
+    "best": "Fano",
+    "feature": {
+      "b": 0.008676946935468494,
+      "center": 0.025000000000000716,
+      "depth": -0.00012042005890365234,
+      "fwhm": 0.34999999999999964
+    }
+  },
+  "noise_bootstrap": [
+    {
+      "sigma_rel": 0.02,
+      "sigma_abs": 2.4084011780730468e-06,
+      "n_boot": 200,
+      "frac_robust_eit": 1.0,
+      "frac_robust_ats": 0.0,
+      "frac_inconclusive": 0.0,
+      "delta_aic_median": 1769.3040920909807,
+      "delta_aic_p05": 1730.1951614454192,
+      "delta_aic_p95": 1860.4108466947966
+    },
+    {
+      "sigma_rel": 0.05,
+      "sigma_abs": 6.021002945182617e-06,
+      "n_boot": 200,
+      "frac_robust_eit": 1.0,
+      "frac_robust_ats": 0.0,
+      "frac_inconclusive": 0.0,
+      "delta_aic_median": 1335.5163951464237,
+      "delta_aic_p05": 1256.6244243795625,
+      "delta_aic_p95": 1403.8829806787055
+    },
+    {
+      "sigma_rel": 0.1,
+      "sigma_abs": 1.2042005890365235e-05,
+      "n_boot": 200,
+      "frac_robust_eit": 1.0,
+      "frac_robust_ats": 0.0,
+      "frac_inconclusive": 0.0,
+      "delta_aic_median": 707.0420747717599,
+      "delta_aic_p05": 640.6151905665262,
+      "delta_aic_p95": 779.4104934161767
+    },
+    {
+      "sigma_rel": 0.2,
+      "sigma_abs": 2.408401178073047e-05,
+      "n_boot": 200,
+      "frac_robust_eit": 1.0,
+      "frac_robust_ats": 0.0,
+      "frac_inconclusive": 0.0,
+      "delta_aic_median": 233.46227759316025,
+      "delta_aic_p05": 191.46169701151447,
+      "delta_aic_p95": 284.8849809063498
+    }
+  ],
+  "window_sweep": [
+    {
+      "window_factor": 0.5,
+      "half_MHz": 10.0,
+      "delta_aic": 4266.7850844336135,
+      "verdict": "robust EIT",
+      "best_model": "Fano",
+      "frac_robust_eit_boot": 1.0
+    },
+    {
+      "window_factor": 0.75,
+      "half_MHz": 15.0,
+      "delta_aic": 2911.5621825266753,
+      "verdict": "robust EIT",
+      "best_model": "Fano",
+      "frac_robust_eit_boot": 1.0
+    },
+    {
+      "window_factor": 1.0,
+      "half_MHz": 20.0,
+      "delta_aic": 1902.159018821134,
+      "verdict": "robust EIT",
+      "best_model": "Fano",
+      "frac_robust_eit_boot": 1.0
+    },
+    {
+      "window_factor": 1.5,
+      "half_MHz": 30.0,
+      "delta_aic": 834.1260372555953,
+      "verdict": "robust EIT",
+      "best_model": "Lorentzian",
+      "frac_robust_eit_boot": 1.0
+    },
+    {
+      "window_factor": 2.0,
+      "half_MHz": 40.0,
+      "delta_aic": 419.76862283798255,
+      "verdict": "robust EIT",
+      "best_model": "Fano",
+      "frac_robust_eit_boot": 1.0
+    }
+  ],
+  "init_robustness": {
+    "n_draws": 50,
+    "baseline_delta_aic": 1902.159018821134,
+    "delta_aic_min": 1900.477350369696,
+    "delta_aic_max": 1990.1465853354603,
+    "delta_aic_spread": 89.66923496576419,
+    "all_verdicts_equal": true,
+    "verdict_counts": {
+      "robust EIT": 50
+    }
+  },
+  "gate1_pass": {
+    "noise_95pct_eit": true,
+    "window_no_flip": true,
+    "init_stable": true,
+    "crossover_continuous": true,
+    "candidate_in_eit_region": true
+  },
+  "gate1_all_passed": true
+}
