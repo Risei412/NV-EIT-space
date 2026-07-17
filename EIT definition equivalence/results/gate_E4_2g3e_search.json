@@ -1,0 +1,12 @@
+{
+  "baseline": {
+    "gamma_e": 1.0,
+    "Delta_e2": 8.0,
+    "theta": 0.7853981633974483,
+    "dp3_amp": 0.5,
+    "dc3_amp": 0.5
+  },
+  "n_Delta3_scanned": 25,
+  "n_exact_zeros_found": 0,
+  "solutions": []
+}
