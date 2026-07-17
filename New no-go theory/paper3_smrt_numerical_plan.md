@@ -1,6 +1,14 @@
 # Paper III numerical plan: interference-controlled exponent promotion in a physical Lindblad model (Phase P)
 
-Status: **PLAN ONLY — not yet executed.** Awaiting approval before any code is run.
+Status: **EXECUTED.** All eight gates (P1–P8) PASS —
+see `results/summary.md` (Phase P section) and
+`results/gates_summary_phaseP.json`. Code: `src/model_physical.py`,
+`src/run_phase_p.py`. One correction to this plan surfaced during
+execution: P3's assumption of a codimension-1 curve directly in the
+2-real-parameter (η, φ) plane was wrong (2 real controls generically give
+an *isolated* zero, not a curve — see the P3 section of `results/summary.md`
+for the corrected 3-control construction). Everything else below matches
+what was executed.
 
 Source strategy: `SMRT_Paper_III_numerical_strategy.md` (user-provided, not committed
 here), which defines Calculations A–H, the acceptance gates, and the figure plan for

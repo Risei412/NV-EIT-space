@@ -136,3 +136,35 @@ Key findings:
   (ε → 10⁻⁶) breaks the clean ν_F = 2ν_x relation (ratio drifts to 1.49),
   confirming Gate M5 as a genuine negative control rather than a
   tautology.
+
+## Phase P: physical Lindblad realization of interference-controlled exponent promotion (Paper III)
+
+A physical CPTP realization of the abstract Phase-D order-promotion result
+(`ν: 3→4`), implementing the plan in `paper3_smrt_numerical_plan.md`.
+
+- `src/model_physical.py` — a 5-level "diamond" Lindblad model (two coherent
+  paths into a readout state, sector cut on both closing couplings), with
+  reduced 4×4 weak-probe machinery, exact symbolic moments/certificate, and
+  the full vectorized 24×24 Liouvillian with an implicit linear-response
+  solver.
+- `src/run_phase_p.py` — runs P1–P8, writes
+  `results/gates_summary_phaseP.json` and `results/figures/figP*.png`.
+
+```bash
+python "src/run_phase_p.py"
+python "src/report.py"
+```
+
+Results (all eight gates PASS): appended to
+[`results/summary.md`](results/summary.md).
+
+Key findings: the cancellation condition `J45* = J23 J35 d4/(J24 d3)` at
+`φ=π` gives exact `m2=0, m3≠0` (ν: 3→4), matching the direct large-Γ fit to
+`9×10⁻⁷`; the universal crossover collapse (`Γ⁴R_S` vs `δΓ`) holds within a
+`3%` spread and `Γ_×∝|δ|⁻¹` to slope `−1.06`; a false `ν≈4` plateau spans
+`2.15` decades at `δ=10⁻⁵`; and the 4×4 reduced system agrees with the
+full 24×24 Liouvillian to `~10⁻¹²`–`10⁻⁶`. One correction to the original
+plan: with only 2 real controls `(|J45|,φ)`, the cancellation `m2=0` is an
+*isolated* point, not a codimension-1 curve (matching the precedent in gate
+M4 above) — a genuine cancellation curve needs a 3rd real control, shown
+explicitly by also rescaling the first branch's amplitude.
