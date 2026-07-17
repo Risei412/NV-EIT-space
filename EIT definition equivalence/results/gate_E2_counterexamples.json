@@ -1,0 +1,67 @@
+{
+  "C2": {
+    "rho_e2e2_ss": -1.2477620505143358e-16,
+    "dark_state_residual": 1.5700924586837747e-17,
+    "chi_witness": [
+      1.0000000000000004,
+      -5.139000839827534e-16
+    ],
+    "chi_bare_expected": 1.0,
+    "witness_matches_bare_Lorentzian": true
+  },
+  "C3": {
+    "rho_ee_lambda_subsystem": 0.0010213578877194896,
+    "chi_e_lambda_channel": [
+      2.7161853847144526e-15,
+      -2.6481973009435277e-16
+    ],
+    "chi_ebg_background_channel": [
+      0.013793103448275702,
+      -0.16551724137931045
+    ],
+    "chi_total": [
+      0.00862068965517503,
+      -0.1034482758620693
+    ],
+    "CPT_holds_but_response_nonzero": false,
+    "scaling_with_Omega_p_bg": [
+      {
+        "Omega_p_bg": 0.5,
+        "rho_ee_lambda": 0.0010213578877194896,
+        "rho_ee_over_Opbg_sq": 0.004085431550877958,
+        "chi_total_mag": 0.10380684981717551,
+        "chi_total_over_Opbg": 0.20761369963435103
+      },
+      {
+        "Omega_p_bg": 0.2,
+        "rho_ee_lambda": 0.0001420421933814957,
+        "rho_ee_over_Opbg_sq": 0.003551054834537392,
+        "chi_total_mag": 0.04152273992687054,
+        "chi_total_over_Opbg": 0.2076136996343527
+      },
+      {
+        "Omega_p_bg": 0.1,
+        "rho_ee_lambda": 3.4739993161842596e-05,
+        "rho_ee_over_Opbg_sq": 0.003473999316184259,
+        "chi_total_mag": 0.020761369963435843,
+        "chi_total_over_Opbg": 0.2076136996343584
+      },
+      {
+        "Omega_p_bg": 0.05,
+        "rho_ee_lambda": 8.636771272691435e-06,
+        "rho_ee_over_Opbg_sq": 0.0034547085090765733,
+        "chi_total_mag": 0.010380684981718532,
+        "chi_total_over_Opbg": 0.20761369963437062
+      },
+      {
+        "Omega_p_bg": 0.02,
+        "rho_ee_lambda": 1.379722067187784e-06,
+        "rho_ee_over_Opbg_sq": 0.00344930516796946,
+        "chi_total_mag": 0.004152273992687469,
+        "chi_total_over_Opbg": 0.20761369963437346
+      }
+    ]
+  },
+  "C1_reference": "see results/gate_E1_lambda_chain.json (gamma_g>0 rows): witness_i (ker Omega) always nontrivial, witness_ii (dark-state residual) nonzero for gamma_g>0",
+  "C4_reference": "see 2g2e_package/ (gate E0): rank([d_p,d_c])=2 (no optical dark vector), 79.03% absorption suppression observed"
+}
