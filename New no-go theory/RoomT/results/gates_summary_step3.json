@@ -1,0 +1,45 @@
+{
+  "model": "No-go theorem/src/nv_model.py, Bx=By=0 exact-diagonal ground manifold",
+  "exact_symbolic_certificate": {
+    "M0": "0",
+    "M0_is_exact_zero": true,
+    "H13_exact_closed_form": "sqrt(2)*(Dperp - I*Lperp)/2",
+    "deg_Q": 6,
+    "deg_N12": 4,
+    "deg_N21": 4,
+    "deg_N22": 5,
+    "nu_K12": 2,
+    "nu_K21": 2,
+    "nu_S2": 1,
+    "nu_R": 4,
+    "leading_coefficient_of_R_EIT_tail": "2*pi**2*beta*(Dperp**2 + Lperp**2)/geff",
+    "smrt_class": "Class II (finite suppression order)"
+  },
+  "numeric_cross_check": {
+    "nu_K12_fit": 1.999997821184365,
+    "nu_K12K21_fit": 3.99999564236873,
+    "nu_R_fit": 3.9998769919881534
+  },
+  "crossover_diagnostics_flag_for_step4": {
+    "nu_eff_at_small_gamma": 0.11054181576381235,
+    "nu_eff_at_large_gamma": 3.999991984769709,
+    "gamma_cross_GHz": 79371.67617217543,
+    "gamma_300K_GHz": 13349.549074059234,
+    "gamma_10K_GHz": 0.03785171587893605,
+    "note_300K_below_crossover": true
+  },
+  "precision_stability": {
+    "nu_K12_highprecision_fit": 2.000408879440514
+  },
+  "gates": {
+    "M0_exact_zero": true,
+    "nu_K12_symbolic_equals_2": true,
+    "nu_R_symbolic_equals_4": true,
+    "nu_K_neq_nu_R": true,
+    "numeric_fit_matches_symbolic_K12": true,
+    "numeric_fit_matches_symbolic_R": true,
+    "precision_stable": true,
+    "not_class_III": true,
+    "overall_pass": true
+  }
+}

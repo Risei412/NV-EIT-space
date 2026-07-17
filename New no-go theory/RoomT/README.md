@@ -9,6 +9,72 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 3 (merged-manifold moment analysis): EXECUTED, all 8 gates PASS.**
+See `results/gates_summary_step3.json` and
+`results/figures/fig_step3_moment_scaling.png`.
+Code: `src/step3_merged_manifold_moments.py`.
+
+At Bx=By=0 (Step 1/2's geometry), `nv_model.Hgs` is exactly diagonal, so
+the probe/control legs dp, dc are EXACT closed-form basis vectors (no
+eigendecomposition needed) -- this makes the whole moment analysis exact
+symbolic algebra rather than a numerical approximation. Using sympy's
+adjugate/determinant method (`New no-go theory/src/core.py`'s Theorem 8.1
+certificate style) on the 6x6 excited-manifold response operator:
+
+- **M0 = dp^T dc = 0 exactly** -- trivial orthogonality of the probe (orbital
+  X) and control (orbital Y) branches, a group-theoretic selection rule
+  holding for ANY Hamiltonian parameter values, not a numerical coincidence.
+- **nu_K = 2**: the first nonzero kernel moment is at order Gamma^-2 (from
+  the exact closed form H[1,3] = (Dperp - i*Lperp)/sqrt(2), proven nonzero
+  generically by keeping Dperp, Lperp as free symbols in the certificate).
+- **nu_R = 4**: R_EIT (the actual EIT observable, not just the kernel)
+  inherits nu_K12 + nu_K21 = 2+2 = 4 asymptotically, NOT nu_K = 2 -- exactly
+  the nu_K != nu_R distinction the plan's Step 3 warns about, since R_EIT
+  enters as the PRODUCT K12*K21 divided by a denominator whose
+  Gamma-independent part (ground decoherence geff) eventually dominates its
+  Gamma-dependent correction (S2 ~ Gamma^-1, nu_S2=1).
+- SMRT class: **Class II** (finite suppression order, not Class I exact
+  zero, not Class III protected) -- the correct outcome for the no-go
+  claim (Class III would reject it).
+- Exact leading coefficient of the R_EIT tail:
+  `R_EIT ~ -2*pi^2*beta*(Dperp^2+Lperp^2)/geff / Gamma^4`.
+
+**Important finding carried forward to Step 4**: R_EIT's Gamma^-3 -> Gamma^-4
+crossover (from the S2~Gamma^-1 correction to the denominator) sits at
+Gamma_cross ~ 7.9e4 GHz for the Step-1 reference point (Oc=1 GHz,
+gg=6.3e-5 GHz) -- ABOVE the physical Gamma(300 K) ~ 1.3e4 GHz. This means
+**at this specific (Oc, gg) point, 300 K is not yet deep in the asymptotic
+Gamma^-4 regime** -- it sits closer to the generic Gamma^-3 pre-asymptotic
+scaling (nu_eff(300K) is between 3 and 4, not yet 4). Since the crossover
+scale is ~Oc^2/geff, smaller (more realistic) control powers push the
+crossover DOWN, making the asymptotic regime easier to reach -- this is
+not a problem for the no-go claim at realistic Oc, but Step 4 (temperature-
+threshold scaling, x(T)=Gamma_XY(T)/Delta_pair) must verify x(300K)>>1
+using the CORRECT local exponent at whatever (Oc, gg) point is actually
+used, not assume nu_R=4 applies uniformly. The numeric cross-check here
+therefore fits deep in the true asymptote (Gamma > 1e8) to confirm the
+exact Gamma -> infinity degree, separately from this pre-asymptotic flag.
+
+Gates certified (`gates_summary_step3.json`):
+
+| Gate | Requirement (plan Sec. 5/7, Step 3) | Result |
+|---|---|---|
+| `M0_exact_zero` | M0=0 via exact identity, not a small float | PASS (dp^T dc = 0 by orbital orthogonality) |
+| `nu_K12_symbolic_equals_2` | exact polynomial-degree certificate for the kernel | PASS (deg_Q=6, deg_N12=4) |
+| `nu_R_symbolic_equals_4` | exact degree certificate for the actual R_EIT observable | PASS (deg_num=8, deg_den=12) |
+| `nu_K_neq_nu_R` | kernel and observable exponents reported separately, not conflated | PASS (2 != 4) |
+| `numeric_fit_matches_symbolic_K12` / `_R` | independent numeric log-log fit (deep asymptotic tail) agrees with the exact degree | PASS |
+| `precision_stable` | exponent unchanged between float64 and 50-digit mpmath | PASS |
+| `not_class_III` | reject the no-go if a protected (Class III) response were found | PASS (Class II confirmed) |
+
+Step 3 (plan: "M0=0をsymbolicに証明", "最初の非零momentを特定",
+"nu_Kとnu_Rを分離") is therefore satisfied with an exact, non-numerical
+certificate. Step 4 (temperature scaling: verify 300 K is deep in
+whichever asymptotic regime applies, using conservative phonon models)
+is next, and must account for the crossover flagged above.
+
+---
+
 **Step 2 (operational cut audit, full NV Liouvillian): EXECUTED, all 4 gates PASS.**
 See `results/gates_summary_step2.json` and
 `results/figures/fig_step2_operational_cut_audit.png`.
@@ -103,10 +169,13 @@ GKSL-admissible D_S construction) is next.
 
     src/step1_low_temperature_validation.py   Step 1
     src/step2_operational_cut_audit.py         Step 2
+    src/step3_merged_manifold_moments.py       Step 3
     results/gates_summary_step1.json
     results/gates_summary_step2.json
+    results/gates_summary_step3.json
     results/figures/fig_step1_low_T_positive_control.png
     results/figures/fig_step2_operational_cut_audit.png
+    results/figures/fig_step3_moment_scaling.png
 
-Future steps (3-9) will follow the same convention: one `stepN_*.py` per
+Future steps (4-9) will follow the same convention: one `stepN_*.py` per
 step, one `gates_summary_stepN.json`, figures under `results/figures/`.
