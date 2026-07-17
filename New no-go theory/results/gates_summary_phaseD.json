@@ -1,0 +1,108 @@
+{
+  "D1_oblique_protection": {
+    "control_hermitian_a0_riesz_vs_orth_diff": 0.0,
+    "control_pass": true,
+    "false_suppression_a_star": 1.1487746522022837,
+    "false_suppression_r0_riesz": 6.239127743973361,
+    "false_suppression_r0_orth": 1.249000902703301e-16,
+    "false_suppression_pass": true,
+    "plateau_checks": {
+      "0.0": {
+        "plateau": 0.20755936790148055,
+        "r0_riesz": 0.2075593542260209,
+        "r0_orth": 0.2075593542260209,
+        "err_riesz": 6.588698304915667e-08,
+        "err_orth": 6.588698304915667e-08
+      },
+      "1.0": {
+        "plateau": 1.6162865865539588,
+        "r0_riesz": 1.6162868965517228,
+        "r0_orth": 0.11827912932138279,
+        "err_riesz": 1.917962488989646e-07,
+        "err_orth": 12.665019313443345
+      },
+      "2.0": {
+        "plateau": 2.363112221281182,
+        "r0_riesz": 2.363113300492612,
+        "r0_orth": 0.07652413793103446,
+        "err_riesz": 4.5669051491292825e-07,
+        "err_orth": 29.880612120202905
+      },
+      "5.0": {
+        "plateau": 0.854221119390514,
+        "r0_riesz": 0.8542206703332345,
+        "r0_orth": 0.0027938915590935143,
+        "err_riesz": 5.256923593387919e-07,
+        "err_orth": 304.74598237723603
+      }
+    },
+    "plateau_pass": true,
+    "nonmonotonic_bump": {
+      "a": 4.0,
+      "Gamma_at_max": 6.02089449333613,
+      "R_max": 178.59296839126526,
+      "R_first": 1.4823463080688462,
+      "R_last": 0.86998235179934,
+      "interior_max": true
+    },
+    "overall_pass": true
+  },
+  "D3_scaling_path": {
+    "calibration_max_diff": 0.0,
+    "chi_full_agreement_at_Gamma0": 0.0,
+    "nu_path_T": -0.002211565360470437,
+    "nu_path_U": 1.961269333910912,
+    "paths_disagree": true,
+    "fan_theta0_nu": 0.0031511587728868698,
+    "fan_interior_nu_mean": 1.9288304004664785,
+    "fan_shows_transition": true,
+    "overall_pass": true
+  },
+  "D2_cancellation_promotion": {
+    "v23_star": -0.7846153846153845,
+    "moments_v12_0p05": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        2.7755575615628914e-17,
+        0.0
+      ],
+      [
+        -0.0019889612649793614,
+        0.0
+      ]
+    ],
+    "nu_direct_fit": 4.000351616068653,
+    "naive_graph_bound_2hop": 3,
+    "order_promoted": true,
+    "control_detuned_nu": 3.000445939986088,
+    "control_demotes_to_naive_order": true,
+    "exact_class_I_moments_zero_for_all_t": true,
+    "exact_class_I_K01_full": -0.45766130806782385,
+    "exact_class_I_K01_cut": 0.3059163059163059,
+    "exact_class_I_kernel_nonzero": true,
+    "overall_pass": true
+  },
+  "D4_masquerade": {
+    "exact_moments_at_v02_star": [
+      "0",
+      "0",
+      "0",
+      "895/2688"
+    ],
+    "m2_exactly_zero_at_v02_star": true,
+    "delta": 1e-05,
+    "false_plateau_decades_at_nu4": 2.430379746835443,
+    "true_nu_tail_measured": 2.999159328775999,
+    "certificate_nu_exact": 3,
+    "certificate_matches_tail": true,
+    "overall_pass": true
+  },
+  "phase_d_overall_pass": true
+}
