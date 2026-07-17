@@ -1,0 +1,90 @@
+{
+  "determinant_identity": {
+    "lhs": [
+      0.028393421357322365,
+      -0.05391861030424535
+    ],
+    "rhs": [
+      0.028393421357322354,
+      -0.05391861030424531
+    ],
+    "match": true,
+    "rank_D": 2
+  },
+  "schur_zero_scan": [
+    {
+      "gamma_g": 0.0,
+      "Omega_c": 0.3,
+      "min_abs_N_full": 0.00017372072765788602,
+      "at_delta": -0.0013999999999994017
+    },
+    {
+      "gamma_g": 0.0,
+      "Omega_c": 0.8,
+      "min_abs_N_full": 0.0012278297941495139,
+      "at_delta": -0.009850000000000136
+    },
+    {
+      "gamma_g": 0.0,
+      "Omega_c": 1.5,
+      "min_abs_N_full": 0.004287953977825509,
+      "at_delta": -0.03449999999999953
+    },
+    {
+      "gamma_g": 0.0001,
+      "Omega_c": 0.3,
+      "min_abs_N_full": 0.0002734634573084857,
+      "at_delta": -0.0013999999999994017
+    },
+    {
+      "gamma_g": 0.0001,
+      "Omega_c": 0.8,
+      "min_abs_N_full": 0.0013278174974767159,
+      "at_delta": -0.009850000000000136
+    },
+    {
+      "gamma_g": 0.0001,
+      "Omega_c": 1.5,
+      "min_abs_N_full": 0.00438789233206244,
+      "at_delta": -0.03449999999999953
+    },
+    {
+      "gamma_g": 0.01,
+      "Omega_c": 0.3,
+      "min_abs_N_full": 0.010173019314741849,
+      "at_delta": -0.0013999999999994017
+    },
+    {
+      "gamma_g": 0.01,
+      "Omega_c": 0.8,
+      "min_abs_N_full": 0.01122725665637615,
+      "at_delta": -0.009850000000000136
+    },
+    {
+      "gamma_g": 0.01,
+      "Omega_c": 1.5,
+      "min_abs_N_full": 0.014281940863701858,
+      "at_delta": -0.03449999999999953
+    },
+    {
+      "gamma_g": 0.1,
+      "Omega_c": 0.3,
+      "min_abs_N_full": 0.10017292034175063,
+      "at_delta": -0.0013999999999994017
+    },
+    {
+      "gamma_g": 0.1,
+      "Omega_c": 0.8,
+      "min_abs_N_full": 0.10122281588283648,
+      "at_delta": -0.009949999999999903
+    },
+    {
+      "gamma_g": 0.1,
+      "Omega_c": 1.5,
+      "min_abs_N_full": 0.10422740549963548,
+      "at_delta": -0.03494999999999937
+    }
+  ],
+  "any_real_axis_zero_found": false,
+  "interpretation": "Confirms Theorem IV at gamma_g=0 and its extension to gamma_g>0 (the latter following as a corollary of Proposition A / gate F4, not an independent finding): a regular full-rank 2g+2e matched model cannot host a perfect dark-state-free real-axis EIT zero at any gamma_g>=0."
+}

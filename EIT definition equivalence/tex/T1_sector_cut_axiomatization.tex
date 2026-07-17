@@ -1,0 +1,294 @@
+\documentclass[11pt,a4paper]{article}
+
+% ------------------------------------------------------------------
+%  T1: Axiomatization of the Sector Cut
+%  Part I of the EIT-definition-equivalence theorem package.
+%  Depends on: "A Closed Theorem Package for Master-Response No-Go
+%  Classification" (Theorem 3.1, invariance) and
+%  "../No-go theorem/Theorem and proofs/eit_nogo_proofs.tex"
+%  (Theorem 2B, the block-Schur sector cut).
+% ------------------------------------------------------------------
+
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!60!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\Ker}{\operatorname{Ker}}
+
+\title{T1: Axiomatization of the Sector Cut\\
+\large Toward general equivalence conditions for EIT}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The response-theoretic definition of EIT proposed in the companion
+strategy document rests on a single operation: cutting a designated
+coherence sector $S$ out of the full linear response while holding
+everything else fixed. Theorems~1 and~2 of that document (absorption
+cancellation, complex transfer-zero equivalence) follow immediately,
+by linearity, from the exact decomposition $\chi_{\mathrm{full}} =
+\chi^{(S)}_{\mathrm{cut}} + R_S$. The entire non-triviality of the
+theory is therefore concentrated in one question: is
+$\chi^{(S)}_{\mathrm{cut}}$ well defined? This note gives the general
+projector definition of the sector cut, shows it reduces to the
+previously proved block-Schur form, states the invariances that
+already follow from the closed no-go theorem package, proves by an
+explicit counterexample that the cut depends on the physical choice of
+$S$ (so the theory is a statement about pairs $(\chi,S)$, not about
+$\chi$ alone), and proves that the absorption functional's sign is
+convention-independent under a passivity assumption.
+\end{abstract}
+
+\section{General definition of the sector cut}
+
+\begin{assumption}[Standing setup]
+Let $V\cong\mathbb C^N$ be the coherence/state space of a finite-dimensional
+Markovian weak-probe system in a stationary rotating frame. Fix a source
+vector $c\in V$, a readout vector $p\in V$, a scaled dissipator $D$, and a
+coupling matrix $B(z)$ analytic on an open frequency domain $\Omega$, so
+that the full generator is
+\[
+A_{\mathrm{full}}(z)=D+B(z),\qquad
+\chi_{\mathrm{full}}(z)=p^\dagger A_{\mathrm{full}}(z)^{-1}c .
+\]
+Let $\Pi_S$ be the orthogonal projector onto a designated sector
+$S\subseteq V$ and $Q=I-\Pi_S$.
+\end{assumption}
+
+\begin{definition}[Sector cut]\label{def:cut}
+The sector-cut coupling matrix is
+\[
+B^{(S)}_{\mathrm{cut}}(z) \;:=\; B(z)-Q\,B(z)\,\Pi_S-\Pi_S\,B(z)\,Q ,
+\]
+i.e.\ $B(z)$ with only the $S\leftrightarrow Q$ cross blocks removed; the
+blocks $\Pi_S B\Pi_S$ (internal to $S$) and $QBQ$ (internal to the
+complement) are kept, together with $D$, $c$, $p$, and the observation
+protocol. The sector-cut generator and response are
+\[
+A^{(S)}_{\mathrm{cut}}(z):=D+B^{(S)}_{\mathrm{cut}}(z),\qquad
+\chi^{(S)}_{\mathrm{cut}}(z):=p^\dagger A^{(S)}_{\mathrm{cut}}(z)^{-1}c,
+\]
+and the master sector response is
+$R_S(z):=\chi_{\mathrm{full}}(z)-\chi^{(S)}_{\mathrm{cut}}(z)$.
+\end{definition}
+
+\begin{lemma}[Reduction to the block-Schur form]\label{lem:reduction}
+When $V=V_Q\oplus S$ (so $\Pi_S$ projects onto the last block), write
+\[
+B(z)=\begin{pmatrix}A(z) & B_{12}(z)\\ B_{21}(z) & G_g(z)\end{pmatrix},
+\qquad c=\begin{pmatrix}b_p\\0\end{pmatrix},\qquad
+p^\dagger=(d^\dagger\ \ 0),
+\]
+using the notation of Theorem~2B of
+\emph{eit\_nogo\_proofs.tex}. Then Definition~\ref{def:cut} gives
+\[
+B^{(S)}_{\mathrm{cut}}(z)=\begin{pmatrix}A(z)&0\\0&G_g(z)\end{pmatrix},
+\]
+exactly the ``$B_{12},B_{21}\to0$ with everything else fixed'' cut used
+there, and consequently
+$\chi^{(S)}_{\mathrm{cut}}=d^\dagger A^{-1}b_p$ and
+\[
+R_S(z)=d^\dagger A^{-1}B_{12}\,S_g^{-1}\,B_{21}A^{-1}b_p,
+\qquad S_g:=G_g-B_{21}A^{-1}B_{12},
+\]
+reproducing Theorem~2B verbatim.
+\end{lemma}
+
+\begin{proof}
+Direct block computation: $Q B\Pi_S$ selects exactly the $(V_Q,S)$ block
+$B_{12}$ placed in the upper-right corner (zero elsewhere), and
+$\Pi_S BQ$ selects $B_{21}$ in the lower-left corner; subtracting both from
+$B$ zeroes precisely those two blocks and leaves $A,G_g$ untouched. The
+formula for $R_S$ is the Schur-complement computation already carried out
+in Theorem~2B's proof, unchanged since $A^{(S)}_{\mathrm{cut}}$ is
+block-diagonal in the same basis.
+\end{proof}
+
+Lemma~\ref{lem:reduction} shows Definition~\ref{def:cut} is not a new
+mathematical object: it is the coordinate-free statement of the cut
+already used throughout the no-go/EIT program, and every prior explicit
+computation ($2$g$+2$e, $2$g$+3$e, the closed-loop and full-GKSL models
+worked out numerically in this project) is a special case of it.
+
+\section{L1.1: invariances inherited from the closed theorem package}
+
+\begin{theorem}[Basis, realization, and cut-representation invariance
+--- restatement of Theorem~3.1, master-response no-go package]
+\label{thm:invariance}
+The sector response $R_S(z)$ of Definition~\ref{def:cut} satisfies:
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Basis invariance.} Under an invertible similarity
+$T$ acting as $A_j\mapsto TA_jT^{-1}$, $c\mapsto Tc$,
+$p\mapsto T^{-\dagger}p$ for $j\in\{\mathrm{full,cut}\}$ (independently on
+each block, in the sense of the augmented realization of that package),
+$R_S(z)$ is unchanged.
+\item \textbf{Realization invariance.} Any two finite-dimensional
+state-space realizations of the same scalar function $R_S(z)$ share the
+same minimal Kalman realization up to similarity, hence the same exact-zero
+certificate and asymptotic index $\nu$.
+\item \textbf{Cut-representation invariance.} If two constructions of the
+cut model produce the same transfer function $\chi^{(S)}_{\mathrm{cut}}$,
+they give the same $R_S$ and hence the same class. This does \emph{not}
+identify two physically different sectors $S_1\neq S_2$ whose cut transfer
+functions differ --- see L1.2 below.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+This is Theorem~3.1 of the master-response no-go closed package, applied
+verbatim: that proof depends only on $R_S$ being a scalar transfer function
+built from a state-space realization $(A,c,p)$, exactly the structure of
+Definition~\ref{def:cut}. No property specific to a particular block
+partition (e.g.\ Lemma~\ref{lem:reduction}'s two-block form) is used, so the
+proof transfers unchanged to the general projector definition.
+\end{proof}
+
+\section{L1.2: the cut depends on the physical choice of sector ---
+the theory is about pairs $(\chi,S)$}
+
+\begin{theorem}[Non-uniqueness across sector choices]\label{thm:L12}
+There exist a full response $\chi_{\mathrm{full}}$ and two distinct
+physical sectors $S_1\neq S_2$ (both satisfying the standing assumptions)
+such that
+\[
+R_{S_1}(z_0)\neq R_{S_2}(z_0)
+\]
+at a common regular frequency $z_0$. Consequently, the equivalence
+$\chi_{\mathrm{full}}(z_0)=0\iff R_S(z_0)=-\chi^{(S)}_{\mathrm{cut}}(z_0)$
+(Theorem~2 of the strategy document) is a statement about the pair
+$(\chi_{\mathrm{full}},S)$, not a property of $\chi_{\mathrm{full}}$ alone:
+the same total response can be ``explained'' by cancellation through one
+sector and not through another.
+\end{theorem}
+
+\begin{proof}[Proof by explicit construction]
+Take the $2$g$+3$e matched coherence-space model (ground coherence $g$,
+excited coherences $e_1,e_2,e_3$; the same construction verified against
+the closed $2$g$+2$e form to machine precision in gate F4/F5 of this
+project). Fix
+\[
+\Delta=(0,\,3,\,-2),\quad
+J_{12}=0.3,\ J_{23}=0.2,\ J_{13}=0.15,\quad
+\gamma_g=0.05,\quad \Omega_c=0.7,
+\]
+\[
+d_c=(0.6,\ 0.9,\ 0.4e^{0.5\im}),\qquad d_p=(1,\,0,\,0.2),\qquad
+\delta_0=0.4 .
+\]
+Take $S_1=\{$ground coherence$\}$ (cut the $g\leftrightarrow\{e_1,e_2,e_3\}$
+coupling only) and $S_2=\{e_2\text{ coherence}\}$ (cut the
+$e_2\leftrightarrow\{e_1,e_3,g\}$ coupling only). Direct numerical
+evaluation gives
+\[
+\chi_{\mathrm{full}}(\delta_0)=0.8129+0.4262\,\im,
+\]
+\[
+R_{S_1}(\delta_0)=-0.0498+0.0623\,\im,\qquad
+R_{S_2}(\delta_0)=-0.0071-0.0008\,\im,
+\]
+so $|R_{S_1}(\delta_0)-R_{S_2}(\delta_0)|\approx0.0762\neq0$. Both cuts
+satisfy the standing assumptions (regular point, invertible cut
+generator, $R_S\neq0$), yet they disagree, proving the claim.
+\end{proof}
+
+\begin{remark}
+This is not a defect of the theory: it is the correct statement of what
+``sector-mediated EIT'' means. A physical experiment (e.g.\ a sector
+dephasing test, Part~VI \S15 Condition~6 of the strategy document)
+identifies $S$ operationally by which coherence, when dephased or
+polarization-switched, destroys the transparency feature; the theorem
+package then makes a definite claim about that specific, experimentally
+identified $S$. Reporting an $R_S$ without naming $S$ is meaningless in
+exactly the same way that reporting a partial derivative without naming
+the variable held fixed is meaningless.
+\end{remark}
+
+\section{L1.3: the absorption functional's sign is convention-independent
+under passivity}
+
+\begin{definition}[Phase-family absorption functional]
+For $\theta\in[0,2\pi)$ define $\mathcal A_\theta[\chi]:=\Re(e^{-\im\theta}\chi)$.
+This generalizes both conventions mentioned in the strategy document,
+$\mathcal A_0=\Re\chi$ and $\mathcal A_{\pi/2}=\Im\chi$.
+\end{definition}
+
+\begin{theorem}[Canonical absorption angle under passivity]\label{thm:L13}
+Let $\chi_{\mathrm{cut}}^{(S)}$ be a matched response
+($p=c$) of a strictly passive generator, $A(z)=\Gamma+\im K(z)$ with
+$\Gamma\succ0$ Hermitian and $K(z)$ Hermitian (Proposition~A / gate~F2 of
+this project). Then:
+\begin{enumerate}[label=(\roman*)]
+\item $\mathcal A_0[\chi_{\mathrm{cut}}^{(S)}(z)]=\Re\chi_{\mathrm{cut}}^{(S)}(z)
+=c^\dagger G^\dagger\Gamma G\,c>0$ for every real regular $z$, i.e.\ the
+$\theta=0$ functional has a fixed, model-independent sign.
+\item No other angle has this property uniformly: for generic $K(z)$ there
+exist $z_1,z_2$ with $\mathcal A_\theta[\chi_{\mathrm{cut}}^{(S)}(z_1)]>0$
+and $\mathcal A_\theta[\chi_{\mathrm{cut}}^{(S)}(z_2)]<0$ for every
+$\theta\neq0\ (\mathrm{mod}\ 2\pi)$.
+\end{enumerate}
+Hence, once the coupling matrix's phase convention is fixed so that
+$\chi=1/a$-type forms (the convention used throughout this project) hold,
+the absorption functional is uniquely $\mathcal A_0=\Re$, and its
+positivity is guaranteed by passivity alone --- it is not a free
+normalization choice, and the ``$\Im\chi$'' convention used in some texts
+corresponds to reading off the \emph{dispersive}, not absorptive, part of
+the same response.
+\end{theorem}
+
+\begin{proof}
+(i) is Proposition~A, proved and verified to machine precision in gate~F2
+of this project ($20$,$000$ random trials, $N_e\in\{2,\dots,6\}$, arbitrary
+Hermitian mixing and non-normal $A$): $\Re\chi_{\mathrm{cut}}^{(S)}=
+c^\dagger\bigl(\tfrac{G+G^\dagger}2\bigr)c=c^\dagger G^\dagger\Gamma G\,c>0$
+whenever $c\neq0$ and $\Gamma\succ0$.
+
+(ii) A single passive Lorentzian resonance, $a(z)=\gamma-\im(z-\Delta)$,
+$\chi=1/a$, has
+$\Re\chi(z)=\gamma/(\gamma^2+(z-\Delta)^2)>0$ for all real $z$ (consistent
+with (i)), while
+$\Im\chi(z)=(z-\Delta)/(\gamma^2+(z-\Delta)^2)$
+changes sign at $z=\Delta$. More generally,
+$\mathcal A_\theta[\chi(z)]=\Re(e^{-\im\theta}/a(z))$
+$=\bigl[\gamma\cos\theta-(z-\Delta)\sin\theta\bigr]/(\gamma^2+(z-\Delta)^2)$,
+whose numerator is an affine function of $z$ with nonzero slope
+$-\sin\theta$ whenever $\theta\neq0$, hence changes sign at
+$z=\Delta+\gamma\cot\theta$. Only $\theta=0$ (mod $2\pi$; $\theta=\pi$
+merely flips the overall sign convention) removes the sign change for
+every choice of $\Delta,\gamma>0$.
+\end{proof}
+
+\section{Summary}
+
+Definition~\ref{def:cut} fixes the sector cut coordinate-free and shows
+(Lemma~\ref{lem:reduction}) that it specializes to every block-Schur
+computation already carried out in this project and its predecessor.
+Theorem~\ref{thm:invariance} transfers the closed no-go package's
+invariance theorem to this general definition without new work. The two
+genuinely new results are Theorem~\ref{thm:L12} (the cut is a property of
+the pair $(\chi,S)$, proved by explicit $2$g$+3$e counterexample) and
+Theorem~\ref{thm:L13} (the absorption functional's sign is
+convention-independent \emph{only} at the physically canonical phase
+$\theta=0$, and passivity alone fixes its sign there). Together these
+close gate~T1: the sector cut used throughout Theorems~1--4 of the
+strategy document is well defined, provided every statement names its
+sector $S$ explicitly.
+
+\end{document}

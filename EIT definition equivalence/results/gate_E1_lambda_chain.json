@@ -1,0 +1,196 @@
+{
+  "gamma_g_scan": [
+    {
+      "gamma_g": 0.0,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 0.0,
+      "witness_iii_rho_ee": -1.253042962966026e-16,
+      "witness_iv_abs_rho_g2g1": 0.5000000000000004,
+      "witness_v_R_S_plus_chi_cut": [
+        1.1102230246251565e-15,
+        4.783065259724323e-16
+      ],
+      "witness_vi_chi_full_direct": [
+        -1.1225193027265044e-16,
+        1.6089564361042648e-17
+      ],
+      "witness_vi_chi_full_resolvent": [
+        1.1406138128610604e-15,
+        4.783065259724323e-16
+      ]
+    },
+    {
+      "gamma_g": 1e-06,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 7.071067811865474e-07,
+      "witness_iii_rho_ee": 9.999954374064395e-07,
+      "witness_iv_abs_rho_g2g1": 0.4999977187600179,
+      "witness_v_R_S_plus_chi_cut": [
+        6.249980467720739e-06,
+        -1.7082374892291064e-16
+      ],
+      "witness_vi_chi_full_direct": [
+        5.143143281619479e-17,
+        -6.249971483196646e-07
+      ],
+      "witness_vi_chi_full_resolvent": [
+        6.249980467701848e-06,
+        -1.7082374892291064e-16
+      ]
+    },
+    {
+      "gamma_g": 1e-05,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 7.071067811865472e-06,
+      "witness_iii_rho_ee": 9.99954377045112e-06,
+      "witness_iv_abs_rho_g2g1": 0.499977188501713,
+      "witness_v_R_S_plus_chi_cut": [
+        6.249804692703975e-05,
+        8.541182787301168e-17
+      ],
+      "witness_vi_chi_full_direct": [
+        -2.957892445246869e-17,
+        -6.249714856367936e-06
+      ],
+      "witness_vi_chi_full_resolvent": [
+        6.249804692698992e-05,
+        8.541182787301168e-17
+      ]
+    },
+    {
+      "gamma_g": 0.0001,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 7.071067811865471e-05,
+      "witness_iii_rho_ee": 9.995439502649162e-05,
+      "witness_iv_abs_rho_g2g1": 0.4997719751318772,
+      "witness_v_R_S_plus_chi_cut": [
+        0.00062480473875548,
+        -1.0932756829057288e-15
+      ],
+      "witness_vi_chi_full_direct": [
+        -8.837178653861078e-18,
+        -6.24714968918249e-05
+      ],
+      "witness_vi_chi_full_resolvent": [
+        0.0006248047387554404,
+        -1.0932756829057288e-15
+      ]
+    },
+    {
+      "gamma_g": 0.001,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 0.0007071067811865472,
+      "witness_iii_rho_ee": 0.0009954574476935315,
+      "witness_iv_abs_rho_g2g1": 0.49772872384688377,
+      "witness_v_R_S_plus_chi_cut": [
+        0.0062305198901562164,
+        5.124402101366915e-16
+      ],
+      "witness_vi_chi_full_direct": [
+        -8.151595634427445e-17,
+        -0.0006221609048085846
+      ],
+      "witness_vi_chi_full_resolvent": [
+        0.006230519890156204,
+        5.124402101366915e-16
+      ]
+    },
+    {
+      "gamma_g": 0.01,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 0.007071067811865474,
+      "witness_iii_rho_ee": 0.009562943593574945,
+      "witness_iv_abs_rho_g2g1": 0.4781471796787447,
+      "witness_v_R_S_plus_chi_cut": [
+        0.06059687926071966,
+        -1.059832778952526e-15
+      ],
+      "witness_vi_chi_full_direct": [
+        -1.0767303546343678e-16,
+        -0.005976839745984402
+      ],
+      "witness_vi_chi_full_resolvent": [
+        0.060596879260719605,
+        -1.059832778952526e-15
+      ]
+    },
+    {
+      "gamma_g": 0.05,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 0.035355339059327355,
+      "witness_iii_rho_ee": 0.04064782470625635,
+      "witness_iv_abs_rho_g2g1": 0.40647824706255886,
+      "witness_v_R_S_plus_chi_cut": [
+        0.26936026936026836,
+        1.0562829042288498e-16
+      ],
+      "witness_vi_chi_full_direct": [
+        8.506259428373677e-18,
+        -0.025404890441410206
+      ],
+      "witness_vi_chi_full_resolvent": [
+        0.26936026936026836,
+        1.0562829042288498e-16
+      ]
+    },
+    {
+      "gamma_g": 0.1,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 0.07071067811865472,
+      "witness_iii_rho_ee": 0.06830309498399142,
+      "witness_iv_abs_rho_g2g1": 0.3415154749199572,
+      "witness_v_R_S_plus_chi_cut": [
+        0.47058823529412086,
+        1.3820071214655386e-15
+      ],
+      "witness_vi_chi_full_direct": [
+        -1.5726706621657832e-17,
+        -0.0426894343649948
+      ],
+      "witness_vi_chi_full_resolvent": [
+        0.4705882352941209,
+        1.3820071214655386e-15
+      ]
+    },
+    {
+      "gamma_g": 0.5,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 0.3535533905932737,
+      "witness_iii_rho_ee": 0.143820224719101,
+      "witness_iv_abs_rho_g2g1": 0.14382022471910114,
+      "witness_v_R_S_plus_chi_cut": [
+        1.0582010582010584,
+        8.370375494015034e-16
+      ],
+      "witness_vi_chi_full_direct": [
+        -2.3553784485074363e-18,
+        -0.08988764044943826
+      ],
+      "witness_vi_chi_full_resolvent": [
+        1.0582010582010584,
+        8.370375494015034e-16
+      ]
+    },
+    {
+      "gamma_g": 1.0,
+      "witness_i_kernel_dim": 1,
+      "witness_ii_dark_state_residual": 0.7071067811865472,
+      "witness_iii_rho_ee": 0.15763546798029557,
+      "witness_iv_abs_rho_g2g1": 0.07881773399014771,
+      "witness_v_R_S_plus_chi_cut": [
+        1.0989010989010985,
+        -8.683194842217013e-16
+      ],
+      "witness_vi_chi_full_direct": [
+        9.109675095354129e-18,
+        -0.0985221674876848
+      ],
+      "witness_vi_chi_full_resolvent": [
+        1.0989010989010985,
+        -8.683194842217013e-16
+      ]
+    }
+  ],
+  "all_hold_at_gamma_g_0": true,
+  "rho_ee_monotonic": true
+}
