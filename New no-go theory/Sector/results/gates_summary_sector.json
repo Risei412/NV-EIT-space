@@ -1,0 +1,25 @@
+{
+  "U1": {
+    "name": "U1_algebraic_operational_equivalence",
+    "ideal_vs_algebraic_cut_error": 0.0,
+    "fit_slope": -0.9999671907365134,
+    "fitted_kappa_coefficient_mag": 0.4622943914193068,
+    "closed_form_coefficient_mag": 0.4624999999999999,
+    "coefficient_relative_error": 0.00044455909339054814,
+    "pass": true
+  },
+  "U2": {
+    "name": "U2_kernel_universality",
+    "same_P_S": true,
+    "ideal_limit_difference": 0.0,
+    "finite_kappa_difference_at_kappa10": 0.028444888270965557,
+    "finite_kappa_difference_at_kappa_max": 3.181007742843131e-05,
+    "pass": true
+  },
+  "U5": {
+    "name": "U5_frozen_vs_self_consistent",
+    "noninvasive_C_S_rho0_norm": 0.0,
+    "steady_state_deviation_across_kappa": 0.0,
+    "pass": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "part1_synthetic_counterexample": {
+    "rho_bar_populations": [
+      0.7,
+      0.3
+    ],
+    "a_drho_full_01": "(0.3+0j)",
+    "b_drho_cut_01": "0.1j",
+    "F_Q_full": 0.36,
+    "F_Q_cut": 0.04000000000000001,
+    "Delta_F_Q": 0.31999999999999995,
+    "I_sector_metric": 0.4,
+    "cross_term": -0.04000000000000001,
+    "reconstruction_residual_should_be_zero": -5.551115123125783e-17,
+    "quantities_are_distinct": "True"
+  },
+  "part1_pass": true,
+  "part2_physical_model": {
+    "params": {
+      "Gamma": 50.0,
+      "theta": 0.3,
+      "lam": 0.7,
+      "phi": 0.4
+    },
+    "F_Q_full": 1.3697608023495882e-06,
+    "F_Q_cut": 0.0,
+    "Delta_F_Q": 1.3697608023495882e-06,
+    "I_sector_metric": 1.3697608023495882e-06,
+    "cross_term": 0.0,
+    "reconstruction_residual_should_be_zero": 0.0,
+    "Delta_F_Q_minus_I_sector_metric": 0.0,
+    "note": "cross_term ~ 0 here because kappa_cut=0 makes the cut Hamiltonian purely diagonal, so drho_cut vanishes identically and x_S = drho_full exactly; see module docstring part (2)."
+  },
+  "pass": true
+}
