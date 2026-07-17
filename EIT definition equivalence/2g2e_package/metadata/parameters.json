@@ -1,0 +1,28 @@
+{
+  "model": "minimal 2g+2e Markovian weak-probe model",
+  "units": "gamma_e = 1",
+  "parameters": {
+    "gamma_e": 1.0,
+    "gamma_g": 0.02,
+    "Delta_e": 8.0,
+    "Omega_c": 0.8,
+    "theta": "pi/4",
+    "beta": 0.16
+  },
+  "representative_results": {
+    "delta_min_over_gamma_e": -0.00965,
+    "Re_chi_full_at_min": 0.20970,
+    "Re_chi_cut_at_min": 0.99991,
+    "relative_absorption_suppression": 0.7903,
+    "nearest_transfer_zero": {
+      "real": -0.009841,
+      "imag": -0.021203
+    },
+    "gamma_scaling": {
+      "class_I": "R_S identically zero for theta=pi/2",
+      "class_II_full_optical": "R_S ~ Gamma^-2",
+      "class_II_all_coherences": "R_S ~ Gamma^-3",
+      "class_III_selective_e2": "R_S ~ Gamma^0"
+    }
+  }
+}
