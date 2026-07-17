@@ -1,0 +1,40 @@
+{
+  "model": "No-go theorem/src/gate2_candidate_full_vs_reduced.py build_full (full NV Liouvillian, N=9), Step 1 low-T geometry",
+  "T_K": 10.0,
+  "Bz_T": 0.02,
+  "d_strain_GHz": 1.683,
+  "Oc_GHz": 1.0,
+  "z_reg_GHz": 0.001,
+  "spectral_gap_of_L_GHz": 2.9999999976434998e-06,
+  "sector_S_liouville_indices": [
+    1,
+    9
+  ],
+  "gates": {
+    "gate_2_1_kappa_inverse_convergence": {
+      "semisimple": true,
+      "selective_damping_ok": true,
+      "fit_slope": -0.9999796993489215,
+      "gate2_agreement_rel_err": 0.0,
+      "pass_": true
+    },
+    "gate_2_2_kernel_universality": {
+      "same_P_S": true,
+      "ideal_limit_difference": 0.0,
+      "finite_kappa_difference_at_kappa10": 1.2913489492811269e-12,
+      "pass_": true
+    },
+    "gate_2_3_noninvasiveness": {
+      "noninvasive_C_S_rho0_norm": 0.0,
+      "max_steady_state_deviation_across_kappa": 9.614813431917819e-17,
+      "pass_": true
+    },
+    "gate_2_4_regularization_and_background": {
+      "regularization_rel_err_vs_gate2_lstsq": 4.817662549323491e-05,
+      "bare_background_rel_err": 2.0883718309438994e-19,
+      "cond_A": 194736.5709271179,
+      "pass_": true
+    }
+  },
+  "overall_pass": true
+}

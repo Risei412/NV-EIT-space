@@ -9,6 +9,48 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 2 (operational cut audit, full NV Liouvillian): EXECUTED, all 4 gates PASS.**
+See `results/gates_summary_step2.json` and
+`results/figures/fig_step2_operational_cut_audit.png`.
+Code: `src/step2_operational_cut_audit.py`.
+
+Builds the FULL (N=9, dim=81) NV Liouvillian at Step 1's exact geometry
+(T=10 K, Bz=0.02 T, Bx=0, control on ms=-1, probe/control on orbital
+branches X/Y), reusing `No-go theorem/src/gate2_candidate_full_vs_reduced.py`'s
+`build_full()` for the Lindbladian construction and
+`New no-go theory/Sector/src/operational_cut.py` for the operational-cut
+machinery already validated on toy models in
+`New no-go theory/Sector/src/run_gates_step3.py` (Gates U1/U2/U5). The
+sector cut S = {rho_pc, rho_cp} is the same one `tests/
+test_operational_cut_equivalence.py` proved is numerically identical to
+gate2's own ad hoc "zero the S<->X Liouvillian blocks" construction.
+
+Since the full vectorized Liouvillian is exactly singular (one
+trace-preserving steady state), the response operator is regularized as
+A(z) = i*z*I - L at a small representative z (0.001 GHz, chosen well
+above L's spectral gap of ~3e-6 GHz) -- a technical device to get an
+invertible matrix for the operational-cut formulas, cross-validated in
+Gate 2.4 against gate2's own DC (lstsq + trace-gauge) solver (agreement to
+5e-5 relative).
+
+Gates certified (`gates_summary_step2.json`):
+
+| Gate | Requirement (plan Sec. 5, Step 2) | Result |
+|---|---|---|
+| 2.1 (~U1) | O(kappa^-1) convergence to the ideal Riesz-projector cut; agreement with gate2's own cut | PASS (fit slope -0.99998; exact agreement with gate2's cut) |
+| 2.2 (~U2) | implementation universality: two admissible cut generators with the same retained projector P_S converge to the identical ideal cut but differ at finite kappa | PASS (ideal-limit difference = 0 exactly; finite-kappa difference nonzero and itself O(kappa^-1)) |
+| 2.3 (~U5) | non-invasiveness (C4): the cut generator annihilates the undriven reference steady state, and L0+kappa*D_S's steady state stays pinned to it for every kappa | PASS (both norms at or below machine precision) |
+| 2.4 | the z-regularization doesn't distort the physics; the cut doesn't remove the one-photon absorption background when there's no control-induced coherence to cut (Oc=0) | PASS (5e-5 regularization error; background error at machine precision) |
+
+Step 2 (plan: two independent GKSL-admissible cut implementations must
+agree in the kappa -> infinity limit, matching the already-validated
+Sector methodology) is therefore satisfied on the full many-level NV
+model, not just the toy Lambda/3-level models it was first proven on.
+Step 3 (merged-manifold moment analysis: symbolic M0=0 and the SMRT class
+of the NV spin-Lambda sector) is next.
+
+---
+
 **Step 1 (positive control): EXECUTED, all 6 gates PASS.**
 See `results/gates_summary_step1.json` and
 `results/figures/fig_step1_low_T_positive_control.png`.
@@ -59,9 +101,12 @@ GKSL-admissible D_S construction) is next.
 
 ## Layout
 
-    src/step1_low_temperature_validation.py   Step 1 (this run)
+    src/step1_low_temperature_validation.py   Step 1
+    src/step2_operational_cut_audit.py         Step 2
     results/gates_summary_step1.json
+    results/gates_summary_step2.json
     results/figures/fig_step1_low_T_positive_control.png
+    results/figures/fig_step2_operational_cut_audit.png
 
-Future steps (2-9) will follow the same convention: one `run_stepN_*.py`
-per step, one `gates_summary_stepN.json`, figures under `results/figures/`.
+Future steps (3-9) will follow the same convention: one `stepN_*.py` per
+step, one `gates_summary_stepN.json`, figures under `results/figures/`.
