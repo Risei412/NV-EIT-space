@@ -24,6 +24,11 @@ algorithm terminates and is correct.
 - `Theorem and proofs/three_theorems_proofs.tex` — self-contained proofs
   document (cites the companion `../No-go theorem/Theorem and proofs/eit_nogo_proofs.tex`
   for reused building blocks: Theorems 2A/2B, 3, 4, 5, 6 there).
+- `Theorem and proofs/no_go_theory_undergrad_guide.tex` — pedagogical guide
+  to the whole theory at undergraduate level (only linear algebra and
+  geometric series assumed): intuition, analogies, exactly solvable 2×2
+  examples for each class, the trichotomy, the decision algorithm, scope,
+  and a jargon dictionary.
 - `src/three_theorem_verification.py` — numerical verification of all three
   theorems and the counterexample lemma.
 

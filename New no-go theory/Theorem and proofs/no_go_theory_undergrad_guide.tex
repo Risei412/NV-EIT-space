@@ -1,0 +1,960 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+
+% ---- notation shortcuts (kept consistent with three_theorems_proofs.tex) ----
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\spann}{\operatorname{span}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\kry}{\mathcal K}
+\newcommand{\nobs}{\mathcal N_{\mathrm{obs}}}
+\newcommand{\Vresp}{\mathcal V_{\mathrm{resp}}}
+\newcommand{\nudiss}{\nu_{\mathrm{diss}}}
+
+% ---- a simple "take-away" box that needs no extra packages ----
+\newenvironment{takeaway}
+  {\par\medskip\noindent
+   \begin{center}\begin{minipage}{0.92\textwidth}
+   \hrule\medskip\noindent\textbf{Take-away.}\ }
+  {\medskip\hrule\end{minipage}\end{center}\medskip}
+
+\title{The New No-Go Theory, Gently:\\
+An Undergraduate's Guide to the Three-Class\\
+Classification of Sector-Mediated Response}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This is a pedagogical companion to the research documents
+\emph{Three Central Theorems of the Sector-Resolved Response Classification}
+and \emph{A Closed Theorem Package for Master-Response No-Go Classification}.
+Those documents prove, at full rigor, that the question ``does a designated
+coherent pathway of an open quantum system contribute to what a detector
+sees?'' has exactly three possible answers --- \emph{never} (an exact
+structural zero), \emph{less and less} (algebraic suppression under strong
+dissipation), or \emph{always} (a protected response that survives arbitrarily
+strong dissipation) --- and that which answer applies can be decided by a
+finite linear-algebra computation.  This guide explains the same theory using
+only tools from a standard undergraduate curriculum: matrix inverses,
+eigenvalues, geometric series, and block matrices.  Every technical
+simplification made here is flagged explicitly; nothing is silently
+misstated.  After reading this guide you should be able to open the rigorous
+documents and recognize every object in them.
+\end{abstract}
+
+\tableofcontents
+
+% ==================================================================
+\section{What is a no-go theorem, and why do we need a new one?}
+% ==================================================================
+
+\subsection{No-go theorems in general}
+
+A \emph{no-go theorem} is a mathematical proof that something is impossible
+within a stated set of rules.  Famous examples: the \emph{no-cloning theorem}
+(no quantum machine can copy an unknown quantum state) and
+\emph{Earnshaw's theorem} (no arrangement of static charges can trap a charge
+stably).  A good no-go theorem does two things at once: it saves you from
+wasting effort on impossible designs, and --- by listing its assumptions
+precisely --- it tells you exactly which assumption you must break if you want
+the ``impossible'' effect after all.
+
+The theory explained here concerns a specific physical question from quantum
+optics.  In effects like \emph{electromagnetically induced transparency}
+(EIT), a weak probe laser interacts with atoms (or solid-state defects such as
+color centers), and quantum interference between internal pathways can make an
+opaque medium transparent.  A natural engineering question is:
+
+\begin{center}
+\emph{``Does this particular internal pathway (`sector') of my system\\
+actually contribute to the signal my detector measures?''}
+\end{center}
+
+An older result --- referred to below as \emph{the old no-go criterion} ---
+answered this with a binary yes/no.  The new theory shows that the binary
+answer is too coarse: the honest answer has \textbf{three} tiers, and the old
+criterion cannot distinguish two of them.
+
+\subsection{The three tiers, in plain words}
+
+Imagine you can turn a single knob $\Gamma$ that makes the environment noisier
+and noisier --- more dissipation, more decoherence, everything decaying
+faster.  Watch what happens to the part of the detector signal that is caused
+by the designated pathway.  The new theory proves that exactly one of three
+things happens:
+
+\begin{description}
+\item[Class I (exact structural no-go).]  The pathway contributes
+\emph{exactly zero}, at \emph{every} probe frequency, for \emph{every} value
+of $\Gamma$.  Not small --- zero.  The wire is simply not connected.
+\item[Class II (asymptotic suppression).]  The contribution is nonzero but
+dies algebraically as the noise grows: it shrinks like $\Gamma^{-\nu}$ for
+some positive integer $\nu$.  The signal must pass through $\nu$ heavily
+damped ``rooms,'' and each door costs a factor $1/\Gamma$.
+\item[Class III (protected survival).]  The contribution approaches a
+\emph{finite nonzero limit} as $\Gamma\to\infty$.  There is a soundproof room
+--- a \emph{dark subspace} the dissipation cannot touch --- and the
+conversation inside continues at full volume no matter how loud the corridor
+gets.
+\end{description}
+
+The whole classification is summarized by a single number, the
+\emph{response-class index}
+\[
+\nu\;\in\;\{\infty\}\;\cup\;(0,\infty)\;\cup\;\{0\},
+\]
+where $\nu=\infty$ means Class I, $0<\nu<\infty$ means Class II
+(with $\nu$ the decay exponent), and $\nu=0$ means Class III.
+
+\begin{takeaway}
+The new no-go theory upgrades a yes/no verdict to a three-way classification
+--- exact zero, power-law suppressed, or protected --- indexed by one number
+$\nu$, and proves the three cases are mutually exclusive, exhaust all
+possibilities (within the stated scope), and can be decided by a finite
+computation.
+\end{takeaway}
+
+\subsection{What you need to know already}
+
+Only standard undergraduate material:
+\begin{itemize}
+\item matrices, matrix inverses, eigenvalues and eigenvectors;
+\item the geometric series $1/(1-x)=\sum_k x^k$ for $|x|<1$;
+\item block (partitioned) matrices;
+\item the words ``analytic function'' and ``Laurent series'' (we use them
+only descriptively);
+\item it helps --- but is not required --- to have seen a driven damped
+harmonic oscillator.
+\end{itemize}
+You do \emph{not} need to know open-quantum-system theory.  Wherever a
+concept from that field appears (Lindblad equation, Liouville space, dark
+state), we describe it in words and then work purely with matrices.
+
+% ==================================================================
+\section{The playground: poke the system, listen to the response}
+% ==================================================================
+
+\subsection{Warm-up: one damped oscillator}
+
+Drive a damped harmonic oscillator with a force $F e^{-i\omega t}$ and measure
+its steady-state displacement.  The answer has the form
+\[
+x(\omega) \;=\; \underbrace{\frac{1}{\;\omega_0^2-\omega^2-i\gamma\omega\;}}_{\text{transfer function}}\,F .
+\]
+Everything interesting --- resonances, damping, interference --- lives in the
+\emph{transfer function}: the complex number that converts ``how hard you
+poke'' into ``how much you hear,'' as a function of frequency.  All of linear
+response theory is a matrix generalization of this single formula.
+
+\subsection{The general setup: a matrix, a source, a readout}
+
+An open quantum system probed by a weak laser can be described (this is the
+one imported fact from quantum optics; see the box below) by a family of
+matrices
+\begin{equation}
+A_\Gamma(z) \;=\; \Gamma D \;+\; B(z),
+\label{eq:AGamma}
+\end{equation}
+acting on a finite-dimensional complex vector space
+$\mathcal V\cong\mathbb C^N$, where:
+\begin{itemize}
+\item $z$ is the complex frequency variable (think ``probe detuning'');
+\item $B(z)$ collects the \emph{coherent} physics: energy levels, laser
+couplings, detunings, and any dissipation whose rate is held fixed.  It
+depends analytically on $z$;
+\item $D$ is the \emph{dissipation matrix}: the part of the dynamics whose
+overall strength we will crank up.  It does not depend on $z$;
+\item $\Gamma\ge 0$ is the knob: the overall dissipation scale.
+\end{itemize}
+Two fixed vectors complete the cast:
+\begin{itemize}
+\item $c\in\mathbb C^N$, the \emph{source}: where the probe field injects
+excitation (``where you poke'');
+\item $p\in\mathbb C^N$, the \emph{readout}: which coherence the detector
+measures (``where you listen'').
+\end{itemize}
+The measured linear response is the scalar transfer function
+\begin{equation}
+F_\Gamma(z) \;=\; p^\dagger\, A_\Gamma(z)^{-1}\, c .
+\label{eq:FGamma}
+\end{equation}
+Read it from right to left: inject at $c$, let the system respond
+(that is what the inverse matrix does --- it solves the steady-state
+equations), and project the result onto what the detector sees.  For the
+single oscillator above, $A$ is $1\times 1$ and
+\eqref{eq:FGamma} reduces exactly to the warm-up formula.
+
+\begin{takeaway}
+One matrix family $A_\Gamma(z)=\Gamma D+B(z)$, one source vector $c$, one
+readout vector $p$.  Everything the detector can see at linear order is the
+scalar $F_\Gamma(z)=p^\dagger A_\Gamma(z)^{-1}c$.  The entire theory is about
+how this scalar behaves as $\Gamma\to\infty$.
+\end{takeaway}
+
+\begin{remark}[Where equation \eqref{eq:AGamma} comes from --- optional]
+For readers who have met density matrices: a Markovian open quantum system
+evolves under a Lindblad master equation
+$\dot\rho=\mathcal L\rho$.  The superoperator $\mathcal L$ is a linear map on
+the space of matrices $\rho$; flattening $\rho$ into a long column vector
+turns $\mathcal L$ into an ordinary $N\times N$ matrix ($N=d^2$ for a
+$d$-level system).  This flattened arena is called \emph{Liouville space}.
+Splitting $\mathcal L$ into the dissipators we scale ($\Gamma D$) and
+everything else ($B$), and solving the weak-probe steady state at frequency
+$z$, produces exactly \eqref{eq:AGamma}--\eqref{eq:FGamma}.  One important
+consequence: $D$ acts on Liouville space and is \emph{in general not
+Hermitian}, even though the physics is perfectly unitary-plus-dissipative.
+This is why Section~\ref{sec:thm3} must use slightly more careful projections
+than the orthogonal ones you know from inner-product spaces.
+\end{remark}
+
+\subsection{The sector cut and the master response}
+\label{sec:master}
+
+Now the key construction.  We want to know what a designated internal pathway
+--- a \emph{sector} $S$, e.g.\ ``the coupling through the metastable spin
+state'' --- contributes to the signal.  The clean way to ask this: compare the
+real system with a fictitious surgery on it.
+
+\begin{definition}[Sector cut]
+The \emph{cut model} is obtained from the full model by deleting the
+couplings that connect sector $S$ to the rest, \emph{inside $B$ only}: the
+dissipation matrix $D$, the source $c$, and the readout $p$ are left
+untouched.  Write $B_{\mathrm{full}}(z)$ and $B^{(S)}_{\mathrm{cut}}(z)$ for
+the two coupling matrices.
+\end{definition}
+
+\begin{definition}[Master sector-resolved response]
+The \emph{master response} of sector $S$ is the difference of the two
+transfer functions,
+\begin{equation}
+R_{S,\Gamma}(z)\;=\;\chi_{\mathrm{full},\Gamma}(z)-\chi^{(S)}_{\mathrm{cut},\Gamma}(z)
+\;=\;p^\dagger\Big[\big(\Gamma D+B_{\mathrm{full}}(z)\big)^{-1}
+-\big(\Gamma D+B^{(S)}_{\mathrm{cut}}(z)\big)^{-1}\Big]c .
+\label{eq:master}
+\end{equation}
+\end{definition}
+
+$R_{S,\Gamma}(z)$ is precisely ``the part of the detected response that
+disappears when you unplug sector $S$.''  If $R_{S,\Gamma}\equiv 0$, the
+sector is irrelevant to the detector; if it survives strong dissipation, the
+sector-mediated effect is robust.  \textbf{The object being classified is
+this difference} --- not the full response and the cut response separately.
+This matters: the full and cut responses could each be large while their
+difference cancels to zero, or each could decay while the difference decays
+faster.  Classifying the difference directly keeps all such cancellations
+honest.
+
+\begin{remark}[One scalar to rule them all: the doubling trick]
+A difference of two transfer functions looks like a more complicated object
+than a single transfer function --- but it is not.  Stack two copies of the
+state space into $\hat{\mathcal V}=\mathcal V\oplus\mathcal V$, run the full
+model in the first copy and the cut model in the second, feed the same source
+into both, and read out with $\hat p=(p,\,-p)$, i.e.\ \emph{subtract} the two
+outputs at the readout stage:
+\[
+\hat D=\begin{pmatrix}D&0\\0&D\end{pmatrix},\quad
+\hat B_S(z)=\begin{pmatrix}B_{\mathrm{full}}(z)&0\\0&B^{(S)}_{\mathrm{cut}}(z)\end{pmatrix},\quad
+\hat c=\begin{pmatrix}c\\ c\end{pmatrix},\quad
+\hat p=\begin{pmatrix}p\\ -p\end{pmatrix}.
+\]
+Then $R_{S,\Gamma}(z)=\hat p^\dagger(\Gamma\hat D+\hat B_S(z))^{-1}\hat c$
+--- a single scalar transfer function of exactly the form
+\eqref{eq:FGamma}, on a space of dimension $2N$.  Consequently, every theorem
+we prove about scalar transfer functions $F_\Gamma$ automatically applies to
+the master response $R_{S,\Gamma}$.  In the rest of this guide we therefore
+state everything for a generic $F_\Gamma(z)=p^\dagger(\Gamma D+B(z))^{-1}c$
+and use small matrices in the examples; keep in mind that in applications
+this $F_\Gamma$ \emph{is} the master response in its doubled realization.
+\end{remark}
+
+\subsection{The one question}
+
+Fix a compact window $K$ of physical frequencies (the range your laser can
+scan).  Ask:
+\begin{center}
+\emph{What happens to $F_\Gamma(z)$, uniformly for $z\in K$, as
+$\Gamma\to\infty$?}
+\end{center}
+The three theorems of the next sections answer this question in the three
+possible regimes, and Section~\ref{sec:trichotomy} proves the regimes are the
+only ones and never overlap.
+
+% ==================================================================
+\section{The toolbox: three facts from linear algebra}
+\label{sec:toolbox}
+% ==================================================================
+
+Three elementary facts power the entire theory.  We state them here once so
+the theorems read smoothly.
+
+\paragraph{Tool 1: the Neumann series (geometric series for matrices).}
+If $\|Y\|<1$ then $I+Y$ is invertible and
+\[
+(I+Y)^{-1}=I-Y+Y^2-Y^3+\cdots,
+\]
+with the same proof as for numbers (multiply and telescope; the series
+converges absolutely because $\|Y^k\|\le\|Y\|^k$).  We will apply this with
+$Y$ proportional to $1/\Gamma$: strong dissipation makes the correction term
+small, so we can expand in powers of $1/\Gamma$.
+
+\paragraph{Tool 2: Cayley--Hamilton.}
+Every $n\times n$ matrix $M$ satisfies its own characteristic polynomial:
+$M^n$ is a linear combination of $I,M,\dots,M^{n-1}$.  Consequence: the
+infinite list of numbers $\mu_k=\ell^\dagger M^k r$ ($k=0,1,2,\dots$) is
+completely determined by its first $n$ entries.  If
+$\mu_0=\dots=\mu_{n-1}=0$, then \emph{all} $\mu_k$ vanish.  This is what
+makes ``check infinitely many frequencies'' collapse to ``check $n$
+numbers'' --- the origin of every \emph{finiteness} claim in the theory.
+
+\paragraph{Tool 3: block elimination (the Schur complement).}
+To solve
+$\left(\begin{smallmatrix}A_{11}&A_{12}\\A_{21}&A_{22}\end{smallmatrix}\right)
+\left(\begin{smallmatrix}x_1\\x_2\end{smallmatrix}\right)
+=\left(\begin{smallmatrix}b_1\\b_2\end{smallmatrix}\right)$
+when $A_{22}$ is invertible, solve the second row for $x_2$ and substitute
+into the first:
+\[
+\big(\underbrace{A_{11}-A_{12}A_{22}^{-1}A_{21}}_{\text{Schur complement}}\big)\,x_1
+= b_1-A_{12}A_{22}^{-1}b_2 .
+\]
+Physically: eliminate the fast, damped variables and obtain an effective
+equation for the slow, protected ones.  This is the engine of
+Theorem~III.
+
+% ==================================================================
+\section{Theorem I: the exact structural no-go (Class I, $\nu=\infty$)}
+\label{sec:thm1}
+% ==================================================================
+
+\subsection{Setting: moments of a realization}
+
+Any scalar transfer function of our type can be written (possibly after the
+doubling trick and a change of variables) in the standard state-space form
+\begin{equation}
+\delta\chi_S(z)=\ell^\dagger (zI-M)^{-1} r,
+\label{eq:realization}
+\end{equation}
+with an $n\times n$ matrix $M$, input vector $r$, and output vector $\ell$.
+For $|z|>\|M\|$ the geometric series (Tool 1, with $Y=M/z$) gives
+\[
+\delta\chi_S(z)=\sum_{k\ge0}\frac{\mu_k}{z^{k+1}},
+\qquad
+\mu_k:=\ell^\dagger M^k r .
+\]
+The numbers $\mu_k$ are called \emph{moments}.  They have a beautiful
+mechanical reading: $r$ is where the excitation enters; $M^k r$ is where it
+has spread after $k$ steps of internal dynamics; $\mu_k$ asks whether, after
+$k$ steps, any of it overlaps what the detector measures.
+
+Two subspaces make this picture precise:
+\begin{itemize}
+\item the \emph{reachable subspace}
+$\kry(M,r)=\spann\{r,\,Mr,\,\dots,\,M^{n-1}r\}$
+--- everywhere the input can spread;
+\item the \emph{unobservable subspace}
+$\nobs(M,\ell)=\bigcap_{k\ge0}\ker(\ell^\dagger M^k)$
+--- everything the detector can never see, no matter how long it waits.
+\end{itemize}
+These are the classical \emph{Kalman} subspaces from control theory.
+
+\subsection{The theorem}
+
+\begin{theorem}[Exact structural no-go]
+\label{thm:one}
+For the realization \eqref{eq:realization} the following are equivalent:
+\begin{enumerate}
+\item[(i)] $\mu_k=\ell^\dagger M^k r=0$ for $k=0,1,\dots,n-1$
+\hfill (\emph{$n$ numbers vanish});
+\item[(ii)] $\kry(M,r)\subseteq\nobs(M,\ell)$
+\hfill (\emph{everything reachable is invisible});
+\item[(iii)] $\ell^\dagger q(M)\,r=0$ for every polynomial $q$
+\hfill (\emph{no dynamics ever connects them});
+\item[(iv)] $\delta\chi_S(z)=0$ for every $z\notin\operatorname{spec}M$
+\hfill (\emph{exact zero at all frequencies}).
+\end{enumerate}
+A system satisfying these conditions is in \textbf{Class I}; we set
+$\nu=\infty$.
+\end{theorem}
+
+\subsection{Why it is true (sketch)}
+
+\emph{(i)$\Rightarrow$(iii).}  Cayley--Hamilton (Tool 2): once the first $n$
+moments vanish, all higher powers of $M$ are combinations of lower ones, so
+all moments vanish, hence $\ell^\dagger q(M)r=0$ for any polynomial.
+
+\emph{(iii)$\Rightarrow$(iv).}  The resolvent $(zI-M)^{-1}$ is itself a
+polynomial in $M$ (with $z$-dependent coefficients): by Cramer's rule
+$(zI-M)^{-1}=\adj(zI-M)/\det(zI-M)$, and the adjugate of $zI-M$ expands as a
+polynomial in $M$.  So (iii) kills $\delta\chi_S(z)$ at every $z$ off the
+spectrum --- \emph{not} only at large $|z|$.
+
+\emph{(iv)$\Rightarrow$(i).}  If a Laurent series
+$\sum_k\mu_k z^{-k-1}$ vanishes on an open annulus, all its coefficients
+vanish (uniqueness of Laurent expansions).
+
+\emph{(ii)$\Leftrightarrow$(iii)}: unwinding definitions --- $\kry(M,r)$ is
+spanned by the vectors $M^k r$, and membership in $\nobs$ says exactly that
+$\ell^\dagger M^j$ kills them for every $j$.
+
+\begin{takeaway}
+An exact all-frequency zero is not a miracle of fine-tuning at each
+frequency; it is a \emph{structural} statement --- the reachable subspace is
+invisible to the detector --- and it can be \emph{certified by computing just
+$n$ numbers}.  This finite certificate is Step~1 of the decision algorithm.
+\end{takeaway}
+
+\subsection{Four mechanisms, one condition}
+
+Physically distinct causes all funnel into condition (ii):
+\begin{enumerate}
+\item \textbf{Symmetry separation}: source and detector live in different
+symmetry sectors that the dynamics never mixes (selection rules);
+\item \textbf{Unreachability}: the input never spreads into the part of the
+space the detector watches;
+\item \textbf{Unobservability}: the input spreads everywhere, but the
+detector is blind to the whole invariant subspace it spreads in;
+\item \textbf{All-order cancellation}: no invariant subspace is visible in
+the physical basis, yet the $n$ moments cancel ``accidentally.''
+\end{enumerate}
+The theorem does not care which mechanism operates --- and that is a feature:
+the certificate is the same finite computation in all four cases.
+
+\begin{example}[A $2\times2$ Class I system]
+Take
+\[
+M=\begin{pmatrix}0&1\\0&0\end{pmatrix},\qquad
+r=\begin{pmatrix}1\\0\end{pmatrix},\qquad
+\ell=\begin{pmatrix}0\\1\end{pmatrix}.
+\]
+Then $Mr=0$, so the reachable subspace is
+$\kry(M,r)=\spann\{r\}=\spann\{e_1\}$, and $\ell^\dagger e_1=0$: everything
+reachable is invisible.  Check the moments: $\mu_0=\ell^\dagger r=0$,
+$\mu_1=\ell^\dagger Mr=0$ --- both vanish, and $n=2$, so Theorem~\ref{thm:one}
+promises an exact zero.  Indeed
+\[
+(zI-M)^{-1}=\begin{pmatrix}1/z&1/z^2\\0&1/z\end{pmatrix}
+\quad\Longrightarrow\quad
+\ell^\dagger(zI-M)^{-1}r=0\ \text{ for every }z\neq0 .
+\]
+Note the drama hidden in this tiny example: $M$ \emph{does} couple the two
+levels ($M_{12}=1\neq0$), but in the wrong direction --- level 2 feeds
+level 1, never the reverse.  Connectivity of the matrix is not enough; what
+counts is directed reachability from $r$ to $\ell$.
+\end{example}
+
+% ==================================================================
+\section{Theorem II: the dissipative hierarchy (Class II, $0<\nu<\infty$)}
+\label{sec:thm2}
+% ==================================================================
+
+\subsection{Setting: invertible dissipation}
+
+Now assume the dissipation matrix $D$ is \emph{invertible} on the relevant
+space: every mode feels the damping when we crank $\Gamma$ up.  (The opposite
+case --- some modes feel nothing --- is Theorem~III.)  Intuitively,
+everything should die as $\Gamma\to\infty$.  Theorem~II makes that precise
+and, more importantly, tells you \emph{how fast}, with an integer exponent
+that has a direct physical meaning.
+
+\subsection{The expansion}
+
+Factor the large parameter out of $A_\Gamma=\Gamma D+B(z)$:
+\[
+A_\Gamma = D\,\big(\Gamma I + D^{-1}B(z)\big)
+\quad\Longrightarrow\quad
+A_\Gamma^{-1}
+=\frac1\Gamma\Big(I+\frac{D^{-1}B(z)}{\Gamma}\Big)^{-1} D^{-1}.
+\]
+For $\Gamma$ larger than $X_K:=\sup_{z\in K}\|D^{-1}B(z)\|$, Tool 1 applies
+with $Y=D^{-1}B(z)/\Gamma$ and gives a convergent series in $1/\Gamma$:
+
+\begin{theorem}[Dissipative asymptotic hierarchy]
+\label{thm:two}
+Let $D$ be invertible and define the \emph{dissipative moments}
+\[
+\mu_k(z)=p^\dagger\big[D^{-1}B(z)\big]^k D^{-1}c,\qquad k\ge0 .
+\]
+Then for all $\Gamma>X_K$ and all $z$ in the compact window $K$,
+\begin{equation}
+F_\Gamma(z)=\sum_{k=0}^{\infty}(-1)^k\,\Gamma^{-(k+1)}\,\mu_k(z),
+\label{eq:hierarchy}
+\end{equation}
+absolutely and uniformly convergent on $K$, with an explicit geometric bound
+on every truncation error.  If the first $m$ moments vanish identically on
+$K$ and $\mu_m\not\equiv0$, then
+\[
+F_\Gamma(z)=(-1)^m\,\mu_m(z)\,\Gamma^{-(m+1)}+O\!\big(\Gamma^{-(m+2)}\big)
+\qquad\text{uniformly on }K,
+\]
+and the \emph{dissipative suppression index}
+\[
+\nudiss:=m+1
+\]
+is well defined, basis independent, and bounded by the dimension $N$ of the
+response-relevant space: $\nudiss\in\{1,\dots,N\}$.  If instead \emph{all}
+moments vanish, then $F_\Gamma\equiv0$ and the system is actually in
+Class~I.  Systems with $0<\nudiss<\infty$ form \textbf{Class II}, with
+$\nu=\nudiss$.
+\end{theorem}
+
+Three remarks on why each claim holds:
+\begin{itemize}
+\item \emph{Convergence and the error bound} are verbatim the geometric
+series: the $k$-th term is bounded by $\mathrm{const}\cdot(X_K/\Gamma)^k/\Gamma$.
+\item \emph{``$m$ cannot exceed $N-1$''} is Cayley--Hamilton again (Tool 2),
+applied to the matrix $D^{-1}B(z)$ at a fixed frequency: if the first $N$
+moments vanish, all do.  So either a finite $m\le N-1$ exists, or the
+response is identically zero.  There is no in-between, no
+``vanishes to all orders but is still nonzero'' --- that possibility is
+mathematically excluded in finite dimension.
+\item \emph{Basis independence}: $F_\Gamma$ itself is unchanged by any
+similarity transformation applied consistently to $(D,B,c,p)$, and the
+coefficients of an asymptotic expansion of a fixed function are unique;
+hence $m$, and with it $\nudiss$, cannot depend on the basis.
+\end{itemize}
+
+\subsection{The meaning of the exponent: counting doors}
+
+Why should $\nu$ be an \emph{integer}, and what does it count?  Suppose the
+space splits into sectors (source sector, intermediate sectors, readout
+sector) such that $D$ and the diagonal part of $B$ preserve each sector,
+while the off-diagonal part $V$ of $B$ hops between adjacent sectors.  Each
+term of moment $\mu_k$ is a word with $k$ letters $D^{-1}B$; a word needs at
+least $d$ hop-letters to carry the source sector into the readout sector,
+where $d$ is the graph distance between them.  Hence
+\[
+\mu_k\equiv0\ \text{ for } k<d
+\qquad\Longrightarrow\qquad \nudiss\ge d+1 .
+\]
+\begin{takeaway}
+In Class II, the decay exponent is a \emph{path length}: the number of damped
+sectors the signal must traverse, after all symmetry cancellations at lower
+order are accounted for.  Every ``door'' costs one factor of $1/\Gamma$.
+This is why the old binary criterion was too coarse: it lumped
+``suppressed like $1/\Gamma$'' and ``suppressed like $1/\Gamma^{5}$''
+into the same verdict, although they are wildly different experimentally.
+\end{takeaway}
+
+\begin{example}[A $2\times2$ Class II system, solved exactly]
+\label{ex:classII}
+Take $N=2$,
+\[
+D=I,\qquad
+B(z)=\begin{pmatrix}z & g\\ g & z\end{pmatrix},\qquad
+c=\begin{pmatrix}1\\0\end{pmatrix},\qquad
+p=\begin{pmatrix}0\\1\end{pmatrix},
+\]
+with coupling $g\neq0$: inject in level 1, read out level 2.  The moments:
+\[
+\mu_0=p^\dagger D^{-1}c=p^\dagger c=0,
+\qquad
+\mu_1(z)=p^\dagger B(z)\,c = g\neq0 .
+\]
+So $m=1$ and Theorem~\ref{thm:two} predicts $\nu=\nudiss=2$.  We can verify
+this without any expansion, because the model is exactly solvable:
+\[
+(\Gamma I+B)^{-1}
+=\frac{1}{(\Gamma+z)^2-g^2}
+\begin{pmatrix}\Gamma+z&-g\\-g&\Gamma+z\end{pmatrix}
+\ \Longrightarrow\
+F_\Gamma(z)=\frac{-g}{(\Gamma+z)^2-g^2}
+\;\xrightarrow[\Gamma\to\infty]{}\;
+-\frac{g}{\Gamma^{2}}+O(\Gamma^{-3}).
+\]
+Exactly the predicted $\Gamma^{-2}$, with the predicted coefficient
+$(-1)^1\mu_1=-g$.  The exponent 2 is ``one hop ($d=1$) plus one'': the signal
+enters the damped level 1 (one factor $1/\Gamma$) and must hop once to reach
+level 2 (a second factor).
+\end{example}
+
+% ==================================================================
+\section{Theorem III: protected channels (Class III, $\nu=0$)}
+\label{sec:thm3}
+% ==================================================================
+
+\subsection{Setting: singular dissipation and dark states}
+
+Theorem~II assumed every mode feels the damping.  But the most interesting
+quantum-optical systems violate exactly this: they possess \emph{dark
+states} --- superpositions that the dissipation cannot touch.  In matrix
+language, $D$ is \emph{singular}: it has a nonzero kernel, $\ker D\neq\{0\}$.
+Cranking up $\Gamma$ then does nothing at all to the kernel directions.  The
+physical expectation is that a response routed entirely through the kernel
+should \emph{survive} $\Gamma\to\infty$.  Theorem~III confirms this and
+computes the surviving limit in closed form.
+
+\subsection{Splitting the space: the Riesz projection}
+
+We need to split $\mathcal V$ into ``protected'' (kernel of $D$) and
+``damped'' (the rest).  If $D$ were Hermitian we would use the orthogonal
+projection onto $\ker D$.  But $D$ lives in Liouville space and is generally
+\emph{not} Hermitian, so its eigenspaces need not be orthogonal --- the right
+notion is the \emph{spectral} (Riesz) projection: the projection $P$ onto
+$\ker D$ \emph{along} the span of all other eigenspaces.
+It satisfies $P^2=P$ and $PD=DP=0$, but in general $P^\dagger\ne P$: the
+splitting $\mathcal V = P\mathcal V\oplus Q\mathcal V$ (with $Q=I-P$) is
+direct but \emph{oblique}, like resolving a vector along two non-perpendicular
+axes.  For the curious: $P$ has the elegant contour-integral formula
+$P=\frac{1}{2\pi i}\oint_\gamma(\zeta I-D)^{-1}d\zeta$ with $\gamma$ a small
+circle around the eigenvalue $0$; for a diagonalizable $D$ you may simply
+think ``keep the zero-eigenvalue part of the eigen-decomposition.''
+
+One technical hypothesis is needed: the zero eigenvalue must be
+\emph{semisimple} (no Jordan block --- geometric multiplicity equals algebraic
+multiplicity), so that $D$ restricted to the damped part, $D_Q$, is honestly
+invertible.  Lindblad dissipators in the models of this repository satisfy
+this.
+
+\subsection{The theorem}
+
+Write $B_{XY}=XB(z)Y$ for the blocks of $B$ in the oblique splitting, and let
+$B_P(z):=PB(z)P|_{P\mathcal V}$ be the \emph{protected block}: the coherent
+dynamics that the kernel directions experience among themselves.
+
+\begin{theorem}[Protected channel under singular dissipation]
+\label{thm:three}
+Assume on the compact window $K$: the zero eigenvalue of $D$ is semisimple,
+the protected block $B_P(z)$ is invertible for every $z\in K$, and $B$ is
+bounded on $K$.  Then there is $\Gamma_*<\infty$ such that for $\Gamma>\Gamma_*$,
+\begin{equation}
+F_\Gamma(z)=F_0(z)+\Gamma^{-1}F_1(z)+O(\Gamma^{-2})
+\qquad\text{uniformly on }K,
+\label{eq:protexp}
+\end{equation}
+with leading coefficient
+\begin{equation}
+\boxed{\;F_0(z)=p^\dagger P\, B_P(z)^{-1}\, P c\;}
+\label{eq:F0}
+\end{equation}
+If $F_0\not\equiv0$ on $K$, the response survives arbitrarily strong
+dissipation at order one: \textbf{Class III}, $\nu=0$.
+\end{theorem}
+
+Formula \eqref{eq:F0} is worth savoring.  It says: in the limit of infinite
+noise, the system behaves as if only the dark subspace existed --- project
+the source into it ($Pc$), evolve with the protected dynamics alone
+($B_P^{-1}$), project onto the detector ($p^\dagger P$).  The infinitely
+damped sector has not merely become small; it has become \emph{invisible},
+and \eqref{eq:F0} is the transfer function of the effective closed system
+living in the kernel.
+
+\subsection{Why it is true (sketch)}
+
+Block-partition $A_\Gamma=\Gamma D+B$ in the splitting
+$P\mathcal V\oplus Q\mathcal V$.  Because $PD=DP=0$, the huge term
+$\Gamma D$ appears \emph{only} in the damped-damped block:
+\[
+A_\Gamma=\begin{pmatrix}
+B_{PP} & B_{PQ}\\
+B_{QP} & \Gamma D_Q+B_{QQ}
+\end{pmatrix}.
+\]
+Now use block elimination (Tool 3): solve the damped block and substitute.
+The damped block's inverse is
+$(\Gamma D_Q+B_{QQ})^{-1}=\Gamma^{-1}D_Q^{-1}+O(\Gamma^{-2})$ --- \emph{small},
+of order $1/\Gamma$.  Hence the Schur complement of the protected block is
+\[
+S_P(\Gamma,z)=B_{PP}-B_{PQ}\,(\Gamma D_Q+B_{QQ})^{-1}B_{QP}
+= B_P(z)+O(\Gamma^{-1}),
+\]
+and inverting it (legitimate since $B_P$ is invertible and the correction is
+small) gives $x_P = B_P^{-1}Pc + O(\Gamma^{-1})$, while the damped component
+$x_Q=O(\Gamma^{-1})$.  Contracting with $p^\dagger$ yields
+\eqref{eq:protexp}--\eqref{eq:F0}.  The first correction $F_1$ can be written
+out explicitly (it contains the leakage terms $B_{PQ},B_{QP}$), and the
+expansion can be pushed to any order.
+
+\begin{example}[A $2\times2$ Class III system, solved exactly]
+Take
+\[
+D=\begin{pmatrix}0&0\\0&1\end{pmatrix},\qquad
+B(z)=\begin{pmatrix} z & g\\ g & z+i\end{pmatrix},\qquad
+c=p=\begin{pmatrix}1\\0\end{pmatrix},
+\]
+on a window $K$ of frequencies bounded away from the points where $B_P$
+degenerates.  Here $\ker D=\spann\{e_1\}$ is the dark direction, $P=\mathrm{diag}(1,0)$,
+and the protected block is the $1\times1$ matrix $B_P(z)=z$, invertible for
+$z\neq0$.  Formula \eqref{eq:F0} predicts $F_0(z)=1/z$.  Exactly:
+\[
+F_\Gamma(z)=\big[(\Gamma D+B)^{-1}\big]_{11}
+=\frac{\Gamma+z+i}{\,z\,(\Gamma+z+i)-g^2\,}
+\;\xrightarrow[\Gamma\to\infty]{}\;\frac1z .
+\]
+The coupling $g$ to the damped level has \emph{not} been assumed zero ---
+leakage out of the dark state is allowed!  It only enters at order
+$1/\Gamma$: divide numerator and denominator by $\Gamma$ to see
+$F_\Gamma=1/(z-g^2/(\Gamma{+}z{+}i))=1/z+O(\Gamma^{-1})$.  Protection is a
+statement about the \emph{leading order}, not about perfect isolation.
+\end{example}
+
+\subsection{A trap: touching the dark state is not enough}
+\label{sec:trap}
+
+It is tempting to shortcut the theorem: ``the source overlaps the dark
+subspace ($Pc\neq0$) and the detector sees it ($p^\dagger P\neq0$), so surely
+the response is protected.''  \textbf{False.}  The protected transfer
+\eqref{eq:F0} sandwiches $B_P^{-1}$ between the endpoint projections, and
+that matrix inverse can have a zero exactly where you sit.  Explicitly, on a
+two-dimensional dark subspace take
+\[
+B_P=\begin{pmatrix}0&1\\1&0\end{pmatrix}
+\ \ (\text{so } B_P^{-1}=B_P),\qquad
+Pc = \begin{pmatrix}1\\0\end{pmatrix},\qquad
+P^\dagger p = \begin{pmatrix}1\\0\end{pmatrix}
+\ \Longrightarrow\
+F_0 = \begin{pmatrix}1&0\end{pmatrix}B_P\begin{pmatrix}1\\0\end{pmatrix}=0,
+\]
+even though both endpoint overlaps are nonzero.  A selection rule inside the
+dark subspace kills the leading order, and the class is then decided by the
+subleading coefficients $F_1,F_2,\dots$ --- the system silently drops into
+Class II (or even Class I).  Moral: \emph{the classification cannot be read
+off from endpoint overlaps; you must evaluate the protected transfer
+function itself}.  This lemma is what makes the decision algorithm of
+Section~\ref{sec:algorithm} genuinely necessary.
+
+% ==================================================================
+\section{The unified index $\nu$ and the exclusive trichotomy}
+\label{sec:trichotomy}
+% ==================================================================
+
+So far, three theorems in three regimes.  The unification step defines one
+number that summarizes them all.
+
+\begin{definition}[Response-class index]
+On the window $K$, define
+\[
+\nu:=\sup\Big\{\,s\ge0:\ \sup_{z\in K}\Gamma^{s}\,|F_\Gamma(z)|
+\xrightarrow[\Gamma\to\infty]{}0\Big\}\ \in[0,\infty],
+\]
+with $\nu=\infty$ when $F_\Gamma$ vanishes identically at large $\Gamma$.
+\end{definition}
+
+In words: $\nu$ is the best power of $\Gamma$ you can multiply the response
+by and still see it die.  If the response is exactly zero you can use any
+power ($\nu=\infty$); if it decays like $\Gamma^{-m}$ you can use any
+$s<m$ but not $s>m$ (so $\nu=m$); if it tends to a nonzero constant even
+$s=0^+$ fails ($\nu=0$).
+
+\begin{theorem}[Exclusive and exhaustive trichotomy]
+Within the declared scope (Section~\ref{sec:scope}), exactly one of the
+following holds:
+\[
+\begin{array}{llll}
+\textbf{Class I} & F_\Gamma(z)\equiv0 & \nu=\infty
+& \text{(exact structural no-go)}\\[2pt]
+\textbf{Class II} & F_\Gamma(z)=\Gamma^{-m}r_m(z)+O(\Gamma^{-m-1}),\ m\ge1 & \nu=m
+& \text{(asymptotic suppression)}\\[2pt]
+\textbf{Class III} & F_\Gamma(z)=r_0(z)+O(\Gamma^{-1}),\ r_0\not\equiv0 & \nu=0
+& \text{(protected survival)}
+\end{array}
+\]
+\end{theorem}
+
+Why \emph{exclusive}?  Because the leading term of an asymptotic expansion of
+a fixed function is unique: if $\Gamma^{m}F_\Gamma(z_0)$ converges to a
+nonzero number for one $m$, it diverges or vanishes for every other $m$.
+One model, one function $F_\Gamma$, one value of $\nu$ --- a model cannot
+carry two class labels.  (And $\nu$ is basis independent, because $F_\Gamma$
+itself is: any similarity transformation applied consistently to
+$(D,B,c,p)$ cancels inside $p^\dagger A_\Gamma^{-1}c$.)
+
+Why \emph{exhaustive}?  Run the case analysis.  If $D$ is invertible,
+Theorem~\ref{thm:two} applies: either all moments vanish (Class I) or a
+first nonzero moment exists at some finite order $\le N-1$ (Class II) ---
+Cayley--Hamilton forbids anything else.  If $D$ is singular with a semisimple
+kernel, Theorem~\ref{thm:three} gives a power series starting at order
+$\Gamma^0$: its first nonvanishing coefficient is either the zeroth
+(Class III), a later one (Class II), or there is none (Class I).  Every
+branch of the tree ends in exactly one of the three classes.
+
+% ==================================================================
+\section{The decision algorithm: classification in finitely many steps}
+\label{sec:algorithm}
+% ==================================================================
+
+Everything above is constructive, and it assembles into an algorithm.  The
+punchline --- remarkable for a statement about the behavior of a function at
+\emph{all} frequencies and \emph{all} large dissipation strengths --- is that
+the algorithm needs only \emph{finitely many exact linear-algebra
+operations}.
+
+\medskip
+\noindent\textbf{Input:} the matrices $(D,B(z),c,p)$ on the response-relevant
+space (dimension $N$), and a realization $(M,r,\ell)$ of the master response
+(dimension $n$).
+
+\begin{enumerate}
+\item[\textbf{Step 1.}] \emph{Test for Class I.}  Compute the $n$ moments
+$\mu_k=\ell^\dagger M^k r$, $k=0,\dots,n-1$.  All zero $\Rightarrow$
+\textbf{Class I}, $\nu=\infty$.  Stop.  (Correctness: Theorem~\ref{thm:one}.)
+\item[\textbf{Step 2.}] \emph{If $D$ is invertible.}  Compute the dissipative
+moments $\mu_k(z)=p^\dagger(D^{-1}B)^kD^{-1}c$ for $k=0,1,\dots$ until the
+first $m$ with $\mu_m\not\equiv0$; Cayley--Hamilton guarantees $m\le N-1$
+(otherwise Step 1 would have fired).  Return \textbf{Class II} with
+$\nu=m+1$.  (Correctness: Theorem~\ref{thm:two}.)
+\item[\textbf{Step 3.}] \emph{If $D$ is singular.}  Verify the zero
+eigenvalue is semisimple, build the Riesz projection $P$, and evaluate the
+protected transfer $F_0$ of \eqref{eq:F0}.  If $F_0\not\equiv0$: return
+\textbf{Class III}, $\nu=0$.  If $F_0\equiv0$: compute the subleading
+coefficients $F_1,F_2,\dots$; the first nonzero one gives \textbf{Class II}
+with the corresponding index; if all vanish, the Class-I certificate of
+Step 1 confirms \textbf{Class I}.  (Correctness: Theorem~\ref{thm:three} and
+Section~\ref{sec:trap}.)
+\end{enumerate}
+
+Why is Step 3 not an infinite search?  Because by Cramer's rule
+$F_\Gamma$ is a \emph{rational} function of $\Gamma$ ---
+a ratio of two polynomials
+$p^\dagger\adj(\Gamma D+B)\,c\,/\det(\Gamma D+B)$
+whose degrees are bounded by the dimension.  A rational function whose first
+$2N{+}1$ expansion coefficients vanish is identically zero, and the
+suppression order can even be read off directly as a difference of two
+polynomial degrees in $\Gamma$.  Finite data, finite answer.
+
+\begin{remark}[Why ``exact'' arithmetic is insisted upon]
+The theorems certify \emph{identities} --- e.g.\ ``this function is exactly
+zero at every frequency.''  Floating-point samples can make an identity
+plausible but can never prove it: no finite set of approximate evaluations
+certifies a statement about a continuum.  The rigorous documents therefore
+require matrix entries in an exact function class (rational or algebraic
+expressions with symbolic parameters) where ``is this expression identically
+zero?'' is decidable.  Numerics remain invaluable --- the repository verifies
+all three theorems numerically --- but as \emph{corroboration}, not
+certification.
+\end{remark}
+
+% ==================================================================
+\section{The fine print: what the theory does \emph{not} say}
+\label{sec:scope}
+% ==================================================================
+
+An honest no-go theorem lists its rules.  The classification holds within,
+and only within, this declared scope:
+
+\begin{itemize}
+\item[(A1)] \textbf{Finite dimension.}  The state space is finite
+dimensional.  Continua of modes (free-space photon fields, phonon baths kept
+explicitly) are excluded.
+\item[(A2)] \textbf{Markovian dynamics.}  The environment is memoryless
+(Lindblad form).  Non-Markovian memory kernels are excluded.
+\item[(A3)] \textbf{Weak probe / linear response.}  Everything is first
+order in the probe field.  Strong-probe nonlinearities are excluded.
+\item[(A4)] \textbf{No gain.}  The system is passive on the physical
+frequency domain, so the resolvents exist where needed.
+\item[(A5)] \textbf{A fixed scaling path.}  ``Strong dissipation'' means the
+specific one-parameter family $\Gamma\mapsto\Gamma D+B$: one designated
+group of dissipators is scaled together, everything else held fixed.
+Change what you scale, and you change the question --- and possibly the
+class.  The split of the dynamics into $D$ versus $B$ is physical input,
+not a mathematical convenience.
+\item[(A6)] \textbf{Semisimple kernel (for Theorem III).}  If the zero
+eigenvalue of $D$ has a nontrivial Jordan block, the clean power series in
+$1/\Gamma$ can fail (fractional powers may appear), and the analysis needs
+different tools (Newton polygons).  Such models are declared out of scope.
+\end{itemize}
+
+Consequently, the phrase ``material-agnostic'' in the research documents has
+a precise, limited meaning: \emph{within} finite-dimensional Markovian
+weak-probe response, the classification does not care which material or
+platform realizes the matrices.  It does \emph{not} claim to classify every
+conceivable open-system model.
+
+\begin{sloppypar}
+Also outside the theory's claims: whether a Class III response is
+\emph{experimentally visible} (linewidths, optical depth, ensemble
+averaging, and noise are all separate questions), and the spectroscopic
+distinction between EIT and Autler--Townes splitting.  The rigorous
+documents list these explicitly as follow-up physics tasks, distinct from
+the closed mathematical classification.
+\end{sloppypar}
+
+% ==================================================================
+\section{Summary and dictionary}
+% ==================================================================
+
+\subsection{One-paragraph summary}
+
+Take an open quantum system in the standard weak-probe setting, designate an
+internal sector, and form the master response
+$R_{S,\Gamma}(z)=\chi_{\mathrm{full}}-\chi_{\mathrm{cut}}$ --- the part of
+the signal that dies when the sector is unplugged.  As the scaled dissipation
+$\Gamma$ grows, exactly one of three things happens to this single scalar
+function: it is identically zero by structure (Class I, certified by $n$
+moment checks via Cayley--Hamilton), it decays like $\Gamma^{-\nu}$ with an
+integer $\nu$ counting the damped sectors the signal must traverse
+(Class II, via the geometric series in $1/\Gamma$), or it survives at order
+one on a dissipation-free dark subspace (Class III, via block elimination
+around the kernel of $D$).  The index $\nu\in\{\infty\}\cup(0,\infty)\cup\{0\}$
+is basis independent, the three classes are mutually exclusive and
+exhaustive, and a three-step, finitely-terminating algorithm decides the
+class of any given model.
+
+\subsection{Jargon dictionary}
+
+\begin{center}
+\begin{tabular}{p{0.32\textwidth}p{0.60\textwidth}}
+\textbf{Term} & \textbf{Plain meaning}\\[3pt]
+\hline\\[-8pt]
+Liouville space & Density matrices flattened into column vectors, so
+superoperators become ordinary matrices.\\[3pt]
+Transfer function & The complex number turning ``how hard you poke'' into
+``how much you hear,'' as a function of frequency.\\[3pt]
+Sector cut & Surgically deleting the couplings of one internal pathway
+(inside $B$ only) to see what the detector loses.\\[3pt]
+Master response $R_{S,\Gamma}$ & The full-minus-cut difference; the one
+object the whole theory classifies.\\[3pt]
+Realization $(M,r,\ell)$ & A state-space presentation
+$\ell^\dagger(zI-M)^{-1}r$ of a transfer function.\\[3pt]
+Moments $\mu_k$ & The numbers $\ell^\dagger M^k r$: overlap between
+detector and $k$-times-evolved source.\\[3pt]
+Reachable subspace $\kry(M,r)$ & Everywhere the injected excitation can
+spread under the dynamics.\\[3pt]
+Unobservable subspace\newline $\nobs(M,\ell)$ & Everything the detector can
+never see, no matter how long it waits.\\[3pt]
+Dark state / kernel of $D$ & A direction the scaled dissipation cannot
+touch: $Dv=0$.\\[3pt]
+Riesz projection $P$ & The (generally non-orthogonal) projection onto the
+dark subspace along the damped one.\\[3pt]
+Protected block $B_P$ & The coherent dynamics the dark directions
+experience among themselves; its inverse is the surviving response.\\[3pt]
+Schur complement & The effective matrix for the slow variables after the
+fast ones are eliminated.\\[3pt]
+Index $\nu$ & The decay exponent of the response at strong dissipation:
+$\infty$, a positive integer, or $0$.\\[3pt]
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Where to go next}
+
+\begin{itemize}
+\item The rigorous proofs of Theorems I--III, the trichotomy, and the
+algorithm: the file \path{three_theorems_proofs.tex} in this folder.
+\item The closed ``theorem package'' formulation, in which everything is
+stated for the master response in its doubled realization, with the
+representation-invariance theorem and the polynomial certificate:
+the companion master-response document.
+\item Numerical verification of all three theorems and of the
+endpoint-overlap counterexample of Section~\ref{sec:trap}:
+\path{src/three_theorem_verification.py} in this repository
+(four PASS lines: a machine-precision Class-I zero, a fitted Class-II slope
+$-\nudiss$, a Class-III plateau at $F_0$ with $1/\Gamma$ correction, and the
+$F_0=0$ counterexample).
+\item Background reading: Kalman controllability/observability (any
+linear-systems textbook); the quantum Zeno effect and decoherence-free
+subspaces (for physical cousins of Class II and Class III); singular
+perturbation theory (for the mathematical cousin of Theorem III).
+\end{itemize}
+
+\end{document}
