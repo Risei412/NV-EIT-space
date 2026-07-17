@@ -216,3 +216,121 @@ Overall: **PASS**
 - `figures/figD4_masquerade.png` -- effective exponent vs. `Gamma`, false
   plateau vs. exact certificate
 
+# Phase P: physical Lindblad realization for Paper III (SMRT interference-controlled exponent promotion)
+
+Runs P1-P8, `paper3_smrt_numerical_plan.md`. All eight gates PASS
+(`phase_p_overall_pass = true`, `gates_summary_phaseP.json`).
+
+Model: a 5-level CPTP Lindblad "diamond" (`src/model_physical.py`) -- ground
+`|1>`, probe-excited `|2>`, intermediates `|3>,|4>`, readout `|5>` -- with two
+coherent paths `|2>-|3>-|5>` and `|2>-|4>-|5>`. The sector cut
+`S = {J35, J45 e^{i phi}}` removes both couplings that close the two branches
+into the readout state simultaneously (revised from the initial strategy
+draft, which cut only one branch and left the difference response `R_S`
+without a tunable interference term -- see plan document P0.1). The
+weak-probe reduced system is graph-isomorphic to the already-validated
+abstract Phase-D model (`model_cancel.py`).
+
+## P1: direct validation of nu 3 -> 4
+
+Three cases, log-log fit over 8 decades of `Gamma` vs. the exact moment
+prediction:
+
+| Case | nu_fit | nu_moment | \|diff\| |
+|---|---:|---:|---:|
+| Generic (`J45=1/2, phi=0`) | 3.0000 | 3 | 4e-11 |
+| Tuned (`J45=51/65, phi=pi`) | 3.99999911 | 4 | 9e-7 |
+| Detuned (`J45` +1%) | 3.0000 | 3 | 3e-10 |
+
+All within the `<0.03` gate; tuned and detuned are separated by `>0.5` in
+`nu`. `figures/figP1_promotion.png`.
+
+## P2: symbolic moment cancellation (exact, not floating-point)
+
+`m2(J45, phi=pi) = 160*I*(51 - 65*J45)/4641`, exactly zero at
+`J45* = 51/65`, confirmed by `sympy` rational arithmetic. At that point the
+full moment ladder is `[0, 0, 0, -28160/140777]` -- `m2 = 0` and `m3 != 0`
+exactly, and `m3` stays bounded away from zero across the probed frequency
+window `z in [-1/2,1/2]`. A 5-point random-parameter cross-check (different
+`d3,d4,J23,J24,J35`, cancellation `J45` solved from the closed form each
+time) gives `max|m2| = 0` to machine precision, confirming the closed-form
+condition `J45* = J23 J35 d4 / (J24 d3)` at `phi = pi`.
+
+## P3: cancellation manifold
+
+With only 2 real controls (`|J45|`, `phi`), `m2 = 0` is 2 real equations
+(Re, Im) in 2 real unknowns and generically has an **isolated** zero --
+verified exactly at `(|J45|,phi) = (51/65, pi)`, with `|m2|` staying
+`> 0.5` in log10 everywhere outside a small neighborhood of that point. This
+corrects the plan document's initial expectation of a codimension-1 curve in
+the 2-parameter `(eta,phi)` plane (a precedent for this already exists in
+Phase M gate M4: 2 real controls generically give an isolated interior
+zero, not a curve). Adding a 3rd real control -- rescaling the branch-1
+amplitude `J23 -> r J23` -- turns the isolated point into a genuine
+codimension-1 line at fixed `phi = pi`: `|J45| = (51/65) * r`, confirmed
+symbolically, with `m3 != 0` along the whole line for `r` up to `~7.26`
+(where `m3` would separately vanish, well outside the scanned range `[0.2,
+3.0]`). `figures/figP3_manifold.png`.
+
+## P4: universal crossover collapse
+
+Predicted `R_S ~ a*delta*Gamma^-3 + b*Gamma^-4` with `a = -1.758 i`,
+`b = 0.2000` (from `d(m2)/d(delta)` and `-m3` at the tuned point). For
+`delta in {1e-2,...,1e-5}` (the `delta=0.1` case is reported separately: its
+predicted `Gamma_x ~ 1.1` is comparable to the model's O(1) coupling scale,
+so the asymptotic two-term law is not expected to hold cleanly there, and it
+does not enter the fit):
+
+- crossover scale `Gamma_x(delta)` extracted from `nu_eff(Gamma)` matches
+  the analytic prediction `|b/(a*delta)|` within a factor 2 at every
+  `delta`;
+- log-log slope of `Gamma_x` vs. `|delta|` is `-1.06`, satisfying
+  `|slope+1| < 0.1` (actually `< 0.15` as specified, passes both);
+- rescaled curves `Gamma^4 R_S` vs. `delta*Gamma` collapse with mean
+  relative spread `0.6%`, max `3.0%` -- well under the `5%` gate.
+
+`figures/figP4_collapse.png`.
+
+## P5: finite-window misclassification map
+
+`nu_eff(Gamma)` sliding-window estimate for the same detuning family. The
+false `nu approx 4` plateau (`|nu_eff-4|<0.05`) spans **2.15 decades** at
+`delta=1e-5` (0 decades at `delta=1e-2,1e-3`, `1.15` decades at `1e-4`) --
+consistent with, and close to, the abstract Phase-D reference of `2.43`
+decades. `figures/figP5_masquerade.png`.
+
+## P6: exact polynomial certificate
+
+`nu_cert = deg_Gamma Q - deg_Gamma N` (exact `sympy` adjugate/determinant)
+matches `nu_moment` exactly in all three cases (generic 3, tuned 4, detuned
+3), and the numerator is confirmed nonzero at the tuned point -- Class II
+(`0<nu<infinity`), not the exact Class-I zero.
+
+## P7: observable robustness
+
+Readout `O1 = Im rho51` shows the full promotion (`nu: 3 -> 4`). The
+deliberately off-branch readout `O3 = rho31` couples only to the first
+branch and stays at `nu = 3` in both the generic and tuned cases (its
+moment `m2 = 16i/91` does not depend on `J45` at all) -- an observability
+statement, not a failure of the mechanism.
+
+## P8: reduced vs. full Liouvillian
+
+The 4x4 weak-probe reduced system and the 24x24 vectorized 5-level
+Liouvillian (implicit linear-response solve, no finite-`eps` subtraction)
+agree to `~1e-12` relative error (generic case) and `~1.6e-6` (tuned case,
+where the response itself is far smaller), both `<<1%`. A sign error in the
+implicit-response derivation (`L0 rho1 = -i[V,rho0]` vs. the correct
+`+i[V,rho0]`) was caught by this exact cross-check during development.
+
+## Phase P figures
+
+- `figures/figP1_promotion.png` -- `|R_S|`, `Gamma^3|R_S|`, `Gamma^4|R_S|`
+  for the generic/tuned/detuned cases
+- `figures/figP3_manifold.png` -- isolated `m2=0` zero (2 controls) and the
+  codimension-1 cancellation line (3 controls)
+- `figures/figP4_collapse.png` -- `Gamma^4 R_S` vs. `delta*Gamma` collapse,
+  and `Gamma_x` vs. `delta` scaling
+- `figures/figP5_masquerade.png` -- `nu_eff(Gamma)` for the detuning family,
+  showing the false-`nu=4` plateau
+
