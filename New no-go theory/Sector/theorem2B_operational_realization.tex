@@ -1,0 +1,199 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,enumitem}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\dchi}{\delta\chi_S}
+
+\title{Remark and Corollary for Theorem 2B:\\
+The Algebraic Sector Cut as an Operational Zeno Limit}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This note is an addendum to Theorem 2B of \texttt{eit\_nogo\_proofs.tex}
+(the sector-resolved no-go theorem and block formula obtained by the
+algebraic prescription $B,C\to0$). We show that this algebraic
+prescription is not an arbitrary matrix surgery: it is exactly the
+$\kappa\to\infty$ limit of adding a selective, GKSL-admissible
+dissipator $\kappa D_S$ to the sector block, in the sense of Theorem 0A
+of \texttt{section0\_operational\_foundations.tex}. We also record the
+sufficient condition, in this concrete block setting, under which the
+frozen-source convention used throughout the numerical work coincides
+with the self-consistent cut of Proposition 0D.
+\end{abstract}
+
+% ==================================================================
+\section{Setup: recalling Theorem 2B}
+% ==================================================================
+
+Recall the block realization of Theorem 2B (\texttt{eit\_nogo\_proofs.tex},
+\S ``Theorem 2B: sector-resolved no-go and the block formula''):
+\[
+M=\begin{pmatrix}A&B\\ C&G_S\end{pmatrix},
+\qquad
+b=\begin{pmatrix}b_p\\0\end{pmatrix},
+\qquad
+d_{\mathrm{tot}}^\dagger=(d^\dagger\ \ 0),
+\]
+where the second row/column is the designated sector $S$, $Mx_{\mathrm{tot}}=b$
+with $x_{\mathrm{tot}}=(x,s)^{\mathsf T}$, $\chi_{\mathrm{full}}=\chi_0d^\dagger x$,
+and the pathway-cut counterfactual is defined algebraically by
+\[
+\chi_{\mathrm{cut}}^{(S)}=\chi_0d^\dagger A^{-1}b_p
+\qquad\text{(i.e.\ $B,C\to0$, everything else fixed).}
+\]
+
+% ==================================================================
+\section{The selective dissipator realizing the block cut}
+% ==================================================================
+
+\begin{definition}
+On the same space as $M$, let
+\[
+D_S=\begin{pmatrix}0&0\\0&I_S\end{pmatrix},
+\qquad
+M_\kappa:=M+\kappa D_S=\begin{pmatrix}A&B\\ C&G_S+\kappa I_S\end{pmatrix},
+\qquad \kappa\ge0,
+\]
+and define the \emph{operational} cut response at finite strength
+$\kappa$ by $\chi_{\mathrm{cut}}^{\mathrm{op}}(\kappa):=\chi_0d_{\mathrm{tot}}^\dagger M_\kappa^{-1}b$.
+\end{definition}
+
+\begin{remark}[$D_S$ is admissible in the sense of Definition 0.2]
+\label{rem:admissible}
+$D_S=\mathrm{diag}(0,I_S)$ has $0$ as a semisimple eigenvalue with
+$\ker D_S=A\text{-block}$, $\Ran D_S=S\text{-block}$ (an orthogonal
+splitting, since $D_S$ is Hermitian): condition (C3) holds, and by
+Lemma~0B$'$ of the companion foundations document the associated Riesz
+projection is the orthogonal projector
+\[
+P_S=\begin{pmatrix}I&0\\0&0\end{pmatrix},
+\qquad
+Q_S=\begin{pmatrix}0&0\\0&I_S\end{pmatrix}.
+\]
+Selective damping (C2) holds by construction: $\kappa D_S$ acts only on
+the sector block. If $\kappa D_S$ is realized as $\kappa\mathcal D[L_S]$
+for a Hermitian jump operator $L_S=L_S^\dagger$ supported on sector $S$
+(as in the minimal $\Lambda$-model construction of the revision note,
+\S11), condition (C1) (GKSL admissibility for all $\kappa\ge0$) holds
+automatically, since a nonnegative multiple of a valid GKSL dissipator is
+again a valid GKSL dissipator.
+\end{remark}
+
+\begin{corollary}[Algebraic--operational equivalence for the block cut]
+\label{cor:U1}
+Assume $A$ and $G_S$ finite, and assume $A$ is invertible. Then there is
+$\kappa_*<\infty$ such that for $\kappa>\kappa_*$,
+\[
+\chi_{\mathrm{cut}}^{\mathrm{op}}(\kappa)
+=\chi_{\mathrm{cut}}^{(S)}+O(\kappa^{-1})
+=\chi_0 d^\dagger A^{-1}b_p+O(\kappa^{-1}),
+\]
+i.e.\ the algebraic sector cut of Theorem 2B is exactly the retained-block
+formula \eqref{eq:0A} of Theorem 0A specialized to $D_S=\mathrm{diag}(0,I_S)$,
+and the two constructions agree in the ideal cut limit $\kappa\to\infty$.
+\end{corollary}
+
+\begin{proof}
+By Remark~\ref{rem:admissible}, $P_S=\mathrm{diag}(I,0)$, so the retained
+block of Theorem 0A is
+\[
+P_SMP_S|_{P_S\mathcal V}=A,
+\]
+which is invertible by hypothesis (H03 of Theorem 0A). Hypothesis H02
+($Q_SD_SQ_S=I_S$ invertible on $Q_S\mathcal V$) is immediate. Since
+$b=(b_p,0)$ and $d_{\mathrm{tot}}=(d,0)$, we have $P_Sb=(b_p,0)=b$ read
+in the retained coordinates and $d_{\mathrm{tot}}^\dagger P_S=d^\dagger$
+in the same coordinates, so Theorem 0A's formula \eqref{eq:0A} reads,
+identifying $A_\Gamma\equiv M$ (the fixed-frequency, fixed-$\Gamma$
+block already in hand),
+\[
+\chi_{\mathrm{cut},\Gamma}^{(S)}
+=\chi_0\,d_{\mathrm{tot}}^\dagger P_S\bigl[P_SMP_S\bigr]^{-1}P_Sb
+=\chi_0\,d^\dagger A^{-1}b_p,
+\]
+which is exactly $\chi_{\mathrm{cut}}^{(S)}$ as defined algebraically in
+Theorem 2B. The $O(\kappa^{-1})$ remainder and the existence of
+$\kappa_*$ are the conclusion of Theorem 0A under (H01)--(H04), all of
+which hold here on a single point (no $z$-dependence is needed for this
+corollary; $K$ may be taken as a singleton).
+
+For an explicit check, block-eliminate $M_\kappa x_{\mathrm{tot},\kappa}=b$
+directly: from the second row, $s_\kappa=-(G_S+\kappa I_S)^{-1}Cx_\kappa$,
+and $(G_S+\kappa I_S)^{-1}=\kappa^{-1}I_S-\kappa^{-2}G_S+O(\kappa^{-3})$.
+Substituting into the first row,
+\[
+\bigl[A-B(G_S+\kappa I_S)^{-1}C\bigr]x_\kappa=b_p
+\;\Longrightarrow\;
+x_\kappa=A^{-1}b_p+\kappa^{-1}A^{-1}BCA^{-1}b_p+O(\kappa^{-2}),
+\]
+so $\chi_{\mathrm{cut}}^{\mathrm{op}}(\kappa)=\chi_0d^\dagger x_\kappa
+=\chi_0d^\dagger A^{-1}b_p+\kappa^{-1}\chi_0d^\dagger A^{-1}BCA^{-1}b_p+O(\kappa^{-2})$,
+confirming both the leading term and an explicit leading correction
+coefficient $\chi_0d^\dagger A^{-1}BCA^{-1}b_p$, which is the concrete
+form taken by $G_1$ of Theorem 0A in this block realization.
+\end{proof}
+
+\begin{remark}[Numerical gate]
+Corollary~\ref{cor:U1}'s explicit $\kappa^{-1}$ coefficient
+$\chi_0d^\dagger A^{-1}BCA^{-1}b_p$ gives a closed-form target for Gate
+U1 (\texttt{new\_nogo\_numerical\_priorities.md}): the fitted slope of
+$\chi_{\mathrm{cut}}^{\mathrm{op}}(\kappa)-\chi_{\mathrm{cut}}^{(S)}$ on a
+log-log plot in $\kappa^{-1}$ should match this coefficient in addition
+to the exponent $-1$.
+\end{remark}
+
+% ==================================================================
+\section{Sufficient condition for frozen-source self-consistency}
+% ==================================================================
+
+\begin{corollary}[Noninvasiveness in the block realization]
+\label{cor:0Dblock}
+Suppose the steady state $\rho_0$ underlying $b_p=\mathcal V_p\rho_0$ has
+no support that $\kappa D_S$ (equivalently $\mathcal D[L_S]$) acts on
+nontrivially, i.e.\ $\mathcal C_S(\rho_0)=0$ in the sense of condition
+(C4) of Definition 0.2, and suppose $\mathcal L_0+\kappa\mathcal C_S$ has
+a unique steady state for every $\kappa\ge0$. Then, by Lemma~0D$'$ of the
+companion foundations document, the frozen-source convention used in
+Theorem 2B (fixing $b_p$, $d$ at their full-model values) coincides with
+the self-consistent cut, and $R_S^{\mathrm{reprep}}=0$: the entire
+difference $\delta\chi_S=\chi_{\mathrm{full}}-\chi_{\mathrm{cut}}^{(S)}$
+of Theorem 2B is pathway-mediated, with no repreparation contribution.
+\end{corollary}
+
+\begin{proof}
+Immediate application of Lemma~0D$'$ with $\mathcal C_S$ realized by
+$D_S=\mathrm{diag}(0,I_S)$ as above.
+\end{proof}
+
+% ==================================================================
+\section*{Placement instruction}
+% ==================================================================
+
+\noindent This remark and the two corollaries are intended to be inserted
+immediately before the statement of Theorem 2B in
+\texttt{No-go theorem/Theorem and proofs/eit\_nogo\_proofs.tex}, as:
+\begin{itemize}[nosep]
+\item Remark~\ref{rem:admissible} $\to$ physical-admissibility remark
+      preceding Theorem 2B;
+\item Corollary~\ref{cor:U1} $\to$ statement that $B,C\to0$ is the
+      $\kappa\to\infty$ Zeno limit of $D_S=\mathrm{diag}(0,I_S)$, with
+      the explicit $O(\kappa^{-1})$ rate quoted for Gate U1;
+\item Corollary~\ref{cor:0Dblock} $\to$ sufficient condition
+      $\mathcal C_S(\rho_0)=0$ for frozen source = self-consistent cut.
+\end{itemize}
+No change to the statement or proof of Theorem 2B itself is required;
+this material is purely an interpretive and quantitative addendum.
+
+\end{document}

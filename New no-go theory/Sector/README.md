@@ -40,12 +40,34 @@ Theorem 0A–0E / Proposition 0D / Definition 0.1–0.3 を、既存の
   cut generator に対する kernel-only 十分条件は未証明(改訂案 §2.2 の懸念は
   完全には解消していない)。
 
-## 次のステップ(Step 2 以降、未着手)
+## Step 2 出力:`theorem2B_operational_realization.tex`
 
-1. `eit_nogo_proofs.tex` Theorem 2B 直前への remark 追加。
-2. `core.py` への `validate_cut_generator` 等の実装と Λ 模型での
-   Gate U1/U2/U5 の数値検証。
-3. README・数値優先度文書・QFI 命名の改訂。
+Theorem 2B(`eit_nogo_proofs.tex`)の block cut $B,C\to0$ が、
+$D_S=\mathrm{diag}(0,I_S)$ を用いた operational cut($\kappa\to\infty$
+Zeno 極限)と厳密に一致することを示す addendum です。既存ファイルへの
+直接編集は行わず、挿入予定の remark/corollary を独立文書として作成しました。
+
+- **Remark**(admissibility):$D_S=\mathrm{diag}(0,I_S)$ が Definition 0.2
+  の admissibility 条件を満たすこと(Hermitian ⇒ Lemma 0B$'$ により
+  $P_S$ が直交射影 $\mathrm{diag}(I,0)$ になる)。
+- **Corollary(Algebraic–operational equivalence)**:Theorem 0A を
+  この $D_S$ に specialize すると、正確に Theorem 2B の
+  $\chi_{\mathrm{cut}}^{(S)}=\chi_0 d^\dagger A^{-1}b_p$ が retained-block
+  公式として再導出される。さらに block 消去を直接計算し、
+  $O(\kappa^{-1})$ 補正係数を閉形式
+  $\chi_0 d^\dagger A^{-1}BCA^{-1}b_p$ として明示(Gate U1 の定量目標値)。
+- **Corollary(frozen-source 十分条件)**:Lemma 0D$'$ をこの block 設定に
+  適用し、$\mathcal C_S(\rho_0)=0$ + 定常状態一意性から
+  $R_S^{\mathrm{reprep}}=0$ を導出。
+- 末尾に `eit_nogo_proofs.tex` への挿入位置の指示を明記(本文・証明自体は
+  無変更、Theorem 2B 直前への追記のみ)。
+
+## 次のステップ(Step 3 以降、未着手)
+
+1. `core.py` への `validate_cut_generator` / `operational_cut_response` /
+   `compare_cut_equivalence` / `self_consistent_cut_response` の実装と、
+   Λ 模型での Gate U1(閉形式係数との照合)/ U2 / U5 の数値検証。
+2. README・数値優先度文書・QFI 命名(`I_sector_metric` 等)の改訂。
 
 (`New no-go theory/Theorem and proofs/operational_cut_revision_plan.md` の
-§4 Step 2–4 に対応。)
+§4 Step 3–4 に対応。)
