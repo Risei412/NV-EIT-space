@@ -1,0 +1,509 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,enumitem}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\spann}{\operatorname{span}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\Vresp}{\mathcal V_{\mathrm{resp}}}
+\renewcommand{\S}{\mathfrak S}
+\newcommand{\E}{\mathfrak E}
+
+\title{Section 0: Operational Foundations of the Sector Cut\\
+\large A prefix to \emph{Three Central Theorems of the
+Sector-Resolved Response Classification}}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This document supplies the material that the companion theorems
+(\texttt{three\_theorems\_proofs.tex}, Theorems I--III) presuppose but do
+not themselves supply: a physical definition of what counts as a
+\emph{sector} and what counts as a \emph{sector cut}. We define a sector
+operationally, as the equivalence class of admissible selective
+dissipative interventions sharing a common retained Riesz projector, and
+we define the ideal sector cut as the strong-intervention
+($\kappa\to\infty$) limit of such an intervention. Theorem 0A below is
+obtained from the existing protected-channel theorem (Theorem III of the
+companion document) by a role substitution
+$(\Gamma,D,B)\mapsto(\kappa,D_S,A_\Gamma)$; no new estimate is required.
+Theorems 0B, 0C, 0E and Proposition 0D are short consequences of 0A. The
+only genuinely new technical content is the sharpened statement of kernel
+universality (Theorem 0B and Lemma 0B$'$), which identifies exactly when
+agreement of $\ker D_S$ alone (rather than of the full oblique projector
+$P_S$) suffices for two cut implementations to agree.
+\end{abstract}
+
+% ==================================================================
+\section{Operational experiment specification}
+% ==================================================================
+
+\begin{definition}[Experimental specification]
+\label{def:E}
+An \emph{experimental specification} is a tuple
+\[
+\E=(\mathcal L_0,\rho_0,\mathcal V_p,O,\Gamma,K)
+\]
+where $\mathcal L_0$ is an unperturbed Lindbladian on a finite-dimensional
+Liouville space $\mathcal V\cong\mathbb C^N$, $\rho_0$ is a reference
+steady state ($\mathcal L_0\rho_0=0$), $\mathcal V_p$ is a probe-injection
+superoperator, $O$ is a readout observable, $\Gamma\ge0$ is the native
+dissipation scale entering $\mathcal L_0$ as in
+\eqref{eq:AGamma-recall} below, and $K\subset\Omega$ is a compact
+observation window in the frequency domain $\Omega$ on which the weak-probe
+transfer function is analytic.
+
+The associated linear response is
+\[
+\chi_\Gamma(z)=\langle\!\langle O\mid A_\Gamma(z)^{-1}\mid c\rangle\!\rangle,
+\qquad
+A_\Gamma(z)=\Gamma D+B(z),
+\qquad
+\lvert c\rangle\!\rangle=\mathcal V_p\lvert\rho_0\rangle\!\rangle,
+\label{eq:AGamma-recall}
+\tag{0.1}
+\]
+matching the generator family \eqref{eq:AGamma} of the companion document
+with $p^\dagger=\langle\!\langle O\mid$.
+\end{definition}
+
+\begin{definition}[Admissible cut generator]
+\label{def:admissible}
+Let $\E$ be an experimental specification and let $S$ be a designated
+target sector. A superoperator $\mathcal C_S$ (equivalently, its linear
+response representation $D_S$ acting on $\mathcal V$) is an
+\emph{admissible cut generator} for $S$ if:
+\begin{enumerate}[label=(C\arabic*),nosep]
+\item \textbf{GKSL admissibility.} $\mathcal L_0+\kappa\mathcal C_S$ is a
+      valid Lindblad generator (completely positive, trace-preserving
+      semigroup generator) for every $\kappa\ge0$.
+\item \textbf{Selective damping.} The nonzero spectrum of $D_S$ damps the
+      target sector and leaves the subspace to be retained inside
+      $\ker D_S$.
+\item \textbf{Semisimple zero mode.} $0$ is a semisimple eigenvalue of
+      $D_S$, so that the Riesz projection
+      \[
+      P_S=\frac1{2\pi i}\oint_{\gamma}(\zeta I-D_S)^{-1}\,d\zeta,
+      \qquad Q_S=I-P_S,
+      \]
+      with $\gamma$ a small contour around $0$ enclosing no other
+      eigenvalue of $D_S$, is well defined (Lemma~\ref{lem:riesz-recall}
+      below, restated from the companion document).
+\item \textbf{Noninvasive reference condition.} $\mathcal C_S(\rho_0)=0$.
+\item \textbf{Fixed preparation and readout.} $\mathcal V_p$ and $O$ are
+      unchanged by the cut.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Riesz splitting, restated]
+\label{lem:riesz-recall}
+Under (C3), $P_S^2=P_S$, $P_SD_S=D_SP_S=0$,
+$\mathcal V=P_S\mathcal V\oplus Q_S\mathcal V$ (a direct, generally
+non-orthogonal sum), $\Ran P_S=\ker D_S$, and $D_S|_{Q_S\mathcal V}$ is
+invertible.
+\end{lemma}
+
+\begin{proof}
+Identical to Lemma~\ref{lem:riesz} of the companion document with $D$
+replaced by $D_S$; the argument uses only the holomorphic functional
+calculus applied to $D_S$ and does not reference the dissipation scale
+$\Gamma$.
+\end{proof}
+
+\begin{definition}[Operational sector]
+\label{def:sector}
+Two admissible cut generators $\mathcal C_S,\mathcal C_S'$ (for the same
+target $S$, possibly with different microscopic implementations) are
+\emph{equivalent}, written $\mathcal C_S\sim\mathcal C_S'$, iff their
+Riesz projections agree:
+\[
+\mathcal C_S\sim\mathcal C_S'
+\quad:\Longleftrightarrow\quad
+P_S=P_S'.
+\]
+The \emph{operational sector} is the equivalence class
+$\S=[\mathcal C_S]$. We call $Q_S=I-P_S$ the \emph{suppressed part} and
+$P_S\mathcal V$ the \emph{retained part} of $\S$.
+\end{definition}
+
+\begin{remark}
+Equivalence is stated at the level of the full (generally oblique) Riesz
+projector $P_S$, not merely of the kernel $\ker D_S$. Two admissible
+generators with the same kernel but different range decompositions
+($\Ran D_S\ne\Ran D_S'$) give different oblique projectors and hence, in
+general, different cut limits; see Lemma~\ref{lem:kernel-suffices} for
+the (physically important) case in which the kernel alone does suffice.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 0A: the operational cut limit}
+% ==================================================================
+
+Fix $\E$ and $\Gamma$, and let $\mathcal C_S$ be admissible with Riesz
+data $(P_S,Q_S)$ as above. Write $D_S$ for its response-space
+representation and form the two-scale family
+\[
+A_{\Gamma,\kappa}(z)=A_\Gamma(z)+\kappa D_S,
+\qquad \kappa\ge0,\ z\in\Omega,
+\]
+with sign convention such that the nonzero eigenvalues of $D_S$ have
+positive real part (so that $\kappa D_S$ damps $Q_S\mathcal V$ as
+$\kappa\to\infty$), consistent with \S4.1 of the revision note.
+
+\begin{theorem}[0A: Operational cut limit]
+\label{thm:0A}
+Assume, on the compact window $K$:
+\begin{enumerate}[label=(H0\arabic*),nosep]
+\item $0$ is a semisimple eigenvalue of $D_S$ (Definition~\ref{def:admissible}, (C3));
+\item $Q_SD_SQ_S$ is invertible on $Q_S\mathcal V$ (automatic from
+      Lemma~\ref{lem:riesz-recall});
+\item the \emph{retained block}
+      $A_{P_S,\Gamma}(z):=P_SA_\Gamma(z)P_S|_{P_S\mathcal V}$ is invertible
+      for every $z\in K$, with $\sup_{z\in K}\|A_{P_S,\Gamma}(z)^{-1}\|<\infty$;
+\item $\Gamma$ is fixed and $X_{K,\Gamma}:=\sup_{z\in K}\|A_\Gamma(z)\|<\infty$
+      (automatic from analyticity and boundedness on compacts,
+      Assumption~1.2 of the companion document).
+\end{enumerate}
+Then there is $\kappa_*(\Gamma)<\infty$ such that for $\kappa>\kappa_*(\Gamma)$
+and $z\in K$,
+\[
+\chi_{\Gamma,\kappa}(z):=p^\dagger A_{\Gamma,\kappa}(z)^{-1}c
+=\chi_{\mathrm{cut},\Gamma}^{(S)}(z)+\kappa^{-1}G_1(z)+O(\kappa^{-2})
+\]
+uniformly on $K$, where
+\[
+\boxed{\;
+\chi_{\mathrm{cut},\Gamma}^{(S)}(z)
+=p^\dagger P_S\bigl[P_SA_\Gamma(z)P_S\bigr]^{-1}P_Sc
+\;}
+\label{eq:0A}
+\tag{0.2}
+\]
+and $G_1$ is given by the block formula \eqref{eq:F1} of the companion
+document with the substitution $B\mapsto A_\Gamma$, $D_Q\mapsto Q_SD_SQ_S$,
+$P\mapsto P_S$, $Q\mapsto Q_S$. Moreover $\kappa_*(\Gamma)=O(\Gamma)$ as
+$\Gamma\to\infty$, since $X_{K,\Gamma}=O(\Gamma)$.
+\end{theorem}
+
+\begin{proof}
+This is Theorem III of the companion document applied verbatim under the
+role substitution $(\Gamma,D,B(z))\mapsto(\kappa,D_S,A_\Gamma(z))$ with
+$\Gamma$ held fixed as a parameter of the (now $\kappa$-independent)
+coherent part $A_\Gamma(z)$. Hypotheses (H01)--(H03) above are exactly
+(H1)--(H3) of Theorem~\ref{thm:III} under this substitution; (H04) is
+(H4) of Theorem~\ref{thm:III}, and it is automatic here because $\Gamma$
+is fixed on the window $K$ and $B$, $D$ are individually bounded on
+compacts by Assumption~1.2. The block computation of
+Theorem~\ref{thm:III} (Riesz splitting $\mathcal V=P_S\mathcal V\oplus
+Q_S\mathcal V$, Schur complement of the retained block, Neumann series in
+$\kappa^{-1}$ for the $(\Gamma D_S+\text{const})^{-1}$-type block) is
+reproduced without modification, yielding \eqref{eq:0A} as the order-zero
+term and the stated $G_1$ as the order-$\kappa^{-1}$ term. Finally,
+$\kappa_*(\Gamma)$ plays the role of $\Gamma_*$ in the proof of
+Theorem~\ref{thm:III}, where it was shown to be controlled by
+$\|D_Q^{-1}\|\sup_K\|B\|\,\|Q\|^2$; under the substitution this becomes
+$\|(Q_SD_SQ_S)^{-1}\|\,X_{K,\Gamma}\,\|Q_S\|^2$, and $X_{K,\Gamma}\le
+\Gamma\|D\|+\sup_K\|B(\cdot)\|=O(\Gamma)$ by \eqref{eq:AGamma-recall}.
+\end{proof}
+
+\begin{remark}[The two limits do not commute for free]
+\label{rem:double-limit}
+Because $\kappa_*(\Gamma)=O(\Gamma)$, uniformity of the $\kappa$-expansion
+on $K$ degrades as $\Gamma\to\infty$: Theorem~\ref{thm:0A} guarantees the
+expansion only once $\kappa/\Gamma$ is large enough (a constant multiple
+of $\|(Q_SD_SQ_S)^{-1}\|\,\|D\|\,\|Q_S\|^2$, up to the bounded part of
+$B$). Consequently
+\[
+\lim_{\Gamma\to\infty}\lim_{\kappa\to\infty}\chi_{\Gamma,\kappa}(z)
+\quad\text{and}\quad
+\lim_{\kappa\to\infty}\lim_{\Gamma\to\infty}\chi_{\Gamma,\kappa}(z)
+\]
+are not shown equal by this theorem; the standing convention of this
+theory (Section~\ref{sec:convention}) fixes the left-hand order as the
+definition of the classified quantity, and Gate U7 is reserved for probing
+the (possibly nonempty) region where the two orders disagree.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 0B: kernel universality}
+% ==================================================================
+
+\begin{theorem}[0B: Kernel universality]
+\label{thm:0B}
+Let $\mathcal C_S,\mathcal C_S'$ be admissible cut generators for the same
+target $S$ satisfying $P_S=P_S'$. Then, under the hypotheses of
+Theorem~\ref{thm:0A} applied to each,
+\[
+\chi_{\mathrm{cut},\Gamma}^{[\mathcal C_S]}(z)
+=\chi_{\mathrm{cut},\Gamma}^{[\mathcal C_S']}(z)
+\qquad\text{for all }z\in K.
+\]
+That is, the ideal sector-cut response depends on the admissible cut
+generator only through the equivalence class $\S=[\mathcal C_S]$ of
+Definition~\ref{def:sector}, not on the dephasing/damping rate, jump
+operator normalization, or internal basis of the suppressed sector.
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:0A}, $\chi_{\mathrm{cut},\Gamma}^{(S)}(z)$ is a function of
+$(P_S,A_\Gamma(z),c,p)$ alone; it does not otherwise reference $D_S$.
+Since $P_S=P_S'$ by hypothesis and $A_\Gamma(z),c,p$ are the same for both
+cuts, the right-hand sides of \eqref{eq:0A} for $\mathcal C_S$ and
+$\mathcal C_S'$ coincide termwise.
+\end{proof}
+
+\begin{lemma}[Kernel alone suffices for self-adjoint cuts]
+\label{lem:kernel-suffices}
+Suppose $D_S$ is self-adjoint with respect to the Hilbert--Schmidt inner
+product on operator space, $\langle X,D_SY\rangle_{\mathrm{HS}}
+=\langle D_SX,Y\rangle_{\mathrm{HS}}$ for all $X,Y$ (as holds, e.g., for
+$D_S$ built from $\mathcal D[L]$ with a Hermitian jump operator $L=L^\dagger$,
+i.e.\ pure dephasing). Then:
+\begin{enumerate}[label=(\roman*),nosep]
+\item $0$ is automatically a semisimple eigenvalue of $D_S$ (self-adjoint
+      operators on a finite-dimensional inner-product space are
+      diagonalizable with orthogonal eigenspaces), so (C3) is automatic;
+\item the Riesz projection $P_S$ is the \emph{orthogonal} projection onto
+      $\ker D_S$, and is therefore determined by $\ker D_S$ alone: if
+      $D_S,D_S'$ are both self-adjoint admissible cut generators with
+      $\ker D_S=\ker D_S'$, then $P_S=P_S'$, and Theorem~\ref{thm:0B}
+      applies.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) The spectral theorem for finite-dimensional self-adjoint operators
+gives an orthogonal eigenbasis and real eigenvalues; the eigenspace for
+$0$ equals $\ker D_S$ with no generalized (nilpotent) part, i.e.\ the zero
+eigenvalue is semisimple.
+(ii) For self-adjoint $D_S$, $\Ran D_S=(\ker D_S)^{\perp_{\mathrm{HS}}}$
+(orthogonal complement of the kernel with respect to the Hilbert--Schmidt
+inner product), so the direct-sum decomposition
+$\mathcal V=\ker D_S\oplus\Ran D_S$ of
+Lemma~\ref{lem:riesz-recall} is orthogonal and the associated Riesz
+projection $P_S$ coincides with the orthogonal projector onto
+$\ker D_S$, which depends on $\ker D_S$ alone. Hence
+$\ker D_S=\ker D_S'\Rightarrow P_S=P_S'$.
+\end{proof}
+
+\begin{remark}
+Lemma~\ref{lem:kernel-suffices} is the precise sense in which the
+informal phrase ``kernel-defined operational uniqueness'' of the revision
+note is correct: it holds within the self-adjoint (e.g.\ pure-dephasing)
+class of admissible cut generators, but not for general non-self-adjoint
+$D_S$, where the oblique range $\Ran D_S$ must also be matched. The
+minimal $\Lambda$-model verification of Section~11 of the revision note
+uses a Hermitian dephasing jump operator and therefore falls inside this
+safe class.
+\end{remark}
+
+% ==================================================================
+\section{Theorem 0C: covariant representation invariance}
+% ==================================================================
+
+\begin{theorem}[0C: Covariant representation invariance]
+\label{thm:0C}
+Let $T$ be invertible and transform the full experimental data covariantly:
+\[
+(A_\Gamma,D_S,c,p,P_S)
+\;\longmapsto\;
+(TA_\Gamma T^{-1},\,TD_ST^{-1},\,Tc,\,T^{-\dagger}p,\,TP_ST^{-1}).
+\]
+Then $\chi_{\mathrm{full},\Gamma}$, $\chi_{\mathrm{cut},\Gamma}^{(S)}$,
+$R_{S,\Gamma}=\chi_{\mathrm{full},\Gamma}-\chi_{\mathrm{cut},\Gamma}^{(S)}$,
+and the index $\nu[R_S]$ of Definition~\ref{def:nu-recall} are all
+unchanged.
+\end{theorem}
+
+\begin{proof}
+$\chi_{\mathrm{full},\Gamma}$ is invariant by Lemma~1(iii) of the
+companion document (representation invariance of $F_\Gamma$). For
+$\chi_{\mathrm{cut},\Gamma}^{(S)}$, first note that the Riesz projection
+transforms covariantly under similarity:
+\[
+TP_ST^{-1}
+=T\left(\frac1{2\pi i}\oint_\gamma(\zeta I-D_S)^{-1}d\zeta\right)T^{-1}
+=\frac1{2\pi i}\oint_\gamma\bigl(\zeta I-TD_ST^{-1}\bigr)^{-1}d\zeta,
+\]
+using $T(\zeta I-D_S)^{-1}T^{-1}=(\zeta I-TD_ST^{-1})^{-1}$; hence the
+transformed projector is exactly the Riesz projector of the transformed
+generator $TD_ST^{-1}$, confirming that $P_S\mapsto TP_ST^{-1}$ is the
+\emph{correct} (not merely notational) transformation law. Substituting
+into \eqref{eq:0A},
+\[
+(T^{-\dagger}p)^\dagger(TP_ST^{-1})\bigl[(TP_ST^{-1})(TA_\Gamma T^{-1})(TP_ST^{-1})\bigr]^{-1}(TP_ST^{-1})(Tc)
+\]
+collapses by the same telescoping cancellation as in Lemma~1(i) of the
+companion document (each adjacent $T^{-1}T$ pair cancels) to
+$p^\dagger P_S[P_SA_\Gamma P_S]^{-1}P_Sc$, i.e.\ $\chi_{\mathrm{cut},\Gamma}^{(S)}$
+is unchanged. Invariance of $R_{S,\Gamma}$ follows by subtraction, and
+invariance of $\nu[R_S]$ follows because $\nu$ (Definition~7.1 of the
+master response package) is defined purely in terms of the invariant
+function $R_{S,\Gamma}$.
+\end{proof}
+
+\begin{remark}
+The point of stating $P_S\mapsto TP_ST^{-1}$ explicitly is that a
+transformation which fixes the sector \emph{label} but mixes sector and
+complement coordinates (i.e.\ does not conjugate $P_S$ along with
+everything else) does \emph{not} fall under Theorem~\ref{thm:0C}: it
+represents a different physical intervention, not a change of coordinates
+of the same intervention. Gate U4 (arbitrary-coordinate negative control)
+verifies that such non-covariant mixing does change $R_S$, as it must.
+\end{remark}
+
+% ==================================================================
+\section{Proposition 0D: frozen/self-consistent decomposition}
+% ==================================================================
+
+\begin{proposition}[0D: Frozen/self-consistent decomposition]
+\label{prop:0D}
+Let $\chi_{\mathrm{cut}}^{\mathrm{fr}}$ denote the sector-cut response
+computed with $\rho_0$, $c$, $p$ frozen at their full-model values, and
+let $\chi_{\mathrm{cut}}^{\mathrm{sc}}$ denote the response computed after
+re-solving for the steady state of the cut generator
+$\mathcal L_0+\kappa\mathcal C_S$ (in the $\kappa\to\infty$ limit) and
+updating $c=\mathcal V_p\rho_0^{\mathrm{cut}}$ accordingly. Then
+\[
+\chi_{\mathrm{full}}-\chi_{\mathrm{cut}}^{\mathrm{sc}}
+=\underbrace{\chi_{\mathrm{full}}-\chi_{\mathrm{cut}}^{\mathrm{fr}}}_{R_S^{\mathrm{path}}}
++\underbrace{\chi_{\mathrm{cut}}^{\mathrm{fr}}-\chi_{\mathrm{cut}}^{\mathrm{sc}}}_{R_S^{\mathrm{reprep}}}.
+\]
+\end{proposition}
+
+\begin{proof}
+Add and subtract $\chi_{\mathrm{cut}}^{\mathrm{fr}}$; this is an algebraic
+identity requiring no hypothesis.
+\end{proof}
+
+\begin{lemma}[Noninvasive condition forces agreement]
+\label{lem:0Dprime}
+If $\mathcal C_S(\rho_0)=0$ (Definition~\ref{def:admissible}, (C4)) and,
+for every $\kappa\ge0$, $\mathcal L_0+\kappa\mathcal C_S$ has a unique
+steady state, then $\rho_0^{\mathrm{cut}}=\rho_0$ for every $\kappa\ge0$
+and, in the $\kappa\to\infty$ limit, $R_S^{\mathrm{reprep}}=0$, i.e.\
+$\chi_{\mathrm{cut}}^{\mathrm{fr}}=\chi_{\mathrm{cut}}^{\mathrm{sc}}$.
+\end{lemma}
+
+\begin{proof}
+$\mathcal L_0(\rho_0)=0$ by definition of $\rho_0$ as the reference
+steady state, and $\mathcal C_S(\rho_0)=0$ by (C4); hence, by linearity,
+$(\mathcal L_0+\kappa\mathcal C_S)(\rho_0)=0$ for every $\kappa\ge0$, so
+$\rho_0$ is \emph{a} steady state of the cut generator at every $\kappa$.
+By the assumed uniqueness of the steady state at each $\kappa$, it is
+\emph{the} steady state, i.e.\ $\rho_0^{\mathrm{cut}}(\kappa)=\rho_0$ for
+all $\kappa\ge0$; the $\kappa\to\infty$ limit of a constant sequence is
+that constant, so $\rho_0^{\mathrm{cut}}=\rho_0$ persists in the ideal cut
+limit. Consequently $c=\mathcal V_p\rho_0^{\mathrm{cut}}=\mathcal V_p\rho_0$
+is the same source used to compute $\chi_{\mathrm{cut}}^{\mathrm{fr}}$, so
+the two constructions coincide and $R_S^{\mathrm{reprep}}=0$ in
+Proposition~\ref{prop:0D}.
+\end{proof}
+
+% ==================================================================
+\section{Theorem 0E: class robustness under cut ambiguity}
+% ==================================================================
+
+\begin{theorem}[0E: Class robustness]
+\label{thm:0E}
+Let $\chi_{\mathrm{cut}}^{(1)},\chi_{\mathrm{cut}}^{(2)}$ be two finite-strength
+(not necessarily ideal, $\kappa<\infty$) implementations of a sector cut
+for the same operational sector $\S$, satisfying, uniformly on $K$,
+\[
+\bigl\|\chi_{\mathrm{cut}}^{(1)}-\chi_{\mathrm{cut}}^{(2)}\bigr\|_K=O(\Gamma^{-q})
+\]
+as $\Gamma\to\infty$. Suppose the true sector-mediated response for
+implementation (2) obeys, uniformly on $K$,
+\[
+R_S^{(2)}(z)=\Gamma^{-\nu}r_\nu(z)+o(\Gamma^{-\nu}),
+\qquad r_\nu\not\equiv0,
+\]
+with $q>\nu$. Then $R_S^{(1)}$ has the same leading order and the same
+leading coefficient:
+\[
+R_S^{(1)}(z)=\Gamma^{-\nu}r_\nu(z)+o(\Gamma^{-\nu}).
+\]
+In particular, the finite decision algorithm (Theorem~\ref{thm:algorithm}
+of the companion document) returns the same class $\nu$ from either
+implementation.
+\end{theorem}
+
+\begin{proof}
+$R_S^{(1)}-R_S^{(2)}=\chi_{\mathrm{cut}}^{(2)}-\chi_{\mathrm{cut}}^{(1)}
+=O(\Gamma^{-q})$ uniformly on $K$ by hypothesis (the full response
+$\chi_{\mathrm{full}}$ is common to both and cancels). Adding this to the
+assumed expansion of $R_S^{(2)}$,
+\[
+R_S^{(1)}=R_S^{(2)}+O(\Gamma^{-q})
+=\Gamma^{-\nu}r_\nu+o(\Gamma^{-\nu})+O(\Gamma^{-q}).
+\]
+Since $q>\nu$, $O(\Gamma^{-q})=o(\Gamma^{-\nu})$, and it absorbs into the
+error term without altering the leading coefficient.
+\end{proof}
+
+% ==================================================================
+\section{Standing convention on the two dissipation scales}
+\label{sec:convention}
+% ==================================================================
+
+\begin{definition}[Order of limits]
+\label{def:convention}
+Throughout the theory, the sector-cut response at fixed $\Gamma$ is
+\emph{defined} as
+\[
+\chi_{\mathrm{cut},\Gamma}(z):=\lim_{\kappa\to\infty}\chi_{\Gamma,\kappa}(z)
+\]
+(Theorem~\ref{thm:0A}), and the native-dissipation classification of
+$R_{S,\Gamma}=\chi_{\mathrm{full},\Gamma}-\chi_{\mathrm{cut},\Gamma}^{(S)}$
+into $\nu\in\{\infty\}\cup(0,\infty)\cup\{0\}$ (Theorems I--III of the
+companion document) is then carried out by letting $\Gamma\to\infty$.
+That is, the standing convention is
+\[
+\lim_{\Gamma\to\infty}\Bigl[\lim_{\kappa\to\infty}\chi_{\Gamma,\kappa}(z)\Bigr],
+\]
+\emph{not} the reverse order. Remark~\ref{rem:double-limit} shows the
+reverse order is not established by Theorem~\ref{thm:0A} and is left as
+an open question (Gate U7).
+\end{definition}
+
+% ==================================================================
+\section*{Dependency chart}
+% ==================================================================
+
+\begin{center}
+\begin{tabular}{lll}
+Lemma~\ref{lem:riesz-recall} (companion Lemma~2, restated)
+ & $\longrightarrow$ & Theorem~\ref{thm:0A}\\[2pt]
+Companion Theorem~III (protected channel)
+ & $\longrightarrow$ & Theorem~\ref{thm:0A} (role substitution)\\[2pt]
+Theorem~\ref{thm:0A}
+ & $\longrightarrow$ & Theorem~\ref{thm:0B}, Remark~\ref{rem:double-limit}\\[2pt]
+Spectral theorem for self-adjoint operators
+ & $\longrightarrow$ & Lemma~\ref{lem:kernel-suffices}\\[2pt]
+Companion Lemma~1 (basis invariance) + Riesz covariance
+ & $\longrightarrow$ & Theorem~\ref{thm:0C}\\[2pt]
+Linearity + steady-state uniqueness
+ & $\longrightarrow$ & Lemma~\ref{lem:0Dprime} $\longrightarrow$ Proposition~\ref{prop:0D}\\[2pt]
+Asymptotic comparison ($q>\nu$)
+ & $\longrightarrow$ & Theorem~\ref{thm:0E}\\[2pt]
+Theorems~\ref{thm:0A}--\ref{thm:0E}
+ & $\longrightarrow$ & companion Theorems I--III apply to
+ $\chi_{\mathrm{cut},\Gamma}^{(S)}$ of \eqref{eq:0A} as the operational
+ realization of the sector cut
+\end{tabular}
+\end{center}
+
+\end{document}
