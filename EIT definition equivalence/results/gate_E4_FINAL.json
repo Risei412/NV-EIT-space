@@ -1,0 +1,58 @@
+{
+  "mechanism": "closed-loop (off-diagonal Hermitian coupling J23 between excited states e2,e3) restores achievability of an exact dark-state-free real-axis transfer zero",
+  "general_extended_nogo": "For ANY N_e excited states with a DIAGONAL resolvent G=diag(1/a_j), Re(a_j)>0 for all j (any passive/no-gain damping), det(D_dagger G D) != 0 whenever rank(D)=2. Verified over 200000 random trials (N_e in 2..5), zero counterexamples.",
+  "construction": {
+    "params": {
+      "delta": 1.5365779521583232,
+      "Delta2": -2.8570941454321535,
+      "Delta3": 2.5307680890514206,
+      "J23": 6.247421103664076,
+      "phi": 0.5270360000158445,
+      "dp3_amp": 0.5,
+      "dc3_amp": 0.5,
+      "rank_D": 2,
+      "residual": 0.0
+    },
+    "ats_ratio_max_sep_over_width": 0.028946269910869106,
+    "poles_delta_plane": [
+      [
+        -0.16316302819036643,
+        -6.636754880431084
+      ],
+      [
+        -0.16316302819036693,
+        4.636754880431086
+      ],
+      [
+        0.0,
+        -1.0
+      ]
+    ],
+    "checks": {
+      "1_chi_full_zero": true,
+      "2_full_rank_D": true,
+      "3_no_stationary_dark_state": true,
+      "4_R_S_nonzero_and_cancels": true,
+      "5_cut_is_absorptive": true,
+      "7_control_induced_cross_coupling_nonzero": true
+    },
+    "extra": {
+      "N_full": [
+        0.0,
+        0.0
+      ],
+      "S_c": [
+        0.24077267248438314,
+        0.23715600759075453
+      ],
+      "chi_cut": [
+        0.29343442383852564,
+        0.49021272839461416
+      ],
+      "R_S": [
+        -0.29343442383852564,
+        -0.49021272839461416
+      ]
+    }
+  }
+}

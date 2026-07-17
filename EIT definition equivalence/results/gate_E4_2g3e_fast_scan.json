@@ -1,0 +1,10 @@
+{
+  "baseline": {
+    "gamma_e": 1.0,
+    "Delta_e2": 8.0,
+    "theta": 0.7853981633974483
+  },
+  "n_configs_tested": 2112,
+  "n_exact_zeros_found": 0,
+  "solutions": []
+}
