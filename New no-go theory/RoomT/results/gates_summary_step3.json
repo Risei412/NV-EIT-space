@@ -3,7 +3,7 @@
   "exact_symbolic_certificate": {
     "M0": "0",
     "M0_is_exact_zero": true,
-    "H13_exact_closed_form": "sqrt(2)*(Dperp - I*Lperp)/2",
+    "H13_exact_closed_form": "-sqrt(2)*I*Lperp/2",
     "deg_Q": 6,
     "deg_N12": 4,
     "deg_N21": 4,
@@ -12,7 +12,7 @@
     "nu_K21": 2,
     "nu_S2": 1,
     "nu_R": 4,
-    "leading_coefficient_of_R_EIT_tail": "2*pi**2*beta*(Dperp**2 + Lperp**2)/geff",
+    "leading_coefficient_of_R_EIT_tail": "2*pi**2*Lperp**2*beta/geff",
     "smrt_class": "Class II (finite suppression order)"
   },
   "numeric_cross_check": {
@@ -29,7 +29,7 @@
     "note_300K_below_crossover": true
   },
   "precision_stability": {
-    "nu_K12_highprecision_fit": 2.000408879440514
+    "nu_K12_highprecision_fit": 1.9999364494382321
   },
   "gates": {
     "M0_exact_zero": true,

@@ -9,6 +9,59 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 4 (temperature scaling, crossover resolution): EXECUTED, all 4 gates PASS.**
+See `results/gates_summary_step4.json` and
+`results/figures/fig_step4_temperature_scaling.png`.
+Code: `src/step4_temperature_scaling.py`.
+
+Reuses Step 3's exact symbolic certificate to get closed-form leading
+coefficients of BOTH R_EIT asymptotes (pre- and post-denominator-crossover,
+see Step 3 section below), then checks numerically, using the actual
+`nv_model.response()` (not just the asymptotic formulas) evaluated on
+resonance (z=Ep, matching Step 1's convention) across the campaign
+temperature grid and four `phonon_rates.py` Gamma_XY(T) models:
+
+- **x1(300K) = Gamma(300K)/d_strain ~ 7559 >> 1**: the excited manifold IS
+  deep in the Hamiltonian-merged regime at 300 K (the plan's own x(T)
+  criterion), confirmed for the most-conservative (`conservative_lower_bound`)
+  dissipation model.
+- **300 K sits in the PRE-crossover Gamma^-3 regime, not yet Gamma^-4**:
+  the Step 3 flag is now resolved quantitatively -- R_EIT(300K) matches
+  the exact Gamma^-3 asymptote to 16.5% relative error (vs 606% for the
+  Gamma^-4 one), consistent with Gamma(300K)~1.27e4 GHz sitting below
+  Gamma_cross~7.7e4 GHz at the Step 1/3 reference point (Oc=1 GHz,
+  gg=6.3e-5 GHz).
+- **|C_EIT|(T) collapses monotonically and enormously**: 0.89 (4 K) ->
+  0.026 (30 K) -> 1.3e-7 (150 K) -> ~2e-9 (300 K), for every one of the
+  four Gamma_XY(T) models tried (full Happacher, literature-uncertainty
+  conservative lower bound, saturation, naive T^5 extrapolation) -- they
+  agree closely up to ~100 K and differ only by factors of a few by 300 K,
+  never changing the qualitative conclusion.
+- **Control-power scan at 300 K (correcting a Step-3 speculation)**:
+  |C_EIT|(300K) increases MONOTONICALLY with Omega_c across the plan's
+  entire declared range (1 MHz .. 10 GHz) and plateaus at only ~2.4e-9 at
+  the top of that range -- there is no interior optimum at small Omega_c.
+  Step 3's remark that smaller (more realistic) control powers would
+  "make the asymptotic regime easier to reach, strengthening the no-go"
+  was correct about WHICH regime (Gamma_cross falls with Omega_c^2, so
+  small Omega_c does sit deeper in the Gamma^-4 tail) but misleading about
+  practical consequence: raw signal magnitude is smallER at smaller
+  Omega_c regardless of regime, so more control power never helps recover
+  the signal in the declared realistic range, and even the best case found
+  is 8+ orders of magnitude below anything detectable.
+
+Gates certified (`gates_summary_step4.json`): `x1_300K_much_greater_than_1`,
+`C_EIT_monotone_decreasing_main_model`, `crossover_diagnosis_self_consistent`
+(the regime R_EIT is actually in matches its own asymptote to <30% error),
+`conservative_model_still_tiny_at_300K` (|C_EIT| < 1e-3, in fact ~2e-9).
+
+Step 4 (plan: verify 300 K is deep in the applicable asymptotic regime
+using conservative phonon models) is satisfied, with the caveat resolved
+honestly rather than assumed. Step 5 (300 K global adversarial
+optimization over the full realistic parameter domain) is next.
+
+---
+
 **Step 3 (merged-manifold moment analysis): EXECUTED, all 8 gates PASS.**
 See `results/gates_summary_step3.json` and
 `results/figures/fig_step3_moment_scaling.png`.
@@ -24,9 +77,11 @@ certificate style) on the 6x6 excited-manifold response operator:
 - **M0 = dp^T dc = 0 exactly** -- trivial orthogonality of the probe (orbital
   X) and control (orbital Y) branches, a group-theoretic selection rule
   holding for ANY Hamiltonian parameter values, not a numerical coincidence.
-- **nu_K = 2**: the first nonzero kernel moment is at order Gamma^-2 (from
-  the exact closed form H[1,3] = (Dperp - i*Lperp)/sqrt(2), proven nonzero
-  generically by keeping Dperp, Lperp as free symbols in the certificate).
+- **nu_K = 2**: the first nonzero kernel moment is at order Gamma^-2, from
+  the exact closed form **H[1,3] = -i\*Lperp/sqrt(2)** (Dpar, Lpar, Dperp all
+  drop out of this specific matrix element; Lperp alone generates the
+  branch-mixing at this order, proven nonzero generically by keeping Lperp
+  free in the certificate).
 - **nu_R = 4**: R_EIT (the actual EIT observable, not just the kernel)
   inherits nu_K12 + nu_K21 = 2+2 = 4 asymptotically, NOT nu_K = 2 -- exactly
   the nu_K != nu_R distinction the plan's Step 3 warns about, since R_EIT
@@ -36,24 +91,36 @@ certificate style) on the 6x6 excited-manifold response operator:
 - SMRT class: **Class II** (finite suppression order, not Class I exact
   zero, not Class III protected) -- the correct outcome for the no-go
   claim (Class III would reject it).
-- Exact leading coefficient of the R_EIT tail:
-  `R_EIT ~ -2*pi^2*beta*(Dperp^2+Lperp^2)/geff / Gamma^4`.
+- Exact leading coefficients (both reused directly by Step 4):
+  `R_EIT ~ -2*pi^2*Lperp^2 / Gamma^3` (Gamma << Gamma_cross) and
+  `R_EIT ~ -2*pi^2*Lperp^2*beta/geff / Gamma^4` (Gamma >> Gamma_cross).
 
-**Important finding carried forward to Step 4**: R_EIT's Gamma^-3 -> Gamma^-4
-crossover (from the S2~Gamma^-1 correction to the denominator) sits at
-Gamma_cross ~ 7.9e4 GHz for the Step-1 reference point (Oc=1 GHz,
-gg=6.3e-5 GHz) -- ABOVE the physical Gamma(300 K) ~ 1.3e4 GHz. This means
-**at this specific (Oc, gg) point, 300 K is not yet deep in the asymptotic
-Gamma^-4 regime** -- it sits closer to the generic Gamma^-3 pre-asymptotic
-scaling (nu_eff(300K) is between 3 and 4, not yet 4). Since the crossover
-scale is ~Oc^2/geff, smaller (more realistic) control powers push the
-crossover DOWN, making the asymptotic regime easier to reach -- this is
-not a problem for the no-go claim at realistic Oc, but Step 4 (temperature-
-threshold scaling, x(T)=Gamma_XY(T)/Delta_pair) must verify x(300K)>>1
-using the CORRECT local exponent at whatever (Oc, gg) point is actually
-used, not assume nu_R=4 applies uniformly. The numeric cross-check here
-therefore fits deep in the true asymptote (Gamma > 1e8) to confirm the
-exact Gamma -> infinity degree, separately from this pre-asymptotic flag.
+**Bug caught and fixed during development**: the first version of the
+symbolic Hamiltonian transcribed the Dperp term as
+`kron(sz_o,SySy-SxSx) - kron(sx_o,SxSz+SzSx)` where the real
+`nv_model.Hes` has `kron(sz_o,SySy-SxSx) - kron(sx_o,SxSy+SySx)` (Sx@Sy,
+not Sx@Sz, in the second piece). This gave a spurious Dperp contribution
+to H[1,3] and a leading coefficient of `(Dperp^2+Lperp^2)` instead of the
+correct `Lperp^2` alone -- caught by cross-checking the exact symbolic K12
+against `nv_model`'s numeric K12 at Gamma(300K) (Step 4), which disagreed
+by a factor of ~5 before the fix and agree to 5e-6 (float64 sqrt(2)
+rounding only) after it. All eight Step 3 gates were re-verified and still
+PASS with the corrected Hamiltonian (expected: the bug was in a
+branch-orthogonal, Gamma-independent diagonal-adjacent term that could
+only change the coefficient, not the M0=0 result or the nu_K=2/nu_R=4
+degrees). The corrected coefficient is smaller (Lperp^2=0.02 vs the
+erroneous Dperp^2+Lperp^2=0.621), so the fix makes the no-go conclusion
+slightly STRONGER, not weaker.
+
+A second, related fix: the leading coefficients were originally verified
+at the certificate's default z=0 rather than the actual probe resonance
+z=Ep, giving numerically correct but not directly Step-1-comparable
+contrast values (C_EIT(4K) came out as -0.03 instead of Step 1's 0.89).
+`build_symbolic_certificate` now takes a `z_val` parameter; Step 4 rebuilds
+it at z=Ep. The leading coefficients turned out to be exactly
+z-independent regardless (a consequence of M0=0: the z-term in the moment
+expansion is multiplied by M0 and drops out), so only the raw C_EIT(T)
+trend needed the z=Ep fix, not the asymptotic degree/coefficient analysis.
 
 Gates certified (`gates_summary_step3.json`):
 
@@ -69,9 +136,7 @@ Gates certified (`gates_summary_step3.json`):
 
 Step 3 (plan: "M0=0をsymbolicに証明", "最初の非零momentを特定",
 "nu_Kとnu_Rを分離") is therefore satisfied with an exact, non-numerical
-certificate. Step 4 (temperature scaling: verify 300 K is deep in
-whichever asymptotic regime applies, using conservative phonon models)
-is next, and must account for the crossover flagged above.
+certificate. See the Step 4 section above for the crossover resolution.
 
 ---
 
@@ -170,12 +235,15 @@ GKSL-admissible D_S construction) is next.
     src/step1_low_temperature_validation.py   Step 1
     src/step2_operational_cut_audit.py         Step 2
     src/step3_merged_manifold_moments.py       Step 3
+    src/step4_temperature_scaling.py           Step 4
     results/gates_summary_step1.json
     results/gates_summary_step2.json
     results/gates_summary_step3.json
+    results/gates_summary_step4.json
     results/figures/fig_step1_low_T_positive_control.png
     results/figures/fig_step2_operational_cut_audit.png
     results/figures/fig_step3_moment_scaling.png
+    results/figures/fig_step4_temperature_scaling.png
 
-Future steps (4-9) will follow the same convention: one `stepN_*.py` per
+Future steps (5-9) will follow the same convention: one `stepN_*.py` per
 step, one `gates_summary_stepN.json`, figures under `results/figures/`.

@@ -81,13 +81,18 @@ def kron(A, B):
     return sp.Matrix(sp.BlockMatrix([[A[i, j] * B for j in range(A.cols)] for i in range(A.rows)]))
 
 
-def build_symbolic_certificate():
+def build_symbolic_certificate(z_val=0):
     """Exact adjugate/determinant certificate for K12, K21, S2 on the
     Bx=By=0 excited-manifold Hamiltonian, with Dperp, Lperp kept as FREE
     symbols (all other parameters at their exact literature-fitted
     rational values, matching nv_model.py) so the moment-order result is
     proven generic in exactly the two couplings that determine it (see
-    module docstring)."""
+    module docstring). z_val is the probe detuning (Gamma-independent, so
+    the leading Gamma-power DEGREES nu_K, nu_R are z-independent, but the
+    leading COEFFICIENTS are not -- Step 4 rebuilds this at z=Ep, the
+    actual resonance, for a quantitatively meaningful comparison to
+    nv_model.py's reported contrast values; Step 3's default z_val=0 is
+    just as valid a point for the degree/class certificate itself)."""
     Gamma = sp.symbols("Gamma")
     Dperp, Lperp = sp.symbols("Dperp Lperp", positive=True)
 
@@ -103,13 +108,21 @@ def build_symbolic_certificate():
 
     Dpar = sp.Rational(142, 100)
     Lpar = sp.Rational(533, 100)
-    dx = sp.nsimplify(D_STRAIN, rational=True)  # phi=0 => dx=d, dy=0
+    dx = sp.Rational("1.683")  # phi=0 => dx=d, dy=0; exact decimal, not nsimplify's search
+    GE = sp.Rational("28.02495164")
+    Bz = sp.Rational("0.02")   # matches Step 1/2's BVEC=(0,0,0.02); Bx=By=0 exactly
 
+    # Full nv_model.Hes(Bvec,d,phi=0) -- including the GE*Bz*kron(I2,Sz)
+    # excited-state Zeeman term (diagonal in orbital space, so it does NOT
+    # affect M0/M1/H[1,3] or the leading Gamma-power structure, but IS
+    # needed for exact finite-Gamma agreement with nv_model.py's numeric
+    # response(), used as a cross-check in Step 4).
     H = kron(I2, Dpar * (Sz * Sz - sp.Rational(2, 3) * I3))
     H += -Lpar * kron(sy_o, Sz)
-    H += Dperp * (kron(sz_o, Sy * Sy - Sx * Sx) - kron(sx_o, Sx * Sz + Sz * Sx))
+    H += Dperp * (kron(sz_o, Sy * Sy - Sx * Sx) - kron(sx_o, Sx * Sy + Sy * Sx))
     H += Lperp * (kron(sz_o, Sx * Sz + Sz * Sx) - kron(sx_o, Sy * Sz + Sz * Sy))
     H += dx * kron(sz_o, I3)
+    H += GE * Bz * kron(I2, Sz)
     H = sp.Matrix(H)
 
     dp = sp.Matrix([0, 1, 0, 0, 0, 0])  # e_1: probe leg (orbital X, ms=0)
@@ -117,7 +130,8 @@ def build_symbolic_certificate():
 
     M0 = sp.simplify((dp.T * dc)[0, 0])
 
-    A = Gamma * sp.eye(6) + sp.I * 2 * sp.pi * H  # z = 0
+    z_sym = sp.nsimplify(z_val, rational=True) if z_val != 0 else sp.Integer(0)
+    A = Gamma * sp.eye(6) + sp.I * 2 * sp.pi * (H - z_sym * sp.eye(6))
     Q = sp.expand(A.det())
     Qp = sp.Poly(Q, Gamma)
     adjA = A.adjugate()

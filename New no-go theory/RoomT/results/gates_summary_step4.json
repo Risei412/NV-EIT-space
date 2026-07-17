@@ -1,0 +1,366 @@
+{
+  "model": "No-go theorem/src/nv_model.py, Step 1-3 geometry; Step 3 exact asymptotic coefficients",
+  "Oc_GHz": 1.0,
+  "gg_GHz": 6.3e-05,
+  "d_strain_GHz": 1.683,
+  "gamma_cross_GHz_at_reference_Oc_gg": 77106.28438351062,
+  "campaign_T_K": [
+    4.0,
+    10.0,
+    30.0,
+    50.0,
+    77.0,
+    150.0,
+    300.0
+  ],
+  "rows": [
+    {
+      "T": 4.0,
+      "Gamma_full_happacher": 0.03344614258137748,
+      "C_EIT_full_happacher": 0.8946804490917054,
+      "R_EIT_full_happacher": [
+        -26.71769472243103,
+        9.01851492483548
+      ],
+      "Gamma_conservative_lower_bound": 0.033443971165783244,
+      "C_EIT_conservative_lower_bound": 0.894692590050477,
+      "R_EIT_conservative_lower_bound": [
+        -26.719792008286475,
+        9.01864056366765
+      ],
+      "Gamma_saturation": 0.03344614258137322,
+      "C_EIT_saturation": 0.8946804490917291,
+      "R_EIT_saturation": [
+        -26.717694722435144,
+        9.018514924835722
+      ],
+      "Gamma_naive_T5_extrapolation": 0.03344534048640917,
+      "C_EIT_naive_T5_extrapolation": 0.8946849338687999,
+      "R_EIT_naive_T5_extrapolation": [
+        -26.718469404595304,
+        9.01856133485185
+      ]
+    },
+    {
+      "T": 10.0,
+      "Gamma_full_happacher": 0.03785171587893605,
+      "C_EIT_full_happacher": 0.8691987871961924,
+      "R_EIT_full_happacher": [
+        -22.935626798675244,
+        8.754908685882603
+      ],
+      "Gamma_conservative_lower_bound": 0.03764222336698612,
+      "C_EIT_conservative_lower_bound": 0.8704458754096187,
+      "R_EIT_conservative_lower_bound": [
+        -23.096361979427837,
+        8.767806044134552
+      ],
+      "Gamma_saturation": 0.0378517158393005,
+      "C_EIT_saturation": 0.8691987874324432,
+      "R_EIT_saturation": [
+        -22.935626828925724,
+        8.754908688325871
+      ],
+      "Gamma_naive_T5_extrapolation": 0.037827781875894986,
+      "C_EIT_naive_T5_extrapolation": 0.8693414268875307,
+      "R_EIT_naive_T5_extrapolation": [
+        -22.95390461911192,
+        8.756383844754717
+      ]
+    },
+    {
+      "T": 30.0,
+      "Gamma_full_happacher": 1.1093509958424823,
+      "C_EIT_full_happacher": 0.02446969666895577,
+      "R_EIT_full_happacher": [
+        -0.02203115109777807,
+        0.07227295701826394
+      ],
+      "Gamma_conservative_lower_bound": 1.0587180078028358,
+      "C_EIT_conservative_lower_bound": 0.025312519523150858,
+      "R_EIT_conservative_lower_bound": [
+        -0.02387990589239558,
+        0.07967906695833715
+      ],
+      "Gamma_saturation": 1.1093486805063737,
+      "C_EIT_saturation": 0.024469733046738974,
+      "R_EIT_saturation": [
+        -0.022031229831770423,
+        0.07227327281195702
+      ],
+      "Gamma_naive_T5_extrapolation": 1.1093509958424823,
+      "C_EIT_naive_T5_extrapolation": 0.02446969666895577,
+      "R_EIT_naive_T5_extrapolation": [
+        -0.02203115109777807,
+        0.07227295701826394
+      ]
+    },
+    {
+      "T": 50.0,
+      "Gamma_full_happacher": 13.831007407501145,
+      "C_EIT_full_happacher": 0.0011410047758683814,
+      "R_EIT_full_happacher": [
+        -8.240985181809103e-05,
+        0.00012318566850583708
+      ],
+      "Gamma_conservative_lower_bound": 13.181708235383445,
+      "C_EIT_conservative_lower_bound": 0.001278542680795638,
+      "R_EIT_conservative_lower_bound": [
+        -9.689101901171266e-05,
+        0.00013979360998961715
+      ],
+      "Gamma_saturation": 13.830626670067334,
+      "C_EIT_saturation": 0.0011410802125109525,
+      "R_EIT_saturation": [
+        -8.24175684382788e-05,
+        0.00012319457583786461
+      ],
+      "Gamma_naive_T5_extrapolation": 13.870218362171839,
+      "C_EIT_naive_T5_extrapolation": 0.001133266678327478,
+      "R_EIT_naive_T5_extrapolation": [
+        -8.16196337968101e-05,
+        0.00012227314157452925
+      ]
+    },
+    {
+      "T": 77.0,
+      "Gamma_full_happacher": 113.77065305145277,
+      "C_EIT_full_happacher": -2.4301061414299126e-05,
+      "R_EIT_full_happacher": [
+        2.1357331566898086e-07,
+        1.7437073253419133e-07
+      ],
+      "Gamma_conservative_lower_bound": 108.4183117313844,
+      "C_EIT_conservative_lower_bound": -2.6160765549016422e-05,
+      "R_EIT_conservative_lower_bound": [
+        2.4126562645724226e-07,
+        2.0922385016770798e-07
+      ],
+      "Gamma_saturation": 113.7447866099454,
+      "C_EIT_saturation": -2.430964158417329e-05,
+      "R_EIT_saturation": [
+        2.1369729934704166e-07,
+        1.7452109305577137e-07
+      ],
+      "Gamma_naive_T5_extrapolation": 119.88389832324295,
+      "C_EIT_naive_T5_extrapolation": -2.2377827388598718e-05,
+      "R_EIT_naive_T5_extrapolation": [
+        1.8664373669245873e-07,
+        1.429195499323155e-07
+      ]
+    },
+    {
+      "T": 150.0,
+      "Gamma_full_happacher": 1779.7086836413873,
+      "C_EIT_full_happacher": -1.217139151572427e-07,
+      "R_EIT_full_happacher": [
+        6.838976263464281e-11,
+        3.199006043772104e-12
+      ],
+      "Gamma_conservative_lower_bound": 1695.9592585288515,
+      "C_EIT_conservative_lower_bound": -1.3416131277828857e-07,
+      "R_EIT_conservative_lower_bound": [
+        7.910640447204634e-11,
+        3.8824266344556305e-12
+      ],
+      "Gamma_saturation": 1773.3966621084032,
+      "C_EIT_saturation": -1.2259087406995392e-07,
+      "R_EIT_saturation": [
+        6.912768874083533e-11,
+        3.244994615030524e-12
+      ],
+      "Gamma_naive_T5_extrapolation": 3362.3802620077563,
+      "C_EIT_naive_T5_extrapolation": -3.3451216732636505e-08,
+      "R_EIT_naive_T5_extrapolation": [
+        9.948670123232416e-12,
+        2.471334875216976e-13
+      ]
+    },
+    {
+      "T": 300.0,
+      "Gamma_full_happacher": 13349.549074059234,
+      "C_EIT_full_happacher": -1.8883028899036016e-09,
+      "R_EIT_full_happacher": [
+        1.414506859128227e-13,
+        9.026129017608022e-16
+      ],
+      "Gamma_conservative_lower_bound": 12721.336571750564,
+      "C_EIT_conservative_lower_bound": -2.093944992991533e-09,
+      "R_EIT_conservative_lower_bound": [
+        1.646010197691232e-13,
+        1.1009891177022576e-15
+      ],
+      "Gamma_saturation": 13002.398520117533,
+      "C_EIT_saturation": -1.998146958505801e-09,
+      "R_EIT_saturation": [
+        1.5367525743266885e-13,
+        1.0061883525276044e-15
+      ],
+      "Gamma_naive_T5_extrapolation": 107595.13298424821,
+      "C_EIT_naive_T5_extrapolation": -1.4236192870137384e-11,
+      "R_EIT_naive_T5_extrapolation": [
+        1.3231260999767954e-16,
+        1.1319950275666192e-19
+      ]
+    }
+  ],
+  "at_300K": {
+    "main_model": "conservative_lower_bound",
+    "Gamma_GHz": 12721.336571750564,
+    "x1_Gamma_over_d_strain": 7558.726424094215,
+    "R_num": [
+      1.646010197691232e-13,
+      1.1009891177022576e-15
+    ],
+    "R_asym_Gamma3": [
+      1.9176153951428722e-13,
+      0.0
+    ],
+    "R_asym_Gamma4": [
+      1.162300809841222e-12,
+      0.0
+    ],
+    "rel_err_vs_Gamma3_asymptote": 0.16514003141253786,
+    "rel_err_vs_Gamma4_asymptote": 6.061190148698151,
+    "regime_300K_actually_in": "pre-crossover (Gamma^-3)"
+  },
+  "Oc_scan_at_300K": [
+    {
+      "Oc": 0.001,
+      "C_EIT": 1.4785411873160515e-14,
+      "gamma_cross": 0.07710628438351062
+    },
+    {
+      "Oc": 0.001467799267622069,
+      "C_EIT": 3.185398136163384e-14,
+      "gamma_cross": 0.16612045389529886
+    },
+    {
+      "Oc": 0.0021544346900318843,
+      "C_EIT": 6.862628794663078e-14,
+      "gamma_cross": 0.35789566859587446
+    },
+    {
+      "Oc": 0.0031622776601683794,
+      "C_EIT": 1.4784605383769914e-13,
+      "gamma_cross": 0.7710628438351063
+    },
+    {
+      "Oc": 0.004641588833612777,
+      "C_EIT": 3.185023825756917e-13,
+      "gamma_cross": 1.6612045389529881
+    },
+    {
+      "Oc": 0.006812920690579608,
+      "C_EIT": 6.860891687681148e-13,
+      "gamma_cross": 3.578956685958738
+    },
+    {
+      "Oc": 0.01,
+      "C_EIT": 1.4776545326229012e-12,
+      "gamma_cross": 7.710628438351062
+    },
+    {
+      "Oc": 0.01467799267622069,
+      "C_EIT": 3.1812855543058046e-12,
+      "gamma_cross": 16.612045389529882
+    },
+    {
+      "Oc": 0.021544346900318832,
+      "C_EIT": 6.843568863351976e-12,
+      "gamma_cross": 35.7895668595874
+    },
+    {
+      "Oc": 0.03162277660168379,
+      "C_EIT": 1.4696425476561197e-11,
+      "gamma_cross": 77.1062843835106
+    },
+    {
+      "Oc": 0.046415888336127774,
+      "C_EIT": 3.1443798782289565e-11,
+      "gamma_cross": 166.12045389529885
+    },
+    {
+      "Oc": 0.06812920690579612,
+      "C_EIT": 6.675033286507063e-11,
+      "gamma_cross": 357.8956685958741
+    },
+    {
+      "Oc": 0.1,
+      "C_EIT": 1.394055510794595e-10,
+      "gamma_cross": 771.062843835106
+    },
+    {
+      "Oc": 0.1467799267622069,
+      "C_EIT": 2.8175227106335057e-10,
+      "gamma_cross": 1661.2045389529887
+    },
+    {
+      "Oc": 0.21544346900318823,
+      "C_EIT": 5.356014855448237e-10,
+      "gamma_cross": 3578.956685958738
+    },
+    {
+      "Oc": 0.31622776601683794,
+      "C_EIT": 9.205801063036862e-10,
+      "gamma_cross": 7710.628438351062
+    },
+    {
+      "Oc": 0.46415888336127775,
+      "C_EIT": 1.381479064205574e-09,
+      "gamma_cross": 16612.04538952989
+    },
+    {
+      "Oc": 0.6812920690579608,
+      "C_EIT": 1.7997062951172211e-09,
+      "gamma_cross": 35789.56685958737
+    },
+    {
+      "Oc": 1.0,
+      "C_EIT": 2.093944992991533e-09,
+      "gamma_cross": 77106.28438351062
+    },
+    {
+      "Oc": 1.467799267622069,
+      "C_EIT": 2.2658959829917246e-09,
+      "gamma_cross": 166120.45389529885
+    },
+    {
+      "Oc": 2.154434690031882,
+      "C_EIT": 2.355685002434624e-09,
+      "gamma_cross": 357895.6685958737
+    },
+    {
+      "Oc": 3.1622776601683795,
+      "C_EIT": 2.3998247058287484e-09,
+      "gamma_cross": 771062.8438351062
+    },
+    {
+      "Oc": 4.6415888336127775,
+      "C_EIT": 2.420879549651717e-09,
+      "gamma_cross": 1661204.5389529886
+    },
+    {
+      "Oc": 6.812920690579608,
+      "C_EIT": 2.4307783947932257e-09,
+      "gamma_cross": 3578956.6859587366
+    },
+    {
+      "Oc": 10.0,
+      "C_EIT": 2.435400591441216e-09,
+      "gamma_cross": 7710628.438351061
+    }
+  ],
+  "best_Oc_at_300K": {
+    "Oc": 10.0,
+    "C_EIT": 2.435400591441216e-09,
+    "gamma_cross": 7710628.438351061
+  },
+  "gates": {
+    "x1_300K_much_greater_than_1": true,
+    "C_EIT_monotone_decreasing_main_model": true,
+    "crossover_diagnosis_self_consistent": true,
+    "conservative_model_still_tiny_at_300K": true,
+    "overall_pass": true
+  }
+}
