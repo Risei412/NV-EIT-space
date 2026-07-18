@@ -73,3 +73,26 @@ def required_tau_s(target_snr: float, d_od: float, od_total: float,
     if denom <= 0: return float('inf')
     rate = power_W/photon_energy_J(lambda_nm)*eta*transmission(od_total)
     return target_snr**2/(denom*rate)
+
+def min_detectable_contrast(target_snr: float, od_sector: float, od_total: float,
+                            power_W: float, lambda_nm: float, tau_s: float,
+                            eta: float, sigma_tech: float = 0.0) -> float:
+    """Inverts snr() at fixed (realistic) integration time to give the
+    smallest sector-EIT contrast C = dOD/OD_sector detectable at
+    target_snr, in the weak-signal (d_od << 1) linear regime where
+    delta_T_over_T(d_od) ~= d_od. This is the epsilon_th of the room-
+    temperature no-go plan (Sec. 0, "sup C_EIT(300K) < epsilon_th"): it
+    must be fixed from the detection chain BEFORE the 300 K global
+    optimization (Step 5) is run, not chosen after the fact to make the
+    optimization result look conclusive.
+
+    Returns inf if even a d_od = 1 (order-unity transmission change)
+    signal cannot reach target_snr at this tau_s -- i.e. no achievable
+    contrast is detectable under these conditions."""
+    N = detected_photons(power_W, lambda_nm, tau_s, eta, od_total)
+    if N <= 0:
+        return float('inf')
+    d_od_min = target_snr*np.sqrt(1.0/N + sigma_tech**2)
+    if d_od_min >= 1.0:
+        return float('inf')
+    return d_od_min/od_sector

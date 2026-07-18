@@ -84,3 +84,65 @@ def maintext_fit_NV1(T):
     """Main-text NV#1 cross-check: gamma_NV * 1.10e-6 K^-5 * T^5 (eps neglected), Hz."""
     gamma_NV = 1.0 / 12.5e-9
     return gamma_NV * 1.10e-6 * T ** 5
+
+
+# ---------------------------------------------------------------------------
+# Gamma_XY(T) model variants for the room-temperature no-go campaign
+# (SMRT_NV_room_temperature_EIT_no_go_numerical_plan.md, Sec. 4.1): the
+# no-go claim must not rest on a single extrapolation of the room-temperature
+# dissipation rate. We provide four labeled variants and a selector that
+# picks the MINIMUM dissipation at each (T, delta_perp) -- the model least
+# favorable to the no-go claim (smallest Gamma broadens the merged manifold
+# least, i.e. is most generous to a surviving EIT sector response) -- for
+# use as the main-result "conservative low-dissipation" campaign point.
+# ---------------------------------------------------------------------------
+
+# 1000 THz: chosen to sit far ABOVE k_orb(300 K) (~27 THz for the default
+# alpha_ph, d=1.683 GHz) so this variant does not bind anywhere in the
+# declared campaign range T in [4, 300] K (plan Sec. 4.1) and therefore
+# cannot silently win the "most conservative" selection below by an
+# arbitrary choice of ceiling -- it only starts capping the rate as a
+# genuine stress-test well beyond 300 K. If a real microscopic saturation
+# scale is identified in the literature, replace this ceiling with it AND
+# rerun k_orb_most_conservative to confirm the selection is unaffected in
+# [4, 300] K before treating "saturation" as eligible to be the main result.
+GAMMA_SAT_CEILING_HZ = 1.0e15
+
+
+def k_orb_saturation(T, delta_perp_GHz, alpha_ph=ALPHA_PH, gamma_max_Hz=GAMMA_SAT_CEILING_HZ):
+    """Bounding construction, NOT a fitted microscopic model: caps the Eq.(22)
+    growth with a Pade-type saturation, k_sat = k_full / (1 + k_full/gamma_max).
+    Used only as a sensitivity/robustness variant (plan Sec. 4.1 "saturation
+    model") to check that the no-go conclusion is not an artifact of
+    unbounded T^5 growth; gamma_max_Hz must stay well above k_orb(300 K, ...)
+    (see module-level note) so it never dominates the "most conservative"
+    selection by construction alone -- see test_phonon_rate_variants.py."""
+    k_full = k_orb(T, delta_perp_GHz, alpha_ph)
+    return k_full / (1.0 + k_full / gamma_max_Hz)
+
+
+def k_orb_conservative_lower(T, delta_perp_GHz, alpha_ph=ALPHA_PH, alpha_ph_err=ALPHA_PH_ERR):
+    """Literature-uncertainty lower bound: alpha_ph - 1 sigma (Eq. 22)."""
+    return k_orb(T, delta_perp_GHz, max(alpha_ph - alpha_ph_err, 0.0))
+
+
+def k_orb_variants(T, delta_perp_GHz, T_ref=30.0):
+    """All Gamma_XY(T) model variants at one (T, delta_perp) point, Hz.
+    Keys match the plan's four required categories (Sec. 4.1)."""
+    return {
+        "full_happacher": k_orb(T, delta_perp_GHz),
+        "conservative_lower_bound": k_orb_conservative_lower(T, delta_perp_GHz),
+        "saturation": k_orb_saturation(T, delta_perp_GHz),
+        "naive_T5_extrapolation": k_orb_naive_T5(T, delta_perp_GHz, T_ref=T_ref),
+        "maintext_NV1_crosscheck": maintext_fit_NV1(T),
+    }
+
+
+def k_orb_most_conservative(T, delta_perp_GHz, T_ref=30.0):
+    """Selects the variant with the SMALLEST dissipation rate at this point
+    -- the model least favorable to the no-go claim -- per plan Sec. 4.1:
+    "no-goに最も不利な、すなわち散逸を最も小さく見積もるモデルを主結果に用いる".
+    Returns (label, value_Hz, all_variants_dict)."""
+    variants = k_orb_variants(T, delta_perp_GHz, T_ref=T_ref)
+    label = min(variants, key=variants.get)
+    return label, variants[label], variants

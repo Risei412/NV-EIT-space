@@ -1,0 +1,85 @@
+{
+  "model": "No-go theorem/src/gate2_candidate_full_vs_reduced.py build_full (+ build_full_asym for branch-linewidth asymmetry), T=300K reference geometry",
+  "epsilon_detection_threshold": 1.5344920423293595e-07,
+  "corrections": {
+    "hyperfine": {
+      "C_by_mI": {
+        "None": -1.815093868469757e-09,
+        "-1": -6.4877396948662956e-12,
+        "0": -1.815093868469757e-09,
+        "1": -8.267316361380454e-12
+      },
+      "C_ensemble_average": -6.099496415086679e-10,
+      "C_baseline_no_hyperfine": -1.815093868469757e-09,
+      "eta_max_deviation": 1.8086061287748909e-09,
+      "C_EIT_max": 0.0
+    },
+    "isc_singlet": {
+      "C_no_isc": -1.815093868469757e-09,
+      "C_with_isc": -1.8837399768924382e-09,
+      "eta_max_deviation": 6.864610842268114e-11,
+      "C_EIT_max": 0.0
+    },
+    "branch_linewidth_asymmetry": {
+      "eta_grid": [
+        0.0,
+        0.05,
+        0.1,
+        0.2,
+        0.3,
+        0.5
+      ],
+      "C_values": [
+        -1.815093868469757e-09,
+        -1.8150939350250117e-09,
+        -1.8150921558493883e-09,
+        -1.8150935866799378e-09,
+        -1.8150922544065784e-09,
+        -1.815092716237522e-09
+      ],
+      "eta_max_deviation": 1.7126203687667072e-15,
+      "C_EIT_max": 0.0
+    },
+    "polarization_impurity": {
+      "eta_grid_rad": [
+        0.0,
+        0.15707963267948966,
+        0.3141592653589793,
+        0.47123889803846897,
+        0.6283185307179586,
+        0.7853981633974483
+      ],
+      "C_values": [
+        -1.815093868469757e-09,
+        -1.815092018969132e-09,
+        -1.8150949499969865e-09,
+        -1.8150909356033452e-09,
+        -1.8150951975523018e-09,
+        -1.8150983277944803e-09
+      ],
+      "eta_max_deviation": 4.459324723264239e-15,
+      "C_EIT_max": 0.0
+    }
+  },
+  "combined_worst_case": {
+    "combo_hyperfine_isc_polarization": {
+      "isc=False,mI=None": -1.8150983277944803e-09,
+      "isc=False,mI=-1": -6.489578786467857e-12,
+      "isc=False,mI=0": -1.8150983277944803e-09,
+      "isc=False,mI=1": -8.266811177089104e-12,
+      "isc=True,mI=None": -1.8837480078005477e-09,
+      "isc=True,mI=-1": -6.770513178443329e-12,
+      "isc=True,mI=0": -1.8837480078005477e-09,
+      "isc=True,mI=1": -8.544129470548237e-12
+    },
+    "combo_branch_asymmetry_polarization": -1.815099078824164e-09,
+    "C_EIT_worst_case": 0.0
+  },
+  "gates": {
+    "each_correction_below_threshold": true,
+    "combined_worst_case_below_threshold": true,
+    "combined_worst_case_tiny_absolute": true,
+    "combined_not_worse_than_sum_of_individual": true,
+    "overall_pass": true
+  }
+}

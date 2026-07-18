@@ -1,0 +1,88 @@
+{
+  "model": "No-go theorem/src/signal_chain.py applied to this campaign's C_EIT(300K) values",
+  "physical_parameters": {
+    "lambda_nm": 637.0,
+    "n_refr": 2.4,
+    "debye_waller": 0.03,
+    "gamma_rad_GHz": 0.0668,
+    "gamma_h_300K_GHz": 12721.336571750564,
+    "gamma_inh_GHz": 5.0,
+    "spectral_fraction": 1.0,
+    "sigma_zpl_cm2": 5.2986196018242675e-17,
+    "power_W": 0.001,
+    "eta_detect": 0.1,
+    "target_snr": 5.0,
+    "sigma_tech": 1e-06,
+    "realistic_tau_ceiling_s": 86400.0
+  },
+  "C_reference": 1.815093868469757e-09,
+  "C_generous_bound": 2.4029e-06,
+  "main_domain": {
+    "n_nv_range_cm3": [
+      1000000000000000.0,
+      1e+18
+    ],
+    "L_range_cm": [
+      0.001,
+      0.1
+    ],
+    "min_required_tau_s_at_reference": null,
+    "min_required_tau_s_at_generous_bound": null
+  },
+  "stress_domain": {
+    "note": "plan Sec 1.2/4/16 convention: extreme (n_NV, L) combinations reported separately, not counted toward the main verdict.",
+    "n_nv_range_cm3": [
+      1000000000000000.0,
+      1e+19
+    ],
+    "L_range_cm": [
+      0.001,
+      1.0
+    ],
+    "min_required_tau_s_at_reference": null,
+    "min_required_tau_s_at_generous_bound": 0.057709269606202436
+  },
+  "converse_required_contrast_for_1hr_SNR5_typical_sample": {
+    "n_nv_cm3": 1e+17,
+    "L_cm": 0.1,
+    "od_sector": 0.04415516334853556,
+    "required_contrast": 0.0001132370912973277
+  },
+  "sigma_tech_sensitivity_at_reference_best_point": {
+    "n_nv_cm3": 1000000000000000.0,
+    "L_cm": 0.001,
+    "od_sector": 4.415516334853556e-06,
+    "rel_signal_d_od": 8.014576625520744e-15,
+    "tau_by_sigma_tech": {
+      "0.0": 1213718734050323.2,
+      "1e-09": Infinity,
+      "1e-08": Infinity,
+      "1e-07": Infinity,
+      "1e-06": Infinity,
+      "1e-05": Infinity
+    }
+  },
+  "sigma_tech_sensitivity_at_generous_stress_extreme": {
+    "n_nv_cm3": 4.641588833612792e+18,
+    "L_cm": 0.1778279410038923,
+    "od_sector": 3.6445856629074362,
+    "rel_signal_d_od": 8.757574889400278e-06,
+    "tau_by_sigma_tech": {
+      "0.0": 0.038898175183822235,
+      "1e-09": 0.038898187863197486,
+      "1e-08": 0.03889944316226538,
+      "1e-07": 0.039025383547363915,
+      "1e-06": 0.057709269606202436,
+      "1e-05": Infinity
+    }
+  },
+  "gates": {
+    "reference_point_undetectable_main_domain": true,
+    "generous_bound_undetectable_main_domain": true,
+    "reference_point_undetectable_stress_domain": true,
+    "required_contrast_1hr_exceeds_reference": true,
+    "sigma_tech_1e9_already_sufficient_to_exclude_reference": true,
+    "overall_pass": true
+  },
+  "verdict": "Theoretical no-go (Steps 3-8): R_EIT is structurally suppressed at 300K and, at the reference point, not even correctly signed for transparency. Detection no-go (this step): including a realistic technical-noise floor (plan Sec 9.2), no (NV density, thickness) combination in the realistic MAIN ensemble domain reaches SNR=5 within a 24-hour integration for either the reference-point contrast or the generous, sign-agnostic upper bound found anywhere in this campaign. An early version of this analysis omitted the technical-noise floor (sigma_tech=0, pure shot-noise limit), which made the reference point look marginally 'achievable' in 12.8 hours by integrating shot noise down indefinitely -- adding ANY realistic noise floor (checked down to 1e-9, already far beyond current capability) makes it undetectable at any integration time. Larger optical depth changes where on this map you sit, not whether the underlying (already-absent) signal exists."
+}

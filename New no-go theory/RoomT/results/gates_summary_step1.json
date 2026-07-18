@@ -1,0 +1,89 @@
+{
+  "model": "No-go theorem/src/nv_model.py (branch-resolved NV spin-Lambda)",
+  "Bvec_T": [
+    0.0,
+    0.0,
+    0.02
+  ],
+  "d_strain_GHz": 1.683,
+  "Ep_GHz": 0.74303109580081,
+  "low_T_grid_K": [
+    4.0,
+    10.0,
+    20.0,
+    30.0
+  ],
+  "low_T_results": [
+    {
+      "T": 4.0,
+      "gamma_oc_GHz": 0.03344614258137748,
+      "C_full": 0.8946804490917054,
+      "C_cut": -0.0
+    },
+    {
+      "T": 10.0,
+      "gamma_oc_GHz": 0.03785171587893605,
+      "C_full": 0.8691987871961924,
+      "C_cut": -0.0
+    },
+    {
+      "T": 20.0,
+      "gamma_oc_GHz": 0.1752801570653571,
+      "C_full": 0.24864866949883138,
+      "C_cut": -0.0
+    },
+    {
+      "T": 30.0,
+      "gamma_oc_GHz": 1.1093509958424823,
+      "C_full": 0.02446969666895577,
+      "C_cut": -0.0
+    }
+  ],
+  "Oc_grid": [
+    0.2,
+    0.5,
+    1.0,
+    2.0,
+    4.0,
+    8.0
+  ],
+  "eit_fwhm_GHz_vs_Oc": [
+    0.5262641213865078,
+    3.2891507586656736,
+    13.156603034662695,
+    52.62641213865078,
+    210.5056485546031,
+    842.0225942184125
+  ],
+  "window_edge_clipped": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "gg_grid_GHz": [
+    1e-06,
+    6.3e-06,
+    6.3e-05,
+    0.00063,
+    0.0063
+  ],
+  "C_vs_gg": [
+    0.8700305240888208,
+    0.8699593759076573,
+    0.8691987871961924,
+    0.8616493181549969,
+    0.7915873358835224
+  ],
+  "gates": {
+    "nonzero_at_low_T": true,
+    "cut_kills_feature": true,
+    "monotone_decreasing_in_T": true,
+    "width_increasing_with_control_power": true,
+    "no_window_edge_clipping": true,
+    "monotone_decreasing_in_ground_decoherence": true,
+    "overall_pass": true
+  }
+}

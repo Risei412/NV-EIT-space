@@ -1,0 +1,94 @@
+{
+  "model": "No-go theorem/src/nv_model.py (Model R) vs gate2_candidate_full_vs_reduced.py (Model L), Step 1-7 reference geometry",
+  "comparison_rows": [
+    {
+      "T_K": 10.0,
+      "Gamma_GHz": 0.03785171587893605,
+      "C_modelR": 0.8691987871961924,
+      "C_modelL": 0.010663386525175659,
+      "ratio_R_over_L": 81.5124524600194,
+      "sign_agree": true
+    },
+    {
+      "T_K": 30.0,
+      "Gamma_GHz": 1.1093509958424823,
+      "C_modelR": 0.02446969666895577,
+      "C_modelL": -0.0008676667261275163,
+      "ratio_R_over_L": -28.20172300275531,
+      "sign_agree": false
+    },
+    {
+      "T_K": 50.0,
+      "Gamma_GHz": 13.831007407501145,
+      "C_modelR": 0.0011410047758683814,
+      "C_modelL": 0.00014242855373797756,
+      "ratio_R_over_L": 8.011067626000479,
+      "sign_agree": true
+    },
+    {
+      "T_K": 70.0,
+      "Gamma_GHz": 72.25969464371656,
+      "C_modelR": -4.314107483671488e-05,
+      "C_modelL": -1.4409980429417528e-05,
+      "ratio_R_over_L": 2.9938329929056473,
+      "sign_agree": true
+    },
+    {
+      "T_K": 100.0,
+      "Gamma_GHz": 369.9222601388049,
+      "C_modelR": -2.8098679671499082e-06,
+      "C_modelL": -2.7423140652324712e-06,
+      "ratio_R_over_L": 1.0246339041811063,
+      "sign_agree": true
+    },
+    {
+      "T_K": 150.0,
+      "Gamma_GHz": 1779.7086836413873,
+      "C_modelR": -1.217139151572427e-07,
+      "C_modelL": -1.2145693527167097e-07,
+      "ratio_R_over_L": 1.0021158107192227,
+      "sign_agree": true
+    },
+    {
+      "T_K": 300.0,
+      "Gamma_GHz": 13349.549074059234,
+      "C_modelR": -1.8883028899036016e-09,
+      "C_modelL": -1.815093868469757e-09,
+      "ratio_R_over_L": 1.0403334630266612,
+      "sign_agree": true
+    }
+  ],
+  "max_high_T_relative_error": 0.04033346302666119,
+  "self_diagnostic_correlation_logCR_vs_logdeviation": 0.904336085462213,
+  "step5_spot_checks_with_model_L": [
+    {
+      "label": "Bx=0 reference (Step 1-7 baseline)",
+      "params": {
+        "label": "Bx=0 reference (Step 1-7 baseline)",
+        "Bx": 0.0,
+        "Bz": 0.02,
+        "d": 1.683,
+        "Oc": 1.0
+      },
+      "C_modelL": -1.815093868469757e-09
+    },
+    {
+      "label": "Bx=0.2T (Step 5's rejected E1-failing candidate)",
+      "params": {
+        "label": "Bx=0.2T (Step 5's rejected E1-failing candidate)",
+        "Bx": 0.2,
+        "Bz": 0.0,
+        "d": 0.0,
+        "Oc": 1.0
+      },
+      "C_modelL": -2.6413991482054615e-06
+    }
+  ],
+  "gates": {
+    "high_T_agreement_within_10pct": true,
+    "low_T_discrepancy_explained_by_perturbative_breakdown": true,
+    "model_L_confirms_negative_or_negligible_at_300K_spotchecks": true,
+    "sign_agreement_from_100K_up": true,
+    "overall_pass": true
+  }
+}
