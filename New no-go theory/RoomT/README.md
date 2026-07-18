@@ -9,6 +9,74 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 5 (300 K global adversarial optimization): EXECUTED, all 6 gates PASS.**
+See `results/gates_summary_step5.json` and
+`results/figures/fig_step5_global_optimization.png`.
+Code: `src/step5_global_adversarial_optimization.py`.
+
+Latin-hypercube pre-sampling (800 points) + local refinement + an
+independent differential-evolution search over Oc, gg, Bx, Bz, d_strain,
+phi, at T=300 K, using the `conservative_lower_bound` Gamma_XY(T,d) model
+(Step 4's pick). Two separate domains are searched: MAIN (plan Sec. 4's
+primary declared realistic range -- what Gate 5 is checked against) and
+STRESS (plan Sec. 4's explicit non-physical-extreme upper bounds,
+reported separately per plan Sec 1.2/4.2/4.3/16 -- a positive finding
+there does not count against the main claim).
+
+**Two real bugs were caught during this run, both material to the
+conclusion, not just cosmetic:**
+
+1. **Wrong sign convention in the objective (the important one).** The
+   first version scored `abs(C)`. The adversarial search promptly found
+   Bx=0.2 T -- well inside the MAIN range -- giving `|C|~1.85e-6`,
+   apparently exceeding the illustrative detection threshold
+   (`epsilon_th~1.53e-7`) by ~12x. Investigating (mechanism check: does
+   the signal vanish as Oc->0? yes, correctly) initially suggested this
+   was a genuine, large EIT-type signal -- and it is the SAME B_perp-
+   induced branch-mixing mechanism already studied at T=70 K elsewhere in
+   this repository (`No-go theorem/`'s SIMULATION_PLAN.md / PRL
+   candidate, BX0~0.23 T). Checking Criterion E1 (transparency: Im
+   chi_full < Im chi_cut) directly -- computing Acut, dA, Afull
+   explicitly -- showed C<0 at this point: Afull > Acut, i.e. the control
+   field INCREASES absorption there. That is the opposite of EIT. Scoring
+   `abs(C)` let the adversarial search "win" by finding absorption
+   increase instead of transparency, which is not a valid escape route.
+   Fixed to `max(C,0)`, matching the plan's own objective
+   `C_EIT(theta) = max[...]_+` (Sec. 5) exactly. After the fix, the MAIN
+   and STRESS range global optima are both consistent with 0 (no
+   detectable transparency anywhere sampled in either domain).
+2. **A companion structural finding surfaced by chasing bug #1**: at the
+   Step 1/3/4 reference configuration itself (Bx=0), C(T) does not merely
+   shrink in magnitude with T -- it changes SIGN, from positive
+   (transparency, matching Step 1's positive control) at T <~ 50 K to
+   negative (absorption-increase) from T >~ 77 K onward (crossover
+   bracketed at [50, 77] K; see `sign_crossover_scan` and the bottom-right
+   panel of the figure). By 300 K, even the "conventional" reference
+   configuration is not weakly-EIT -- it is not EIT-signed at all. Step
+   1/3/4's `abs(C)`-based monotonicity checks did not catch this (a
+   magnitude check can't detect a sign flip); it does not change any of
+   their PASS verdicts (the magnitude claims all still hold) but sharpens
+   the physical picture.
+
+Gates certified (`gates_summary_step5.json`): `M0_robust_under_Bx` (ground-
+state orthogonality protects M0=0 for ANY Bx, Bz -- verified directly, not
+just at Bx=0 -- so opening the transverse field cannot reopen the leading-
+order channel, only perturb the already-suppressed subleading one),
+`main_range_max_below_detection_threshold`, `main_range_max_tiny_absolute`,
+`stress_range_max_still_far_below_unity`, `lhs_and_DE_consistent`,
+`reference_config_sign_crossover_found`.
+
+Step 5 (plan: search the full realistic domain simultaneously, not just
+convenient points) is satisfied: no combination found anywhere in the
+declared MAIN domain gives detectable, correctly-signed (transparency)
+contrast at 300 K, and the same holds even in the STRESS-test domain.
+Step 6 (separating apparent dips from genuine EIT via Criteria E1-E4) is
+largely already anticipated by this step's Criterion-E1 check; the
+remaining Step 6 work is characterizing the OTHER failure modes (ATS,
+saturation, pumping) for whatever residual features exist.
+
+---
+
 **Step 4 (temperature scaling, crossover resolution): EXECUTED, all 4 gates PASS.**
 See `results/gates_summary_step4.json` and
 `results/figures/fig_step4_temperature_scaling.png`.
@@ -236,14 +304,17 @@ GKSL-admissible D_S construction) is next.
     src/step2_operational_cut_audit.py         Step 2
     src/step3_merged_manifold_moments.py       Step 3
     src/step4_temperature_scaling.py           Step 4
+    src/step5_global_adversarial_optimization.py  Step 5
     results/gates_summary_step1.json
     results/gates_summary_step2.json
     results/gates_summary_step3.json
     results/gates_summary_step4.json
+    results/gates_summary_step5.json
     results/figures/fig_step1_low_T_positive_control.png
     results/figures/fig_step2_operational_cut_audit.png
     results/figures/fig_step3_moment_scaling.png
     results/figures/fig_step4_temperature_scaling.png
+    results/figures/fig_step5_global_optimization.png
 
-Future steps (5-9) will follow the same convention: one `stepN_*.py` per
+Future steps (6-9) will follow the same convention: one `stepN_*.py` per
 step, one `gates_summary_stepN.json`, figures under `results/figures/`.

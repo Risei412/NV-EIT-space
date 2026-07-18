@@ -1,0 +1,131 @@
+{
+  "model": "No-go theorem/src/nv_model.py, T=300K, conservative_lower_bound Gamma_XY(T,d)",
+  "T_K": 300.0,
+  "M0_max_abs_over_random_Bx": 0.0,
+  "epsilon_detection_threshold": 1.5344920423293595e-07,
+  "reference_config_sign_crossover": {
+    "Ts": [
+      4.0,
+      10.0,
+      20.0,
+      30.0,
+      50.0,
+      77.0,
+      100.0,
+      150.0,
+      200.0,
+      300.0
+    ],
+    "Cs": [
+      0.8946804490917054,
+      0.8691987871961924,
+      0.24864866949883138,
+      0.02446969666895577,
+      0.0011410047758683814,
+      -2.4301061414299126e-05,
+      -2.8098679671499082e-06,
+      -1.217139151572427e-07,
+      -1.8682754229373975e-08,
+      -1.8883028899036016e-09
+    ],
+    "crossover_bracket_K": [
+      50.0,
+      77.0
+    ]
+  },
+  "main_range": {
+    "bounds": {
+      "log10_Oc": [
+        -3.0,
+        0.0
+      ],
+      "log10_gg": [
+        -5.0,
+        -2.0
+      ],
+      "Bx": [
+        0.0,
+        0.2
+      ],
+      "Bz": [
+        0.0,
+        0.1
+      ],
+      "d_strain": [
+        0.0,
+        50.0
+      ],
+      "phi": [
+        0.0,
+        6.283185307179586
+      ]
+    },
+    "n_lhs": 800,
+    "lhs_best_C": 0.0,
+    "de_best_C": 0.0,
+    "de_nit": 1,
+    "best_theta_physical": {
+      "Oc_GHz": 0.0019004716421569658,
+      "gg_GHz": 1.106593971212711e-05,
+      "Bx_T": 0.0014897566190159514,
+      "Bz_T": 0.035622934045558934,
+      "d_strain_GHz": 14.136670610049984,
+      "phi_rad": 3.212963704389291
+    },
+    "best_C_EIT_reported_by_optimizer": 0.0,
+    "best_C_EIT_reverified": 0.0
+  },
+  "stress_test_range": {
+    "note": "plan Sec 1.2/4.2/4.3/16: a positive finding here is reported separately and does NOT count against the main no-go claim.",
+    "bounds": {
+      "log10_Oc": [
+        -3.0,
+        1.0
+      ],
+      "log10_gg": [
+        -5.0,
+        -2.0
+      ],
+      "Bx": [
+        0.0,
+        1.0
+      ],
+      "Bz": [
+        0.0,
+        0.1
+      ],
+      "d_strain": [
+        0.0,
+        100.0
+      ],
+      "phi": [
+        0.0,
+        6.283185307179586
+      ]
+    },
+    "n_lhs": 800,
+    "lhs_best_C": 0.0,
+    "de_best_C": 0.0,
+    "de_nit": 1,
+    "best_theta_physical": {
+      "Oc_GHz": 0.026757213987629192,
+      "gg_GHz": 1.799640512255068e-05,
+      "Bx_T": 0.01981980048410046,
+      "Bz_T": 0.05700641881910784,
+      "d_strain_GHz": 41.83602106849869,
+      "phi_rad": 2.659174975761943
+    },
+    "best_C_EIT_reported_by_optimizer": 0.0,
+    "best_C_EIT_reverified": 0.0
+  },
+  "gates": {
+    "M0_robust_under_Bx": true,
+    "main_range_max_below_detection_threshold": true,
+    "main_range_max_tiny_absolute": true,
+    "stress_range_max_still_far_below_unity": true,
+    "lhs_and_DE_consistent": true,
+    "reference_config_sign_crossover_found": true,
+    "overall_pass": true
+  },
+  "runtime_s": 2.875405788421631
+}
