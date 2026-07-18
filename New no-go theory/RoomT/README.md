@@ -9,6 +9,67 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 7 (correction-mechanism upper bounds): EXECUTED, all 4 gates PASS.**
+See `results/gates_summary_step7.json` and
+`results/figures/fig_step7_correction_bounds.png`.
+Code: `src/step7_correction_mechanisms.py`.
+
+Four corrections evaluated at T=300 K on the reference geometry, each
+reported as `eta_max_deviation` (how much the correction changes C from
+baseline) and `C_EIT_max` (the largest POSITIVE/transparency value found,
+per Step 6's Criterion-E1 lesson -- max(C,0), not abs(C)):
+
+- **Hyperfine (14N secular, exact literature A_GS/A_ES)**: mI=-1,+1
+  branches show |C| roughly 200x SMALLER than the mI=None baseline
+  (-6.5e-12, -8.3e-12 vs -1.82e-9); the mI-ensemble average is
+  -6.1e-10 -- hyperfine mixing SUPPRESSES the already-negative feature
+  further, it does not restore transparency (`eta_max_deviation`~1.8e-9,
+  `C_EIT_max`=0).
+- **ISC / singlet shelving (exact literature branching)**: negligible
+  effect (`eta_max_deviation`~6.9e-11).
+- **Branch-linewidth asymmetry** (free parameter, up to a generous 50%
+  radiative-rate difference between orbital branches X and Y -- not
+  already in the model, needed a modified jump-operator construction,
+  `build_full_asym`): C stays completely FLAT at -1.82e-9 across the
+  entire 0-50% range (`eta_max_deviation`~1.7e-15) -- at 300 K, Gamma
+  dominates so completely that this O(1) fractional rate asymmetry is
+  irrelevant.
+- **Polarization impurity** (free parameter, probe/control orbital
+  polarization mixed up to 45 degrees off pure orthogonal X/Y): equally
+  negligible (`eta_max_deviation`~4.5e-15), confirming Step 5's structural
+  argument (M0=0 is protected by ground-state orthogonality regardless of
+  polarization, so this can only perturb the subleading response, and
+  here it barely does even that).
+- **Combined worst case** (all four simultaneously, each at its most
+  adversarial individual setting): C_EIT_max = 0 -- no combination
+  restores positive (transparency-signed) contrast.
+
+Transverse/axial field, strain magnitude/azimuth, and "off-axis
+orientation" are NOT re-done here -- Step 5's global optimization already
+searched Bx, Bz, d_strain, phi over the full realistic domain (a
+superset of what a dedicated small-perturbation sweep would show) and
+found no correctly-signed transparency anywhere.
+
+A quick robustness check during development: since Step 6 found d2=0 is
+a special (non-representative) point for one particular small-Oc
+expansion, the most adversarial correction setting (branch asymmetry
+eta=0.5) was re-scanned across a +/-20 MHz window to rule out a hidden
+positive peak nearby that a d2=0-only evaluation might miss. The window
+scan confirms the d2=0 evaluation is representative: the only positive
+values found are at the window edge and utterly negligible (~1e-14, five
+orders of magnitude below the detection threshold).
+
+Gates certified (`gates_summary_step7.json`): `each_correction_below_
+threshold`, `combined_worst_case_below_threshold`, `combined_worst_
+case_tiny_absolute`, `combined_not_worse_than_sum_of_individual`.
+
+Step 7 (plan: show small symmetry-breaking corrections, individually and
+combined, do not restore room-temperature EIT) is satisfied. Step 8
+(reduced-kernel vs full-Liouvillian agreement across the full parameter
+range) and Step 9 (local-response to detectable-signal conversion) remain.
+
+---
+
 **Step 6 (separating apparent dips from genuine EIT, Criteria E1-E4): EXECUTED, all 8 gates PASS.**
 See `results/gates_summary_step6.json` and
 `results/figures/fig_step6_dip_discrimination.png`.
@@ -366,18 +427,21 @@ GKSL-admissible D_S construction) is next.
     src/step4_temperature_scaling.py           Step 4
     src/step5_global_adversarial_optimization.py  Step 5
     src/step6_dip_discrimination.py             Step 6
+    src/step7_correction_mechanisms.py          Step 7
     results/gates_summary_step1.json
     results/gates_summary_step2.json
     results/gates_summary_step3.json
     results/gates_summary_step4.json
     results/gates_summary_step5.json
     results/gates_summary_step6.json
+    results/gates_summary_step7.json
     results/figures/fig_step1_low_T_positive_control.png
     results/figures/fig_step2_operational_cut_audit.png
     results/figures/fig_step3_moment_scaling.png
     results/figures/fig_step4_temperature_scaling.png
     results/figures/fig_step5_global_optimization.png
     results/figures/fig_step6_dip_discrimination.png
+    results/figures/fig_step7_correction_bounds.png
 
-Future steps (7-9) will follow the same convention: one `stepN_*.py` per
+Future steps (8-9) will follow the same convention: one `stepN_*.py` per
 step, one `gates_summary_stepN.json`, figures under `results/figures/`.
