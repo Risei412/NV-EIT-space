@@ -9,6 +9,66 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 6 (separating apparent dips from genuine EIT, Criteria E1-E4): EXECUTED, all 8 gates PASS.**
+See `results/gates_summary_step6.json` and
+`results/figures/fig_step6_dip_discrimination.png`.
+Code: `src/step6_dip_discrimination.py`.
+
+Reuses `No-go theorem/src/gate2_candidate_full_vs_reduced.py`'s
+`full_spectrum()` (the FULL N=9 Lindblad master equation with a genuine
+independent two-photon detuning d2 -- unlike the reduced kernel's single
+shared z, per Step 4/5's finding) to compute full vs EIT-sector-cut
+absorption spectra at both T=10 K (Step 1's positive control) and T=300 K,
+on the identical reference geometry used throughout. Four criteria (plan
+Sec. 6) are checked at BOTH temperatures, not asserted only at 300 K:
+
+- **T=10 K (positive control): genuine EIT, all four criteria satisfied.**
+  E1 transparency (C(d2)>0, peak +1.07e-2, full spectrum visibly below cut
+  spectrum); E2 sector causality (R_EIT=0 exactly at Oc=0); E4 continuous
+  quadratic emergence from Oc=0 (fit slope ~2.0, verified over five
+  decades of Oc AT THE ACTUAL PEAK location, not an arbitrary d2=0 -- see
+  bug note below); ground coherence proxy 0.0127 (order-1%, substantial).
+- **T=300 K: NOT EIT -- fails E1 outright.** C(d2) is negative
+  EVERYWHERE in the scanned +/-20 MHz window (peak -1.82e-9 exactly at
+  d2=0), meaning the control field INCREASES absorption there -- the
+  opposite of transparency. This confirms, now across the full two-photon
+  detuning window and the FULL (not reduced) Liouvillian, exactly what
+  Step 5 found at the single resonance point. The full and cut spectra
+  are visually indistinguishable at any practical plotting resolution
+  (differ only at the 1e-9 level on a ~1.6e-4 background) -- there is no
+  appreciable dip of ANY kind (real or fake) to worry about at 300 K, not
+  merely a fake one that fails discrimination. Ground coherence proxy is
+  ~1e-5, about 970x smaller than at 10 K.
+
+**Bug caught during development**: the first version of the E4
+(continuous-emergence) check evaluated C at the arbitrary fixed point
+d2=0 for small Oc. At T=10 K this gave a spurious SIGN FLIP and an
+apparent cubic (not quadratic) power law -- d2=0 turned out to be a
+non-representative, near-degenerate point for the small-Oc expansion of
+this particular model. Evaluating instead at the ACTUAL feature peak
+(d2~0.2-0.25 MHz, found from the reference-Oc spectrum) gives a clean,
+single-signed Oc^2 scaling across five decades (1e-4 to 1 GHz) before
+saturating at large Oc -- the expected, unambiguous EIT power-broadening
+signature. This does not affect T=300 K's conclusion (which fails E1
+regardless, independent of the E4 check), but was necessary to get a
+trustworthy positive-control confirmation at 10 K.
+
+Gates certified (`gates_summary_step6.json`): `low_T_passes_E1_transparency`,
+`low_T_passes_E2_sector_causality`, `low_T_E4_continuous_emergence`,
+`room_T_fails_E1_transparency` (yes, this is the PASS direction -- the
+gate is that room-T genuinely fails E1, confirming no-go), `room_T_passes_
+E2_sector_causality`, `room_T_dip_not_edge_artifact`,
+`ground_coherence_far_smaller_at_room_T`.
+
+Step 6 (plan: "dip exists AND R_EIT~=0 => not EIT") is satisfied with a
+stronger result than the plan's minimum bar: at 300 K there is no
+appreciable dip of any kind, real or fake, and what negligible residual
+exists fails Criterion E1 by sign, not merely by magnitude. Step 7
+(correction mechanisms: hyperfine, strain, ensemble, linewidth asymmetry)
+is next.
+
+---
+
 **Step 5 (300 K global adversarial optimization): EXECUTED, all 6 gates PASS.**
 See `results/gates_summary_step5.json` and
 `results/figures/fig_step5_global_optimization.png`.
@@ -305,16 +365,19 @@ GKSL-admissible D_S construction) is next.
     src/step3_merged_manifold_moments.py       Step 3
     src/step4_temperature_scaling.py           Step 4
     src/step5_global_adversarial_optimization.py  Step 5
+    src/step6_dip_discrimination.py             Step 6
     results/gates_summary_step1.json
     results/gates_summary_step2.json
     results/gates_summary_step3.json
     results/gates_summary_step4.json
     results/gates_summary_step5.json
+    results/gates_summary_step6.json
     results/figures/fig_step1_low_T_positive_control.png
     results/figures/fig_step2_operational_cut_audit.png
     results/figures/fig_step3_moment_scaling.png
     results/figures/fig_step4_temperature_scaling.png
     results/figures/fig_step5_global_optimization.png
+    results/figures/fig_step6_dip_discrimination.png
 
-Future steps (6-9) will follow the same convention: one `stepN_*.py` per
+Future steps (7-9) will follow the same convention: one `stepN_*.py` per
 step, one `gates_summary_stepN.json`, figures under `results/figures/`.
