@@ -9,6 +9,66 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 8 (reduced-kernel vs full-Liouvillian agreement): EXECUTED, all 4 gates PASS.**
+See `results/gates_summary_step8.json` and
+`results/figures/fig_step8_model_agreement.png`.
+Code: `src/step8_reduced_vs_full_liouvillian.py`.
+
+Compares Model R (`nv_model.py`'s reduced 6-level kernel, used for Steps
+1/3/4/5/7's asymptotic and optimization work) against Model L (the full
+N=9 Lindblad master equation, `gate2_candidate_full_vs_reduced.py`, used
+in Steps 2/6) at the SAME reference geometry, T=10 K through 300 K, both
+evaluated at a single unambiguous point (Model R at z=Ep, Model L at
+d2=0) rather than via a peak search -- an exploratory attempt at a
+window-max peak search hit the same ambiguity Steps 5/6 already found,
+worse in the 30-70 K crossover region where multiple spectral features of
+comparable size coexist (a +/-50 MHz window was needed to find a
+"non-edge" extremum at T=30 K, and it did not correspond to the same
+physical feature as the near-resonance dip). Evaluating at z=Ep/d2=0
+sidesteps this entirely.
+
+**Key finding**: Model R systematically OVERESTIMATES |C| relative to
+Model L, by a factor shrinking monotonically with T: ~80x at 10 K, ~28x
+at 30 K (also sign-disagreeing there), ~8x at 50 K, ~3x at 70 K, then
+1.00-1.04x for T >= 100 K. This is a genuine, self-diagnosing
+perturbative-breakdown effect, not a bug: Model R's adiabatic-elimination
+formula (`dXi = -beta*K12*K21/den`) assumes the Raman correction is a
+SMALL perturbation to the bare susceptibility. At T=10 K, Model R's own
+`|C|~0.87` is manifestly not small -- signaling its own breakdown -- while
+at T>=100 K, `|C|` has collapsed to ~1e-6 or below, confirming the
+perturbative assumption holds. The correlation between log|C_modelR| and
+log-deviation-from-Model-L across the whole T range is 0.90, confirming
+Model R's own magnitude is a reliable self-diagnostic for when to trust
+it quantitatively.
+
+**Consequence for the rest of this campaign** (why this doesn't undercut
+anything already concluded): Step 1's low-T contrast VALUES (0.89 at 4 K)
+were only ever used QUALITATIVELY there (EIT works, cut kills it, correct
+trends) -- unaffected. Steps 3/4's exact symbolic Gamma-scaling analysis
+(nu_K=2, nu_R=4) is derived in and applies to the LARGE-Gamma regime,
+exactly where this step shows Model R and Model L agree to a few percent
+-- so the exponent result is now validated on the model that actually
+matters (Model L), not merely self-consistent within Model R. Steps
+5/6/7's 300 K conclusions were already close to model-independent (both
+agree to ~4% there); two spot-checks with Model L directly (the Bx=0
+reference point and Step 5's rejected Bx=0.2T candidate) both confirm
+negative/negligible C at 300 K, matching Model R's verdict.
+
+Gates certified (`gates_summary_step8.json`): `high_T_agreement_within_
+10pct` (max relative error 4.0% for T>=100K), `low_T_discrepancy_
+explained_by_perturbative_breakdown` (correlation 0.90), `model_L_
+confirms_negative_or_negligible_at_300K_spotchecks`, `sign_agreement_
+from_100K_up`.
+
+Step 8 (plan: "Model Rが指数・機構を正しく再現し、Model Lが有限温度での上界を
+確認すること") is satisfied, with the added value of an explicit,
+quantitative, self-diagnosing account of where and why the two models
+diverge. Step 9 (local response to detectable-signal conversion, tying
+together `signal_chain.py`'s OD/SNR machinery already built during the
+preflight work) is the last step in the plan.
+
+---
+
 **Step 7 (correction-mechanism upper bounds): EXECUTED, all 4 gates PASS.**
 See `results/gates_summary_step7.json` and
 `results/figures/fig_step7_correction_bounds.png`.
@@ -428,6 +488,7 @@ GKSL-admissible D_S construction) is next.
     src/step5_global_adversarial_optimization.py  Step 5
     src/step6_dip_discrimination.py             Step 6
     src/step7_correction_mechanisms.py          Step 7
+    src/step8_reduced_vs_full_liouvillian.py    Step 8
     results/gates_summary_step1.json
     results/gates_summary_step2.json
     results/gates_summary_step3.json
@@ -435,6 +496,7 @@ GKSL-admissible D_S construction) is next.
     results/gates_summary_step5.json
     results/gates_summary_step6.json
     results/gates_summary_step7.json
+    results/gates_summary_step8.json
     results/figures/fig_step1_low_T_positive_control.png
     results/figures/fig_step2_operational_cut_audit.png
     results/figures/fig_step3_moment_scaling.png
@@ -442,6 +504,8 @@ GKSL-admissible D_S construction) is next.
     results/figures/fig_step5_global_optimization.png
     results/figures/fig_step6_dip_discrimination.png
     results/figures/fig_step7_correction_bounds.png
+    results/figures/fig_step8_model_agreement.png
 
-Future steps (8-9) will follow the same convention: one `stepN_*.py` per
-step, one `gates_summary_stepN.json`, figures under `results/figures/`.
+Step 9 (local response to detectable-signal conversion) will follow the
+same convention: one `stepN_*.py`, one `gates_summary_stepN.json`, a
+figure under `results/figures/`.
