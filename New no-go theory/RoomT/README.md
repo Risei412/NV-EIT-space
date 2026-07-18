@@ -9,6 +9,77 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 9 (local response to detectable-signal conversion): EXECUTED, all 5 gates PASS.
+This completes all nine steps of the plan.**
+See `results/gates_summary_step9.json` and
+`results/figures/fig_step9_snr_map.png`.
+Code: `src/step9_signal_conversion.py`.
+
+Applies `No-go theorem/src/signal_chain.py` (built during this campaign's
+pre-flight work, before Step 1, and unmodified since) to this campaign's
+actual findings, keeping "theoretical no-go" (Steps 3-8: R_EIT is
+structurally suppressed and not even correctly signed) and "detection
+no-go" (this step: even granting a signal, is it measurable) explicitly
+separate, per the plan's own insistence that large optical depth can
+AMPLIFY an existing small response but cannot manufacture one that
+Steps 3-8 already showed is absent.
+
+Two contrast values carried through the chain: `C_reference` (1.82e-9,
+the actual Step 1-8 finding, honestly labeled as NOT correctly signed for
+transparency) and `C_generous_bound` (2.40e-6, the largest |C| found
+ANYWHERE in this campaign regardless of sign -- Step 5's stress-range
+optimum, which Step 6 already showed also fails Criterion E1). The
+homogeneous linewidth feeding the ZPL cross-section uses this campaign's
+OWN Gamma_XY(300K) value (Step 4), so the same phonon broadening driving
+the whole SMRT mechanism also independently suppresses the ZPL cross-
+section itself. (NV density, thickness) is swept over a MAIN realistic
+domain (up to ~5.7 ppm, 1 mm -- typical ensemble samples) and a STRESS
+domain (up to ~57 ppm, 1 cm -- deliberately extreme, reported separately
+per this campaign's established main/stress convention).
+
+**Bug caught and fixed during development**: the first version left
+`signal_chain.py`'s `sigma_tech` (technical-noise floor) at its default
+of 0 -- pure shot-noise limit. This made the reference point look
+"achievable in 12.8 hours" at the best (n_NV, L) point in the MAIN
+domain, since shot noise can always be integrated down given enough
+photons and time, regardless of how small the true signal is. But the
+plan's Sec. 9.2 explicitly lists "technical-noise floor" as a required
+ingredient, and no real experiment is shot-noise-limited at a ~1e-9
+relative-modulation level over many-hour integrations. Adding ANY
+realistic sigma_tech (checked down to 1e-9, already far beyond current
+experimental capability) makes the reference point's required
+integration time infinite -- undetectable at any integration time, not
+just impractically long.
+
+**Result with the technical-noise floor included (sigma_tech=1e-6, an
+aggressive/optimistic but real-world-plausible value)**: undetectable at
+the reference-point contrast in BOTH the main and stress (NV density,
+thickness) domains; undetectable at the generous, sign-agnostic bound in
+the main domain; only becomes marginally "detectable" (0.06 s) in the
+STRESS domain's single most extreme corner (~57 ppm, 1 cm) -- a
+combination that is not achievable with any real diamond sample, applied
+to a value ALREADY established (Step 6) not to be genuine EIT, and which
+itself stops being "detectable" once sigma_tech reaches 1e-5 (still a
+realistic value for many real setups). The contrast an ordinary MAIN-
+domain ensemble sample (n_NV=1e17, L=0.1 cm) would need for a mere 1-hour
+SNR=5 measurement is 1.13e-4 -- about 62,000x larger than the reference
+point and 47x larger than the generous bound.
+
+Gates certified (`gates_summary_step9.json`): `reference_point_
+undetectable_main_domain`, `generous_bound_undetectable_main_domain`,
+`reference_point_undetectable_stress_domain`, `required_contrast_1hr_
+exceeds_reference`, `sigma_tech_1e9_already_sufficient_to_exclude_
+reference`.
+
+Step 9 (plan: separate theoretical no-go from detection no-go; large
+optical depth amplifies an existing signal, it cannot create one) is
+satisfied, and completes the plan's own recommended priority order (Sec.
+17): the operational cut and merged-manifold moment analysis (Steps 2-3),
+the 300 K realistic-domain global upper bound (Step 5), and now the full
+chain from local response through to detectability.
+
+---
+
 **Step 8 (reduced-kernel vs full-Liouvillian agreement): EXECUTED, all 4 gates PASS.**
 See `results/gates_summary_step8.json` and
 `results/figures/fig_step8_model_agreement.png`.
@@ -489,6 +560,7 @@ GKSL-admissible D_S construction) is next.
     src/step6_dip_discrimination.py             Step 6
     src/step7_correction_mechanisms.py          Step 7
     src/step8_reduced_vs_full_liouvillian.py    Step 8
+    src/step9_signal_conversion.py               Step 9
     results/gates_summary_step1.json
     results/gates_summary_step2.json
     results/gates_summary_step3.json
@@ -497,6 +569,7 @@ GKSL-admissible D_S construction) is next.
     results/gates_summary_step6.json
     results/gates_summary_step7.json
     results/gates_summary_step8.json
+    results/gates_summary_step9.json
     results/figures/fig_step1_low_T_positive_control.png
     results/figures/fig_step2_operational_cut_audit.png
     results/figures/fig_step3_moment_scaling.png
@@ -505,7 +578,9 @@ GKSL-admissible D_S construction) is next.
     results/figures/fig_step6_dip_discrimination.png
     results/figures/fig_step7_correction_bounds.png
     results/figures/fig_step8_model_agreement.png
+    results/figures/fig_step9_snr_map.png
 
-Step 9 (local response to detectable-signal conversion) will follow the
-same convention: one `stepN_*.py`, one `gates_summary_stepN.json`, a
+All nine steps of the plan are now executed (Steps 1-9). Any future work
+(e.g. the paper figure composition described in the plan's Sec. 14) would
+follow the same convention: one script, one `gates_summary_*.json`, one
 figure under `results/figures/`.
