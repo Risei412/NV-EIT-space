@@ -1,0 +1,151 @@
+{
+  "description": "Gate A: observable-order inheritance nu_obs = n12 + n21 - nu_den",
+  "quick": false,
+  "bilinear_models": [
+    {
+      "label": "synthetic-generic (nu_obs=2)",
+      "readout_mode": "bilinear",
+      "mechanism": "generic",
+      "n12": 1,
+      "n21": 1,
+      "nu_den": 0,
+      "nu_obs_pred": 2,
+      "nu_obs_cert": 2,
+      "nu_obs_tail_fit": 1.9984115039828823,
+      "pred_cert_agree": true,
+      "fit_agree": true,
+      "agree": true
+    },
+    {
+      "label": "synthetic-protected (nu_obs=4)",
+      "readout_mode": "bilinear",
+      "mechanism": "symmetry-protected",
+      "n12": 2,
+      "n21": 2,
+      "nu_den": 0,
+      "nu_obs_pred": 4,
+      "nu_obs_cert": 4,
+      "nu_obs_tail_fit": 3.9984115039706234,
+      "pred_cert_agree": true,
+      "fit_agree": true,
+      "agree": true
+    },
+    {
+      "label": "synthetic-doubly-protected (nu_obs=6)",
+      "readout_mode": "bilinear",
+      "mechanism": "symmetry-protected",
+      "n12": 3,
+      "n21": 3,
+      "nu_den": 0,
+      "nu_obs_pred": 6,
+      "nu_obs_cert": 6,
+      "nu_obs_tail_fit": 5.998411503945576,
+      "pred_cert_agree": true,
+      "fit_agree": true,
+      "agree": true
+    },
+    {
+      "label": "NV EIT (physical, nu_obs=4)",
+      "readout_mode": "bilinear",
+      "mechanism": "symmetry-protected",
+      "n12": 2,
+      "n21": 2,
+      "nu_den": 0,
+      "nu_obs_pred": 4,
+      "nu_obs_cert": null,
+      "nu_obs_tail_fit": 3.9959437037409216,
+      "pred_cert_agree": true,
+      "fit_agree": true,
+      "agree": true
+    }
+  ],
+  "nv_exact_certificate": {
+    "M0_exact_zero": true,
+    "nu_K12": 2,
+    "nu_K21": 2,
+    "nu_S2": 1,
+    "nu_R": 4,
+    "inheritance_ok": true,
+    "smrt_class": "Class II (finite suppression order)"
+  },
+  "qfi_quadratic": {
+    "nu_x": 2.009710624805443,
+    "nu_F": 4.004449101892334,
+    "nu_obs_pred": 4.019421249610886,
+    "ratio_F_over_2x": 0.9962750488717743,
+    "quadratic_inheritance_ok": true
+  },
+  "frozen_source_difference": {
+    "nu_generic": 3,
+    "nu_tuned": 4,
+    "J45_star": "51/65",
+    "promotion_ok": true
+  },
+  "phase_n_q_fan": {
+    "fan": [
+      {
+        "q": "0",
+        "nu": "4",
+        "expected": "4",
+        "match": true
+      },
+      {
+        "q": "1/2",
+        "nu": "7/2",
+        "expected": "7/2",
+        "match": true
+      },
+      {
+        "q": "1",
+        "nu": "3",
+        "expected": "3",
+        "match": true
+      },
+      {
+        "q": "3/2",
+        "nu": "7/2",
+        "expected": "7/2",
+        "match": true
+      },
+      {
+        "q": "2",
+        "nu": "4",
+        "expected": "4",
+        "match": true
+      },
+      {
+        "q": "3",
+        "nu": "4",
+        "expected": "4",
+        "match": true
+      }
+    ],
+    "fan_ok": true
+  },
+  "phase_n_z_star": {
+    "z_generic": "1",
+    "order_generic": 4,
+    "z_star": "543/280",
+    "order_star": 5,
+    "resonance_promotion_ok": true
+  },
+  "preasymptotic_separation_NV": {
+    "nu_asymptotic": 3.9959437037409216,
+    "nu_eff_small": 0.12065981504830756,
+    "nu_eff_large": 3.999991614020441,
+    "gamma_cross": 71798.45648236798,
+    "nu_eff_at_phys": 3.150971947632729,
+    "is_preasymptotic": true,
+    "gamma_phys_300K": 13349.549074059234,
+    "gamma_phys_10K": 0.03785171587893605
+  },
+  "gates": {
+    "G_O1_inheritance_three_observables": true,
+    "G_O2_generic_vs_protected_exact": true,
+    "G_O3_predict_matches_loglog": true,
+    "G_O4_preasymptotic_separated": true,
+    "G_O5_three_route_and_modifiers": true,
+    "overall_pass": true
+  },
+  "runtime_s": 9.4
+}

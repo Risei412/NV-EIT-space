@@ -1,0 +1,3 @@
+tuning,amp_slope,eff_slope,eff_cert,blind_nu_K,blind_eff
+generic,0.9963,1.9926,2,1,2
+protected,1.9963,3.9926,4,2,4

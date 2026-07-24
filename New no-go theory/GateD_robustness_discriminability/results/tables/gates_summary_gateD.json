@@ -1,0 +1,217 @@
+{
+  "description": "Gate D: physical significance -- robustness/crossover (P6) and experimental discriminability (P8). Completes the PRL central claim.",
+  "p6_nv_exact_class": {
+    "rows": [
+      {
+        "perturbation": "unperturbed",
+        "abs_M0": 0.0,
+        "abs_M1": 0.0,
+        "slope": 2.999752762624614,
+        "order_unchanged": true
+      },
+      {
+        "perturbation": "xi_x=0.05",
+        "abs_M0": 0.0,
+        "abs_M1": 0.0,
+        "slope": 2.999752743837942,
+        "order_unchanged": true
+      },
+      {
+        "perturbation": "xi_x=0.2",
+        "abs_M0": 0.0,
+        "abs_M1": 0.0,
+        "slope": 2.999752462041001,
+        "order_unchanged": true
+      },
+      {
+        "perturbation": "xi_y=0.1",
+        "abs_M0": 0.0,
+        "abs_M1": 0.0,
+        "slope": 2.999752831620255,
+        "order_unchanged": true
+      },
+      {
+        "perturbation": "Bx=0.2",
+        "abs_M0": 0.0,
+        "abs_M1": 0.0,
+        "slope": 2.99974564591397,
+        "order_unchanged": true
+      }
+    ],
+    "z_rows": [
+      {
+        "z": 0.0,
+        "abs_M0": 0.0,
+        "abs_M1": 0.0
+      },
+      {
+        "z": 0.5,
+        "abs_M0": 0.0,
+        "abs_M1": 0.0
+      },
+      {
+        "z": 1.0,
+        "abs_M0": 0.0,
+        "abs_M1": 0.0
+      }
+    ],
+    "is_exact_class": true
+  },
+  "p6_sc_approximate_class": {
+    "rows": [
+      {
+        "eps": 1e-08,
+        "gamma_star": 447794.8934642373
+      },
+      {
+        "eps": 1e-09,
+        "gamma_star": 4190850.400882314
+      },
+      {
+        "eps": 1e-10,
+        "gamma_star": 45527455.78784639
+      },
+      {
+        "eps": 1e-11,
+        "gamma_star": 426085154.441104
+      }
+    ],
+    "nu_protected_eps0": 1.9989602590799627,
+    "crossover_power": -0.9971223021582747,
+    "law_is_inverse": true
+  },
+  "p6_nu_q_fan": {
+    "rows": [
+      {
+        "q": "0",
+        "nu": "4",
+        "expected": "4",
+        "match": true
+      },
+      {
+        "q": "1/2",
+        "nu": "7/2",
+        "expected": "7/2",
+        "match": true
+      },
+      {
+        "q": "1",
+        "nu": "3",
+        "expected": "3",
+        "match": true
+      },
+      {
+        "q": "3/2",
+        "nu": "7/2",
+        "expected": "7/2",
+        "match": true
+      },
+      {
+        "q": "2",
+        "nu": "4",
+        "expected": "4",
+        "match": true
+      },
+      {
+        "q": "3",
+        "nu": "4",
+        "expected": "4",
+        "match": true
+      }
+    ],
+    "fan_ok": true
+  },
+  "p8_required_gamma_range": {
+    "per_window": [
+      {
+        "window_decades": 1,
+        "slope_err": 2.085138338170367e-05
+      },
+      {
+        "window_decades": 2,
+        "slope_err": 8.622865907970123e-06
+      },
+      {
+        "window_decades": 3,
+        "slope_err": 4.574723552641657e-06
+      },
+      {
+        "window_decades": 4,
+        "slope_err": 2.804286651336696e-06
+      }
+    ],
+    "decades_needed": 1,
+    "delta_nu_resolvable": true
+  },
+  "p8_gamma_T_mapping": {
+    "T": [
+      4,
+      10,
+      20,
+      50,
+      100,
+      200,
+      300
+    ],
+    "nv_korb_GHz": [
+      9.228516275496172e-05,
+      0.0089034317578721,
+      0.28376031413071423,
+      27.59521481500229,
+      739.7777202776099,
+      8937.555415619174,
+      26699.031348118468
+    ],
+    "siv_GHz": [
+      0.05464085859998098,
+      0.09119570963513879,
+      0.1676298609278752,
+      0.40849756455295383,
+      0.8139550620464383,
+      1.6263886686008486,
+      2.4391602826187415
+    ],
+    "snv_GHz": [
+      81.00000000000003,
+      81.00009050256851,
+      81.12117487105262,
+      90.6393086392002,
+      131.31466076542267,
+      234.67103517908927,
+      344.0074721305072
+    ],
+    "nv_decades": 8.461363622785427,
+    "siv_decades": 1.649722824682518,
+    "snv_decades": 0.6280828570353334,
+    "sc_decades_available": 9.0,
+    "regime_SiV_300K": 24.51366955685597,
+    "regime_SnV_300K": 2.0836619123327575
+  },
+  "p8_optical_snr": {
+    "gamma_h_GHz": 13.831007407501145,
+    "sigma_zpl_cm2": 5.638672340909382e-14,
+    "spectral_fraction": 0.46103358025003816,
+    "od_sector": 19.063860179366316,
+    "min_detectable_contrast": 0.0001064737419490125,
+    "representative_contrast": 0.01,
+    "detectable": true,
+    "operating_point": {
+      "n_nv_cm3": 1.76e+17,
+      "L_cm": 0.05,
+      "tau_s": 3600.0,
+      "T_K": 50.0,
+      "density_ppm": 1.0
+    }
+  },
+  "quick": false,
+  "gates": {
+    "G_D1_exact_vs_approximate_class": true,
+    "G_D2_crossover_scale_law": true,
+    "G_D3_exponent_map_and_fan": true,
+    "G_D4_required_gamma_range": true,
+    "G_D5_gammaT_platform_reach": true,
+    "G_D6_optical_snr_discriminability": true,
+    "overall_pass": true
+  },
+  "runtime_s": 0.05
+}

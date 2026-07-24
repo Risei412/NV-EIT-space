@@ -1,0 +1,5 @@
+label,readout_mode,mechanism,n12,n21,nu_den,nu_obs_pred,nu_obs_cert,nu_obs_tail_fit,pred_cert_agree,fit_agree,agree
+synthetic-generic (nu_obs=2),bilinear,generic,1,1,0,2,2,1.9984115039828823,True,True,True
+synthetic-protected (nu_obs=4),bilinear,symmetry-protected,2,2,0,4,4,3.9984115039706234,True,True,True
+synthetic-doubly-protected (nu_obs=6),bilinear,symmetry-protected,3,3,0,6,6,5.998411503945576,True,True,True
+"NV EIT (physical, nu_obs=4)",bilinear,symmetry-protected,2,2,0,4,,3.9959437037409216,True,True,True
