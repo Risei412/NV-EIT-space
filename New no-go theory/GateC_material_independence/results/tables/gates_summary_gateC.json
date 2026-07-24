@@ -1,0 +1,108 @@
+{
+  "description": "Gate C: material independence -- group-IV full GKSL (P4) and three-class scaling collapse n=1,2,3 (P5), diamond & non-diamond.",
+  "p4_group_iv_full_gksl": {
+    "SiV": {
+      "slope_dephasing": 0.9999966657377248,
+      "slope_hopping": 0.9999868563503783,
+      "reduced_vs_full_max_rel_err": 2.787030926564144e-16,
+      "abs_M0": 1.0,
+      "gamma_times_R_over_M0": 0.9999999998421872,
+      "rho0_residual": 0.0
+    },
+    "SnV": {
+      "slope_dephasing": 0.999996846966607,
+      "slope_hopping": 0.9999874042842835,
+      "reduced_vs_full_max_rel_err": 2.584939414232464e-16,
+      "abs_M0": 1.0,
+      "gamma_times_R_over_M0": 0.9999999999984185,
+      "rho0_residual": 0.0
+    }
+  },
+  "predicted_exponents": {
+    "group_IV": 1,
+    "NV_0_m1": 2,
+    "NV_m1_p1": 3
+  },
+  "p5_three_class": [
+    {
+      "n_class": 1,
+      "system": "group-IV SiV",
+      "material_type": "diamond",
+      "slope": 0.9999967113374594,
+      "predicted": 1,
+      "slope_match": true,
+      "compensated_spread": 1.6619980719527908e-05,
+      "plateau_value": 0.9999941399298747,
+      "collapse_ok": true,
+      "slope_lo": 0.9999884574018341,
+      "slope_hi": 0.9999999967099282,
+      "window_stable": true
+    },
+    {
+      "n_class": 1,
+      "system": "SC generic",
+      "material_type": "non-diamond",
+      "slope": 0.9962037377403505,
+      "predicted": 1,
+      "slope_match": true,
+      "compensated_spread": 0.014379214163190131,
+      "plateau_value": 254077978.9948802,
+      "collapse_ok": true,
+      "slope_lo": 0.9886703190450484,
+      "slope_hi": 0.9999000018484028,
+      "window_stable": true
+    },
+    {
+      "n_class": 2,
+      "system": "NV 0<->-1",
+      "material_type": "diamond",
+      "slope": 1.999805880236965,
+      "predicted": 2,
+      "slope_match": true,
+      "compensated_spread": 0.0006323912536493918,
+      "plateau_value": 0.14138226322628242,
+      "collapse_ok": true,
+      "slope_lo": 1.9993696726881094,
+      "slope_hi": 1.99999730089772,
+      "window_stable": true
+    },
+    {
+      "n_class": 2,
+      "system": "SC protected",
+      "material_type": "non-diamond",
+      "slope": 1.9961654372793785,
+      "predicted": 2,
+      "slope_match": true,
+      "compensated_spread": 0.014555058591733297,
+      "plateau_value": 5081226.936217208,
+      "collapse_ok": true,
+      "slope_lo": 1.9885356127561251,
+      "slope_hi": 1.9998999913143405,
+      "window_stable": true
+    },
+    {
+      "n_class": 3,
+      "system": "NV -1<->+1",
+      "material_type": "diamond",
+      "slope": 2.9995899827147934,
+      "predicted": 3,
+      "slope_match": true,
+      "compensated_spread": 0.0013498014511685113,
+      "plateau_value": 8.256720696114211,
+      "collapse_ok": true,
+      "slope_lo": 2.9986565602726847,
+      "slope_hi": 2.999995631909217,
+      "window_stable": true
+    }
+  ],
+  "quick": false,
+  "gates": {
+    "G_C1_groupIV_full_gksl": true,
+    "G_C2_three_physical_classes": true,
+    "G_C3_scaling_collapse": true,
+    "G_C4_material_independence": true,
+    "G_C5_full_reduced_and_finite_gamma": true,
+    "overall_pass": true
+  },
+  "runtime_s": 0.5
+}
