@@ -1,0 +1,480 @@
+{
+  "N1_exact_nonidentifiability": {
+    "common_full_model": true,
+    "common_source": "-i e_rho21",
+    "common_readout": "e_rho51",
+    "full_moments": [
+      "0",
+      "4/21",
+      "0",
+      "-1120312/904995"
+    ],
+    "nu_chi_full": 2,
+    "sector_table": {
+      "S3_single_intermediate": {
+        "eliminated_reduced_indices": [
+          1
+        ],
+        "moments": [
+          "0",
+          "0",
+          "160/91*I",
+          "-276512/422331",
+          "-30217472/5490303*I",
+          "585251276224/127402481115"
+        ],
+        "nu_R_S": 3
+      },
+      "S4_single_intermediate": {
+        "eliminated_reduced_indices": [
+          2
+        ],
+        "moments": [
+          "0",
+          "0",
+          "-160/91*I",
+          "-231328/422331",
+          "2696320/422331*I",
+          "494129064896/127402481115"
+        ],
+        "nu_R_S": 3
+      },
+      "S34_two_intermediate": {
+        "eliminated_reduced_indices": [
+          1,
+          2
+        ],
+        "moments": [
+          "0",
+          "0",
+          "0",
+          "-173760/140777",
+          "-22592/422331*I",
+          "59433504448/8493498741"
+        ],
+        "nu_R_S": 4
+      }
+    },
+    "distinct_sector_orders": [
+      3,
+      4
+    ],
+    "theorem": "No function of the uncut response alone can return a unique intervention-resolved order when S is not supplied.",
+    "scope_caveat": "The result does not apply after the intervention S and a tomographically complete generator are supplied.",
+    "overall_pass": true
+  },
+  "N2_direct_fits": {
+    "gammas": [
+      100.0,
+      107.97751623277094,
+      116.59144011798323,
+      125.89254117941675,
+      135.93563908785256,
+      146.7799267622069,
+      158.48931924611142,
+      171.1328304161781,
+      184.78497974222907,
+      199.52623149688787,
+      215.44346900318845,
+      232.63050671536263,
+      251.18864315095797,
+      271.22725793320296,
+      292.8644564625237,
+      316.2277660168379,
+      341.4548873833601,
+      368.69450645195735,
+      398.1071705534973,
+      429.86623470822764,
+      464.15888336127773,
+      501.18723362727246,
+      541.1695265464638,
+      584.3414133735175,
+      630.957344480193,
+      681.2920690579615,
+      735.6422544596413,
+      794.3282347242813,
+      857.6958985908946,
+      926.1187281287937,
+      1000.0
+    ],
+    "nu_chi_full_fit": 1.9997802186787286,
+    "nu_chi_full_exact": 2,
+    "max_full_response_spread_between_sector_labels": 0.0,
+    "table": {
+      "S3_single_intermediate": {
+        "nu_R_S_fit": 2.999896480289594,
+        "nu_R_S_exact": 3
+      },
+      "S4_single_intermediate": {
+        "nu_R_S_fit": 2.999878840427449,
+        "nu_R_S_exact": 3
+      },
+      "S34_two_intermediate": {
+        "nu_R_S_fit": 3.9998083163161446,
+        "nu_R_S_exact": 4
+      }
+    },
+    "overall_pass": true
+  },
+  "N3_operational_admissibility": {
+    "all_native_and_cut_rates_nonnegative": true,
+    "noninvasive_reference_state": "All added jumps annihilate |1><1|.",
+    "fixed_probe_and_readout": true,
+    "semisimple_cut_zero_mode": true,
+    "rows": [
+      {
+        "sector": "S3_single_intermediate",
+        "mode": "ideal",
+        "hamiltonian_hermiticity_residual": 0.0,
+        "trace_preservation_residual": 0.0,
+        "number_of_jumps": 4
+      },
+      {
+        "sector": "S3_single_intermediate",
+        "mode": "finite_kappa",
+        "hamiltonian_hermiticity_residual": 0.0,
+        "trace_preservation_residual": 0.0,
+        "number_of_jumps": 5
+      },
+      {
+        "sector": "S4_single_intermediate",
+        "mode": "ideal",
+        "hamiltonian_hermiticity_residual": 0.0,
+        "trace_preservation_residual": 0.0,
+        "number_of_jumps": 4
+      },
+      {
+        "sector": "S4_single_intermediate",
+        "mode": "finite_kappa",
+        "hamiltonian_hermiticity_residual": 0.0,
+        "trace_preservation_residual": 0.0,
+        "number_of_jumps": 5
+      },
+      {
+        "sector": "S34_two_intermediate",
+        "mode": "ideal",
+        "hamiltonian_hermiticity_residual": 0.0,
+        "trace_preservation_residual": 0.0,
+        "number_of_jumps": 4
+      },
+      {
+        "sector": "S34_two_intermediate",
+        "mode": "finite_kappa",
+        "hamiltonian_hermiticity_residual": 0.0,
+        "trace_preservation_residual": 0.0,
+        "number_of_jumps": 6
+      }
+    ],
+    "max_hamiltonian_hermiticity_residual": 0.0,
+    "max_trace_preservation_residual": 0.0,
+    "max_reduced_vs_full_liouvillian_error": 1.5184274650250922e-18,
+    "overall_pass": true
+  },
+  "N4_operational_limit_and_path": {
+    "fixed_Gamma_for_kappa_limit": 10.0,
+    "kappas": [
+      100.0,
+      146.7799267622069,
+      215.44346900318845,
+      316.2277660168379,
+      464.15888336127773,
+      681.2920690579608,
+      1000.0,
+      1467.799267622069,
+      2154.4346900318824,
+      3162.2776601683795,
+      4641.588833612777,
+      6812.920690579608,
+      10000.0,
+      14677.992676220676,
+      21544.346900318822,
+      31622.776601683792,
+      46415.888336127726,
+      68129.20690579608,
+      100000.0,
+      146779.92676220674,
+      215443.46900318822,
+      316227.7660168379,
+      464158.8833612772,
+      681292.0690579608,
+      1000000.0,
+      1467799.2676220676,
+      2154434.6900318824,
+      3162277.660168379,
+      4641588.833612773,
+      6812920.690579608,
+      10000000.0
+    ],
+    "convergence": {
+      "S3_single_intermediate": {
+        "slope": -0.9999585494959714,
+        "error_at_kappa_max": 2.2968856847992123e-09
+      },
+      "S4_single_intermediate": {
+        "slope": -0.9999460910681292,
+        "error_at_kappa_max": 2.9722330019167453e-09
+      },
+      "S34_two_intermediate": {
+        "slope": -0.9999076622326993,
+        "error_at_kappa_max": 7.27524379383074e-10
+      }
+    },
+    "path_table": {
+      "S3_single_intermediate": {
+        "kappa_equals_Gamma_power_1": 2.9993213734699125,
+        "kappa_equals_Gamma_power_2": 2.989794370916013,
+        "kappa_equals_Gamma_power_3": 2.9994196029990263
+      },
+      "S34_two_intermediate": {
+        "kappa_equals_Gamma_power_1": 3.0006800507643407,
+        "kappa_equals_Gamma_power_2": 3.985160765315512,
+        "kappa_equals_Gamma_power_3": 3.999061672074703
+      }
+    },
+    "interpretation": "For S34, kappa proportional to Gamma leaves a Gamma^-3 finite-cut term; kappa growing as Gamma^2 or faster recovers the promoted exponent 4.",
+    "overall_pass": true
+  },
+  "N5_exact_path_order_fan": {
+    "theorem": "For finite-dimensional R=N/Q and kappa=Gamma^q, nu(q)=deg_q(Q)-deg_q(N), with deg_q the exact weighted Newton degree after face cancellation.",
+    "consequence": "nu(q) is finitely decidable and piecewise linear in q.",
+    "phase_n_fan": "nu(q)=4-q for 0<=q<=1; nu(q)=2+q for 1<=q<=2; nu(q)=4 for q>=2.",
+    "breakpoints": [
+      1.0,
+      2.0
+    ],
+    "minimum_order": 3.0,
+    "minimum_at_q": 1.0,
+    "numerator_terms": [
+      {
+        "power_Gamma": 0,
+        "power_kappa": 1,
+        "coefficient": "38879493/219700000*I"
+      },
+      {
+        "power_Gamma": 0,
+        "power_kappa": 2,
+        "coefficient": "81039/1690000"
+      },
+      {
+        "power_Gamma": 1,
+        "power_kappa": 1,
+        "coefficient": "122248569/878800000"
+      },
+      {
+        "power_Gamma": 1,
+        "power_kappa": 2,
+        "coefficient": "-1059/520000*I"
+      },
+      {
+        "power_Gamma": 2,
+        "power_kappa": 1,
+        "coefficient": "362247/2112500*I"
+      },
+      {
+        "power_Gamma": 2,
+        "power_kappa": 2,
+        "coefficient": "4887/104000"
+      },
+      {
+        "power_Gamma": 3,
+        "power_kappa": 1,
+        "coefficient": "361311/5200000"
+      },
+      {
+        "power_Gamma": 4,
+        "power_kappa": 1,
+        "coefficient": "1071/40000*I"
+      }
+    ],
+    "denominator_term_count": 21,
+    "exact_rows": [
+      {
+        "q": "0",
+        "q_float": 0.0,
+        "nu_exact": "4",
+        "nu_exact_float": 4.0,
+        "leading_numerator_coefficient": "1071/40000*I",
+        "leading_denominator_coefficient": "21538881/256000000"
+      },
+      {
+        "q": "1/4",
+        "q_float": 0.25,
+        "nu_exact": "15/4",
+        "nu_exact_float": 3.75,
+        "leading_numerator_coefficient": "1071/40000*I",
+        "leading_denominator_coefficient": "21538881/256000000"
+      },
+      {
+        "q": "1/2",
+        "q_float": 0.5,
+        "nu_exact": "7/2",
+        "nu_exact_float": 3.5,
+        "leading_numerator_coefficient": "1071/40000*I",
+        "leading_denominator_coefficient": "21538881/256000000"
+      },
+      {
+        "q": "3/4",
+        "q_float": 0.75,
+        "nu_exact": "13/4",
+        "nu_exact_float": 3.25,
+        "leading_numerator_coefficient": "1071/40000*I",
+        "leading_denominator_coefficient": "21538881/256000000"
+      },
+      {
+        "q": "1",
+        "q_float": 1.0,
+        "nu_exact": "3",
+        "nu_exact_float": 3.0,
+        "leading_numerator_coefficient": "1071/40000*I",
+        "leading_denominator_coefficient": "60523281/256000000"
+      },
+      {
+        "q": "5/4",
+        "q_float": 1.25,
+        "nu_exact": "13/4",
+        "nu_exact_float": 3.25,
+        "leading_numerator_coefficient": "1071/40000*I",
+        "leading_denominator_coefficient": "97461/2560000"
+      },
+      {
+        "q": "3/2",
+        "q_float": 1.5,
+        "nu_exact": "7/2",
+        "nu_exact_float": 3.5,
+        "leading_numerator_coefficient": "1071/40000*I",
+        "leading_denominator_coefficient": "97461/2560000"
+      },
+      {
+        "q": "7/4",
+        "q_float": 1.75,
+        "nu_exact": "15/4",
+        "nu_exact_float": 3.75,
+        "leading_numerator_coefficient": "1071/40000*I",
+        "leading_denominator_coefficient": "97461/2560000"
+      },
+      {
+        "q": "2",
+        "q_float": 2.0,
+        "nu_exact": "4",
+        "nu_exact_float": 4.0,
+        "leading_numerator_coefficient": "4887/104000+1071/40000*I",
+        "leading_denominator_coefficient": "97461/2560000"
+      },
+      {
+        "q": "9/4",
+        "q_float": 2.25,
+        "nu_exact": "4",
+        "nu_exact_float": 4.0,
+        "leading_numerator_coefficient": "4887/104000",
+        "leading_denominator_coefficient": "97461/2560000"
+      },
+      {
+        "q": "5/2",
+        "q_float": 2.5,
+        "nu_exact": "4",
+        "nu_exact_float": 4.0,
+        "leading_numerator_coefficient": "4887/104000",
+        "leading_denominator_coefficient": "97461/2560000"
+      },
+      {
+        "q": "11/4",
+        "q_float": 2.75,
+        "nu_exact": "4",
+        "nu_exact_float": 4.0,
+        "leading_numerator_coefficient": "4887/104000",
+        "leading_denominator_coefficient": "97461/2560000"
+      },
+      {
+        "q": "3",
+        "q_float": 3.0,
+        "nu_exact": "4",
+        "nu_exact_float": 4.0,
+        "leading_numerator_coefficient": "4887/104000",
+        "leading_denominator_coefficient": "97461/2560000"
+      }
+    ],
+    "exact_rational_fit_rows": [
+      {
+        "q": 0.0,
+        "nu_fit": 3.9999999999878564,
+        "nu_exact": 4.0,
+        "abs_error": 1.2143619443349962e-11
+      },
+      {
+        "q": 0.25,
+        "nu_fit": 3.749999995046689,
+        "nu_exact": 3.75,
+        "abs_error": 4.953311094624269e-09
+      },
+      {
+        "q": 0.5,
+        "nu_fit": 3.4999981335622548,
+        "nu_exact": 3.5,
+        "abs_error": 1.8664377452459746e-06
+      },
+      {
+        "q": 0.75,
+        "nu_fit": 3.24945035215034,
+        "nu_exact": 3.25,
+        "abs_error": 0.000549647849660051
+      },
+      {
+        "q": 1.0,
+        "nu_fit": 2.9999999999999996,
+        "nu_exact": 3.0,
+        "abs_error": 4.440892098500626e-16
+      },
+      {
+        "q": 1.25,
+        "nu_fit": 3.2487869953055797,
+        "nu_exact": 3.25,
+        "abs_error": 0.0012130046944203166
+      },
+      {
+        "q": 1.5,
+        "nu_fit": 3.499995875197585,
+        "nu_exact": 3.5,
+        "abs_error": 4.124802415184092e-06
+      },
+      {
+        "q": 1.75,
+        "nu_fit": 3.7500021064888154,
+        "nu_exact": 3.75,
+        "abs_error": 2.106488815378782e-06
+      },
+      {
+        "q": 2.0,
+        "nu_fit": 3.999999999982977,
+        "nu_exact": 4.0,
+        "abs_error": 1.70228275919726e-11
+      },
+      {
+        "q": 2.25,
+        "nu_fit": 4.000000223200893,
+        "nu_exact": 4.0,
+        "abs_error": 2.232008933233942e-07
+      },
+      {
+        "q": 2.5,
+        "nu_fit": 4.00000000000145,
+        "nu_exact": 4.0,
+        "abs_error": 1.4503953593703045e-12
+      },
+      {
+        "q": 2.75,
+        "nu_fit": 3.9999999999999973,
+        "nu_exact": 4.0,
+        "abs_error": 2.6645352591003757e-15
+      },
+      {
+        "q": 3.0,
+        "nu_fit": 3.9999999999999973,
+        "nu_exact": 4.0,
+        "abs_error": 2.6645352591003757e-15
+      }
+    ],
+    "max_exact_rational_fit_error": 0.0012130046944203166,
+    "overall_pass": true
+  },
+  "phase_n_overall_pass": true
+}
