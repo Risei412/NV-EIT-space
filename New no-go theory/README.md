@@ -168,3 +168,40 @@ plan: with only 2 real controls `(|J45|,φ)`, the cancellation `m2=0` is an
 *isolated* point, not a codimension-1 curve (matching the precedent in gate
 M4 above) — a genuine cancellation curve needs a 3rd real control, shown
 explicitly by also rescaling the first branch's amplitude.
+
+## Phase Z: physical detuning signature zZ (Phase N Priority 4)
+
+Closes the gap flagged by the Phase N Priority 3 report: a physical EIT
+implementation places laser detunings with different weights on different
+coherences, so the common resolvent shift `-izI` must be replaced by a
+diagonal signature `-izZ`, `Z = diag(zeta)`, derived from which laser is
+swept (rotating-frame spanning tree of the 5-level diamond; the loop laser
+is co-swept). Gates Z0-Z6 certify, exactly where possible:
+
+- **Z0** bit-exact regression to the Priority 3 polynomials at `Z = I` and
+  to the Phase N polynomials at `z = 0`;
+- **Z1** the generic V-shaped path-order fan `nu(q) = 4-q, 2+q, 4` is
+  preserved *exactly* for every physical detuning signature tested;
+- **Z2** the frequency-promotion root `z*` moves with the detuning
+  direction (exact rational values per signature; sweeping the closing
+  laser `omega35` has *no* real promotion root — its `m4(z)` is constant);
+- **Z3** frequency-unfolding crossover laws and collapse at the physical
+  root `z* = 543/1190` of the `omega23` sweep;
+- **Z4** finite broadening/resolution restores the generic fan
+  (Gaussian/Lorentzian window norms), with `Gamma_x ∝ sigma^-1`;
+- **Z5** reduced Z-pencil vs. full 25x25 GKSL Liouvillian with explicit
+  level-shift detunings: difference **exactly zero** in Gaussian-rational
+  arithmetic (plus float grid `<1e-11`);
+- **Z6** first dimensional (NV-like) estimate of `z*` and the required
+  spectral selectivity.
+
+- `PhaseZ/src/phase_z_detuning_core.py` — Z-weighted exact 3-variable
+  pencil, moment ladder, Sturm real-root machinery, weighted Newton fans.
+- `PhaseZ/src/run_phase_z.py` — gates Z0-Z6, figures, JSON summary.
+- `PhaseZ/PHASE_Z_DETUNING_REPORT.md` — production report.
+
+```bash
+pip install numpy matplotlib
+python "PhaseZ/src/run_phase_z.py" --smoke   # ~25 s
+python "PhaseZ/src/run_phase_z.py"           # production
+```
