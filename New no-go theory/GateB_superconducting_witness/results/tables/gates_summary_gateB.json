@@ -1,0 +1,78 @@
+{
+  "description": "Gate B: non-EIT non-diamond superconducting dissipative-transfer witness; path-moment law predicts integer transfer-efficiency order.",
+  "witness": "superconducting transmon + two lossy bus modes (dissipative state transfer)",
+  "observable": "A->B transfer amplitude K(kappa)=p_B^dag[kappa D+A0]^-1 c_A; efficiency |K|^2",
+  "blind_prediction": {
+    "generic": {
+      "nu_K": 1,
+      "nu_efficiency_pred": 2
+    },
+    "protected": {
+      "nu_K": 2,
+      "nu_efficiency_pred": 4
+    }
+  },
+  "reduced_vs_full": {
+    "rows": [
+      {
+        "tuning": "generic",
+        "max_rel_err": 1.3886669592011457e-16
+      },
+      {
+        "tuning": "protected",
+        "max_rel_err": 3.469446951953046e-10
+      }
+    ],
+    "rho0_steady_residual": 0.0
+  },
+  "full_model_slopes": {
+    "generic": {
+      "amp_slope": 0.9963192133365687,
+      "eff_slope": 1.9926384266731374,
+      "eff_cert": 2,
+      "nu_K_cert": 1
+    },
+    "protected": {
+      "amp_slope": 1.996283685769035,
+      "eff_slope": 3.99256737153807,
+      "eff_cert": 4,
+      "nu_K_cert": 2
+    }
+  },
+  "crossover_fan": {
+    "rows": [
+      {
+        "eps": 1e-08,
+        "nu_eff_plateau": 1.7969264267164375,
+        "kappa_star": 439957.6288099086
+      },
+      {
+        "eps": 1e-09,
+        "nu_eff_plateau": 1.8021850222248703,
+        "kappa_star": 4321742.776037884
+      },
+      {
+        "eps": 1e-10,
+        "nu_eff_plateau": 1.8022378901771492,
+        "kappa_star": 42452862.27393857
+      },
+      {
+        "eps": 1e-11,
+        "nu_eff_plateau": 1.8022384188126461,
+        "kappa_star": 417018228.21169305
+      }
+    ],
+    "nu_eff_protected_eps0": 1.9999999931205283,
+    "kappa_star_monotonic_in_1_over_eps": true
+  },
+  "quick": false,
+  "gates": {
+    "G_B1_reduced_equals_full": true,
+    "G_B2_blind_prediction_fixed": true,
+    "G_B3_full_model_matches_blind": true,
+    "G_B4_selection_rule_changes_order": true,
+    "G_B5_symmetry_breaking_crossover": true,
+    "overall_pass": true
+  },
+  "runtime_s": 0.38
+}
