@@ -1,0 +1,741 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools,bm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={Sector-Mediated Response Theory: Operationally Integrated Theorem Package}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{plain}
+\newtheorem{theoremzeroa}{Theorem}
+\renewcommand{\thetheoremzeroa}{0A}
+\newtheorem{corollaryzerob}{Corollary}
+\renewcommand{\thecorollaryzerob}{0B}
+
+\newcommand{\V}{\mathcal V}
+\newcommand{\K}{\mathcal K}
+\newcommand{\R}{\mathcal R}
+\newcommand{\A}{\mathcal A}
+\newcommand{\B}{\mathcal B}
+\newcommand{\D}{\mathcal D}
+\newcommand{\C}{\mathbb C}
+\newcommand{\I}{\mathbb I}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\Ker}{\operatorname{Ker}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\normK}[1]{\left\lVert #1\right\rVert_{K}}
+\newcommand{\full}{\mathrm{full}}
+\newcommand{\cut}{\mathrm{cut}}
+\newcommand{\resp}{\mathrm{resp}}
+\newcommand{\ClassI}{\ensuremath{\mathrm{Class\ I}}}
+\newcommand{\ClassII}{\ensuremath{\mathrm{Class\ II}}}
+\newcommand{\ClassIII}{\ensuremath{\mathrm{Class\ III}}}
+\newcommand{\Gcut}{\mathcal G}
+\newcommand{\ExpSpec}{\mathfrak E}
+
+\title{Sector-Mediated Response Theory (SMRT)\\
+\large Operational Cuts, Exact No-Go, Dissipative Suppression, and Protected Survival}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We formulate Sector-Mediated Response Theory (SMRT) as a classification of the observable linear response carried by an operationally specified internal sector.  The sector is defined by an equivalence class of selective interventions induced by GKSL-admissible generators and sharing the same retained Riesz projector.  For every fixed native-dissipation scale $\Gamma$, we independently prove that the strong-intervention limit $\kappa\to\infty$ exists and equals the compressed retained-space response with an $O(\!\kappa^{-1})$ error.  This ideal operational cut defines a single master response.  Three complementary results---exact structural no-go, algebraic suppression under strong native dissipation, and protected survival under singular native dissipation---then classify that same scalar response family.  Within finite-dimensional Markovian weak-probe models with a declared dissipation-scaling path and a regular large-dissipation limit, the classification is mutually exclusive, exhaustive, basis independent, realization independent, and decidable by finitely many exact linear-algebra operations.  The classes are indexed by
+\[
+  \nu\in\{\infty\}\cup(0,\infty)\cup\{0\},
+\]
+corresponding respectively to an exact zero, a finite algebraic decay order, and an order-one protected response.  Joint $\Gamma$--$\kappa$ limits, material-specific validation, and experimental observability remain separate tasks.
+\end{abstract}
+
+\tableofcontents
+
+\section{Scope and standing assumptions}
+
+\subsection{Physical scope}
+Let $\V_{\full}\cong\C^{N_{\full}}$ be a finite-dimensional Liouville or state-space representation of a weak-probe open quantum system.  The theory is restricted to the following domain.
+
+\begin{assumption}[Declared scope]\label{ass:scope}
+The model satisfies:
+\begin{enumerate}[label=(A\arabic*)]
+  \item finite-dimensional dynamics;
+  \item Markovian, linear weak-probe response;
+  \item a fixed one-parameter dissipation scaling $\Gamma\ge 0$;
+  \item no gain on the physical frequency domain;
+  \item no strong-probe nonlinearity, non-Markovian memory kernel, continuum limit, time-dependent control, or propagation-induced many-body instability.
+\end{enumerate}
+\end{assumption}
+
+The phrase ``material agnostic'' therefore means material-agnostic structural classification \emph{within finite-dimensional Markovian weak-probe response}; it does not mean an unrestricted theorem for every open-system model.
+
+\subsection{Native response family and experiment specification}
+Let $\V_{\full}\cong\C^{N_{\full}}$ be the full response space and write
+\begin{equation}\label{eq:full-family}
+  A_{\full,\Gamma}(z)=\Gamma D_{\full}+B_{\full}(z),
+  \qquad z\in\Omega.
+\end{equation}
+Here $\Gamma$ is the \emph{native} dissipation scale to be classified by Theorems~I--III below.  The corresponding experiment specification is
+\begin{equation}\label{eq:experiment-specification}
+  \ExpSpec=\bigl(A_{\full,\Gamma},c_{\full},p_{\full},K\bigr),
+\end{equation}
+where $c_{\full}$ is the probe source, $p_{\full}^{\dagger}$ is the readout covector, and $K\Subset\Omega$ is the observation window.  SMRT therefore classifies a system--probe--readout--intervention tuple, not the system matrix alone.
+
+\section{Operational foundations of the sector cut}\label{sec:operational}
+
+\begin{definition}[Admissible operational cut generator]\label{def:admissible-cut}
+A response-space generator $\Gcut_S\in\C^{N_{\full}\times N_{\full}}$ is an admissible cut generator for sector $S$ when the following conditions hold.
+\begin{enumerate}[label=(C\arabic*)]
+  \item $\Gcut_S$ is induced, after linearization, by a specified GKSL-admissible intervention at the master-equation level.
+  \item The eigenvalue $0$ of $\Gcut_S$ is semisimple.  Its Riesz projector is denoted by
+  \[
+    \Pi_S=\frac{1}{2\pi i}\oint_{\gamma_S}(\zeta I-\Gcut_S)^{-1}\,d\zeta,
+    \qquad \Xi_S=I-\Pi_S,
+  \]
+  where $\gamma_S$ encloses only $0$.
+  \item The suppressed block
+  \[
+    \Gcut_{S,\Xi}:=\Xi_S\Gcut_S\Xi_S\big|_{\Ran\Xi_S}
+  \]
+  is invertible.  The sign convention is chosen so that adding $\kappa\Gcut_S$ with $\kappa>0$ suppresses the $\Xi_S$ modes.
+  \item The native path $\Gamma\mapsto A_{\full,\Gamma}$, the probe source, and the readout are held fixed while the intervention strength $\kappa$ is varied.
+\end{enumerate}
+The extra noninvasiveness condition $\mathcal L_S(\rho_0)=0$ for the underlying GKSL intervention is required only when a frozen-source cut is to be identified with a self-consistent re-prepared cut; it is not part of the general definition above.
+\end{definition}
+
+\begin{remark}[GKSL admissibility is model specific]\label{rem:gksl-model}
+Hermiticity, diagonal form, or positivity of the response-space matrix $\Gcut_S$ alone does not prove that it is induced by a physical GKSL generator.  Each concrete model must state the jump operators or GKSL superoperator, derive the induced linear-response generator, and verify Conditions~(C1)--(C4).  This is an admissibility audit for each model, not an additional universal theorem.
+\end{remark}
+
+\begin{definition}[Operational sector]\label{def:operational-sector}
+Two admissible cut generators are equivalent when their retained Riesz projectors agree:
+\begin{equation}
+  \Gcut_S\sim\Gcut'_S
+  \quad\Longleftrightarrow\quad
+  \Pi_S=\Pi'_S.
+\end{equation}
+The equivalence class $\mathfrak S=[\Gcut_S]$ is called an \emph{operational sector}.  In general the projector, not merely the set $\Ker\Gcut_S$, is the invariant datum because the Riesz splitting may be oblique.
+\end{definition}
+
+\begin{theoremzeroa}[Operational cut limit]\label{thm:operational-cut}
+Fix $\Gamma\ge0$.  Assume that $z\mapsto A_{\full,\Gamma}(z)$ is continuous on compact $K$, that $\Gcut_S$ is admissible, and that the compressed operator
+\begin{equation}\label{eq:compressed-full}
+  A_{\Pi\Pi,\Gamma}(z)
+  :=\Pi_S A_{\full,\Gamma}(z)\Pi_S\big|_{\Ran\Pi_S}
+\end{equation}
+is invertible for every $z\in K$ with uniformly bounded inverse.  Then there exist $\kappa_0(\Gamma)>0$ and $C_{K,\Gamma}>0$ such that, for every $\kappa\ge\kappa_0(\Gamma)$,
+\begin{equation}\label{eq:operational-limit-operator}
+  \sup_{z\in K}
+  \left\|
+  \bigl[A_{\full,\Gamma}(z)+\kappa\Gcut_S\bigr]^{-1}
+  -\Pi_S A_{\Pi\Pi,\Gamma}(z)^{-1}\Pi_S
+  \right\|
+  \le \frac{C_{K,\Gamma}}{\kappa}.
+\end{equation}
+Consequently, the ideal operational cut response is
+\begin{equation}\label{eq:ideal-cut-response}
+  \boxed{
+  \chi_{\cut,\Gamma}^{(S)}(z)
+  :=p_{\full}^{\dagger}\Pi_S
+  A_{\Pi\Pi,\Gamma}(z)^{-1}
+  \Pi_Sc_{\full}}
+\end{equation}
+and
+\begin{equation}\label{eq:finite-kappa-response}
+  p_{\full}^{\dagger}
+  \bigl[A_{\full,\Gamma}(z)+\kappa\Gcut_S\bigr]^{-1}c_{\full}
+  =\chi_{\cut,\Gamma}^{(S)}(z)+O_{K,\Gamma}(\kappa^{-1}).
+\end{equation}
+The inverse in \eqref{eq:compressed-full} is the inverse on $\Ran\Pi_S$, not an inverse on the full space.
+\end{theoremzeroa}
+
+\begin{proof}
+Use the Riesz splitting $\V_{\full}=\Ran\Pi_S\oplus\Ran\Xi_S$.  Semisimplicity gives
+\[
+  \Gcut_S=
+  \begin{pmatrix}0&0\\0&\Gcut_{S,\Xi}\end{pmatrix},
+\]
+while
+\[
+  A_{\full,\Gamma}(z)=
+  \begin{pmatrix}
+    A_{\Pi\Pi,\Gamma}&A_{\Pi\Xi,\Gamma}\\
+    A_{\Xi\Pi,\Gamma}&A_{\Xi\Xi,\Gamma}
+  \end{pmatrix}.
+\]
+Set
+\[
+  E_{\kappa,\Gamma}(z)
+  =A_{\Xi\Xi,\Gamma}(z)+\kappa\Gcut_{S,\Xi}.
+\]
+Since $\Gcut_{S,\Xi}$ is invertible and all blocks of $A_{\full,\Gamma}(z)$ are uniformly bounded on $K$, the Neumann expansion gives
+\begin{equation}\label{eq:suppressed-inverse}
+  E_{\kappa,\Gamma}(z)^{-1}
+  =\kappa^{-1}\Gcut_{S,\Xi}^{-1}+O_{K,\Gamma}(\kappa^{-2})
+\end{equation}
+uniformly on $K$.  The Schur complement of $E_{\kappa,\Gamma}$ is
+\[
+  S_{\kappa,\Gamma}
+  =A_{\Pi\Pi,\Gamma}
+   -A_{\Pi\Xi,\Gamma}E_{\kappa,\Gamma}^{-1}
+    A_{\Xi\Pi,\Gamma}
+  =A_{\Pi\Pi,\Gamma}+O_{K,\Gamma}(\kappa^{-1}).
+\]
+Uniform invertibility of $A_{\Pi\Pi,\Gamma}$ and another Neumann expansion imply
+\[
+  S_{\kappa,\Gamma}^{-1}
+  =A_{\Pi\Pi,\Gamma}^{-1}+O_{K,\Gamma}(\kappa^{-1}).
+\]
+The block inverse formula then shows that the retained block differs from $A_{\Pi\Pi,\Gamma}^{-1}$ by $O(\kappa^{-1})$, both off-diagonal blocks are $O(\kappa^{-1})$, and the suppressed block is $O(\kappa^{-1})$.  This proves \eqref{eq:operational-limit-operator}; contraction with the fixed source and readout gives \eqref{eq:finite-kappa-response}.
+\end{proof}
+
+\begin{corollaryzerob}[Riesz-projector universality]\label{cor:projector-universality}
+If two admissible cut generators $\Gcut_S$ and $\Gcut'_S$ have the same retained Riesz projector $\Pi_S$, then their ideal operational cut responses coincide for the same experiment specification:
+\[
+  \chi_{\cut,\Gamma}^{[\Gcut_S]}(z)
+  =\chi_{\cut,\Gamma}^{[\Gcut'_S]}(z).
+\]
+Thus the strong-cut limit depends on the retained projector and the compressed full response, not on the nonzero eigenvalues or internal dynamics of the suppressed block.
+\end{corollaryzerob}
+
+\begin{proof}
+Both limits are given by the right-hand side of \eqref{eq:ideal-cut-response} with the same projector.
+\end{proof}
+
+\begin{remark}[Fixed-$\Gamma$ theorem and joint limits]\label{rem:joint-limit}
+Theorem~\ref{thm:operational-cut} is uniform on $K$ but is proved for each fixed native-dissipation scale $\Gamma$.  The constants $\kappa_0(\Gamma)$ and $C_{K,\Gamma}$ may grow with $\Gamma$.  No universal law such as $\kappa_*(\Gamma)=O(\Gamma)$, no commutation of the $\Gamma\to\infty$ and $\kappa\to\infty$ limits, and no joint-scaling transition is asserted here.  Those are finite-$\kappa$ numerical or model-specific analytical questions.
+\end{remark}
+
+\begin{remark}[Algebraic block cuts are conditional realizations]\label{rem:algebraic-operational}
+In the Riesz splitting, when both diagonal blocks are invertible, simply setting the off-diagonal blocks of $A_{\full,\Gamma}$ to zero gives the full-space inverse
+\[
+  \begin{pmatrix}
+    A_{\Pi\Pi,\Gamma}^{-1}&0\\
+    0&A_{\Xi\Xi,\Gamma}^{-1}
+  \end{pmatrix},
+\]
+which is not the operator limit in \eqref{eq:operational-limit-operator}.  Its scalar response equals the ideal operational cut response under the sufficient support conditions
+\begin{equation}\label{eq:retained-support}
+  \Xi_Sc_{\full}=0,
+  \qquad
+  p_{\full}^{\dagger}\Xi_S=0,
+\end{equation}
+or when the algebraic cut is explicitly defined to delete the suppressed block from the response space.  Without one of these conventions, algebraic decoupling and operational removal must not be identified.  Accidental equality for a particular source and readout does not establish a universal equivalence.
+\end{remark}
+
+\subsection{Reduced cut realization used by the classification}\label{subsec:cut-realization}
+The ideal cut has the canonical reduced realization on
+\[
+  \V_{\cut}^{(S)}:=\Ran\Pi_S,
+\]
+with
+\begin{align}
+  A_{\cut,\Gamma}^{(S)}(z)
+  &:=A_{\Pi\Pi,\Gamma}(z)
+    =\Gamma D_{\cut}^{(S)}+B_{\cut}^{(S)}(z),\label{eq:cut-family}\\
+  D_{\cut}^{(S)}
+  &:=\Pi_SD_{\full}\Pi_S\big|_{\Ran\Pi_S},\\
+  B_{\cut}^{(S)}(z)
+  &:=\Pi_SB_{\full}(z)\Pi_S\big|_{\Ran\Pi_S},\\
+  c_{\cut}^{(S)}&:=\Pi_Sc_{\full},
+  \qquad
+  p_{\cut}^{(S)\dagger}:=p_{\full}^{\dagger}\Pi_S
+  \quad\text{on }\Ran\Pi_S.
+\end{align}
+Any other finite-dimensional realization with the same scalar transfer function as a function of $(\Gamma,z)$ is equivalent for the classification.  A same-space algebraic realization may be used when Remark~\ref{rem:algebraic-operational} is satisfied.
+
+\begin{assumption}[Analyticity, boundedness, and pole exclusion]\label{ass:analytic}
+For $j\in\{\full,\cut\}$, the maps $B_j$ on their respective finite-dimensional response spaces are analytic and bounded on compact subsets.  There exists $\Gamma_0$ such that both resolvents exist for every $z\in K$ and $\Gamma\ge\Gamma_0$.
+\end{assumption}
+
+\begin{assumption}[Exact function class]\label{ass:exact}
+All matrix entries belong to a specified exact function field or effective algebra $\mathfrak F$ in the variables $z$ and model parameters, closed under the finite operations used below and equipped with a decidable identity test.  Typical examples are rational or algebraic functions with exact symbolic parameters.
+\end{assumption}
+
+\begin{remark}
+Assumption~\ref{ass:exact} is needed only for the word ``algorithm'' in the strict mathematical sense.  Numerical sampling can suggest that an analytic function vanishes, but no finite set of floating-point samples can certify an identity on a continuum.
+\end{remark}
+
+\section{The single master response}
+
+\begin{definition}[Master sector-resolved response]\label{def:master}
+The master response associated with sector $S$ is
+\begin{equation}\label{eq:master}
+  \boxed{
+  \R_{S,\Gamma}(z)
+  :=\chi_{\full,\Gamma}(z)-\chi_{\cut,\Gamma}^{(S)}(z)
+  =p_{\full}^\dagger A_{\full,\Gamma}(z)^{-1}c_{\full}
+  -p_{\cut}^{(S)\dagger}A_{\cut,\Gamma}^{(S)}(z)^{-1}c_{\cut}^{(S)} .}
+\end{equation}
+It measures the part of the detected linear response removed by the ideal operational cut of Definition~\ref{def:operational-sector} and Theorem~\ref{thm:operational-cut}.
+\end{definition}
+
+The subtraction in \eqref{eq:master} is not an auxiliary comparison performed after the classification.  It is the object being classified.
+
+\subsection{Augmented realization}
+Introduce the direct-sum space
+$\widehat\V=\V_{\full}\oplus\V_{\cut}^{(S)}$ and
+\begin{equation}\label{eq:augmented}
+ \widehat D=
+ \begin{pmatrix}D_{\full}&0\\0&D_{\cut}^{(S)}\end{pmatrix},\qquad
+ \widehat B_S(z)=
+ \begin{pmatrix}B_{\full}(z)&0\\0&B_{\cut}^{(S)}(z)\end{pmatrix},
+\end{equation}
+with
+\begin{equation}
+ \widehat c=\binom{c_{\full}}{c_{\cut}^{(S)}},\qquad
+ \widehat p=\binom{p_{\full}}{-p_{\cut}^{(S)}},\qquad
+ \widehat A_{S,\Gamma}(z)=\Gamma\widehat D+\widehat B_S(z).
+\end{equation}
+Then
+\begin{equation}\label{eq:augmented-response}
+  \boxed{\R_{S,\Gamma}(z)=
+  \widehat p^{\dagger}\widehat A_{S,\Gamma}(z)^{-1}\widehat c.}
+\end{equation}
+Thus every theorem below acts on one scalar transfer function.  We may restrict the augmented matrices to the smallest response-relevant subspace $\widehat\V_{\resp}$ generated by $\widehat c$ under $\widehat D$ and $\widehat B_S(z)$, together with the dual observable subspace generated by $\widehat p$.  Denote its dimension by $N_{\resp}$.
+
+\begin{remark}[Unequal full and cut realizations]
+The operationally reduced cut space is generally smaller than the full space, so the direct-sum construction above is the default rather than an exception.  Nothing depends on the two blocks having equal dimension.
+\end{remark}
+
+\section{Representation invariance}
+
+\begin{theorem}[Basis, realization, and operational-cut invariance]\label{thm:invariance}
+The master response and every class quantity derived from it have the following invariances.
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Basis invariance.}  Under independent invertible similarities $T_{\full}$ and $T_{\cut}$ in the two blocks, with the corresponding transformations
+  \[
+   A_j\mapsto T_jA_jT_j^{-1},\quad c_j\mapsto T_jc_j,
+   \quad p_j\mapsto T_j^{-\dagger}p_j,
+  \]
+  the scalar function $\R_{S,\Gamma}(z)$ is unchanged.
+  \item \textbf{Realization invariance.}  Any two finite-dimensional state-space realizations of the same scalar function $\R_{S,\Gamma}$ have the same minimal Kalman realization, up to similarity, and therefore give the same exact-zero certificate and the same asymptotic index $\nu$.
+  \item \textbf{Operational-cut realization invariance.}  If two finite-dimensional realizations represent the same ideal operational cut transfer function $\chi_{\cut,\Gamma}^{(S)}$, they produce the same $\R_{S,\Gamma}$ and hence the same class.  Corollary~\ref{cor:projector-universality} supplies a sufficient physical equivalence criterion through equality of retained Riesz projectors.
+  \item \textbf{Asymptotic-coefficient invariance.}  Every coefficient in the large-$\Gamma$ expansion of $\R_{S,\Gamma}$, including the first nonzero coefficient, is invariant under the transformations above.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+For each block,
+\[
+ (T_j^{-\dagger}p_j)^\dagger(T_jA_jT_j^{-1})^{-1}(T_jc_j)
+ =p_j^\dagger A_j^{-1}c_j.
+\]
+Subtracting the two invariant scalar responses proves (i).  A scalar rational transfer function is determined by its minimal reachable-observable realization, and any two minimal realizations are similar; unreachable or unobservable states do not alter the transfer function.  This proves (ii).  Statement (iii) follows directly from Definition~\ref{def:master}.  Finally, asymptotic coefficients are unique: if two expansions of the same scalar function differ at their first coefficient, their difference cannot be of strictly higher order.  Hence (iv).
+\end{proof}
+
+\begin{remark}[What is not invariant]
+The classification is attached to the experiment specification, the operational sector, and the declared native scaling paths $\Gamma\mapsto\Gamma D_j+B_j$ of the full and cut realizations.  An arbitrary reassignment of terms between $D_j$ and $B_j$, or a change of intervention that changes the retained projector, changes the physical asymptotic question and need not preserve the class.
+\end{remark}
+
+\section{Theorem I: exact structural no-go for the master response}
+
+For the frequency-domain zero theorem, assume that for each $\Gamma\ge\Gamma_0$ the master response admits a finite-dimensional, $z$-independent realization
+\begin{equation}\label{eq:zreal}
+ \R_{S,\Gamma}(z)=\ell_\Gamma^\dagger(zI-M_\Gamma)^{-1}r_\Gamma,
+ \qquad \dim M_\Gamma=n.
+\end{equation}
+A common $n$ can always be obtained by using a nonminimal augmented realization; the minimal dimension may be smaller.
+
+\begin{definition}[Reachable and unobservable subspaces]
+For a realization $(M,r,\ell)$ define
+\begin{align}
+ \K(M,r)&=\Span\{r,Mr,\ldots,M^{n-1}r\},\\
+ \mathcal N_{\mathrm{obs}}(M,\ell)
+ &=\bigcap_{k\ge0}\Ker(\ell^\dagger M^k).
+\end{align}
+\end{definition}
+
+\begin{theorem}[Master-response exact structural no-go]\label{thm:exact}
+Fix $\Gamma\ge\Gamma_0$ and a realization \eqref{eq:zreal}.  The following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+ \item $\ell_\Gamma^\dagger M_\Gamma^k r_\Gamma=0$ for $k=0,\ldots,n-1$;
+ \item $\K(M_\Gamma,r_\Gamma)\subseteq\mathcal N_{\mathrm{obs}}(M_\Gamma,\ell_\Gamma)$;
+ \item $\ell_\Gamma^\dagger q(M_\Gamma)r_\Gamma=0$ for every polynomial $q$;
+ \item $\R_{S,\Gamma}(z)=0$ for every $z\notin\spec M_\Gamma$.
+\end{enumerate}
+If these equivalent identities hold as identities in $\Gamma$ on an open interval, then
+\begin{equation}\label{eq:classI}
+ \R_{S,\Gamma}(z)\equiv0
+\end{equation}
+throughout the common resolvent domain.  This is \ClassI, the exact structural no-go class.
+\end{theorem}
+
+\begin{proof}
+By Cayley--Hamilton, $M^n$ is a linear combination of $I,M,\ldots,M^{n-1}$.  Thus (i) implies that all moments $\ell^\dagger M^kr$ vanish, and hence (iii).  If (iii) holds, then for every $M^kr\in\K(M,r)$ and every $j\ge0$,
+\[
+ \ell^\dagger M^j(M^kr)=\ell^\dagger M^{j+k}r=0,
+\]
+which proves (ii).  Conversely, (ii) immediately gives all moments, hence (i).
+
+For $z\notin\spec M$, the adjugate identity gives
+\[
+ (zI-M)^{-1}=\frac{\adj(zI-M)}{\det(zI-M)},
+\]
+and $\adj(zI-M)$ is a polynomial in $M$ with scalar coefficients depending on $z$.  Therefore (iii) implies (iv).  Conversely, for $|z|>\|M\|$,
+\[
+ \R_{S,\Gamma}(z)=\sum_{k=0}^{\infty}
+ \ell_\Gamma^\dagger M_\Gamma^kr_\Gamma\,z^{-k-1}.
+\]
+If the left-hand side vanishes on an open annulus, uniqueness of the Laurent expansion gives (i).  If the moment identities hold on an open $\Gamma$ interval, analyticity or rational identity in $\Gamma$ extends the zero throughout the connected common resolvent domain.
+\end{proof}
+
+\begin{corollary}[Finite exact-zero certificate]\label{cor:finitezero}
+At fixed $\Gamma$, at most $n$ scalar moment identities certify an all-frequency exact zero.  Under Assumption~\ref{ass:exact}, testing those identities as functions of $\Gamma$ is a finite exact certificate of \ClassI.
+\end{corollary}
+
+\begin{remark}[Physical mechanisms]
+Symmetry separation, selection rules, an unreachable sector, an unobservable sector, and all-order destructive cancellation are different physical mechanisms that realize the same mathematical condition in Theorem~\ref{thm:exact}.
+\end{remark}
+
+\section{Theorem II: dissipative asymptotic hierarchy of the master response}
+
+Assume that $\widehat D$ is invertible on $\widehat\V_{\resp}$, equivalently that the native dissipators of both realizations are invertible on their response-relevant subspaces.  Define the master moments
+\begin{equation}\label{eq:mastermoments}
+ \mathfrak m_k(z)
+ :=\widehat p^\dagger
+   [\widehat D^{-1}\widehat B_S(z)]^k
+   \widehat D^{-1}\widehat c.
+\end{equation}
+In the special equal-space realization with $D_{\full}=D_{\cut}=D$, $c_{\full}=c_{\cut}=c$, and $p_{\full}=p_{\cut}=p$, this becomes
+\begin{equation}\label{eq:deltamoments}
+ \mathfrak m_k(z)=p^\dagger\!\left(
+ [D^{-1}B_{\full}(z)]^kD^{-1}
+ -[D^{-1}B_{\cut}^{(S)}(z)]^kD^{-1}
+ \right)c.
+\end{equation}
+Thus the expansion classifies the \emph{difference response itself}; it is not obtained by separately classifying the full and cut responses and then ignoring possible cancellation.
+
+\begin{theorem}[Dissipative asymptotic hierarchy]\label{thm:invertible}
+Suppose $\widehat D$ is invertible on $\widehat\V_{\resp}$.  Set
+\[
+ X_K=\sup_{z\in K}\|\widehat D^{-1}\widehat B_S(z)\|<\infty.
+\]
+For every $\Gamma>X_K$,
+\begin{equation}\label{eq:neumann}
+ \R_{S,\Gamma}(z)
+ =\sum_{k=0}^{\infty}(-1)^k\Gamma^{-(k+1)}\mathfrak m_k(z),
+\end{equation}
+with absolute and uniform convergence on $K$.  Moreover,
+\begin{align}
+ &\sup_{z\in K}\left|
+ \R_{S,\Gamma}(z)-\sum_{k=0}^{m}(-1)^k\Gamma^{-(k+1)}\mathfrak m_k(z)
+ \right|\nonumber\\
+ &\hspace{15mm}\le
+ \frac{\|\widehat p\|\,\|\widehat D^{-1}\|\,\|\widehat c\|}{\Gamma}
+ \frac{(X_K/\Gamma)^{m+1}}{1-X_K/\Gamma}.
+ \label{eq:tail}
+\end{align}
+If
+\[
+ \mathfrak m_0\equiv\cdots\equiv\mathfrak m_{m-1}\equiv0,
+ \qquad \mathfrak m_m\not\equiv0
+\]
+on $K$, then
+\begin{equation}\label{eq:classIIexp}
+ \R_{S,\Gamma}(z)=(-1)^m\mathfrak m_m(z)\Gamma^{-(m+1)}
+ +O(\Gamma^{-(m+2)})
+\end{equation}
+uniformly on $K$.  The first nonzero index satisfies $m\le N_{\resp}-1$.  The corresponding suppression index is
+\begin{equation}
+ \nu_{\mathrm{diss}}=m+1\in\{1,\ldots,N_{\resp}\}.
+\end{equation}
+This is \ClassII.
+\end{theorem}
+
+\begin{proof}
+Factor
+\[
+ \widehat A_{S,\Gamma}
+ =\widehat D\bigl(\Gamma I+\widehat D^{-1}\widehat B_S\bigr).
+\]
+For $\Gamma>X_K$ the Neumann series for
+$(I+\Gamma^{-1}\widehat D^{-1}\widehat B_S)^{-1}$ converges uniformly on $K$.  Contracting term by term with $\widehat p^\dagger$ and $\widehat D^{-1}\widehat c$ yields \eqref{eq:neumann}, while the geometric remainder gives \eqref{eq:tail}.  If the first $m$ coefficients vanish, the first surviving term and the remainder give \eqref{eq:classIIexp}.
+
+For the finite bound, fix $z$ and set
+$X(z)=\widehat D^{-1}\widehat B_S(z)$ and $v=\widehat D^{-1}\widehat c$.  The coefficients are moments $\widehat p^\dagger X(z)^kv$.  Cayley--Hamilton on the $N_{\resp}$-dimensional response-relevant space implies that vanishing of the first $N_{\resp}$ moments forces all higher moments to vanish.  Therefore a nonzero first moment occurs no later than $N_{\resp}-1$.
+\end{proof}
+
+\begin{corollary}[Sector-path lower bound]
+If $\widehat\V_{\resp}$ is decomposed into sectors preserved by $\widehat D$ and by the diagonal part of $\widehat B_S$, and if at least $d$ off-diagonal coupling insertions are required to connect the source sector to the readout sector, then
+\[
+ \mathfrak m_k\equiv0\quad(k<d),\qquad
+ \nu_{\mathrm{diss}}\ge d+1.
+\]
+Thus the suppression index measures an effective path length after all lower-order symmetry and interference cancellations are included.
+\end{corollary}
+
+\section{Theorem III: protected master response under singular dissipation}
+
+Assume now that $\widehat D$ is singular.  Since a Lindblad-space dissipator need not be Hermitian, protection is formulated blockwise with Riesz projections rather than orthogonal projections.
+
+\begin{assumption}[Regular singular regime]\label{ass:singular}
+For each $j\in\{\full,\cut\}$, either $0\notin\spec D_j$, in which case set $P_j=0$ and $Q_j=I$, or the eigenvalue $0$ of $D_j$ is semisimple and
+\begin{equation}
+ P_j=\frac{1}{2\pi i}\oint_{\gamma_j}(\zeta I-D_j)^{-1}\,d\zeta,
+ \qquad Q_j=I-P_j,
+\end{equation}
+where $\gamma_j$ encloses only $0$.  Then $\Ran P_j=\Ker D_j$, $P_jD_j=D_jP_j=0$, and
+\[
+  D_{Q,j}:=Q_jD_jQ_j\big|_{\Ran Q_j}
+\]
+is invertible.  In addition, whenever $P_j\ne0$,
+\begin{equation}
+ B_{P,j}(z):=P_jB_j(z)P_j\big|_{\Ran P_j}
+\end{equation}
+is invertible for every $z\in K$, with uniformly bounded inverse.  If $P_j=0$, the corresponding protected contribution is defined to be zero.
+\end{assumption}
+
+Let
+\[
+ \widehat P=\begin{pmatrix}P_{\full}&0\\0&P_{\cut}\end{pmatrix},\qquad
+ \widehat Q=I-\widehat P.
+\]
+
+\begin{theorem}[Protected-channel expansion for the master response]\label{thm:singular}
+Under Assumptions~\ref{ass:analytic} and \ref{ass:singular}, there exists $\Gamma_*>0$ such that
+\begin{equation}\label{eq:singexp}
+ \R_{S,\Gamma}(z)=\sum_{j=0}^{\infty}\Gamma^{-j}\R_{S,j}(z)
+\end{equation}
+converges uniformly on $K$ for $\Gamma>\Gamma_*$.  Its leading coefficient is
+\begin{equation}\label{eq:R0}
+ \boxed{
+ \R_{S,0}(z)=
+ p_{\full}^\dagger P_{\full}B_{P,\full}(z)^{-1}P_{\full}c_{\full}
+ -p_{\cut}^{(S)\dagger}P_{\cut}B_{P,\cut}(z)^{-1}P_{\cut}c_{\cut}^{(S)}.}
+\end{equation}
+Consequently:
+\begin{enumerate}[label=(\roman*)]
+ \item if $\R_{S,0}\not\equiv0$ on $K$, then
+ \[
+   \R_{S,\Gamma}(z)=\R_{S,0}(z)+O(\Gamma^{-1}),
+ \]
+ and an order-one sector-mediated response survives arbitrarily strong dissipation; this is \ClassIII;
+ \item if $\R_{S,0}\equiv0$ but the first nonzero coefficient is $\R_{S,m}$ with $m\ge1$, then
+ \[
+   \R_{S,\Gamma}(z)=\Gamma^{-m}\R_{S,m}(z)+O(\Gamma^{-m-1}),
+ \]
+ which is \ClassII with $\nu=m$;
+ \item if every coefficient in \eqref{eq:singexp} vanishes identically, then $\R_{S,\Gamma}\equiv0$ and the model is in \ClassI.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Work in one block $j\in\{\full,\cut\}$ and decompose $\V_j=P_j\V_j\oplus Q_j\V_j$.  In this generally oblique decomposition,
+\[
+ A_{j,\Gamma}=
+ \begin{pmatrix}
+  B_{PP,j}&B_{PQ,j}\\
+  B_{QP,j}&\Gamma D_{Q,j}+B_{QQ,j}
+ \end{pmatrix}.
+\]
+Set $\varepsilon=\Gamma^{-1}$.  Uniformly on $K$,
+\[
+ (\Gamma D_{Q,j}+B_{QQ,j})^{-1}
+ =\varepsilon(D_{Q,j}+\varepsilon B_{QQ,j})^{-1}
+\]
+is analytic in $\varepsilon$ near $0$.  The protected Schur complement
+\[
+ S_{P,j}(\varepsilon,z)
+ =B_{PP,j}-B_{PQ,j}(\Gamma D_{Q,j}+B_{QQ,j})^{-1}B_{QP,j}
+\]
+is therefore analytic in $\varepsilon$ and satisfies
+$S_{P,j}(0,z)=B_{P,j}(z)$.  By the uniform invertibility assumption, $S_{P,j}^{-1}$ is analytic in $\varepsilon$ for sufficiently small $\varepsilon$, uniformly on $K$.  The block inverse formula now shows that $A_{j,\Gamma}^{-1}$ has a convergent power series in $\Gamma^{-1}$ and that its order-zero part is
+\[
+ P_j B_{P,j}^{-1}P_j.
+\]
+Subtracting the cut expansion from the full expansion yields \eqref{eq:singexp} and \eqref{eq:R0}.  An analytic power series is either identically zero or has a finite first nonzero coefficient, proving the three alternatives.
+\end{proof}
+
+\begin{remark}[Endpoint overlap is not sufficient]
+For either realization, the endpoint conditions $P_jc_j\ne0$ and $p_j^\dagger P_j\ne0$ do not imply $\R_{S,0}\ne0$.  Each protected transfer can vanish by a selection rule, and the full--cut difference can vanish by cancellation.  Likewise, nonzero leakage $P_jB_jQ_j$ does not destroy leading-order protection; it enters only subleading coefficients.
+\end{remark}
+
+\begin{remark}[Excluded nonsemisimple zero modes]
+If the zero eigenvalue of either $D_j$ has a nilpotent Jordan part, the corresponding block $\Gamma P_jD_jP_j$ does not vanish and the regular integer-power expansion above may fail.  Puiseux or Newton-polygon analysis may then be required.  Such models are outside the declared closed theorem package.
+\end{remark}
+
+\section{Unified response index and exclusive trichotomy}
+
+\begin{definition}[Invariant response-class index]\label{def:index}
+For the master response on $K$, define
+\begin{equation}\label{eq:index}
+ \boxed{
+ \nu[\R_S]
+ :=\sup\left\{s\ge0:\normK{\R_{S,\Gamma}}=O(\Gamma^{-s})
+ \text{ as }\Gamma\to\infty\right\}\in[0,\infty].}
+\end{equation}
+For an exact zero, the supremum is $\infty$.  The set in \eqref{eq:index} always contains $s=0$ in the regular regimes considered here, so no empty-set convention is needed.
+\end{definition}
+
+\begin{theorem}[Exclusive and exhaustive master-response trichotomy]\label{thm:trichotomy}
+Assume the declared scope and exact-function assumptions, and suppose that on the response-relevant augmented space either
+\begin{enumerate}[label=(R\arabic*)]
+ \item $\widehat D$ is invertible, or
+ \item $\widehat D$ is singular and the blockwise native dissipators satisfy Assumption~\ref{ass:singular}, so the zero eigenvalue of $\widehat D$ is semisimple on the augmented response space.
+\end{enumerate}
+Then exactly one of the following holds:
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+Class & Master-response behavior & Index\\
+\midrule
+\ClassI & $\R_{S,\Gamma}(z)\equiv0$ & $\nu=\infty$\\
+\ClassII & $\R_{S,\Gamma}(z)=\Gamma^{-m}r_m(z)+O(\Gamma^{-m-1})$, $m\ge1$ & $\nu=m\in(0,\infty)$\\
+\ClassIII & $\R_{S,\Gamma}(z)=r_0(z)+O(\Gamma^{-1})$, $r_0\not\equiv0$ & $\nu=0$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The three classes are mutually exclusive and exhaustive within the stated regularity domain.
+\end{theorem}
+
+\begin{proof}
+In the invertible regime, Theorem~\ref{thm:invertible} gives a uniformly convergent series beginning at order $\Gamma^{-1}$.  Either all master moments vanish, which by the finite moment theorem gives an exact zero, or a finite first nonzero moment exists and yields \ClassII.
+
+In the regular singular regime, Theorem~\ref{thm:singular} gives a uniformly convergent power series beginning at order $\Gamma^0$.  If the zeroth coefficient is nonzero, the system is in \ClassIII.  If it vanishes, either a finite positive-order coefficient is the first nonzero term, giving \ClassII, or every coefficient vanishes, giving \ClassI.
+
+For a nonzero leading coefficient $r_m$, continuity on compact $K$ implies $\normK{r_m}>0$.  Therefore
+\[
+ \normK{\R_{S,\Gamma}}=\Theta(\Gamma^{-m}),
+\]
+so Definition~\ref{def:index} gives $\nu=m$.  The values $\infty$, $m\ge1$, and $0$ are disjoint, proving exclusivity.  The case split above proves exhaustivity.
+\end{proof}
+
+\begin{corollary}[All three central theorems classify the same quantity]
+Theorem~\ref{thm:exact}, Theorem~\ref{thm:invertible}, and Theorem~\ref{thm:singular} are not classifications of three different observables.  They are complementary structural tests for the same master response $\R_{S,\Gamma}(z)$ in Definition~\ref{def:master}, distinguished only by whether the leading large-dissipation order is absent, positive, or zero.
+\end{corollary}
+
+\section{Finite decision theorem}
+
+\subsection{A polynomial certificate in the dissipation scale}
+On the response-relevant augmented space write
+\begin{equation}
+ \R_{S,\Gamma}(z)
+ =\frac{N_S(\Gamma,z)}{Q_S(\Gamma,z)},
+\end{equation}
+where
+\begin{align}
+ N_S(\Gamma,z)
+ &=\widehat p^\dagger\adj\!\left(\Gamma\widehat D+
+ \widehat B_S(z)\right)\widehat c,\label{eq:numerator}\\
+ Q_S(\Gamma,z)
+ &=\det\!\left(\Gamma\widehat D+
+ \widehat B_S(z)\right).\label{eq:denominator}
+\end{align}
+Both are polynomials in $\Gamma$ of finite degree, with coefficients in $\mathfrak F$.
+
+\begin{theorem}[Finite termination and correctness]\label{thm:algorithm}
+Under the assumptions of Theorem~\ref{thm:trichotomy}, the following exact procedure terminates after finitely many operations and returns the unique response class.
+
+\begin{enumerate}[label=\textbf{Step \arabic*.},leftmargin=16mm]
+ \item Construct the master response in the augmented form \eqref{eq:augmented-response} and restrict it to a reachable-observable realization.
+ \item Test the finite exact-zero certificate of Theorem~\ref{thm:exact}, or equivalently test whether the numerator $N_S(\Gamma,z)$ in \eqref{eq:numerator} is identically zero.  If so, return \ClassI and $\nu=\infty$.
+ \item If $\widehat D$ is invertible, compute the master moments \eqref{eq:mastermoments} for $k=0,\ldots,N_{\resp}-1$.  The first nonzero moment at $k=m$ returns \ClassII with $\nu=m+1$.
+ \item If $\widehat D$ is singular, verify blockwise semisimplicity, construct $P_{\full}$ and $P_{\cut}$, and evaluate $\R_{S,0}$ from \eqref{eq:R0}.  If it is nonzero, return \ClassIII with $\nu=0$.
+ \item If $\R_{S,0}=0$ but $N_S\not\equiv0$, determine
+ \begin{equation}\label{eq:degreeindex}
+  \nu=\deg_{\Gamma}Q_S-\deg_{\Gamma}N_S.
+ \end{equation}
+ After cancellation of no common factor is required for this degree difference.  Regularity ensures $\nu\ge1$.  Return \ClassII.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Every step uses finite-dimensional matrix operations, a finite number of moment evaluations, a finite eigenspace computation, or polynomial degree and identity tests in $\mathfrak F$.  Hence the procedure terminates.
+
+Correctness of Step 2 is Theorem~\ref{thm:exact}.  Correctness of Step 3 is Theorem~\ref{thm:invertible} and the bound $m\le N_{\resp}-1$.  Correctness of Step 4 is Theorem~\ref{thm:singular}.  For Step 5, write
+\[
+ N_S(\Gamma,z)=n_e(z)\Gamma^e+\cdots,\qquad
+ Q_S(\Gamma,z)=q_d(z)\Gamma^d+\cdots,
+\]
+with $n_e,q_d$ nonzero elements of $\mathfrak F$.  Then
+\[
+ \R_{S,\Gamma}(z)=\Gamma^{e-d}\frac{n_e(z)+O(\Gamma^{-1})}
+ {q_d(z)+O(\Gamma^{-1})}.
+\]
+Therefore the suppression order is $d-e$, which is exactly \eqref{eq:degreeindex}.  A common polynomial factor lowers both degrees by the same amount and leaves the difference unchanged.  Since the order-zero coefficient was already tested to vanish and the regular expansion is bounded, $d-e\ge1$.  Theorem~\ref{thm:trichotomy} then guarantees uniqueness of the returned class.
+\end{proof}
+
+\begin{remark}[Why the algorithm is genuinely finite]
+The singular branch does not require an unbounded search through $\R_{S,1},\R_{S,2},\ldots$.  The adjugate and determinant have degrees bounded by the finite response-space dimension, so the asymptotic order is determined by finite polynomial data.
+\end{remark}
+
+\section{Closure statement and remaining physics tasks}
+
+\begin{proposition}[Closure of the abstract construction stage]\label{prop:closure}
+Within the stated domain, the abstract construction of the no-go theory is closed by the following chain:
+\[
+\boxed{
+\begin{gathered}
+ \text{operational sector and ideal cut}\\
+ \Downarrow\\[-1mm]
+ \text{single master response}\\
+ \Downarrow\\[-1mm]
+ \text{three structural theorems and one invariant index}\\
+ \Downarrow\\[-1mm]
+ \text{exclusive trichotomy and finite decision procedure}
+\end{gathered}}
+\]
+Beyond the operational cut theorem and its projector-universality corollary, no additional central theorem is required merely to establish that the three classes describe the same physical response quantity.
+\end{proposition}
+
+What remains is not completion of the abstract classification, but validation and demonstration:
+\begin{enumerate}[label=(\roman*)]
+ \item benchmark known EIT and no-go examples;
+ \item identify credible representatives of Classes I, II, and III;
+ \item compute field-, strain-, polarization-, or cavity-induced class transitions;
+ \item separate response classification from EIT-versus-ATS spectral identification;
+ \item propagate linewidth, optical depth, ensemble averaging, and noise into experimental visibility;
+ \item compare the theorem package with Kalman decomposition, quantum-Zeno asymptotics, decoherence-free subspaces, and singular perturbation theory.
+\end{enumerate}
+
+\section{Compact theorem dependency map}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.39\textwidth}X@{}}
+\toprule
+Input or result & Role\\
+\midrule
+Definitions~\ref{def:admissible-cut}--\ref{def:operational-sector} & physically specified sector and intervention\\
+Theorem~\ref{thm:operational-cut} and Corollary~\ref{cor:projector-universality} & existence and projector universality of the ideal cut\\
+Definition~\ref{def:master} and augmented realization & one scalar quantity for all classes\\
+Theorem~\ref{thm:invariance} & basis, realization, and cut-representation independence\\
+Theorem~\ref{thm:exact} & exact structural no-go, $\nu=\infty$\\
+Theorem~\ref{thm:invertible} & invertible-dissipator hierarchy, $0<\nu<\infty$\\
+Theorem~\ref{thm:singular} & protected survival or subleading hierarchy, $\nu=0$ or $\nu>0$\\
+Theorem~\ref{thm:trichotomy} & exclusivity and exhaustivity\\
+Theorem~\ref{thm:algorithm} & finite termination and correctness\\
+Proposition~\ref{prop:closure} & closure of the theory-construction stage\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\end{document}
