@@ -1,0 +1,11 @@
+{
+  "mode": "production",
+  "overall_pass": true,
+  "runtime_seconds": 266.94,
+  "representative": {
+    "signature": "coupling23",
+    "z_star_exact": "543/1190",
+    "z_star_float": 0.45630252100840335
+  },
+  "output": "/home/user/NV-EIT-space/New no-go theory/PhaseZ/results/gates_summary_phaseZ.json"
+}
