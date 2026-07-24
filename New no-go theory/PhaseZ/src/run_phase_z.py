@@ -1017,7 +1017,7 @@ def make_fig_z2(representative):
 def make_fig_z3(z3):
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
     for row in z3["rows"]:
-        eps = [1e-2, 1e-3, 1e-4, 1e-5][:len(row["log10_crossovers"])]
+        eps = [1e-2, 1e-3, 1e-4, 1e-5, 1e-6][:len(row["log10_crossovers"])]
         axes[0].plot(
             [math.log10(e) for e in eps], row["log10_crossovers"],
             "o-", label=(f"q={row['q']}  fit {row['fitted_slope']:.3f} "
