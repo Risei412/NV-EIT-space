@@ -4,7 +4,7 @@ Status: **PLAN ONLY — not yet executed.** Awaiting approval before any code is
 
 This document identifies theoretical results / phenomena that exist in the *new*
 master-response theorem package (`master_response_no_go_theorem_package.pdf`,
-`Theorem and proofs/three_theorems_proofs.tex`) but are structurally invisible to
+`Sector-Master-Resolved-Theory: theory/three_theorems_proofs.tex`) but are structurally invisible to
 the *old* no-go framework (`eit_nogo_lecture.pdf`: per-kernel criterion
 `K12*K21 = 0`, invertible-D moment hierarchy, Hermitian orthogonal-projector
 protected channels, class attached to the configuration alone). It then defines

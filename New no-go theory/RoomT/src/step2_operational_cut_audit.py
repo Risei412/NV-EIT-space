@@ -12,7 +12,7 @@ in tests/test_operational_cut_equivalence.py to be numerically identical to
 the algebraic D_S = diag(0, I_S) construction of Theorem 0A / Corollary
 "Algebraic-operational equivalence for the block cut" (New no-go
 theory/Sector/theorem2B_operational_realization.tex), implemented in
-New no-go theory/Sector/src/operational_cut.py. This script reuses that
+New no-go theory/src/operational_cut.py. This script reuses that
 same operational_cut.py machinery and runs the three checks the plan's
 Step 2 requires (mirroring the already-validated Gates U1/U2/U5 of
 Sector/src/run_gates_step3.py, now applied to the full many-level NV
@@ -58,7 +58,7 @@ import matplotlib.pyplot as plt
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOMT_ROOT = os.path.dirname(HERE)
 NOGO_SRC = os.path.join(ROOMT_ROOT, "..", "..", "No-go theorem", "src")
-SECTOR_SRC = os.path.join(ROOMT_ROOT, "..", "Sector", "src")
+SECTOR_SRC = os.path.join(ROOMT_ROOT, "..", "src")
 sys.path.insert(0, NOGO_SRC)
 sys.path.insert(0, SECTOR_SRC)
 

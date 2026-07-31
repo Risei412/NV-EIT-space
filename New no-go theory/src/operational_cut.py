@@ -24,7 +24,7 @@ import importlib.util
 import numpy as np
 
 _CORE_PATH = os.path.join(
-    os.path.dirname(__file__), "..", "..", "src", "core.py"
+    os.path.dirname(__file__), "core.py"
 )
 _spec = importlib.util.spec_from_file_location("nogo_core", _CORE_PATH)
 core = importlib.util.module_from_spec(_spec)

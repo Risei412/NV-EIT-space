@@ -1,4 +1,4 @@
-"""Phase P, physical model (paper3_smrt_numerical_plan.md, P0).
+"""Phase P, physical model (Sector-Master-Resolved-Theory: docs/paper3_smrt_numerical_plan.md, P0).
 
 A 5-level "diamond" Lindblad model realizing the SMRT interference-controlled
 exponent promotion nu: 3 -> 4 in a genuine CPTP open quantum system.

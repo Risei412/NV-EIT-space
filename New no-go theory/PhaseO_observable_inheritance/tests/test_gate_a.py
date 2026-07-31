@@ -14,10 +14,9 @@ from fractions import Fraction
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "..", "src")
-PHASEN12 = os.path.join(HERE, "..", "..", "PhaseN", "priority_1_2")
-PHASEN3 = os.path.join(HERE, "..", "..", "PhaseN", "priority_3_frequency")
+PHASE_SRC = os.path.join(HERE, "..", "..", "src")
 NOGO = os.path.join(HERE, "..", "..", "..", "No-go theorem", "src")
-for _p in (SRC, PHASEN12, PHASEN3, NOGO):
+for _p in (SRC, PHASE_SRC, NOGO):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 

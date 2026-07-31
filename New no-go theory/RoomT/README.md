@@ -469,9 +469,9 @@ Builds the FULL (N=9, dim=81) NV Liouvillian at Step 1's exact geometry
 (T=10 K, Bz=0.02 T, Bx=0, control on ms=-1, probe/control on orbital
 branches X/Y), reusing `No-go theorem/src/gate2_candidate_full_vs_reduced.py`'s
 `build_full()` for the Lindbladian construction and
-`New no-go theory/Sector/src/operational_cut.py` for the operational-cut
+`../src/operational_cut.py` for the operational-cut
 machinery already validated on toy models in
-`New no-go theory/Sector/src/run_gates_step3.py` (Gates U1/U2/U5). The
+`Sector-Master-Resolved-Theory: Sector/src/run_gates_step3.py` (Gates U1/U2/U5). The
 sector cut S = {rho_pc, rho_cp} is the same one `tests/
 test_operational_cut_equivalence.py` proved is numerically identical to
 gate2's own ad hoc "zero the S<->X Liouvillian blocks" construction.
@@ -547,7 +547,7 @@ decades.
 
 Gate 1 (plan: "Gate 1を通過しないcodeで室温no-goを論じてはならない")
 is therefore satisfied; Step 2 (operational cut audit on the full NV
-Liouvillian, matching `New no-go theory/Sector/src/operational_cut.py`'s
+Liouvillian, matching `../src/operational_cut.py`'s
 GKSL-admissible D_S construction) is next.
 
 ## Layout

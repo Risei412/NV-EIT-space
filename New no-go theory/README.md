@@ -1,207 +1,84 @@
-# New No-Go Theory: Three-Tier Response Classification
+# NV-Side Campaigns of the Three-Tier Response Classification
 
-This directory contains the new no-go theory that upgrades the binary EIT
-go/no-go criterion (see `../No-go theorem/`) to a **three-tier classification**
-of sector-mediated coherent response in finite-dimensional Markovian
-weak-probe systems, following the strategy in
-`EIT_new_nogo_PRX_taxonomy_and_quantum_network_strategy.md`.
+The three-tier classification upgrades the binary EIT go/no-go criterion (see
+`../No-go theorem/`) to an exclusive trichotomy of the suppression index
+ν ∈ {∞} ∪ (0,∞) ∪ {0} — exact structural no-go, asymptotic no-go, protected go
+— for sector-mediated coherent response in finite-dimensional Markovian
+weak-probe systems.
 
-## The three central theorems
+> **The theory itself now lives in a separate repository.**
+> Theorems I–III and their proofs, the operational cut, and the campaigns that
+> are independent of NV physics were moved to
+> **[Sector-Master-Resolved-Theory](https://github.com/Risei412/Sector-Master-Resolved-Theory)**
+> (SMRT), which is where the theory is developed.
+>
+> What remains here is the material that is bound to NV-center physics or that
+> feeds this repository's manuscript figures.
 
-| Theorem | Class | Index | Content |
-|---|---|---|---|
-| **I** — Sector-Resolved Transfer-Function No-Go | I: Exact Structural No-Go | ν = ∞ | δχ_S(z) ≡ 0 ⇔ ℓ†Mᵏr = 0 (k < n) ⇔ 𝒦(M,r) ⊆ 𝒩_obs(M,ℓ); finite Krylov certificate |
-| **II** — Dissipative Asymptotic Hierarchy | II: Asymptotic No-Go | 0 < ν < ∞ | Uniform-in-z expansion F_Γ = Σ(−1)ⁿΓ^−(n+1)μ_n(z); suppression index ν_diss = m+1 ≤ dim, basis independent |
-| **III** — Protected Channel under Singular Dissipation | III: Protected Go | ν = 0 | Non-Hermitian D, semisimple kernel, Riesz projection P; F_Γ = F₀ + Γ⁻¹F₁ + O(Γ⁻²), F₀ = p†P B_P⁻¹ Pc; EIT corollary δχ_{S,0} |
+## What moved to the SMRT repository
 
-Plus: basis/realization independence (Kalman), the exclusive trichotomy
-ν ∈ {∞} ∪ (0,∞) ∪ {0}, the counterexample showing Pc ≠ 0 and p†P ≠ 0 do
-**not** suffice for protection, and a proof that the 3-step decision
-algorithm terminates and is correct.
+| Moved | Now at |
+|---|---|
+| Theorem documents and proofs | `theory/` |
+| `three_theorem_verification.py` | `src/` |
+| Operational cut, gates U1–U8 | `Sector/` |
+| Exact path fan | `PhaseN/` |
+| Detuning campaign | `PhaseZ/` |
+| Physical hidden-class transition | `PhaseH/` |
+| SMRT plan and revision notes | `docs/` |
 
-## Contents
+`PhaseH` was incomplete here — `model_hidden_physical.py` and
+`results/gates_summary_phaseH.json` were never committed — and is restored and
+runnable in the SMRT repository.
 
-- `Theorem and proofs/three_theorems_proofs.tex` — self-contained proofs
-  document (cites the companion `../No-go theorem/Theorem and proofs/eit_nogo_proofs.tex`
-  for reused building blocks: Theorems 2A/2B, 3, 4, 5, 6 there).
-- `Theorem and proofs/no_go_theory_undergrad_guide.tex` — pedagogical guide
-  to the whole theory at undergraduate level (only linear algebra and
-  geometric series assumed): intuition, analogies, exactly solvable 2×2
-  examples for each class, the trichotomy, the decision algorithm, scope,
-  and a jargon dictionary.
-- `src/three_theorem_verification.py` — numerical verification of all three
-  theorems and the counterexample lemma.
+## What stays here
+
+| Directory | Contents | Why it stays |
+|---|---|---|
+| `PhaseO_observable_inheritance/` | Gate A: observable-order inheritance `ν_obs = n₁₂+n₂₁−ν_den`, and the NV pre-asymptotic/asymptotic crossover | Imports `nv_model` from `../No-go theorem/src/`; produces PRL Fig. 2 |
+| `GateB_superconducting_witness/` | Non-diamond witness: superconducting transfer efficiency, blind-predicted κ⁻²/κ⁻⁴ | Produces PRL Fig. 3(b) |
+| `GateC_material_independence/` | Material independence: group-IV and NV at the same integer n | Imports `group_iv_model`; produces PRL Fig. 3(a) |
+| `GateD_robustness_discriminability/` | Exact vs approximate class, `ν_eff(Γ)`, crossover `Γ*(ε) ∝ 1/ε`, platform reach | Imports `signal_chain`; produces PRL Fig. 4 |
+| `RoomT/` | Steps 1–9 of the NV room-temperature no-go: low-temperature validation, merged-manifold moments, temperature scaling, adversarial optimization, dip discrimination, correction mechanisms, reduced-vs-full Liouvillian, signal conversion | Imports `liouvillian_core`, `nv_model`, `phonon_rates`, `gate2_candidate_full_vs_reduced` from `../No-go theorem/src/` |
+| `src/` | Shared models and the Phase A/B/D/M/P sector-response campaigns | Imported by all of the above and by `../Writing Paper/prl_figures/` |
+| `results/` | Archived gate summaries and figures for those campaigns | Outputs of `src/run_phase_*.py` |
+
+## Modules duplicated across the two repositories
+
+These exist in both repositories by design — each side needs them and neither
+should depend on the other's checkout:
+
+- `src/core.py` — transfer function, Krylov certificate, moment method,
+  Riesz-projection protected coefficient, log–log ν fit.
+- `src/model_metro_lindblad.py`
+- `src/operational_cut.py` — used here by `RoomT/src/step2_operational_cut_audit.py`
+  and by `../No-go theorem/tests/test_operational_cut_equivalence.py`, which
+  checks that gate 2's block-zeroed cut agrees with the ideal operational cut.
+- `src/phase_n_exact_core.py`, `src/phase_n_frequency_core.py` — used here by
+  `PhaseO_observable_inheritance/`.
 
 ## Reproduce
 
 ```bash
-pip install numpy
-python "src/three_theorem_verification.py"
+pip install -r requirements.txt
+
+python PhaseO_observable_inheritance/src/run_gate_a.py
+python GateB_superconducting_witness/src/run_gate_b.py
+python GateC_material_independence/src/run_gate_c.py
+python GateD_robustness_discriminability/src/run_gate_d.py
+python src/run_phase_a.py    # also run_phase_{b,d,m,p}.py
 ```
 
-Expected output: four PASS lines (Theorem I machine-precision zero;
-Theorem II fitted slope −ν_diss; Theorem III O(1) plateau at F₀ with 1/Γ
-correction; counterexample F₀ = 0 with nonzero endpoint projections).
+Tests live in each campaign's `tests/` directory. Gate results are archived as
+JSON/CSV under each campaign's `results/`, and `results/summary.md` collects the
+Phase A/B/D/M/P outcomes.
 
-## Sector-resolved response calculation (`new_nogo_numerical_priorities.md`)
+## Planning documents
 
-A second, independent calculation implements the priorities in
-`new_nogo_numerical_priorities.md`: it computes χ_full, the frozen-source
-sector-cut χ_cut, and the difference R_S = χ_full − χ_cut together (never
-χ_full alone), extracts the suppression index ν three independent ways
-(direct log–log fit, moment method, protected-coefficient method), searches
-for a *hidden class transition* — a parameter point where ν[χ_full] stays 0
-while ν[R_S] jumps 0→1 — and checks the associated Γ(λ−λ_c) scaling
-collapse.
-
-- `src/core.py` — shared infrastructure (transfer function, Krylov
-  certificate, moment method, Riesz-projection protected coefficient,
-  log–log ν fit).
-- `src/model_lambda.py` — Phase A: standard 2×2 Λ model (analytic and
-  numeric cross-checked).
-- `src/model_protected.py` — Phase B: Class I/II/III unit-test models and
-  the singular-D full/cut transition model.
-- `src/run_phase_a.py` — Figure 2 (EIT–ATS crossover maps), Figure 5
-  (mechanism map), Gate 3.
-- `src/run_phase_b.py` — Figure 1 (unit test), Figure 3 (hidden class
-  transition), Figure 4 (scaling collapse), Gates 1/2/4.
-- `src/report.py` — assembles `results/summary.md` from the two gate JSON
-  files.
-
-```bash
-pip install numpy scipy matplotlib
-python "src/run_phase_a.py"
-python "src/run_phase_b.py"
-python "src/report.py"
-```
-
-Results (all four automated gates currently PASS): see
-[`results/summary.md`](results/summary.md) and `results/figures/`.
-
-Key finding: in the minimal 2×2 Λ model, the sector cut severs the only
-coupling responsible for both the EIT notch and the ATS splitting, so
-χ_cut is always the bare Lorentzian — R_S alone carries the coherent
-structure, and the Anisimov–Kocharovsky/Giner discriminant
-Ω_c ≷ |γ31−γ21| separates the EIT-dominant and ATS-dominant regions (Figure
-5). In the extended singular-D model (Phase B), a hidden class transition
-is realized explicitly: χ_full remains Class III (ν=0, O(1) plateau) on
-both sides of a tuned control parameter λ_c, while R_S transitions from
-ν≈0 to ν≈1 exactly at the root of r₀(λ) = δχ_{S,0}(λ), with Γ·R_S vs.
-Γ(λ−λ_c) collapsing onto a single curve across a decade of Γ (Figure 4).
-
-## Metrological (QFI) extension: does ν also classify sensing information?
-
-A further calculation tests the candidate prediction that the tangent-vector
-difference x_S = ∂_θρ_full − ∂_θρ_cut obeys ‖x_S‖ ∼ Γ^−ν, and that the
-sector-mediated quantum Fisher information F_{Q,S} = x_S^† G_ρ x_S ∼ Γ^−2ν
-— i.e. that the same three-tier classification governs not just response
-magnitude but how much parameter-estimation information a sector carries
-under strong dissipation.
-
-- `src/model_metro_linear.py` — abstract vector-valued generalization of
-  the theorems, plus a rank-1 (Sherman–Morrison) sector cut giving an
-  **exact** vector hidden-class transition in closed form (no root search).
-- `src/model_metro_lindblad.py` — a genuine 3-level Λ Lindblad master
-  equation: vectorized steady state, implicit-differentiation tangent
-  vector, and SLD quantum Fisher information.
-- `src/run_phase_m.py` — Gates M1–M5, Figures M1–M5.
-
-```bash
-python "src/run_phase_m.py"
-python "src/report.py"
-```
-
-Results (Gates M1, M2, M3, M5 PASS; M4 is an informative negative result
-— see below): appended to
-[`results/summary.md`](results/summary.md).
-
-Key findings:
-- **The ν → 2ν QFI translation holds** in a genuine 3-level Lindblad model:
-  at a generic point, ‖x_S‖ ∼ Γ^{−2.00} and F_{Q,S} ∼ Γ^{−3.99} — the
-  ratio ν_F/(2ν_x) = 1.0007 (Gate M3, Figure M3).
-- **The vector hidden class transition is exact** in the abstract
-  (non-Hermitian, rank-1 cut) arena: ν[x_S] jumps 0 → 1 at a
-  closed-form λ_c, with Γ·‖x_S‖ vs. Γ(λ−λ_c) collapsing across two decades
-  of Γ (Gate M2, Figure M2).
-- **A genuine physical (Hermitian) coupling cut does *not* exhibit an
-  interior transition** with only a 2-parameter (amplitude, phase)
-  control — a 2D search finds no dip beyond the trivial edge (Gate M4,
-  Figure M4). This is explained, not contradicted, by the theory: the
-  leading-order response lives in a 3-real-dimensional traceless-Hermitian
-  slice of the protected block, so codimension counting predicts an
-  interior zero needs ≥3 independent real controls. The theory correctly
-  predicts *when* a hidden transition is physically achievable.
-- **The full-rank / non-singular-SLD-metric assumption is load-bearing**:
-  forcing the steady state toward a near-pure (rank-deficient) regime
-  (ε → 10⁻⁶) breaks the clean ν_F = 2ν_x relation (ratio drifts to 1.49),
-  confirming Gate M5 as a genuine negative control rather than a
-  tautology.
-
-## Phase P: physical Lindblad realization of interference-controlled exponent promotion (Paper III)
-
-A physical CPTP realization of the abstract Phase-D order-promotion result
-(`ν: 3→4`), implementing the plan in `paper3_smrt_numerical_plan.md`.
-
-- `src/model_physical.py` — a 5-level "diamond" Lindblad model (two coherent
-  paths into a readout state, sector cut on both closing couplings), with
-  reduced 4×4 weak-probe machinery, exact symbolic moments/certificate, and
-  the full vectorized 24×24 Liouvillian with an implicit linear-response
-  solver.
-- `src/run_phase_p.py` — runs P1–P8, writes
-  `results/gates_summary_phaseP.json` and `results/figures/figP*.png`.
-
-```bash
-python "src/run_phase_p.py"
-python "src/report.py"
-```
-
-Results (all eight gates PASS): appended to
-[`results/summary.md`](results/summary.md).
-
-Key findings: the cancellation condition `J45* = J23 J35 d4/(J24 d3)` at
-`φ=π` gives exact `m2=0, m3≠0` (ν: 3→4), matching the direct large-Γ fit to
-`9×10⁻⁷`; the universal crossover collapse (`Γ⁴R_S` vs `δΓ`) holds within a
-`3%` spread and `Γ_×∝|δ|⁻¹` to slope `−1.06`; a false `ν≈4` plateau spans
-`2.15` decades at `δ=10⁻⁵`; and the 4×4 reduced system agrees with the
-full 24×24 Liouvillian to `~10⁻¹²`–`10⁻⁶`. One correction to the original
-plan: with only 2 real controls `(|J45|,φ)`, the cancellation `m2=0` is an
-*isolated* point, not a codimension-1 curve (matching the precedent in gate
-M4 above) — a genuine cancellation curve needs a 3rd real control, shown
-explicitly by also rescaling the first branch's amplitude.
-
-## Phase Z: physical detuning signature zZ (Phase N Priority 4)
-
-Closes the gap flagged by the Phase N Priority 3 report: a physical EIT
-implementation places laser detunings with different weights on different
-coherences, so the common resolvent shift `-izI` must be replaced by a
-diagonal signature `-izZ`, `Z = diag(zeta)`, derived from which laser is
-swept (rotating-frame spanning tree of the 5-level diamond; the loop laser
-is co-swept). Gates Z0-Z6 certify, exactly where possible:
-
-- **Z0** bit-exact regression to the Priority 3 polynomials at `Z = I` and
-  to the Phase N polynomials at `z = 0`;
-- **Z1** the generic V-shaped path-order fan `nu(q) = 4-q, 2+q, 4` is
-  preserved *exactly* for every physical detuning signature tested;
-- **Z2** the frequency-promotion root `z*` moves with the detuning
-  direction (exact rational values per signature; sweeping the closing
-  laser `omega35` has *no* real promotion root — its `m4(z)` is constant);
-- **Z3** frequency-unfolding crossover laws and collapse at the physical
-  root `z* = 543/1190` of the `omega23` sweep;
-- **Z4** finite broadening/resolution restores the generic fan
-  (Gaussian/Lorentzian window norms), with `Gamma_x ∝ sigma^-1`;
-- **Z5** reduced Z-pencil vs. full 25x25 GKSL Liouvillian with explicit
-  level-shift detunings: difference **exactly zero** in Gaussian-rational
-  arithmetic (plus float grid `<1e-11`);
-- **Z6** first dimensional (NV-like) estimate of `z*` and the required
-  spectral selectivity.
-
-- `PhaseZ/src/phase_z_detuning_core.py` — Z-weighted exact 3-variable
-  pencil, moment ladder, Sturm real-root machinery, weighted Newton fans.
-- `PhaseZ/src/run_phase_z.py` — gates Z0-Z6, figures, JSON summary.
-- `PhaseZ/PHASE_Z_DETUNING_REPORT.md` — production report.
-
-```bash
-pip install numpy matplotlib
-python "PhaseZ/src/run_phase_z.py" --smoke   # ~25 s
-python "PhaseZ/src/run_phase_z.py"           # production
-```
+- `new_nogo_numerical_priorities.md` — the priorities implemented by the
+  sector-resolved response calculation in `src/`: computing χ_full, the
+  frozen-source sector cut χ_cut, and the difference R_S = χ_full − χ_cut
+  together (never χ_full alone), extracting ν three independent ways, and
+  searching for a hidden class transition where ν[χ_full] stays 0 while
+  ν[R_S] jumps 0→1.
+- `phase_d_beyond_old_theory_plan.md` — the Phase D plan.

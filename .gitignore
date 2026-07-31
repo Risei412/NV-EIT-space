@@ -1,3 +1,33 @@
-No-go theorem/.venv/
+# Python
 __pycache__/
 *.pyc
+*.pyo
+.venv/
+venv/
+No-go theorem/.venv/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*~
+*.swp
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
+# Publisher PDFs are not redistributed from this public repository.
+# Bibliographic metadata lives in `hBN papers/README.md` and
+# `No-go theorem/results/tables/literature_manifest.csv`.
+hBN papers/*.pdf
+
+# Archives (keep the extracted tree under version control, not the zip)
+*.zip

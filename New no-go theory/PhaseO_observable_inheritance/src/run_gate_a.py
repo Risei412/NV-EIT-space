@@ -42,9 +42,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PHASE_SRC = os.path.join(HERE, "..", "..", "src")
 NOGO_SRC = os.path.join(HERE, "..", "..", "..", "No-go theorem", "src")
 ROOMT_SRC = os.path.join(HERE, "..", "..", "RoomT", "src")
-PHASEN12_SRC = os.path.join(HERE, "..", "..", "PhaseN", "priority_1_2")
-PHASEN3_SRC = os.path.join(HERE, "..", "..", "PhaseN", "priority_3_frequency")
-for _p in (HERE, PHASE_SRC, NOGO_SRC, ROOMT_SRC, PHASEN12_SRC, PHASEN3_SRC):
+for _p in (HERE, PHASE_SRC, NOGO_SRC, ROOMT_SRC):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 

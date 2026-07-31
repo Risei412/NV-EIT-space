@@ -2,8 +2,8 @@
 cut (an ad hoc "zero the S<->X blocks of L" construction) is exactly the
 algebraic-cut special case D_S = diag(0, I_S) of the operational sector cut
 (Theorem 0A / Corollary "Algebraic-operational equivalence for the block
-cut", New no-go theory/Sector/theorem2B_operational_realization.tex),
-implemented independently in New no-go theory/Sector/src/operational_cut.py.
+cut", Sector-Master-Resolved-Theory: Sector/theorem2B_operational_realization.tex),
+implemented independently in New no-go theory/src/operational_cut.py.
 
 This closes the room-temperature no-go plan's preflight item: the existing
 NV gate2 cut and the new operational-cut machinery must be shown to agree,
@@ -22,7 +22,7 @@ import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "..", "src")
-SECTOR_SRC = os.path.join(HERE, "..", "..", "New no-go theory", "Sector", "src")
+SECTOR_SRC = os.path.join(HERE, "..", "..", "New no-go theory", "src")
 sys.path.insert(0, SRC)
 sys.path.insert(0, SECTOR_SRC)
 
