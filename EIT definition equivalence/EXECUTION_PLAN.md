@@ -10,7 +10,7 @@
 プログラムの作業場所である。戦略文書は
 `prl_eit_equivalence_conditions.md`(以下「戦略MD」)、
 数学的基盤は Class I–III master-response no-go 定理パッケージ
-(`../New no-go theory/Theorem and proofs/three_theorems_proofs.tex` および
+(`Sector-Master-Resolved-Theory: theory/three_theorems_proofs.tex` および
 アップロード版 PDF)、数値的出発点は `2g2e_package/`
 (dark-state-free coherent transparency、79.03% 吸収抑制、2g+2e no-go)である。
 
@@ -47,7 +47,7 @@ the PRL-level argument」)。(d) の成否がこのプログラム全体のク�
 | 資産 | 場所 | 使い方 |
 |---|---|---|
 | 戦略MD(定理列・主張・証拠要件) | `prl_eit_equivalence_conditions.md` | 定理番号・主張文の原案 |
-| Class I–III closed theorem package | `../New no-go theory/Theorem and proofs/` | R_S の定義・不変性(Thm 3.1)・トリコトミー(Thm 7.2)・有限判定(Thm 8.1)をそのまま引用 |
+| Class I–III closed theorem package | `Sector-Master-Resolved-Theory: theory/` | R_S の定義・不変性(Thm 3.1)・トリコトミー(Thm 7.2)・有限判定(Thm 8.1)をそのまま引用 |
 | 2g+2e 数値パッケージ | `2g2e_package/` | (c) の反例 C4(近似版)、(d) の no-go 境界、E3 の再現元 |
 | 数値基盤 | `../New no-go theory/src/core.py` | 伝達関数・Krylov 証明書・moment 法・Riesz 射影・ν フィット(再利用) |
 | EIT/ATS 分離指標 | Phase A Gate 3(`run_phase_a.py`)の W_S, η_S | E5 の判定器 |

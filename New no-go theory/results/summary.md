@@ -218,7 +218,7 @@ Overall: **PASS**
 
 # Phase P: physical Lindblad realization for Paper III (SMRT interference-controlled exponent promotion)
 
-Runs P1-P8, `paper3_smrt_numerical_plan.md`. All eight gates PASS
+Runs P1-P8, `Sector-Master-Resolved-Theory: docs/paper3_smrt_numerical_plan.md`. All eight gates PASS
 (`phase_p_overall_pass = true`, `gates_summary_phaseP.json`).
 
 Model: a 5-level CPTP Lindblad "diamond" (`src/model_physical.py`) -- ground

@@ -1,5 +1,5 @@
 """Phase P driver: physical Lindblad realization of the SMRT interference-
-controlled exponent promotion (paper3_smrt_numerical_plan.md, runs P1-P8).
+controlled exponent promotion (Sector-Master-Resolved-Theory: docs/paper3_smrt_numerical_plan.md, runs P1-P8).
 
 Outputs into ../results/figures and ../results/gates_summary_phaseP.json.
 """

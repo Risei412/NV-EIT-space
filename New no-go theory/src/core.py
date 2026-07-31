@@ -1,5 +1,5 @@
 """Common numerical infrastructure for the sector-resolved response
-classification (Theorems I-III, three_theorems_proofs.tex).
+classification (Theorems I-III, Sector-Master-Resolved-Theory: theory/three_theorems_proofs.tex).
 
 Implements, independently of any specific model:
   - the scalar transfer function F_Gamma(z) = p^dag A_Gamma(z)^-1 c;
