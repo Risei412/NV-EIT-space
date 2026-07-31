@@ -227,7 +227,7 @@ EIT definition equivalence/
    - Corollary(教科書 Λ 同値)/ Theorem III(一般非同値 + 反例 4 種)
    - Theorem IV(2g+2e 障害)/ **構成的定理(2g+3e 厳密零点)or 拡張 no-go**
    - Class I–III 統合定理(verdict)
-2. PRL 本文への反映は `../writing paper/The theory of EIT in Nitrogen Vacancy.tex`
+2. PRL 本文への反映は `../Writing Paper/drafts/The theory of EIT in Nitrogen Vacancy.tex`
    系列とは独立の新規原稿として開始(定義変更論文は NV 特化論文と分離)。
 3. Definition of Done は戦略MD §23 の 10 項目チェックリストをそのまま採用。
 
