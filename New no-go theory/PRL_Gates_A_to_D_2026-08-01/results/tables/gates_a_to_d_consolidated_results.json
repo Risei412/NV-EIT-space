@@ -1,0 +1,93 @@
+{
+  "frozen_date": "2026-08-01",
+  "gate_A": {
+    "verdict": "CONDITIONAL_PASS",
+    "deep_tail_orders": {
+      "K12": 2.0,
+      "complex_dXi": 3.999876,
+      "Acut": 1.0,
+      "signed_absorption_difference": 3.999876,
+      "normalized_contrast": 2.999876
+    },
+    "finite_window_orders_Gamma_1e3_to_2e4": {
+      "K12": 1.999957,
+      "complex_dXi": 3.066935,
+      "Acut": 0.999995,
+      "signed_absorption_difference": 3.066417,
+      "normalized_contrast": 2.066422
+    },
+    "local_orders_at_Gamma_300K": {
+      "complex_response": 3.144,
+      "signed_absorption_difference": 3.144,
+      "normalized_contrast": 2.144
+    }
+  },
+  "gate_B": {
+    "verdict": "STRUCTURAL_PASS_EXPERIMENTAL_WINDOW_UNRESOLVED",
+    "blind_prediction": {
+      "generic": {"nu_amplitude": 1, "nu_power": 2},
+      "protected": {"nu_amplitude": 2, "nu_power": 4}
+    },
+    "deep_tail_results": [
+      {"tuning": "generic", "amplitude_order": 0.9944858594640357, "raw_power_order": 1.9889717189280713, "normalized_transfer_order": 1.9944344828747445, "finite_drive_B_population_order": 1.9889717274626653},
+      {"tuning": "protected", "amplitude_order": 1.9944344828747462, "raw_power_order": 3.9888689657494925, "normalized_transfer_order": 3.99443448287471, "finite_drive_B_population_order": 3.9888689744900545}
+    ],
+    "max_reduced_vs_full_relative_error": 1.864650019881691e-07,
+    "symmetry_breaking_crossovers": [
+      {"eps": 1e-08, "analytic_kappa_star": 400000.00000000006, "numeric_kappa_star": 419412.6347923944, "ratio_numeric_to_analytic": 1.048531586980986},
+      {"eps": 1e-09, "analytic_kappa_star": 4000000.000000001, "numeric_kappa_star": 4015813.9581211503, "ratio_numeric_to_analytic": 1.0039534895302873},
+      {"eps": 1e-10, "analytic_kappa_star": 40000000.00000001, "numeric_kappa_star": 41941263.47923944, "ratio_numeric_to_analytic": 1.048531586980986}
+    ],
+    "current_parameter_physical_window_orders": {"generic": 3.5275989226688693e-06, "protected": 0.023894591431586634}
+  },
+  "gate_C": {
+    "verdict": "CONDITIONAL_PASS_THEN_CLOSED_BY_NON_NV_N3_WITNESS",
+    "systems": [
+      {"system": "SiV", "platform": "group-IV diamond defect", "predicted_order": 1, "fit_order": 0.9999971054798109},
+      {"system": "SnV", "platform": "group-IV diamond defect", "predicted_order": 1, "fit_order": 0.9996142920848466},
+      {"system": "NV_0_to_m1", "platform": "NV diamond defect", "predicted_order": 2, "fit_order": 1.9998212928612045},
+      {"system": "NV_m1_to_p1", "platform": "NV diamond defect", "predicted_order": 3, "fit_order": 2.9996234920493285},
+      {"system": "SC_generic", "platform": "circuit QED artificial atom", "predicted_order": 1, "fit_order": 0.9963948579701585},
+      {"system": "SC_protected", "platform": "circuit QED artificial atom", "predicted_order": 2, "fit_order": 1.99636111105588}
+    ],
+    "robustness_counts": {"group_IV_n1": {"1": 100}, "NV_n2": {"2": 100}, "NV_n3": {"3": 100}}
+  },
+  "minimal_nonNV_n3_witness": {
+    "verdict": "PASS",
+    "hilbert_space": "4 levels: ground plus three single-excitation mode states",
+    "exact_certificate": {"M0": "0", "M1": "0", "M2": "-J12*J23", "clean_resonant_kernel": "-J12*J23/(Gamma*(Gamma**2 + J12**2 + J23**2))"},
+    "numerics": {
+      "amplitude_order_clean": 2.9999708317956233,
+      "mode3_population_order_clean": 5.999941663591247,
+      "full_vs_reduced_max_relative_error": 8.641944732952219e-16,
+      "direct_bypass_order": 2.029115594578413,
+      "readout_leakage_order": 0.9992299735565953,
+      "robustness_n3_count": 200,
+      "robustness_total": 200
+    },
+    "gates": {"K0_three_active_states_are_minimal": true, "K1_exact_M0_M1_zero_M2_nonzero": true, "K2_full_GKSL_amplitude_order_3": true, "K3_fixed_readout_population_order_6": true, "K4_reduced_equals_full": true, "K5_topology_preserving_disorder_robust": true, "K6_controlled_breaking_gives_n2_and_n1": true, "overall_pass": true}
+  },
+  "gate_D_measurability": {
+    "verdict": "CONDITIONAL_PASS",
+    "dimensionless_design": {"J12": 1.0, "J23": 0.8, "gamma_over_J_window": [5.0, 15.0], "port_energy_decay_over_J": 0.4549880601500485, "n_points": 9},
+    "physical_design_target": {"J12_over_2pi_MHz": 3.0, "J23_over_2pi_MHz": 2.4, "engineered_amplitude_damping_over_2pi_MHz": [15.0, 45.0], "engineered_energy_decay_over_2pi_MHz": [30.0, 90.0], "input_port_energy_decay_over_2pi_MHz": 1.3649641804501456, "output_port_energy_decay_over_2pi_MHz": 1.3649641804501456, "input_power_dBm": -110.0, "noise_temperature_K": 3.0, "integration_time_per_point_s": 40.0},
+    "clean_n3": {"global_amplitude_order": 2.9002027784306006, "local_amplitude_order_min": 2.8163143773051105, "local_amplitude_order_max": 2.9517671415777027, "worst_power_transmission": 1.0796165214753758e-08, "worst_output_power_dBm": -189.66730478014478, "worst_point_required_integration_time_s_for_SNR10": 38.364983469683516, "worst_point_achieved_SNR_at_40s": 10.210863909696526, "monte_carlo_slope_95pct": [2.8285951468361206, 2.9779103404054887]},
+    "comparison_n2": {"direct_bypass_over_J": 0.2, "global_amplitude_order": 2.088369857868747, "monte_carlo_slope_95pct": [2.068034892028006, 2.1089877612797845]},
+    "fabrication_robustness": {"samples": 5000, "pass_fraction": 1.0, "global_order_quantiles": [2.880877547664699, 2.884933282185657, 2.896755426537518, 2.9068234921296074, 2.910705697168589]},
+    "device_tolerances": {"worst_phase_direct_bypass_max_over_J": 0.008912509381337459, "worst_phase_direct_bypass_max_over_2pi_kHz": 26.737528144012376, "worst_phase_readout_leakage_amplitude_max": 0.0004466835921509635, "worst_phase_readout_leakage_dB": -67.0},
+    "gates": {"D1_threefold_measurable_window": true, "D2_signal_detectable_under_reference_homodyne_model": true, "D3_n3_and_n2_statistically_separated": true, "D4_fabrication_robustness": true, "D5_device_tolerances_quantified": true, "model_level_overall_pass": true}
+  },
+  "gate_D_final_background": {
+    "verdict": "PASS_WITH_SELECTED_PROTOCOL",
+    "selected_protocol": "eight-state Thue-Morse sign cycling of one nearest-neighbor coupling",
+    "clean_amplitude_order": 2.9002027784306015,
+    "phase_sequences": {"two_state": [1, -1], "ABBA_four_state": [1, -1, -1, 1], "Thue_Morse_eight_state": [1, -1, -1, 1, -1, 1, 1, -1]},
+    "two_point_calibration_maximum_quadratic_curvature_fraction_for_95pct_recovery": {"1": 0.01778279410038923, "10": 0.0017782794100389228, "100": 0.00017782794100389227, "1000": 1.778279410038923e-05, "10000": 1.7782794100389227e-06},
+    "phase_cycle_1000x_background": {"two_state_max_epsilon": 1e-05, "ABBA_max_epsilon": 0.004641588833612777, "Thue_Morse_max_epsilon": 0.03162277660168379, "Thue_Morse_minimum_drift_timescale_s_for_80ms_cycle": 2.5298221281347035},
+    "internal_contamination_after_phase_projection": {"maximum_direct_bypass_over_J_with_order_error_le_0.15": 1.370764191164282, "readout_leakage_tested_up_to_amplitude": 10.0, "maximum_readout_leakage_order_error": 4.085620730620576e-14},
+    "sign_switch_hardware_ensemble": {"samples": 5000, "recovery_fraction": 1.0, "order_quantiles": [2.846667162951937, 2.870071149405585, 2.898941727450061, 2.9290856022597884, 2.9542798521693214]},
+    "port_reversal_verdict": "STRUCTURAL_FAIL_AS_STANDALONE_BACKGROUND_REJECTION",
+    "gates": {"F1_two_point_calibration_is_not_background_universal": true, "F2_port_reversal_rejected_for_reciprocal_chain": true, "F3_Thue_Morse_cancels_static_linear_quadratic_drift": true, "F4_phase_cycle_recovers_n3_with_1000x_background": true, "F5_phase_cycle_relaxes_internal_short_path_tolerances": true, "F6_sign_switch_hardware_ensemble": true, "model_level_overall_pass": true}
+  },
+  "final_decision": "CALCULATION_AND_MEASUREMENT_MODEL_GATES_PASS; DEVICE_SPECIFIC_DRIFT_AND_SWITCH_TRANSIENT_AUDIT_REMAINS"
+}
