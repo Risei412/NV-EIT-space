@@ -97,6 +97,7 @@ def run_bilinear(quick=False):
 
     nv = ms.nv_spec()
     chk_nv = gao.check_model(nv, gammas_nv, z=0.0, kmax=8, slope_tol=0.06)
+    chk_nv["pencil_check_max_abs_err"] = nv.meta["pencil_check"]["pencil_max_abs_err"]
     rows.append(chk_nv)
     v_nv = gao.verify_nu_obs_loglog(nv, gammas_nv, z=0.0)
     curves[nv.label] = (v_nv["gammas"], np.abs(v_nv["vals"]))
@@ -263,15 +264,26 @@ def main():
     g_o1 = bool(bilinear_ok and nv_exact["inheritance_ok"]
                 and qfi["quadratic_inheritance_ok"] and frozen["promotion_ok"])
 
-    # G-O2: generic vs protected distinguished by exact certificate
+    # G-O2: generic vs protected distinguished by exact certificate.
+    #   The physical NV model must now carry its OWN certificate (nu_obs = 4)
+    #   computed by Gate A on the same pencil its numeric legs come from, and
+    #   that certificate must agree with the independent RoomT step3 route.
+    #   Previously only the synthetic family was certified and NV contributed
+    #   just M0_exact_zero, while its own nu_obs_cert was null.
     syn = {r["label"]: r for r in bilinear_rows}
     generic = next((r for r in bilinear_rows if r["mechanism"] == "generic"), None)
     protected = [r for r in bilinear_rows if r["mechanism"] == "symmetry-protected"]
+    nv_row = next((r for r in bilinear_rows if r["label"].startswith("NV EIT")), None)
+    nv_cert_cross_route_agree = bool(
+        nv_row is not None and nv_row["nu_obs_cert"] == nv_exact["nu_R"]
+    )
     g_o2 = bool(
         generic is not None and generic["nu_obs_cert"] == 2
         and any(r["nu_obs_cert"] == 4 for r in protected)
         and any(r["nu_obs_cert"] == 6 for r in protected)
         and nv_exact["M0_exact_zero"]
+        and nv_row is not None and nv_row["nu_obs_cert"] == 4
+        and nv_cert_cross_route_agree
     )
 
     # G-O3: predicted == full log-log tail slope (per-model fit_agree)
@@ -284,8 +296,12 @@ def main():
         and abs(reg_nv["nu_asymptotic"] - 4.0) < 0.1
     )
 
-    # G-O5: three-route consistency + Phase N modifiers
-    g_o5 = bool(bilinear_ok and qfan["fan_ok"] and zstar["resonance_promotion_ok"])
+    # G-O5: three-route consistency + Phase N modifiers.
+    #   Every bilinear model must actually carry an exact certificate, so that
+    #   adding a model without one can never pass this gate by default.
+    all_certified = all(r["cert_present"] for r in bilinear_rows)
+    g_o5 = bool(bilinear_ok and all_certified
+                and qfan["fan_ok"] and zstar["resonance_promotion_ok"])
 
     gates = dict(
         G_O1_inheritance_three_observables=g_o1,
@@ -301,6 +317,8 @@ def main():
         quick=quick,
         bilinear_models=bilinear_rows,
         nv_exact_certificate=nv_exact,
+        nv_cert_cross_route_agree=nv_cert_cross_route_agree,
+        all_bilinear_models_certified=bool(all_certified),
         qfi_quadratic=_clean({k: v for k, v in qfi.items()
                               if k not in ("gammas", "xnorm", "fqs")}),
         frozen_source_difference=frozen,
@@ -320,6 +338,7 @@ def main():
     with open(out_csv, "w", newline="") as f:
         cols = ["label", "readout_mode", "mechanism", "n12", "n21", "nu_den",
                 "nu_obs_pred", "nu_obs_cert", "nu_obs_tail_fit",
+                "cert_present", "cert_source",
                 "pred_cert_agree", "fit_agree", "agree"]
         w = csv.DictWriter(f, fieldnames=cols)
         w.writeheader()

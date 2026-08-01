@@ -1,6 +1,9 @@
 # Phase D plan: phenomena invisible to the old no-go framework
 
-Status: **PLAN ONLY — not yet executed.** Awaiting approval before any code is run.
+Status: **EXECUTED.** All Phase D gates pass; see `results/gates_summary_phaseD.json`
+(`phase_d_overall_pass: true`), the driver `src/run_phase_d.py`, and the D1-D4
+figures in `results/figures/`. This line previously still read "PLAN ONLY -- not
+yet executed", which was left behind when the plan was carried out.
 
 This document identifies theoretical results / phenomena that exist in the *new*
 master-response theorem package (`master_response_no_go_theorem_package.pdf`,

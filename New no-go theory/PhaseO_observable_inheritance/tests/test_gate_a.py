@@ -16,7 +16,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, "..", "src")
 PHASE_SRC = os.path.join(HERE, "..", "..", "src")
 NOGO = os.path.join(HERE, "..", "..", "..", "No-go theorem", "src")
-for _p in (SRC, PHASE_SRC, NOGO):
+ROOMT = os.path.join(HERE, "..", "..", "RoomT", "src")
+for _p in (SRC, PHASE_SRC, NOGO, ROOMT):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
@@ -60,6 +61,59 @@ def test_nv_predicts_order_four():
     assert pred["n12"] == 2 and pred["n21"] == 2
     assert pred["nu_obs_pred"] == 4
     assert abs(pred["m0_overlap"]) < 1e-9
+
+
+def test_nv_carries_its_own_exact_certificate():
+    """The physical NV spec must certify nu_obs = 4 through Gate A's own
+    rational-degree route, not only through the predictor. Constituent orders
+    are pinned too, so a change that keeps nu_obs = 4 by cancelling errors is
+    still caught."""
+    nv = ms.nv_spec()
+    cert = gao.certify_nu_obs_exact(nv, z_val=0.0)
+    assert cert["nu_cert"] == 4, cert
+    assert cert["nu_K12"] == 2 and cert["nu_K21"] == 2, cert
+    assert cert["nu_S2"] == 1, cert
+
+
+def test_nv_numeric_and_symbolic_pencil_agree():
+    """The attached symbolic pencil must be the same object as the numeric one.
+
+    nv_model.legs() builds dp/dc from an eigen-decomposition, while the
+    certificate uses RoomT step3's exact rational pencil; nothing but this
+    check ties the two together, and without it the certificate would be
+    decorative."""
+    nv = ms.nv_spec()
+    chk = nv.meta["pencil_check"]
+    assert chk["leg_overlap_ok"]
+    assert chk["pencil_max_abs_err"] < 1e-9, chk
+
+
+def test_check_model_does_not_pass_a_missing_certificate():
+    """Regression: check_model used to compute
+        pred_cert_agree = (nu_cert is None) or (nu_pred == nu_cert)
+    so a spec with no symbolic pencil satisfied the certificate criterion
+    vacuously and reported pred_cert_agree=True. A certificate-free spec must
+    now report cert_present=False, pred_cert_agree=None, and fail 'agree'."""
+    import numpy as np
+    bare = ms.nv_spec(symbolic=False)
+    assert bare.D_sym is None
+    gammas = np.logspace(0, 10, 40)
+    chk = gao.check_model(bare, gammas, z=0.0, kmax=8, require_cert=True)
+    assert chk["cert_present"] is False
+    assert chk["pred_cert_agree"] is None
+    assert chk["fit_agree"] is True, "the fit itself should still be fine"
+    assert chk["agree"] is False, "no certificate must not count as agreement"
+
+
+def test_gate_a_cert_matches_roomt_step3():
+    """Gate A's certificate and the independent RoomT step3 certificate are two
+    routes to the same number; they must not drift apart."""
+    import step3_merged_manifold_moments as step3
+    analysis = step3.analyze_certificate(step3.build_symbolic_certificate())
+    cert = gao.certify_nu_obs_exact(ms.nv_spec(), z_val=0.0)
+    assert analysis["nu_R"] == cert["nu_cert"] == 4
+    assert analysis["nu_K12"] == cert["nu_K12"]
+    assert analysis["nu_S2"] == cert["nu_S2"]
 
 
 def test_qfan_is_v_shaped():

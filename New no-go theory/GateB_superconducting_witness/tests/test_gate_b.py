@@ -75,6 +75,33 @@ def test_symmetry_breaking_crossover_moves_with_eps():
     assert abs(core.fit_nu_loglog(kappas, vals0)["nu_eff"][-1] - 2.0) < 0.05
 
 
+def test_asymptotic_window_is_not_engineerable():
+    """The kappa range where the integer order is read is far above the range a
+    bus can actually be tuned over. Pinning this keeps the two from being
+    conflated: the number of decades a numerical sweep covers is not evidence
+    of experimental reach."""
+    assert m.KAPPA_ASYMPTOTIC[0] > m.KAPPA_ENGINEERABLE[1] * 1e5
+    assert m.decades(m.KAPPA_ENGINEERABLE) < 3.0
+
+
+def test_physical_window_order_is_not_the_asymptotic_integer():
+    """Inside the engineerable range kappa sits far below the couplings, so the
+    response has not entered its 1/kappa tail and the measured efficiency order
+    is ~0 for both tunings -- nowhere near the asymptotic 2 and 4.
+
+    This is the substance behind Gate B's
+    STRUCTURAL_PASS_EXPERIMENTAL_WINDOW_UNRESOLVED verdict; if a future change
+    made the window reachable this test should be updated deliberately, not
+    silently."""
+    lo, hi = m.KAPPA_ENGINEERABLE
+    kappas = np.logspace(np.log10(lo), np.log10(hi), 120)
+    for tuning, asymptotic in (("generic", 2.0), ("protected", 4.0)):
+        K = np.array([m.transfer_kernel(k, tuning=tuning) for k in kappas])
+        eff_order = core.fit_nu_loglog(kappas, np.abs(K) ** 2)["nu_global"]
+        assert abs(eff_order) < 0.1, (tuning, eff_order)
+        assert abs(eff_order - asymptotic) > 0.5, (tuning, eff_order)
+
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
     failed = 0

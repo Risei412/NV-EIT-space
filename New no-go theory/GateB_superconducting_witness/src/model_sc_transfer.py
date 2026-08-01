@@ -67,6 +67,27 @@ GAMMA_Q = 2.5e-5  # qubit relaxation floor, T1 ~ 40 us
 DELTA_A = 0.0
 DELTA_B = 0.0
 
+# --- kappa ranges, in GHz (ordinary frequency), shared by Gate B and Gate D ---
+#
+# KAPPA_ASYMPTOTIC is the numerical sweep used to read the ASYMPTOTIC integer
+# order. It is a mathematical window: kappa there is far above any bus decay a
+# circuit-QED device can be built with.
+#
+# KAPPA_ENGINEERABLE is the range an actual lossy bus can be tuned over,
+# kappa/2pi ~ 0.1-50 MHz (Krantz 2019 Sec. IV; Blais 2021 Sec. VI; the
+# Purcell-filtered tunable-coupler transfer of Burkhart PRX Quantum 2, 030321).
+# Experimental-reach claims must use THIS range: the number of decades a
+# numerical sweep happens to cover is not evidence that a device can be tuned
+# over them.
+KAPPA_ASYMPTOTIC = (1e5, 1e9)
+KAPPA_ENGINEERABLE = (1e-4, 5e-2)
+
+
+def decades(rng):
+    """Number of decades spanned by a (lo, hi) range."""
+    lo, hi = rng
+    return float(np.log10(hi) - np.log10(lo))
+
 
 def couplings(tuning="generic", eps=0.0):
     """Return (gA1, gA2, gB1, gB2) for the requested selection-rule class.

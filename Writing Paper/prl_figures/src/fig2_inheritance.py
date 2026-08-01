@@ -16,11 +16,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-GATEA_SRC = os.path.join(HERE, "..", "..", "..", "New no-go theory",
-                         "PhaseO_observable_inheritance", "src")
-for _p in (HERE, GATEA_SRC):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
+import _paths  # noqa: E402
+_paths.add_sources("gate_a", "nogo", "phase", "roomt")
 
 import prl_style as sty  # noqa: E402
 import gate_a_observable as gao  # noqa: E402

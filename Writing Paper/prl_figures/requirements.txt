@@ -1,0 +1,15 @@
+# Dependencies for building the PRL figures.
+#
+# The figures import the gate code directly rather than reading cached tables,
+# so they need everything the gates need -- in particular sympy, which Fig. 2
+# pulls in through gate_a_observable's exact rational-degree certificate. This
+# file previously did not exist, so a clean clone failed at import time with
+# ModuleNotFoundError: sympy.
+#
+# Kept in step with "New no-go theory/requirements.txt"; the figure build has
+# no dependencies of its own beyond that set.
+matplotlib
+mpmath
+numpy
+scipy
+sympy

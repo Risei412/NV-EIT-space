@@ -25,8 +25,17 @@ P8  Experimental discriminability.
     (temperature-tuned exponent measurement); group-IV Bose-law Gamma(T) is
     narrow (SiV ~1.6, SnV ~0.6 decade).
   * Optical read-out feasibility via signal_chain.py (ZPL OD -> SNR): the
-    minimum detectable contrast at a feasible density x integration time, so
-    the log-log slope (the class) is measurable.
+    minimum detectable contrast at a feasible density x integration time,
+    compared against the ENSEMBLE-AVERAGED contrasts measured by the PRA
+    campaign's Gate 5 rather than an assumed single-defect value, and at the
+    same 70 K candidate temperature as those contrasts.
+  * Slope budget (G-D7): whether the exponent is actually measurable, i.e.
+    whether the Gamma window that stays above the detection floor is as wide
+    as the noisy log-log fit needs. Optical NV fails this once ensemble
+    washout is included -- at nu = 4 one decade of Gamma costs four decades of
+    signal -- while engineered-dissipation platforms pass comfortably. The
+    law is platform-independent, so one realization that resolves the class
+    satisfies P8; which platforms do and do not is reported explicitly.
 
 Usage:  python run_gate_d.py [--quick] [--smoke]
 Outputs: results/tables/gates_summary_gateD.json, gate_d_robustness.csv,
@@ -51,12 +60,17 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PHASE_SRC = os.path.join(HERE, "..", "..", "src")
 NOGO_SRC = os.path.join(HERE, "..", "..", "..", "No-go theorem", "src")
 GATEB_SRC = os.path.join(HERE, "..", "..", "GateB_superconducting_witness", "src")
-PHASEN12_SRC = os.path.join(HERE, "..", "..", "PhaseN", "priority_1_2")
-for _p in (HERE, PHASE_SRC, NOGO_SRC, GATEB_SRC, PHASEN12_SRC):
+GATEC_SRC = os.path.join(HERE, "..", "..", "GateC_material_independence", "src")
+# phase_n_exact_core lives in New no-go theory/src (PHASE_SRC). The theory-side
+# PhaseN tree moved to the SMRT repository, so there is no PhaseN/priority_1_2
+# path here to add.
+for _p in (HERE, PHASE_SRC, NOGO_SRC, GATEB_SRC, GATEC_SRC):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
 import core                              # noqa: E402
+import experimental_budget as eb         # noqa: E402
+import chain3_witness as chain3          # noqa: E402
 import nv_reduced_kernel as nvk          # noqa: E402
 import model_sc_transfer as sc           # noqa: E402
 import phonon_rates as pr                # noqa: E402
@@ -149,21 +163,32 @@ def nu_q_fan():
 # P8 -- experimental discriminability
 # =====================================================================
 def required_gamma_range():
-    """Decades of clean asymptotic Gamma needed to pin a power-law exponent to
-    +-0.1 (so an adjacent class Delta nu = 1 is unambiguously resolved). Uses
-    the clean NV Gamma^-2 kernel; fit the slope over windows of increasing
-    width and report the smallest width reaching |slope - 2| < 0.1."""
-    decades_needed = None
-    per = []
-    for W in (1, 2, 3, 4):
-        ks = np.logspace(3, 3 + W, 12 * W)
-        err = abs(_slope(ks, nvk.kernel(_NV_H, (0, -1), ks)) - 2.0)
-        per.append(dict(window_decades=W, slope_err=float(err)))
-        if decades_needed is None and err < 0.1:
-            decades_needed = W
-    return dict(per_window=per, decades_needed=decades_needed or 99,
-                # Delta nu = 1 separation needs ~ this many decades of clean Gamma
-                delta_nu_resolvable=bool(decades_needed is not None))
+    """Decades of Gamma needed to resolve an adjacent class AT FINITE SNR.
+
+    This used to fit the noiseless analytic kernel and ask for |slope - 2| <
+    0.1, which one decade satisfies to 2e-5 -- a statement about floating-point
+    arithmetic, not about an experiment. The window width is now decided by the
+    spread of the fitted slope under measurement noise, requiring
+    |bias| + 2*std < 0.5 so two adjacent integer classes separate at 2 sigma.
+
+    Reported across a range of per-point precisions: sigma_rel = 0.20 is the
+    SNR = 5 detection threshold, 0.01 a well-resolved measurement.
+    """
+    def nv_kernel(gs):
+        return nvk.kernel(_NV_H, (0, -1), gs)
+
+    per_sigma = {}
+    for sigma_rel in (0.01, 0.03, 0.10, 0.20):
+        r = eb.decades_needed(nv_kernel, 1e3, sigma_rel, seed=20260801)
+        per_sigma[str(sigma_rel)] = r
+    at_threshold = per_sigma["0.2"]["decades_needed"]
+    return dict(
+        criterion="|bias| + 2*std < %.1f on the fitted log-log slope" % eb.SLOPE_RESOLUTION,
+        per_sigma_rel=per_sigma,
+        decades_needed=at_threshold if at_threshold is not None else 99,
+        decades_needed_well_resolved=per_sigma["0.01"]["decades_needed"],
+        delta_nu_resolvable=bool(at_threshold is not None),
+    )
 
 
 def gamma_T_mapping():
@@ -179,35 +204,161 @@ def gamma_T_mapping():
     return dict(
         T=Ts, nv_korb_GHz=nv_g, siv_GHz=siv_g, snv_GHz=snv_g,
         nv_decades=decades(nv_g), siv_decades=decades(siv_g), snv_decades=decades(snv_g),
-        sc_decades_available=9.0,  # kappa engineerable over >= 9 decades (Gate B sweep)
+        # Two different things, previously conflated into a hard-coded 9.0.
+        # The sweep range is how far the numerics ran; the engineerable range is
+        # how far a bus can actually be tuned. Only the latter is experimental
+        # reach, and it is nearly six decades smaller.
+        sc_decades_swept=sc.decades(sc.KAPPA_ASYMPTOTIC),
+        sc_decades_engineerable=sc.decades(sc.KAPPA_ENGINEERABLE),
+        sc_kappa_engineerable_GHz=list(sc.KAPPA_ENGINEERABLE),
         regime_SiV_300K=float(giv.thermal_regime("SiV", 300.0)),
         regime_SnV_300K=float(giv.thermal_regime("SnV", 300.0)),
     )
 
 
-def optical_snr():
-    """Minimum detectable ZPL contrast at a feasible operating point (1 ppm,
-    1 h), so the response slope (the class) is measurable via optical OD."""
+# The PRA campaign's candidate point is 70 K; c_min must be evaluated there,
+# not at some other temperature, or the comparison mixes two operating points.
+CANDIDATE_T_K = 70.0
+# Gate 5's own pass criterion is that post-selection (one orientation class,
+# spectral-hole selection) plus field shimming keeps the feature above 1e-3, so
+# that scenario is the stated recommended operating point and the one to gate
+# on. Everything else is reported alongside it, not folded into a verdict.
+GATING_SCENARIO = "post_selected_shimmed"
+
+
+def _c_min_at(T, tau=3600.0, n_nv=1.76e17, L=0.05):
     lam, n_refr, DW, gamma_inh = 637.0, 2.41, 0.035, 30.0
     eta, power, sigma_tech, target = 0.1, 1e-6, 1e-6, 5.0
-    n_nv, L, tau = 1.76e17, 0.05, 3600.0  # 1 ppm, 0.5 mm, 1 hour
-    T = 50.0
     gamma_h = float(nv.gamma_oc_GHz(T, 1.683))
     sigma = sig.sigma_zpl_cm2(lam, n_refr, DW, nv.GRAD, gamma_h)
     f_spec = sig.spectral_fraction(gamma_h, gamma_inh)
     alpha = sig.alpha_cm(sigma, n_nv, 0.25, 1 / 3, f_spec)
     od_sector = sig.od(alpha, L)
-    od_total = od_sector
-    c_min = sig.min_detectable_contrast(target, od_sector, od_total, power, lam, tau,
+    c_min = sig.min_detectable_contrast(target, od_sector, od_sector, power, lam, tau,
                                         eta, sigma_tech)
-    # a modest sector-EIT contrast (order 1e-2) is well above c_min -> detectable
-    representative_contrast = 1e-2
-    detectable = bool(np.isfinite(c_min) and representative_contrast > c_min)
-    return dict(gamma_h_GHz=gamma_h, sigma_zpl_cm2=sigma, spectral_fraction=f_spec,
-                od_sector=od_sector, min_detectable_contrast=float(c_min),
-                representative_contrast=representative_contrast, detectable=detectable,
-                operating_point=dict(n_nv_cm3=n_nv, L_cm=L, tau_s=tau, T_K=T,
+    return dict(T_K=T, gamma_h_GHz=gamma_h, sigma_zpl_cm2=sigma,
+                spectral_fraction=f_spec, od_sector=od_sector,
+                min_detectable_contrast=float(c_min), target_snr=target,
+                operating_point=dict(n_nv_cm3=n_nv, L_cm=L, tau_s=tau,
                                      density_ppm=1.0))
+
+
+def optical_snr():
+    """Detectability of the NV EIT contrast against the optical floor.
+
+    The representative contrast used to be the literal 1e-2. That is
+    essentially the SINGLE-DEFECT value from the PRA campaign's ensemble study
+    (0.0136) -- i.e. the value before any ensemble averaging. Every averaged
+    scenario in that same table is one to two orders of magnitude smaller and
+    the worst of them sits level with the detection floor, so the hard-coded
+    number was quietly assuming away the washout the study had measured.
+
+    All five scenarios are now read from that table and reported; the verdict
+    is taken at the recommended operating point (GATING_SCENARIO), and c_min is
+    evaluated at the same 70 K candidate temperature as the contrasts rather
+    than at 50 K as before.
+    """
+    scen = eb.load_gate5_contrast()
+    floor = _c_min_at(CANDIDATE_T_K)
+    floor_50K = _c_min_at(50.0)
+    c_min = floor["min_detectable_contrast"]
+
+    per_scenario = {}
+    for name, row in scen.items():
+        c = row["Cmax"]
+        per_scenario[name] = dict(
+            contrast=c,
+            washout_factor=row["washout_factor"],
+            margin_over_floor=float(c / c_min) if c_min > 0 else float("inf"),
+            sigma_rel_per_point=eb.sigma_rel_from_contrast(c, c_min),
+            detectable=bool(np.isfinite(c_min) and c > c_min),
+        )
+
+    gated = per_scenario[GATING_SCENARIO]
+    return dict(
+        provenance=dict(
+            contrast_source=os.path.relpath(eb.GATE5_CSV, HERE),
+            note=("contrasts are ensemble-averaged results of the PRA campaign's "
+                  "Gate 5; the previous hard-coded 1e-2 corresponded to the "
+                  "un-averaged single-defect scenario"),
+            gating_scenario=GATING_SCENARIO,
+            gating_rationale=("Gate 5's own pass criterion is that the "
+                              "post-selected, field-shimmed configuration stays "
+                              "above 1e-3"),
+        ),
+        floor_at_candidate_T=floor,
+        floor_at_50K_previous_convention=floor_50K,
+        min_detectable_contrast=c_min,
+        per_scenario=per_scenario,
+        representative_contrast=gated["contrast"],
+        detectable=gated["detectable"],
+        worst_case_scenario="high_density",
+        worst_case_detectable=per_scenario["high_density"]["detectable"],
+    )
+
+
+def slope_budget(snr):
+    """Can each platform actually MEASURE its exponent?
+
+    Combines the Gamma window that stays above the detection floor with the
+    slope precision achievable there. A platform resolves its class only if the
+    usable window is at least as wide as the width the noisy fit needs.
+
+    The optical NV entry is the hard case by construction: its observable order
+    is 4, so one decade of Gamma costs four decades of signal and the window
+    above the floor closes almost immediately. Platforms where the dissipation
+    is an engineered knob read out by a transmission amplitude do not pay that.
+    """
+    c_min = snr["min_detectable_contrast"]
+    rows = []
+
+    for scenario in ("single", GATING_SCENARIO, "high_density"):
+        s = snr["per_scenario"][scenario]
+        win = eb.usable_gamma_window(nu=4.0, contrast_ref=s["contrast"],
+                                     gamma_ref=1e3, c_min=c_min)
+        sigma_rel = min(s["sigma_rel_per_point"], 0.2)
+        need = eb.decades_needed(
+            lambda gs: nvk.kernel(_NV_H, (-1, 1), gs), 1e3, sigma_rel,
+            seed=20260801)["decades_needed"]
+        rows.append(dict(
+            platform=f"NV optical EIT ({scenario})", nu=4.0,
+            readout="ZPL absorption contrast vs Gamma(T)",
+            window_decades=win["decades"], sigma_rel=sigma_rel,
+            decades_needed=need,
+            class_resolvable=bool(need is not None and win["decades"] >= need),
+        ))
+
+    # Engineered-dissipation platform: kappa is a design knob swept directly and
+    # the readout is a transmission amplitude, so the precision does not decay
+    # with kappa the way an optical contrast does.
+    sc_window = sc.decades(sc.KAPPA_ENGINEERABLE)
+    for label, nu, tuning in (("SC transfer (generic)", 1.0, "generic"),
+                              ("SC transfer (protected)", 2.0, "protected")):
+        need = eb.decades_needed(
+            lambda gs, _t=tuning: np.array([sc.transfer_kernel(g, tuning=_t) for g in gs]),
+            1e6, 0.01, seed=20260801)["decades_needed"]
+        rows.append(dict(
+            platform=label, nu=nu, readout="bus transmission amplitude vs kappa",
+            window_decades=sc_window, sigma_rel=0.01, decades_needed=need,
+            class_resolvable=bool(need is not None and sc_window >= need),
+        ))
+
+    # Non-diamond class-3 chain, the Gate C witness, with the same 1% readout.
+    chain_need = eb.decades_needed(
+        lambda gs: np.array([chain3.kernel(g) for g in gs]), 1e2, 0.01, seed=20260801
+    )["decades_needed"]
+    rows.append(dict(
+        platform="3-mode chain (class 3)", nu=3.0,
+        readout="marked-port transmission amplitude vs engineered loss",
+        window_decades=3.0, sigma_rel=0.01, decades_needed=chain_need,
+        class_resolvable=bool(chain_need is not None and 3.0 >= chain_need),
+    ))
+
+    return dict(rows=rows,
+                any_platform_resolvable=bool(any(r["class_resolvable"] for r in rows)),
+                optical_nv_resolvable=bool(
+                    any(r["class_resolvable"] for r in rows
+                        if r["platform"].startswith("NV optical"))))
 
 
 # =====================================================================
@@ -265,6 +416,7 @@ def main():
     req = required_gamma_range()
     gT = gamma_T_mapping()
     snr = optical_snr()
+    budget = slope_budget(snr)
 
     # -- gates --------------------------------------------------------
     g_d1 = bool(nv_exact["is_exact_class"] and sc_res["nu_protected_eps0"] > 1.9
@@ -274,10 +426,18 @@ def main():
                 and all(sc_res["rows"][i]["gamma_star"] < sc_res["rows"][i + 1]["gamma_star"]
                         for i in range(len(sc_res["rows"]) - 1)))
     g_d4 = bool(req["delta_nu_resolvable"] and req["decades_needed"] <= 4)
+    # Reach is measured against the ENGINEERABLE kappa range, not the numerical
+    # sweep width that used to be hard-coded as 9.0 decades.
     g_d5 = bool(gT["nv_decades"] >= req["decades_needed"]
-                and gT["sc_decades_available"] >= req["decades_needed"]
+                and gT["sc_decades_engineerable"] >= req["decades_needed"]
                 and gT["siv_decades"] < gT["nv_decades"])
     g_d6 = bool(snr["detectable"] and np.isfinite(snr["min_detectable_contrast"]))
+    # G-D7: the exponent must be measurable somewhere, combining the Gamma
+    # window that stays above the detection floor with the slope precision
+    # available in it. "At least one platform" is deliberate: the law is
+    # platform-independent, so one realization where the class is readable is
+    # what P8 asks for. Which platforms do and do not qualify is reported.
+    g_d7 = bool(budget["any_platform_resolvable"])
 
     gates = dict(
         G_D1_exact_vs_approximate_class=g_d1,
@@ -286,6 +446,7 @@ def main():
         G_D4_required_gamma_range=g_d4,
         G_D5_gammaT_platform_reach=g_d5,
         G_D6_optical_snr_discriminability=g_d6,
+        G_D7_slope_measurable=g_d7,
     )
     gates["overall_pass"] = bool(all(gates.values()))
 
@@ -298,6 +459,7 @@ def main():
         p8_required_gamma_range=req,
         p8_gamma_T_mapping=gT,
         p8_optical_snr=snr,
+        p8_slope_budget=budget,
         quick=quick, gates=gates, runtime_s=round(time.time() - t0, 2),
     )
 
@@ -322,10 +484,19 @@ def main():
     print(f"P6 approximate class (SC): Gamma*(eps) power={sc_res['crossover_power']:.3f} "
           f"(expect -1); protected eps=0 nu={sc_res['nu_protected_eps0']:.2f}")
     print(f"P6 nu(q) fan ok: {fan['fan_ok']}")
-    print(f"P8 required Gamma range: {req['decades_needed']} decades for +-0.1 slope")
+    print(f"P8 required Gamma range: {req['decades_needed']} decades at sigma_rel=0.20 "
+          f"({req['criterion']})")
     print(f"P8 Gamma(T) decades: NV={gT['nv_decades']:.1f} SiV={gT['siv_decades']:.1f} "
-          f"SnV={gT['snv_decades']:.1f} SC>={gT['sc_decades_available']:.0f}")
-    print(f"P8 optical: C_min={snr['min_detectable_contrast']:.2e} detectable={snr['detectable']}")
+          f"SnV={gT['snv_decades']:.1f} SC engineerable={gT['sc_decades_engineerable']:.1f} "
+          f"(swept {gT['sc_decades_swept']:.0f})")
+    print(f"P8 optical: C_min={snr['min_detectable_contrast']:.2e} "
+          f"(T={snr['floor_at_candidate_T']['T_K']:.0f} K) "
+          f"gating={snr['provenance']['gating_scenario']} "
+          f"C={snr['representative_contrast']:.3e} detectable={snr['detectable']}")
+    print("P8 slope budget:")
+    for r in budget["rows"]:
+        print(f"    {r['platform']:<38} nu={r['nu']:.0f} window={r['window_decades']:.2f} dec "
+              f"need={r['decades_needed']} resolvable={r['class_resolvable']}")
     print(f"\nwrote {out_json}")
     print(f"runtime {summary['runtime_s']} s")
     return summary

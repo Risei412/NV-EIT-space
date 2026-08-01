@@ -81,21 +81,16 @@ def kron(A, B):
     return sp.Matrix(sp.BlockMatrix([[A[i, j] * B for j in range(A.cols)] for i in range(A.rows)]))
 
 
-def build_symbolic_certificate(z_val=0):
-    """Exact adjugate/determinant certificate for K12, K21, S2 on the
-    Bx=By=0 excited-manifold Hamiltonian, with Dperp, Lperp kept as FREE
-    symbols (all other parameters at their exact literature-fitted
-    rational values, matching nv_model.py) so the moment-order result is
-    proven generic in exactly the two couplings that determine it (see
-    module docstring). z_val is the probe detuning (Gamma-independent, so
-    the leading Gamma-power DEGREES nu_K, nu_R are z-independent, but the
-    leading COEFFICIENTS are not -- Step 4 rebuilds this at z=Ep, the
-    actual resonance, for a quantitatively meaningful comparison to
-    nv_model.py's reported contrast values; Step 3's default z_val=0 is
-    just as valid a point for the degree/class certificate itself)."""
-    Gamma = sp.symbols("Gamma")
-    Dperp, Lperp = sp.symbols("Dperp Lperp", positive=True)
+def symbolic_H(Dperp, Lperp):
+    """Exact symbolic nv_model.Hes(Bvec=(0,0,0.02), d=1.683, phi=0) with Dperp
+    and Lperp left as the caller's symbols (or values).
 
+    Every other parameter is at its exact literature-fitted rational value, so
+    a degree result proven here is generic in exactly the two couplings that
+    determine it. Shared by build_symbolic_certificate() below and by Gate A
+    (PhaseO_observable_inheritance/src/model_specs.py), which needs the same
+    pencil to attach an exact certificate to the numeric NV SectorSpec.
+    """
     s2 = 1 / sp.sqrt(2)
     Sz = sp.diag(-1, 0, 1)
     Sx = s2 * sp.Matrix([[0, 1, 0], [1, 0, 1], [0, 1, 0]])
@@ -114,24 +109,87 @@ def build_symbolic_certificate(z_val=0):
 
     # Full nv_model.Hes(Bvec,d,phi=0) -- including the GE*Bz*kron(I2,Sz)
     # excited-state Zeeman term (diagonal in orbital space, so it does NOT
-    # affect M0/M1/H[1,3] or the leading Gamma-power structure, but IS
-    # needed for exact finite-Gamma agreement with nv_model.py's numeric
-    # response(), used as a cross-check in Step 4).
+    # affect M0/M1 or the leading Gamma-power structure, but IS needed for
+    # exact finite-Gamma agreement with nv_model.py's numeric response()).
     H = kron(I2, Dpar * (Sz * Sz - sp.Rational(2, 3) * I3))
     H += -Lpar * kron(sy_o, Sz)
     H += Dperp * (kron(sz_o, Sy * Sy - Sx * Sx) - kron(sx_o, Sx * Sy + Sy * Sx))
     H += Lperp * (kron(sz_o, Sx * Sz + Sz * Sx) - kron(sx_o, Sy * Sz + Sz * Sy))
     H += dx * kron(sz_o, I3)
     H += GE * Bz * kron(I2, Sz)
-    H = sp.Matrix(H)
+    return sp.Matrix(H)
 
-    dp = sp.Matrix([0, 1, 0, 0, 0, 0])  # e_1: probe leg (orbital X, ms=0)
-    dc = sp.Matrix([0, 0, 0, 1, 0, 0])  # e_3: control leg (orbital Y, ms=-1)
+
+# Probe/control legs. nv_model.legs() builds them as kron(OX, U[:,1]) and
+# kron(OY, U[:,0]) with OX = [0,1], OY = [1,0]; at Bx=By=0 the dressed ground
+# vectors are the bare ones, so in the 6-dim orbital(x)spin basis
+# (index = 3*orbital + spin) the probe sits at index 4 and the control at 0.
+#
+# build_symbolic_certificate() historically used the mirror pair (e_1, e_3),
+# i.e. the same two legs with the orbital labels exchanged. That pair is
+# equivalent for this Hamiltonian -- both give M0 = 0, the identical first
+# nonzero generator H[4,0] = H[1,3] = -sqrt(2)*I*Lperp/2, and the identical
+# degrees -- so the historical certificate stands. Gate A nevertheless needs
+# the nv_model-matching pair, because there the symbolic result is asserted
+# against the *numeric* dp/dc of the same SectorSpec.
+LEGS_NV_MODEL = (4, 0)   # matches nv_model.legs(): probe kron(OX,ms=0), control kron(OY,ms=-1)
+LEGS_MIRROR = (1, 3)     # orbital-exchanged pair used by build_symbolic_certificate()
+
+
+def symbolic_pencil(z_val=0, Dperp_val=None, Lperp_val=None, legs=LEGS_NV_MODEL):
+    """Exact pencil A(Gamma,z) = Gamma*I6 + i*2pi*(H - z*I6) plus its legs, in
+    the form Gate A's certify_nu_obs_exact() consumes.
+
+    Returns D_sym, B_sym_of_z, dp_sym, dc_sym alongside H and the free symbols.
+    Passing rational Dperp_val / Lperp_val substitutes them immediately, which
+    keeps the 6x6 adjugate cheap enough for a --quick run; leaving them None
+    keeps them free so the degree result is proven generic in both couplings.
+    """
+    Gamma = sp.symbols("Gamma")
+    Dperp = sp.Symbol("Dperp", positive=True) if Dperp_val is None else sp.nsimplify(Dperp_val, rational=True)
+    Lperp = sp.Symbol("Lperp", positive=True) if Lperp_val is None else sp.nsimplify(Lperp_val)
+
+    H = symbolic_H(Dperp, Lperp)
+    i_probe, i_ctrl = legs
+    dp = sp.zeros(6, 1)
+    dp[i_probe] = 1
+    dc = sp.zeros(6, 1)
+    dc[i_ctrl] = 1
+
+    z_sym = sp.nsimplify(z_val, rational=True) if z_val != 0 else sp.Integer(0)
+
+    def B_sym_of_z(z, _H=H):
+        zz = sp.nsimplify(z, rational=True) if z != 0 else sp.Integer(0)
+        return sp.I * 2 * sp.pi * (_H - zz * sp.eye(6))
+
+    return dict(
+        Gamma=Gamma, Dperp=Dperp, Lperp=Lperp, H=H,
+        D_sym=sp.eye(6), B_sym_of_z=B_sym_of_z,
+        dp_sym=dp, dc_sym=dc, z_sym=z_sym, legs=legs,
+    )
+
+
+def build_symbolic_certificate(z_val=0):
+    """Exact adjugate/determinant certificate for K12, K21, S2 on the
+    Bx=By=0 excited-manifold Hamiltonian, with Dperp, Lperp kept as FREE
+    symbols (all other parameters at their exact literature-fitted
+    rational values, matching nv_model.py) so the moment-order result is
+    proven generic in exactly the two couplings that determine it (see
+    module docstring). z_val is the probe detuning (Gamma-independent, so
+    the leading Gamma-power DEGREES nu_K, nu_R are z-independent, but the
+    leading COEFFICIENTS are not -- Step 4 rebuilds this at z=Ep, the
+    actual resonance, for a quantitatively meaningful comparison to
+    nv_model.py's reported contrast values; Step 3's default z_val=0 is
+    just as valid a point for the degree/class certificate itself)."""
+    pen = symbolic_pencil(z_val=z_val, legs=LEGS_MIRROR)
+    Gamma, Dperp, Lperp = pen["Gamma"], pen["Dperp"], pen["Lperp"]
+    H = pen["H"]
+    dp, dc = pen["dp_sym"], pen["dc_sym"]
 
     M0 = sp.simplify((dp.T * dc)[0, 0])
 
-    z_sym = sp.nsimplify(z_val, rational=True) if z_val != 0 else sp.Integer(0)
-    A = Gamma * sp.eye(6) + sp.I * 2 * sp.pi * (H - z_sym * sp.eye(6))
+    z_sym = pen["z_sym"]
+    A = Gamma * pen["D_sym"] + pen["B_sym_of_z"](z_val)
     Q = sp.expand(A.det())
     Qp = sp.Poly(Q, Gamma)
     adjA = A.adjugate()

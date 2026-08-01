@@ -130,6 +130,45 @@ def full_model_slopes(kappas_tail):
     return rows, curves
 
 
+def physical_window_orders(n=120):
+    """Effective efficiency order over the kappa range a real bus can be tuned
+    over (m.KAPPA_ENGINEERABLE), as opposed to the asymptotic sweep.
+
+    The asymptotic slopes above are read at kappa = 1e5-1e9 GHz, which is
+    mathematically correct but eight or more decades above any physical bus
+    decay. Inside the engineerable range kappa is far BELOW the couplings
+    (g ~ 0.1 GHz), so the response has not entered its 1/kappa tail at all and
+    the measured order is ~0 for both tunings. Reporting only the asymptotic
+    slope hides that, so the physical-window order is computed and gated on
+    explicitly: Gate B's claim is structural universality, not an experimental
+    protocol for this device.
+    """
+    lo, hi = m.KAPPA_ENGINEERABLE
+    kappas = np.logspace(np.log10(lo), np.log10(hi), n)
+    out = {}
+    for tuning in ("generic", "protected"):
+        K = np.array([m.transfer_kernel(k, tuning=tuning) for k in kappas])
+        out[tuning] = dict(
+            amp_order=float(core.fit_nu_loglog(kappas, K)["nu_global"]),
+            eff_order=float(core.fit_nu_loglog(kappas, np.abs(K) ** 2)["nu_global"]),
+        )
+    # the asymptotic integer is "reached" in the physical window only if the
+    # measured order is within 0.5 of the blind prediction there
+    blind = blind_prediction()
+    reached = {
+        t: bool(abs(out[t]["eff_order"] - blind[t]["nu_efficiency_pred"]) < 0.5)
+        for t in ("generic", "protected")
+    }
+    return dict(
+        kappa_range_GHz=[lo, hi],
+        decades_engineerable=m.decades(m.KAPPA_ENGINEERABLE),
+        decades_asymptotic_sweep=m.decades(m.KAPPA_ASYMPTOTIC),
+        orders=out,
+        asymptotic_order_reached=reached,
+        experimental_window_resolved=bool(all(reached.values())),
+    )
+
+
 # ----------------------------------------------------------------------
 # G-B5: symmetry-breaking crossover kappa*(eps)
 # ----------------------------------------------------------------------
@@ -205,8 +244,10 @@ def main():
     kappas_chk = np.logspace(3, 7, 5)
     rvf_rows, rho0_resid = reduced_vs_full(kappas_chk)
 
-    kappas_tail = np.logspace(5, 9, 25 if quick else 50)
+    kappas_tail = np.logspace(np.log10(m.KAPPA_ASYMPTOTIC[0]),
+                              np.log10(m.KAPPA_ASYMPTOTIC[1]), 25 if quick else 50)
     full_rows, eff_curves = full_model_slopes(kappas_tail)
+    phys_window = physical_window_orders(40 if quick else 120)
 
     epsilons = [1e-8, 1e-9, 1e-10, 1e-11]
     cross_rows, cross_curves, nu_eff0_protected, kstar_monotonic = crossover_fan(epsilons, quick=quick)
@@ -231,12 +272,25 @@ def main():
     g_b5 = bool(kstar_monotonic and abs(nu_eff0_protected - 2.0) < 0.05
                 and all(r["nu_eff_plateau"] > 1.5 for r in cross_rows))
 
+    # G-B6: the experimental window is REPORTED, not assumed. This gate asserts
+    # that the physical-window order was computed and, when the asymptotic
+    # integer is not reached there, that the shortfall is recorded rather than
+    # silently absent. It deliberately does not require the window to be
+    # reachable: Gate B's claim is structural universality (see the verdict
+    # string and README), and the unreached window is a stated boundary of it.
+    g_b6 = bool(
+        "experimental_window_resolved" in phys_window
+        and all(np.isfinite(phys_window["orders"][t]["eff_order"])
+                for t in ("generic", "protected"))
+    )
+
     gates = dict(
         G_B1_reduced_equals_full=g_b1,
         G_B2_blind_prediction_fixed=g_b2,
         G_B3_full_model_matches_blind=g_b3,
         G_B4_selection_rule_changes_order=g_b4,
         G_B5_symmetry_breaking_crossover=g_b5,
+        G_B6_physical_window_reported=g_b6,
     )
     gates["overall_pass"] = bool(all(gates.values()))
 
@@ -248,8 +302,17 @@ def main():
         blind_prediction=blind,
         reduced_vs_full=dict(rows=rvf_rows, rho0_steady_residual=rho0_resid),
         full_model_slopes=full_rows,
+        physical_window=phys_window,
         crossover_fan=dict(rows=cross_rows, nu_eff_protected_eps0=nu_eff0_protected,
                            kappa_star_monotonic_in_1_over_eps=kstar_monotonic),
+        verdict=("STRUCTURAL_PASS" if phys_window["experimental_window_resolved"]
+                 else "STRUCTURAL_PASS_EXPERIMENTAL_WINDOW_UNRESOLVED"),
+        claim_scope=("Structural universality: a non-EIT, non-diamond full-GKSL "
+                     "witness reproduces the predicted integer transfer-efficiency "
+                     "orders and the symmetry-breaking crossover. The asymptotic "
+                     "window sits far above the engineerable bus decay, so this is "
+                     "NOT a measurement protocol for this device; measurability is "
+                     "assessed in Gate D."),
         quick=quick,
         gates=gates,
         runtime_s=round(time.time() - t0, 2),

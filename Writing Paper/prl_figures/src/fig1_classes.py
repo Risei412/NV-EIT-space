@@ -22,13 +22,8 @@ from matplotlib.path import Path
 from matplotlib.patches import PathPatch
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-NOGO_SRC = os.path.join(HERE, "..", "..", "..", "No-go theorem", "src")
-GATEC_SRC = os.path.join(HERE, "..", "..", "..", "New no-go theory",
-                         "GateC_material_independence", "src")
-PHASE_SRC = os.path.join(HERE, "..", "..", "..", "New no-go theory", "src")
-for _p in (HERE, NOGO_SRC, GATEC_SRC, PHASE_SRC):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
+import _paths  # noqa: E402
+_paths.add_sources("nogo", "gate_c", "phase")
 
 import prl_style as sty  # noqa: E402
 import nv_reduced_kernel as nvk  # noqa: E402

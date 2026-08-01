@@ -19,11 +19,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-GATED_SRC = os.path.join(HERE, "..", "..", "..", "New no-go theory",
-                         "GateD_robustness_discriminability", "src")
-for _p in (HERE, GATED_SRC):
-    if _p not in sys.path:
-        sys.path.insert(0, _p)
+import _paths  # noqa: E402
+_paths.add_sources("gate_d", "gate_b", "gate_c", "nogo", "phase")
 
 import prl_style as sty  # noqa: E402
 import run_gate_d as rd  # noqa: E402

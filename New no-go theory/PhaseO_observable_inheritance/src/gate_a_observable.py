@@ -283,15 +283,23 @@ def separate_regimes(spec: SectorSpec, gammas: np.ndarray, z: float = 0.0,
 # Top-level per-model consistency check (predict vs certificate vs fit)
 # ----------------------------------------------------------------------
 def check_model(spec: SectorSpec, gammas: np.ndarray, z: float = 0.0,
-                kmax: int = 8, slope_tol: float = 0.06) -> dict:
+                kmax: int = 8, slope_tol: float = 0.06,
+                require_cert: bool = True) -> dict:
     """Run all three routes on one SectorSpec and report agreement.
 
-    'agree' requires: predictor == exact certificate (integers), and the
-    deep-tail log-log slope within slope_tol of that integer.
+    'agree' requires: an exact certificate to exist, the predictor to equal it,
+    and the deep-tail log-log slope to sit within slope_tol of that integer.
+
+    require_cert defaults to True on purpose. Previously the certificate check
+    read `(nu_cert is None) or (nu_pred == nu_cert)`, which returned True for
+    any spec that carried no symbolic pencil -- so a model with no certificate
+    at all passed the certificate criterion vacuously, and the reported
+    pred_cert_agree=True said nothing. `cert_present` is now always reported,
+    and pred_cert_agree is None (not True) when there is nothing to compare.
     """
     pred = predict_nu_obs(spec, z=z, kmax=kmax)
     cert = None
-    if spec.D_sym is not None:
+    if spec.D_sym is not None and spec.B_sym_of_z is not None:
         cert = certify_nu_obs_exact(spec, z_val=z)
     fit = verify_nu_obs_loglog(spec, gammas, z=z)
 
@@ -299,9 +307,14 @@ def check_model(spec: SectorSpec, gammas: np.ndarray, z: float = 0.0,
     nu_cert = cert["nu_cert"] if cert else None
     nu_tail = fit["nu_tail"]
 
-    pred_cert_agree = (nu_cert is None) or (nu_pred == nu_cert)
-    ref = nu_cert if nu_cert is not None else nu_pred
+    cert_present = nu_cert is not None
+    pred_cert_agree = (nu_pred == nu_cert) if cert_present else None
+    ref = nu_cert if cert_present else nu_pred
     fit_agree = (ref is not None) and (abs(nu_tail - ref) < slope_tol)
+
+    agree = bool(fit_agree) and (
+        bool(pred_cert_agree) if cert_present else (not require_cert)
+    )
 
     return dict(
         label=spec.label,
@@ -309,7 +322,9 @@ def check_model(spec: SectorSpec, gammas: np.ndarray, z: float = 0.0,
         mechanism=pred["mechanism"],
         n12=pred["n12"], n21=pred["n21"], nu_den=pred["nu_den"],
         nu_obs_pred=nu_pred, nu_obs_cert=nu_cert, nu_obs_tail_fit=nu_tail,
-        pred_cert_agree=bool(pred_cert_agree),
+        cert_present=bool(cert_present),
+        cert_source=spec.meta.get("cert_source", "gate_a_symbolic" if cert_present else None),
+        pred_cert_agree=pred_cert_agree,
         fit_agree=bool(fit_agree),
-        agree=bool(pred_cert_agree and fit_agree),
+        agree=agree,
     )

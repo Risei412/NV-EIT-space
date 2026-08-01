@@ -93,8 +93,69 @@
       "slope_lo": 2.9986565602726847,
       "slope_hi": 2.999995631909217,
       "window_stable": true
+    },
+    {
+      "n_class": 3,
+      "system": "3-mode chain",
+      "material_type": "non-diamond",
+      "slope": 2.999986357760556,
+      "predicted": 3,
+      "slope_match": true,
+      "compensated_spread": 4.38422750422982e-05,
+      "plateau_value": 0.7999842874364723,
+      "collapse_ok": true,
+      "slope_lo": 2.99995620260227,
+      "slope_hi": 2.9999997552905446,
+      "window_stable": true
     }
   ],
+  "non_diamond_class3_witness": {
+    "model": "three-mode chain, single-excitation manifold, common ground state",
+    "exact_certificate": {
+      "M0": "0",
+      "M1": "0",
+      "M2": "-J12*J23",
+      "K_resonant": "-J12*J23/(Gamma*(Gamma**2 + J12**2 + J23**2))"
+    },
+    "M0": 0.0,
+    "M1": 0.0,
+    "M2": 0.8,
+    "first_nonzero_moment_index": 2,
+    "predicted_order": 3,
+    "reduced_slope": 2.999986357760556,
+    "full_amplitude_slope": 2.999986357760556,
+    "full_population_slope": 5.999972715521112,
+    "reduced_vs_full_max_rel_err": 8.835244941076262e-16
+  },
+  "material_independence_by_class": {
+    "1": {
+      "diamond": [
+        "group-IV SiV"
+      ],
+      "non_diamond": [
+        "SC generic"
+      ],
+      "both_hosts_match_predicted_order": true
+    },
+    "2": {
+      "diamond": [
+        "NV 0<->-1"
+      ],
+      "non_diamond": [
+        "SC protected"
+      ],
+      "both_hosts_match_predicted_order": true
+    },
+    "3": {
+      "diamond": [
+        "NV -1<->+1"
+      ],
+      "non_diamond": [
+        "3-mode chain"
+      ],
+      "both_hosts_match_predicted_order": true
+    }
+  },
   "quick": false,
   "gates": {
     "G_C1_groupIV_full_gksl": true,
@@ -102,7 +163,8 @@
     "G_C3_scaling_collapse": true,
     "G_C4_material_independence": true,
     "G_C5_full_reduced_and_finite_gamma": true,
+    "G_C6_non_diamond_class3_exact": true,
     "overall_pass": true
   },
-  "runtime_s": 0.5
+  "runtime_s": 1.2
 }
