@@ -1,4 +1,4 @@
-# 一般理論PRL（経路モーメント応答則）— Gate A–D 監査 (2026-08-01)
+# 一般理論PRL（経路モーメント応答則）— Gate A–E 監査 (2026-08-02)
 
 > **この監査の対象**：`Writing Paper/NV_EIT_PRA_PRL_Split_Strategy_20260724.md`
 > §13（Priority 1–8）と §14（Gate A–D）が定める**一般理論PRL**、実装は
@@ -84,6 +84,42 @@ G-C4 は全クラスに両ホストを要求、新設 G-C6 が witness の厳密
 
 ## 是正の結果として確定した主張の範囲
 
+### Gate E — 漸近到達性・工学的到達性・検出性の結合監査（2026-08-02）
+
+Gate D は可変幅とノイズ下の指数識別を検査したが、その可変区間が同時に
+漸近域かつ検出域に入ることまでは要求していなかった。Gate E では同一の散逸区間
+
+\[
+I_E=I_{\rm engineerable}\cap I_{\rm asymptotic}\cap I_{\rm detectable}
+\]
+
+が存在し、局所指数・信号床・必要区間幅を同時に満たすことを要求した。
+
+| プラットフォーム | Gate E | 根拠 |
+|---|---|---|
+| 光学NV | **FAIL** | 漸近域へ入る前に信号が検出床へ落ちる（0.51–0.84 decade） |
+| Gate B SC transfer | **FAIL** | 0.1–50 MHzでは実効指数が約0、整数漸近域は8桁以上先 |
+| 3モード鎖 | **MODEL-LEVEL CONDITIONAL PASS** | 15–45 MHzの有限散逸窓でclass 2/3を統計的に分離 |
+
+3モード鎖では \(J_{12}/2\pi=3.0\,\mathrm{MHz}\)、
+\(J_{23}/2\pi=2.4\,\mathrm{MHz}\)、\(\Gamma/2\pi=15\text{–}45\,\mathrm{MHz}\)
+を用いた。class 3 のglobal exponentは2.9002、local exponentは
+2.8163–2.9518、Monte Carlo 95%区間は[2.8286, 2.9779]。class 2の95%区間
+[2.0680, 2.1090]とは非重複である。最悪点は−189.67 dBmで、3 K、入力−110 dBm、
+40 s/点ならSNR=10.21（SNR 10に必要な時間38.36 s）。製造ばらつき5000標本の
+合格率は100%だった。
+
+背景除去には結合符号の8状態Thue–Morse cycle
+`+ - - + - + + -`を選ぶ。定数・一次・二次時間ドリフトを相殺し、信号の1000倍の
+滑らかな背景でも指数回収率100%。80 ms cycleに対し必要な背景ドリフト時間尺度は
+2.53 s以上である。
+
+このPASSはデバイス固有の実証ではない。15–45 MHzの可変engineered loss、結合を
+保った独立損失掃引、−190 dBm級の増幅・校正、符号切替transient、feedthroughの
+実測ドリフトスペクトルは設計仮定として残る。したがって許される主張は
+「3モードengineered-loss chainにclass 2/3を識別できる有限窓が存在する」までであり、
+任意のengineered-dissipation platformでの測定可能性ではない。
+
 **光学NVでは指数が読めない。** これは新設した G-D7（slope budget）が出した結論であり、
 本監査で最も重要な発見である。
 
@@ -92,14 +128,15 @@ G-C4 は全クラスに両ホストを要求、新設 G-C6 が witness の厳密
 | NV optical EIT (single) | 4 | 1.02 dec | 1 | ○（ただし平均前の値） |
 | NV optical EIT (post_selected_shimmed) | 4 | 0.84 dec | 1 | **×** |
 | NV optical EIT (high_density) | 4 | 0.51 dec | 1 | **×** |
-| SC transfer (generic) | 1 | 2.70 dec | 1 | ○ |
-| SC transfer (protected) | 2 | 2.70 dec | 1 | ○ |
-| 3-mode chain (class 3) | 3 | 3.00 dec | 1 | ○ |
+| SC transfer (generic) | 1 | 2.70 dec | 1 | **×（Gate E：漸近域外）** |
+| SC transfer (protected) | 2 | 2.70 dec | 1 | **×（Gate E：漸近域外）** |
+| 3-mode chain (class 3) | 3 | 0.48 dec (15–45 MHz) | finite-window fit | **△（model-level）** |
 
 ν = 4 では Γ を1桁上げるとコントラストが4桁落ちるため、検出限界までの窓が
 フィットの必要幅に届かない。G-D7 は「≥1プラットフォーム」定義なので Gate D 自体は
-PASS を維持するが、**「測定可能な設計則」の主張は engineered-dissipation
-プラットフォームに限定**し、NV は exact class の認証を与える witness と位置づける。
+PASS を維持するが、Gate Eによって一般的な**「測定可能な設計則」**は棄却された。
+測定可能性は3モードengineered-loss chainの具体的有限窓に限定し、NV は exact class の
+認証を与える witness と位置づける。
 戦略文書 §14 に Gate D の fallback 節を新設してこれを明文化した（従来 Gate D だけ
 不合格分岐が未定義だった）。
 
