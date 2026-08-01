@@ -353,29 +353,52 @@ vertices, the leading behaviour should be $C \simeq C_{\mathrm{res}} +
 a\Bperp^{2}$, with $C_{\mathrm{res}}$ the field-independent residual pathway
 through $^{3}E$ spin mixing.
 
-Extracting the exponent is harder than it looks, and we report a partly
-negative result. Three complications compound. The residual is not the value
-at exactly $\Bperp=0$, which is structurally degenerate and does not join
-smoothly onto the small-field plateau; it must be fitted. At the temperatures
-where the island exists the response saturates early --- by
-$\Bperp\approx\SI{0.06}{\tesla}$ at \SI{70}{\kelvin} the contrast has already
-reached its plateau value --- so the interval between the residual plateau and
-saturation spans less than a decade. Within that interval the local
-logarithmic slope sweeps continuously from above $8$ down through $2$ to $0$
-rather than resting on a plateau.
+The field range over which that law can be tested is bounded from both sides,
+and narrowly. From above, the mixing ceases to be perturbative once the ground
+Zeeman energy reaches the zero-field splitting, $\gamma_{e}\Bperp = D_{gs}$ at
+$\Bperp=\SI{0.103}{\tesla}$; we take $\SI{0.031}{\tesla}$, three tenths of
+that, as the ceiling of the perturbative window. From below, the fit needs the
+opened part to stand clear of $C_{\mathrm{res}}$, which happens near
+$\SI{0.008}{\tesla}$ at these temperatures. Less than a decade of field
+separates the two. Note also that $C_{\mathrm{res}}$ cannot be read off at
+$\Bperp=0$: that point is structurally degenerate and does not join smoothly
+onto the small-field plateau, so the residual has to be a fitted parameter,
+which is what including the plateau points in the fit constrains.
 
-Fitting $C=C_{\mathrm{res}}+a\Bperp^{n}$ over the pre-saturation range gives
-excellent fits ($R^{2}>0.997$) but exponents that depend on the choice of
-upper cutoff. Only at \SI{70}{\kelvin} is the fit stable against that choice
-(spread $0.06$ across cutoffs), and there $n=2.5$; at \SI{55}{\kelvin} and
-\SI{85}{\kelvin} the spread is $1.1$--$1.6$ and the exponent is not
-determined. We therefore do not claim to have verified the quadratic law in
-the island. What the data do establish is that the opening is superlinear in
-every well-conditioned fit, and that it is consistent with a quadratic leading
-term: the archived room-temperature campaign, where the dynamic range between
-plateau and saturation is largest, returns $n=2.03$--$2.18$. The honest
-statement is that the exponent is measurable where the field range is wide and
-is not measurable where the island lives.
+Fitting $C=C_{\mathrm{res}}+a\Bperp^{n}$ on a dense grid inside that window
+separates the temperatures cleanly, and we report the separation rather than
+an average over it. At \SI{85}{\kelvin} the exponent is stable against the
+choice of upper cutoff --- it varies by $0.25$ over cutoffs from
+\SI{0.022}{\tesla} to \SI{0.046}{\tesla}, with no monotone trend (Spearman
+$\rho=-0.05$) --- and equals
+%
+\begin{equation}
+n(\SI{85}{\kelvin}) = 2.11 \pm 0.08 ,
+\end{equation}
+%
+which is the expected quadratic opening. At \SI{70}{\kelvin} and
+\SI{55}{\kelvin} it is not stable: the fitted exponent drifts monotonically
+downward with the cutoff ($\rho=-0.97$ at both, spanning $0.65$ and $0.86$
+respectively), running from $2.7$--$3.0$ at the smallest usable cutoff through
+$2$ near $\Bperp\approx\SI{0.04}{\tesla}$. A genuine power law shows a plateau
+against the fitting window; a crossover shows exactly this drift.
+Figure~\ref{fig:bperp}(b) displays the distinction directly. We therefore
+claim the quadratic law at \SI{85}{\kelvin} and above, and state that it is
+not resolvable at the cold end of the island.
+
+Two controls establish that the drift belongs to the physics of the pathway
+and not to the way it is interrogated. Varying the control Rabi frequency over
+a factor of ten, $\Omega_{c}=0.03$ to \SI{0.3}{\giga\hertz}, moves the
+\SI{70}{\kelvin} exponent from $2.664$ to $2.628$ --- that is, not at all
+beyond the fit error. And fitting the absolute signal
+$\Delta A=\Acut-\Afull$, which carries no field-dependent denominator, instead
+of the ratio $C$ returns the same exponent ($2.70$ against $2.63$ at
+\SI{70}{\kelvin}), so the excess above $2$ is not an artefact of normalising
+by a quantity that itself varies with field. Together with the archived
+room-temperature campaign, which returns $n=2.03$--$2.18$ where the dynamic
+range is largest, the picture is that the opening is quadratic in its
+asymptotic regime and that the cold end of the island simply does not reach
+that regime before the mixing saturates.
 
 The practical consequence does not depend on the exponent. $\Bperp$ behaves as
 a switch rather than a dial: Sec.~\ref{sec:boundary} shows that raising it
@@ -386,17 +409,18 @@ in which the transverse-field route is not a recovery mechanism for
 high-temperature EIT: it changes the prefactor of a suppressed response, not
 the temperature at which the suppression sets in.
 
-\begin{figure}[t]
-\includegraphics[width=\columnwidth]{fig5_bperp_scaling.pdf}
+\begin{figure*}[t]
+\includegraphics[width=\textwidth]{fig5_bperp_scaling.pdf}
 \caption{Opening of the Raman pathway with transverse field, full
-Liouvillian. Solid curves are fits of $C=C_{\mathrm{res}}+a\Bperp^{n}$ over the
-pre-saturation range; the dotted line is a slope-2 reference. The fitted
-exponent is quoted only where it survives a change of upper cutoff
-(\SI{70}{\kelvin}); at the other temperatures the interval between the
-residual plateau and saturation is too narrow to determine it, and the legend
-says so.}
+Liouvillian. (a) Sector contrast against $\Bperp$; solid curves are fits of
+$C=C_{\mathrm{res}}+a\Bperp^{n}$ inside the perturbative window, whose ceiling
+$B_{\mathrm{pert}}$ and the full-mixing field $\gamma_{e}\Bperp=D_{gs}$ are
+marked. (b) The fitted exponent against the upper fitting cutoff. A power law
+appears as a plateau and a crossover as a drift: \SI{85}{\kelvin} plateaus at
+the expected $n=2$, while \SI{70}{\kelvin} and \SI{55}{\kelvin} drift
+monotonically and do not determine an exponent.}
 \label{fig:bperp}
-\end{figure}
+\end{figure*}
 
 % ===========================================================================
 \section{Where the boundary lies, and how well it is known}
@@ -568,10 +592,11 @@ dephasing argument describes.
 This also sharpens what would count as a decisive experiment. A transparency
 dip at a single temperature and field establishes little, since a dip is
 equally the signature of Autler--Townes splitting; the discriminating
-measurements are the $\Bperp^{2}$ opening at fixed temperature, the collapse
-of the contrast with temperature over several decades, and above all the
-change of sign near \SI{103}{\kelvin}, which no Autler--Townes mechanism
-produces and which we find to be resolvable in seconds. A measurement that
+measurements are the quadratic opening with transverse field at the warm end
+of the island, the collapse of the contrast with temperature over several
+decades, and above all the change of sign near \SI{103}{\kelvin}, which no
+Autler--Townes mechanism produces and which we find to be resolvable in
+seconds. A measurement that
 followed the fringe through zero and out the other side would test the
 pathway-interference account directly.
 

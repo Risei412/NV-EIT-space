@@ -296,43 +296,69 @@ def fig4_contrast_vs_T():
 def fig5_bperp_scaling():
     rows = _load_csv("p5_bperp_scaling.csv")
     summ = _load_json("p5_summary.json")
-    Ts = sorted({_f(r["T_K"]) for r in rows})
-    fig, ax = plt.subplots(figsize=(st.COL_1 * 1.5, 2.9))
+    B_pert = summ["physical_window"]["B_pert_T"]
+    B_mix = summ["physical_window"]["B_full_mixing_T"]
+    fits = summ["temperature_fits"]
+    oc0 = 0.1
+    Ts = sorted({_f(r["T_K"]) for r in rows if _f(r["Oc_GHz"]) == oc0})
 
+    fig, axes = plt.subplots(1, 2, figsize=(st.COL_2, 2.9))
+
+    # (a) the data and the fitted curves
+    ax = axes[0]
     for i, T in enumerate(Ts):
-        key = f"{T:.0f}"
-        f = summ["fits"].get(key, {})
-        sub = sorted([r for r in rows if _f(r["T_K"]) == T],
+        f = fits[f"{T:.0f}"]["contrast"]
+        sub = sorted([r for r in rows if _f(r["T_K"]) == T
+                      and _f(r["Oc_GHz"]) == oc0],
                      key=lambda r: _f(r["Bx_T"]))
-        B = np.array([_f(r["Bx_T"]) for r in sub])
+        Bv = np.array([_f(r["Bx_T"]) for r in sub])
         Cv = np.array([_f(r["C"]) for r in sub])
         col = C[st.CAT_ORDER[i % len(st.CAT_ORDER)]]
-        m = np.isfinite(Cv) & (Cv > 0) & (B > 0)
-        robust = f.get("window_robust", False)
-        lab = (f"{T:.0f} K:  $n$ = {f.get('n', float('nan')):.2f}"
-               + (r" $\pm$ " + f"{f.get('n_err', float('nan')):.2f}" if robust
-                  else " (window dependent)"))
-        ax.loglog(B[m], Cv[m], st.MARKERS[i % len(st.MARKERS)], color=col,
-                  ms=3.8, ls="none", label=lab)
-        # the fitted three-parameter curve over its own fitting range
+        m = np.isfinite(Cv) & (Cv > 0) & (Bv > 0)
+        ax.loglog(Bv[m], Cv[m], st.MARKERS[i % len(st.MARKERS)], color=col,
+                  ms=3.6, ls="none", label=f"{T:.0f} K")
         rng = f.get("fit_range_T")
         if rng and np.isfinite(f.get("n", np.nan)):
             bb = np.logspace(np.log10(rng[0]), np.log10(rng[1]), 60)
-            yy = f["C_res"] + f["a"] * bb ** f["n"]
-            good = yy > 0
-            ax.loglog(bb[good], yy[good], "-", color=col, lw=1.0, alpha=0.85)
-
-    Bref = np.array([2e-3, 3e-2])
-    ax.loglog(Bref, 0.9 * (Bref / Bref[-1]) ** 2 * 3e-3, ":", color=C["black"],
-              lw=1.0, label=r"slope 2, for reference")
+            yy = f["y_res"] + f["a"] * bb ** f["n"]
+            g = yy > 0
+            ax.loglog(bb[g], yy[g], "-", color=col, lw=1.0, alpha=0.9)
+    ax.axvline(B_pert, color=C["gray"], ls="--", lw=0.8)
+    ax.axvline(B_mix, color=C["gray"], ls=":", lw=0.8)
+    ax.text(B_pert * 0.92, 3e-6, r"$B_{\rm pert}$", fontsize=6.3,
+            color=C["gray"], ha="right", rotation=90)
+    ax.text(B_mix * 1.08, 3e-6, r"$\gamma_e B = D_{gs}$", fontsize=6.3,
+            color=C["gray"], ha="left", rotation=90)
     ax.set_xlabel(r"transverse field $B_\perp$ (T)")
     ax.set_ylabel(r"sector contrast $C$")
-    ax.legend(fontsize=6.2, loc="lower right")
-    ax.set_title("opening of the Raman pathway with transverse field",
-                 fontsize=8.5)
-    ax.text(0.03, 0.95,
-            "solid: fitted $C_{\\rm res}+aB_\\perp^{\\,n}$ below saturation",
-            transform=ax.transAxes, fontsize=6, va="top")
+    ax.legend(fontsize=6.5, loc="lower right")
+    st.panel_label(ax, "a")
+
+    # (b) exponent against fitting cutoff -- plateau vs drift
+    ax = axes[1]
+    for i, T in enumerate(Ts):
+        f = fits[f"{T:.0f}"]["contrast"]
+        w = f.get("n_by_window", {})
+        if not w:
+            continue
+        cuts = np.array([v["b_max"] for v in w.values()])
+        ns = np.array([v["n"] for v in w.values()])
+        er = np.array([v["n_err"] for v in w.values()])
+        o = np.argsort(cuts)
+        col = C[st.CAT_ORDER[i % len(st.CAT_ORDER)]]
+        rho = f.get("drift_rho")
+        tag = ("drifts" if f.get("monotone_drift") else "stable")
+        ax.errorbar(cuts[o], ns[o], yerr=er[o], fmt=st.MARKERS[i % 6] + "-",
+                    color=col, ms=3.4, lw=1.1, capsize=2,
+                    label=f"{T:.0f} K ({tag})")
+    ax.axhline(2.0, color=C["black"], ls=":", lw=1.0)
+    ax.text(ax.get_xlim()[1], 2.04, r"$n=2$", fontsize=6.5, ha="right",
+            va="bottom")
+    ax.set_xlabel(r"upper fitting cutoff $B_{\rm max}$ (T)")
+    ax.set_ylabel(r"fitted exponent $n$")
+    ax.legend(fontsize=6.3, loc="upper right")
+    st.panel_label(ax, "b")
+
     fig.tight_layout()
     _save(fig, "fig5_bperp_scaling")
 

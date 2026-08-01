@@ -91,7 +91,7 @@ def _metrics(d_MHz, C):
     return cmax, float(d_MHz[i0]), fwhm, at_edge
 
 
-def adaptive_spectrum(T, Bx, half_MHz=WIN_START_MHz):
+def adaptive_spectrum(T, Bx, half_MHz=WIN_START_MHz, Oc=OC):
     """Settle a two-photon window that actually contains the feature.
 
     Widens while the peak sits on the edge, while no half-maximum crossing
@@ -106,7 +106,7 @@ def adaptive_spectrum(T, Bx, half_MHz=WIN_START_MHz):
     for attempt in range(MAX_ATTEMPTS):
         info["attempts"] = attempt + 1
         d2s = np.linspace(-half_MHz * 1e-3, half_MHz * 1e-3, N_FINE)
-        sp = g2.full_spectrum(d2s, T=T, Bx=Bx, Bz=BZ0, Oc=OC)
+        sp = g2.full_spectrum(d2s, T=T, Bx=Bx, Bz=BZ0, Oc=Oc)
         d, Af, Ac, C = sp["d2_MHz"], sp["A_full"], sp["A_cut"], sp["C"]
         if not np.all(np.isfinite(C)):
             info.update(half_MHz=float(half_MHz), status="nonfinite")
@@ -141,11 +141,11 @@ def adaptive_spectrum(T, Bx, half_MHz=WIN_START_MHz):
     return d, Af, Ac, C, info
 
 
-def classify_point(T, Bx):
+def classify_point(T, Bx, Oc=OC):
     """Sign + lineshape + EIT/ATS verdict at one (T, B_perp) grid point."""
     t0 = time.time()
-    d, Af, Ac, C, info = adaptive_spectrum(T, Bx)
-    row = dict(T_K=float(T), Bx_T=float(Bx), Bz_T=float(BZ0), Oc_GHz=float(OC),
+    d, Af, Ac, C, info = adaptive_spectrum(T, Bx, Oc=Oc)
+    row = dict(T_K=float(T), Bx_T=float(Bx), Bz_T=float(BZ0), Oc_GHz=float(Oc),
                half_MHz=float(info.get("half_MHz", np.nan)),
                attempts=int(info["attempts"]))
 
