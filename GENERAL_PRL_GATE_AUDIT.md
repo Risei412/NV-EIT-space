@@ -119,12 +119,40 @@ PASS を維持するが、**「測定可能な設計則」の主張は engineere
 - **PRL 原稿が存在しない**。`Writing Paper/drafts/` にあるのは日本語の講義ノート1本で、
   経路モーメント関連の語彙は皆無。図4枚と数値認証は揃っているが本文は0行。
   REVTeX テンプレートも Supplement の構成表も無い。
-- **投稿凍結の項目が全て未達**：git tag（ローカルに
-  `pre-prl-cleanup-2026-08-01` を作成したが、リモートがタグ push を拒否するため
-  未反映。基準点はコミット `38d1e17`）、GitHub release、Zenodo DOI、
+- **投稿凍結の項目が全て未達**：git tag、GitHub release、Zenodo DOI、
   原稿への commit hash 記録。
-- **未処理のブランチ2本**。`claude/content-review-9afb78`（7コミット・約1900行、
-  `Theorem and proofs/` の modify/delete 衝突。SMRT 側の管轄を含むため選択的
-  cherry-pick が必要）と `claude/repository-content-review-yuwiox`（対象ファイルが
-  SMRT へ移管済み。ただし PR #16 マージ後に2コミット追加されているので
-  無条件削除は不可）。今回の整理では触れていない。
+
+## ブランチ整理の実施結果
+
+統合したもの（すべて本作業ブランチ `claude/prl-claim-calculation-check-vvrvx8` へ）：
+
+| ブランチ | 内容 |
+|---|---|
+| `agent/prl-gates-a-d-bundle-2026-08-01`（PR #20） | Gate A–D 独立監査バンドル（9ファイル） |
+| `claude/theorem-proof-code-audit-dt2ur4` | `AUDIT_theorem_and_code_2026-08-01.md` |
+| `claude/notion-question-db-audit-u05gz6` | Gate F5-C の結果とランナー |
+
+**削除できなかったもの（環境の制約）**。main の祖先であることを
+`git merge-base --is-ancestor` で14本すべて確認した上で削除を試みたが、
+`git push origin --delete` はいずれも **HTTP 403** で拒否された。同じ制約で
+**タグの push も拒否**される（`pre-prl-cleanup-2026-08-01` はローカルにのみ存在）。
+`/root/.ccr/README.md` は 403/407 を組織ポリシーによる拒否として扱い再試行しないよう
+指示しているため、削除は未実施のまま残している。リモートのブランチ数は 23 のまま。
+
+削除対象として検証済みの14本（すべて `claude/` 接頭辞）：
+`eit-no-go-numerics-l2v9i6`, `theorem-proof-plan-qnouqs`,
+`no-go-theorem-computation-o11kzl`, `no-go-theory-phenomena-3qqsjz`,
+`no-go-theory-tex-guide-ucx404`, `numerical-computation-plan-2y83n1`,
+`eit-definition-equivalence-7pcftx`, `theorem-revision-strategy-cx2yqf`,
+`claude-md-documentation-jgbjor`, `nbv-eit-no-go-access-7gdyjq`,
+`understand-commit-text-m4lqag`, `repository-content-review-vbly8p`,
+`repository-organization-o6k79k`, `eit-no-go-theory-publication-unvqb4`。
+リポジトリ管理者が GitHub 側から削除すれば済む。
+
+**意図的に触れていないもの**：
+- `claude/content-review-9afb78`（7コミット・約1900行。`Theorem and proofs/` に対する
+  modify/delete 衝突を必ず起こす。SMRT 側の管轄を含むため選択的 cherry-pick が必要）
+- `claude/repository-content-review-yuwiox`（対象ファイルが SMRT へ移管済み。ただし
+  PR #16 マージ後に2コミット追加されているので無条件削除は不可）
+- `claude/simulation-plan-markdown-pug2sy`, `claude/paper-1-numerical-methods-4lekau`
+  （計画文書のみ。基点が 7/16–7/17 と古く、SMRT 移管前のパス参照を含む可能性がある）
