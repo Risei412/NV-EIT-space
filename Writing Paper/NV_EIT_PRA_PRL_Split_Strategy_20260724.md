@@ -311,8 +311,12 @@ PRLでは、このうち少なくとも一つをEITとは独立したfull physic
   1桁上げるごとに信号が4桁落ちる。アンサンブル平均後のコントラスト
   （post-selected + shim で 2.63e-3）から検出限界 \(c_{\min} = 1.16\times10^{-6}\)（70 K）
   までの使用可能窓は 0.84 decade で、ノイズ入りフィットが必要とする 1 decade に届かない。
-  測定可能な設計則が成立するのは \(\Gamma\) を直接可変にできる engineered-dissipation
-  プラットフォームであり、NV は exact class の**認証**を与える witness である（Gate D §14 参照）。
+  NV は exact class の**認証**を与える witness である（Gate E §14 参照）。
+- **測定可能性は任意のengineered-dissipation platformには一般化できない**。Gate Eで
+  engineerable・asymptotic・detectableの共通窓を要求すると、Gate BのSC transferはFAIL。
+  3モードengineered-loss chainだけが、\(\Gamma/2\pi=15\text{–}45\,\mathrm{MHz}\)で
+  class 2/3を分離できる **model-level conditional pass** を得た。したがって実験主張は
+  この具体的有限窓に限定し、デバイス固有の実装検証を未解決事項として残す。
 
 ---
 
@@ -545,6 +549,23 @@ measurable scaling は「どのプラットフォームで読めるか」の問�
   robustness とクラス分類を理論結果として残し、実験識別可能性の主張は撤回して
   Supplement へ送るか、Gate A 不合格分岐と同様に PRA の設計原理へ統合する。
 
+### Gate E：漸近到達性 × SNR × 工学的到達性
+
+同一の散逸区間が
+
+\[
+I_E=I_{\rm engineerable}\cap I_{\rm asymptotic}\cap I_{\rm detectable}
+\]
+
+を満たすことを要求する。Gate Eの判定は、光学NV **FAIL**、Gate B SC transfer
+**FAIL**、3モード鎖 **MODEL-LEVEL CONDITIONAL PASS**。3モード鎖ではclass 3の
+global exponent 2.9002、Monte Carlo 95%区間[2.8286, 2.9779]がclass 2の
+[2.0680, 2.1090]と非重複で、最悪点でも40 s/点でSNR=10.21を得た。
+
+8状態Thue–Morse結合符号cycleは1000倍の滑らかな背景下でも指数を回収する。ただし
+可変損失回路、−190 dBm級の増幅校正、切替transient、feedthrough driftは未実証である。
+よって中心主張は構造的整数クラスの一般則とし、測定可能性は3モード鎖の具体的提案に限定する。
+
 ---
 
 ## 15. PRLの推奨ストーリー
@@ -713,9 +734,9 @@ full-Liouvillian \(T\)–\(B_\perp\)相図、温度境界の不確かさ、obser
 robustness と crossover（Gate D P6：NV は exact class、超伝導は
 \(\Gamma_\ast(\epsilon) \propto 1/\epsilon\) の approximate class）も揃っている。
 
-**残る条件は範囲設定であって計算ではない。** 上記 §12.3 の2点、すなわち
-Gate B の実験窓が未解決であることと、光学NVでは指数が読めないことを本文に明記し、
-「測定可能な設計則」の主張を engineered-dissipation プラットフォームに限定する必要がある。
+**Gate Eにより範囲設定は確定した。** Gate BのSC transferと光学NVでは指数が読めず、
+3モードengineered-loss chainのみがmodel-level conditional passである。本文では
+構造的整数クラスを一般主張とし、測定可能性をこの具体的有限窓に限定する必要がある。
 各ゲートの `overall_pass` が検査していない項目の監査は
 `GENERAL_PRL_GATE_AUDIT.md` に記録している。
 
