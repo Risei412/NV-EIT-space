@@ -12,6 +12,8 @@
       "nu_obs_pred": 2,
       "nu_obs_cert": 2,
       "nu_obs_tail_fit": 1.9984115039828823,
+      "cert_present": true,
+      "cert_source": "gate_a_symbolic",
       "pred_cert_agree": true,
       "fit_agree": true,
       "agree": true
@@ -26,6 +28,8 @@
       "nu_obs_pred": 4,
       "nu_obs_cert": 4,
       "nu_obs_tail_fit": 3.9984115039706234,
+      "cert_present": true,
+      "cert_source": "gate_a_symbolic",
       "pred_cert_agree": true,
       "fit_agree": true,
       "agree": true
@@ -40,6 +44,8 @@
       "nu_obs_pred": 6,
       "nu_obs_cert": 6,
       "nu_obs_tail_fit": 5.998411503945576,
+      "cert_present": true,
+      "cert_source": "gate_a_symbolic",
       "pred_cert_agree": true,
       "fit_agree": true,
       "agree": true
@@ -52,11 +58,14 @@
       "n21": 2,
       "nu_den": 0,
       "nu_obs_pred": 4,
-      "nu_obs_cert": null,
+      "nu_obs_cert": 4,
       "nu_obs_tail_fit": 3.9959437037409216,
+      "cert_present": true,
+      "cert_source": "RoomT step3 symbolic pencil (Dperp, Lperp free)",
       "pred_cert_agree": true,
       "fit_agree": true,
-      "agree": true
+      "agree": true,
+      "pencil_check_max_abs_err": 8.881784197001252e-16
     }
   ],
   "nv_exact_certificate": {
@@ -68,6 +77,8 @@
     "inheritance_ok": true,
     "smrt_class": "Class II (finite suppression order)"
   },
+  "nv_cert_cross_route_agree": true,
+  "all_bilinear_models_certified": true,
   "qfi_quadratic": {
     "nu_x": 2.009710624805443,
     "nu_F": 4.004449101892334,
@@ -147,5 +158,5 @@
     "G_O5_three_route_and_modifiers": true,
     "overall_pass": true
   },
-  "runtime_s": 9.4
+  "runtime_s": 24.31
 }

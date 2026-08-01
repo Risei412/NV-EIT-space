@@ -22,7 +22,8 @@ import sympy as sp
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _NOGO_SRC = os.path.join(_HERE, "..", "..", "..", "No-go theorem", "src")
-for _p in (_HERE, _NOGO_SRC):
+_ROOMT_SRC = os.path.join(_HERE, "..", "..", "RoomT", "src")
+for _p in (_HERE, _NOGO_SRC, _ROOMT_SRC):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
@@ -105,11 +106,55 @@ def synthetic_specs(g_eff=1e-3, beta=1.0):
 # ----------------------------------------------------------------------
 # Physical NV EIT bilinear pencil (No-go theorem/src/nv_model.py)
 # ----------------------------------------------------------------------
-def nv_spec(T_boundary_K=300.0):
+def _assert_numeric_matches_symbolic(spec, tol=1e-9):
+    """Check that the attached symbolic pencil is the same object as the numeric
+    one, so the exact certificate certifies the model actually being evaluated.
+
+    Without this the certificate is decorative: nothing otherwise ties
+    step3's exact rational pencil to the floats that nv_model.legs() produces
+    from an eigen-decomposition. Legs are compared up to a global phase (the
+    eigenvector phase convention in nv_model.dressed_ground is arbitrary).
+    """
+    dp_sym = np.array(spec.dp_sym.evalf(), dtype=complex).flatten()
+    dc_sym = np.array(spec.dc_sym.evalf(), dtype=complex).flatten()
+
+    for name, num, sym in (("dp", spec.dp, dp_sym), ("dc", spec.dc, dc_sym)):
+        overlap = abs(np.vdot(sym, num)) / (np.linalg.norm(sym) * np.linalg.norm(num))
+        if abs(overlap - 1.0) > 1e-9:
+            raise AssertionError(
+                f"NV {name}: numeric leg and symbolic leg differ "
+                f"(|overlap| = {overlap!r}, expected 1). The exact certificate "
+                f"would not describe the numeric SectorSpec."
+            )
+
+    B_num = spec.B_of_z(0.0)
+    B_sym = np.array(
+        spec.B_sym_of_z(0.0).subs(spec.meta["symbolic_subs"]).evalf(), dtype=complex
+    )
+    err = float(np.max(np.abs(B_num - B_sym)))
+    if err > 1e-6 * max(1.0, float(np.max(np.abs(B_num)))):
+        raise AssertionError(
+            f"NV pencil: numeric B_of_z(0) and symbolic B_sym_of_z(0) differ by {err}"
+        )
+    return dict(leg_overlap_ok=True, pencil_max_abs_err=err)
+
+
+def nv_spec(T_boundary_K=300.0, symbolic=True, symbolic_subs=None):
     """NV(-) ZPL spin-Lambda EIT reduced pencil, matching RoomT step3's
     numeric_cross_check convention: A = Gamma*I + i*2pi*(H - z*I), Gamma the
     native excited dissipation scale. Probe on orbital X / ms=0, control on
-    orbital Y / ms=-1 (dp^dag dc = 0 -> n12 = 2 -> nu_obs = 4)."""
+    orbital Y / ms=-1 (dp^dag dc = 0 -> n12 = 2 -> nu_obs = 4).
+
+    With symbolic=True the exact rational pencil from RoomT step3 is attached
+    (shared builder, not a second implementation) so Gate A can evaluate the
+    exact Gamma-degree certificate on the physical model rather than only on
+    the synthetic family. The symbolic legs used are step3's LEGS_NV_MODEL
+    pair, i.e. the ones nv_model.legs() actually produces; the attachment is
+    verified by _assert_numeric_matches_symbolic.
+
+    symbolic=False reproduces the historical certificate-free spec and is kept
+    so the "missing certificate must fail the gate" regression can be written.
+    """
     import nv_model as nm
 
     Bvec = (0.0, 0.0, 0.02)
@@ -137,4 +182,26 @@ def nv_spec(T_boundary_K=300.0):
     )
     spec.meta["gamma_phys_300K"] = float(nm.gamma_oc_GHz(T_boundary_K, D_STRAIN))
     spec.meta["gamma_phys_10K"] = float(nm.gamma_oc_GHz(10.0, D_STRAIN))
+
+    if symbolic:
+        import step3_merged_manifold_moments as step3
+
+        pen = step3.symbolic_pencil(z_val=0, legs=step3.LEGS_NV_MODEL)
+        spec.D_sym = pen["D_sym"]
+        spec.B_sym_of_z = pen["B_sym_of_z"]
+        spec.dp_sym = pen["dp_sym"]
+        spec.dc_sym = pen["dc_sym"]
+        # Dperp / Lperp stay free symbols so the degree result is generic in
+        # the two couplings that determine it; the numeric-vs-symbolic check
+        # substitutes nv_model's fitted values only to compare the pencils.
+        spec.meta["symbolic_subs"] = {
+            pen["Dperp"]: float(nm.P["Dperp"]),
+            pen["Lperp"]: float(nm.P["Lperp"]),
+        }
+        spec.meta["cert_source"] = "RoomT step3 symbolic pencil (Dperp, Lperp free)"
+        spec.meta["symbolic_legs"] = step3.LEGS_NV_MODEL
+        spec.meta["pencil_check"] = _assert_numeric_matches_symbolic(spec)
+        if symbolic_subs:
+            spec.meta["cert_subs"] = symbolic_subs
+
     return spec
