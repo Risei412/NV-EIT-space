@@ -1,4 +1,4 @@
-# NV–EIT PRL Gates A–D Calculation Bundle
+# NV–EIT PRL Gates A–E Calculation Bundle
 
 **Frozen:** 2026-08-01  
 **Repository target:** `Risei412/NV-EIT-space`  
@@ -13,6 +13,7 @@
 | Gate C | PASS | Classes 1 and 2 recur across diamond and circuit-QED platforms; a minimal non-NV three-mode chain supplies the missing class-3 witness. |
 | Gate D | Model-level PASS | A threefold finite-dissipation window retains an effective amplitude order near 3 at finite SNR. |
 | Gate D-final | PASS with selected protocol | An eight-state Thue–Morse coupling-sign cycle rejects static feedthrough and smooth background drift and preserves quantitative order recovery. |
+| Gate E | Model-level CONDITIONAL PASS | The joint engineerable–asymptotic–detectable window fails for optical NV and the Gate-B SC transfer, but a 15–45 MHz three-mode-chain window separates classes 2 and 3 at finite SNR. |
 
 ## Central non-NV class-3 witness
 
@@ -41,6 +42,19 @@ The final calculation selects coupling-sign phase cycling with the eight-state T
 ```
 
 which cancels background Taylor moments of temporal degree 0, 1, and 2. In the model audit it recovers the class-3 exponent with a background up to `10^4` times the strongest marked signal, subject to a measured smooth-drift condition and switching-transient control.
+
+## Gate E claim boundary
+
+Gate E requires the same loss interval to be engineerable, asymptotic enough for class
+identification, and detectable. Optical NV and the Gate-B superconducting transfer witness fail
+this joint test. The three-mode chain gives a model-level conditional pass for
+`Gamma/2pi = 15–45 MHz`: the class-3 95% slope interval `[2.8286, 2.9779]` is disjoint from
+the class-2 interval `[2.0680, 2.1090]`, and the worst point reaches SNR 10.21 with 40 s
+integration under the stated 3 K, −110 dBm input model.
+
+This is not a device-level experimental pass. Tunable loss hardware, amplifier calibration near
+−190 dBm, coupling-sign switching transients, and the measured feedthrough drift spectrum remain
+open engineering checks.
 
 ## Directory layout
 
