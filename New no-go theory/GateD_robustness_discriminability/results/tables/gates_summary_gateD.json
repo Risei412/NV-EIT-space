@@ -122,25 +122,227 @@
     "fan_ok": true
   },
   "p8_required_gamma_range": {
-    "per_window": [
-      {
-        "window_decades": 1,
-        "slope_err": 2.085138338170367e-05
+    "criterion": "|bias| + 2*std < 0.5 on the fitted log-log slope",
+    "per_sigma_rel": {
+      "0.01": {
+        "sigma_rel": 0.01,
+        "per_window": [
+          {
+            "window_decades": 1,
+            "truth": 1.9999786584328023,
+            "bias": -0.00033001206352767376,
+            "std": 0.0046121982603379175,
+            "closed_form_std": 0.004690916539940599,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 2,
+            "truth": 1.9999910797994849,
+            "bias": -0.00019305763329557912,
+            "std": 0.0017533652046425082,
+            "closed_form_std": 0.0017664693897635345,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 3,
+            "truth": 1.9999952384946311,
+            "bias": -6.655951878320465e-05,
+            "std": 0.0009509397475468049,
+            "closed_form_std": 0.000981842828706093,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 4,
+            "truth": 1.999997069722369,
+            "bias": -2.269158034184926e-05,
+            "std": 0.0006517917527510871,
+            "closed_form_std": 0.0006444123141563683,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 5,
+            "truth": 1.999998023131096,
+            "bias": 1.9052174168310287e-05,
+            "std": 0.0004679337462754038,
+            "closed_form_std": 0.0004639971462313296,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 6,
+            "truth": 1.9999985789210024,
+            "bias": -3.745665531740272e-05,
+            "std": 0.00034850819854128864,
+            "closed_form_std": 0.0003544491622367639,
+            "resolves_adjacent_class": true
+          }
+        ],
+        "decades_needed": 1
       },
-      {
-        "window_decades": 2,
-        "slope_err": 8.622865907970123e-06
+      "0.03": {
+        "sigma_rel": 0.03,
+        "per_window": [
+          {
+            "window_decades": 1,
+            "truth": 1.9999786584328023,
+            "bias": -0.0009945921611660413,
+            "std": 0.013868419655333608,
+            "closed_form_std": 0.014072749619821797,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 2,
+            "truth": 1.9999910797994849,
+            "bias": -0.000578293638429983,
+            "std": 0.005269060300580984,
+            "closed_form_std": 0.0052994081692906035,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 3,
+            "truth": 1.9999952384946311,
+            "bias": -0.00020259156240332032,
+            "std": 0.0028600335152149893,
+            "closed_form_std": 0.002945528486118279,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 4,
+            "truth": 1.999997069722369,
+            "bias": -6.798746931058197e-05,
+            "std": 0.0019583950440000223,
+            "closed_form_std": 0.0019332369424691046,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 5,
+            "truth": 1.999998023131096,
+            "bias": 5.645398789311251e-05,
+            "std": 0.0014067281643040702,
+            "closed_form_std": 0.0013919914386939889,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 6,
+            "truth": 1.9999985789210024,
+            "bias": -0.00011315145842516472,
+            "std": 0.0010481135609046273,
+            "closed_form_std": 0.0010633474867102917,
+            "resolves_adjacent_class": true
+          }
+        ],
+        "decades_needed": 1
       },
-      {
-        "window_decades": 3,
-        "slope_err": 4.574723552641657e-06
+      "0.1": {
+        "sigma_rel": 0.1,
+        "per_window": [
+          {
+            "window_decades": 1,
+            "truth": 1.9999786584328023,
+            "bias": -0.003388715288734856,
+            "std": 0.046948124826609566,
+            "closed_form_std": 0.046909165399406,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 2,
+            "truth": 1.9999910797994849,
+            "bias": -0.0019254334016849395,
+            "std": 0.017793992604024866,
+            "closed_form_std": 0.017664693897635347,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 3,
+            "truth": 1.9999952384946311,
+            "bias": -0.0007120701228666704,
+            "std": 0.009692263488490066,
+            "closed_form_std": 0.009818428287060931,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 4,
+            "truth": 1.999997069722369,
+            "bias": -0.00022472254873040498,
+            "std": 0.00661541841941691,
+            "closed_form_std": 0.006444123141563683,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 5,
+            "truth": 1.999998023131096,
+            "bias": 0.00018032271499346386,
+            "std": 0.004761935238193686,
+            "closed_form_std": 0.004639971462313297,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 6,
+            "truth": 1.9999985789210024,
+            "bias": -0.00038913419282526895,
+            "std": 0.0035526301815622906,
+            "closed_form_std": 0.003544491622367639,
+            "resolves_adjacent_class": true
+          }
+        ],
+        "decades_needed": 1
       },
-      {
-        "window_decades": 4,
-        "slope_err": 2.804286651336696e-06
+      "0.2": {
+        "sigma_rel": 0.2,
+        "per_window": [
+          {
+            "window_decades": 1,
+            "truth": 1.9999786584328023,
+            "bias": -0.007124758449334578,
+            "std": 0.09837832900121067,
+            "closed_form_std": 0.093818330798812,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 2,
+            "truth": 1.9999910797994849,
+            "bias": -0.0038683051914307764,
+            "std": 0.03709098441998779,
+            "closed_form_std": 0.03532938779527069,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 3,
+            "truth": 1.9999952384946311,
+            "bias": -0.0015534650812922823,
+            "std": 0.02036993570336801,
+            "closed_form_std": 0.019636856574121862,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 4,
+            "truth": 1.999997069722369,
+            "bias": -0.0004261608731330746,
+            "std": 0.01383984253592669,
+            "closed_form_std": 0.012888246283127366,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 5,
+            "truth": 1.999998023131096,
+            "bias": 0.0003358832791684474,
+            "std": 0.010006463877478835,
+            "closed_form_std": 0.009279942924626593,
+            "resolves_adjacent_class": true
+          },
+          {
+            "window_decades": 6,
+            "truth": 1.9999985789210024,
+            "bias": -0.0008343467168117069,
+            "std": 0.007474433287607954,
+            "closed_form_std": 0.007088983244735278,
+            "resolves_adjacent_class": true
+          }
+        ],
+        "decades_needed": 1
       }
-    ],
+    },
     "decades_needed": 1,
+    "decades_needed_well_resolved": 1,
     "delta_nu_resolvable": true
   },
   "p8_gamma_T_mapping": {
@@ -183,25 +385,154 @@
     "nv_decades": 8.461363622785427,
     "siv_decades": 1.649722824682518,
     "snv_decades": 0.6280828570353334,
-    "sc_decades_available": 9.0,
+    "sc_decades_swept": 4.0,
+    "sc_decades_engineerable": 2.6989700043360187,
+    "sc_kappa_engineerable_GHz": [
+      0.0001,
+      0.05
+    ],
     "regime_SiV_300K": 24.51366955685597,
     "regime_SnV_300K": 2.0836619123327575
   },
   "p8_optical_snr": {
-    "gamma_h_GHz": 13.831007407501145,
-    "sigma_zpl_cm2": 5.638672340909382e-14,
-    "spectral_fraction": 0.46103358025003816,
-    "od_sector": 19.063860179366316,
-    "min_detectable_contrast": 0.0001064737419490125,
-    "representative_contrast": 0.01,
-    "detectable": true,
-    "operating_point": {
-      "n_nv_cm3": 1.76e+17,
-      "L_cm": 0.05,
-      "tau_s": 3600.0,
+    "provenance": {
+      "contrast_source": "../../../No-go theorem/results/tables/gate5_ensemble_contrast.csv",
+      "note": "contrasts are ensemble-averaged results of the PRA campaign's Gate 5; the previous hard-coded 1e-2 corresponded to the un-averaged single-defect scenario",
+      "gating_scenario": "post_selected_shimmed",
+      "gating_rationale": "Gate 5's own pass criterion is that the post-selected, field-shimmed configuration stays above 1e-3"
+    },
+    "floor_at_candidate_T": {
+      "T_K": 70.0,
+      "gamma_h_GHz": 72.25969464371656,
+      "sigma_zpl_cm2": 1.0792810473406987e-14,
+      "spectral_fraction": 1.0,
+      "od_sector": 7.914727680498458,
+      "min_detectable_contrast": 1.1599051535422284e-06,
+      "target_snr": 5.0,
+      "operating_point": {
+        "n_nv_cm3": 1.76e+17,
+        "L_cm": 0.05,
+        "tau_s": 3600.0,
+        "density_ppm": 1.0
+      }
+    },
+    "floor_at_50K_previous_convention": {
       "T_K": 50.0,
-      "density_ppm": 1.0
-    }
+      "gamma_h_GHz": 13.831007407501145,
+      "sigma_zpl_cm2": 5.638672340909382e-14,
+      "spectral_fraction": 0.46103358025003816,
+      "od_sector": 19.063860179366316,
+      "min_detectable_contrast": 0.0001064737419490125,
+      "target_snr": 5.0,
+      "operating_point": {
+        "n_nv_cm3": 1.76e+17,
+        "L_cm": 0.05,
+        "tau_s": 3600.0,
+        "density_ppm": 1.0
+      }
+    },
+    "min_detectable_contrast": 1.1599051535422284e-06,
+    "per_scenario": {
+      "single": {
+        "contrast": 0.01360014974074735,
+        "washout_factor": 1.0,
+        "margin_over_floor": 11725.22572144276,
+        "sigma_rel_per_point": 1.705724092238546e-05,
+        "detectable": true
+      },
+      "low_density": {
+        "contrast": 0.0005721492074293866,
+        "washout_factor": 0.04206933146590091,
+        "margin_over_floor": 493.2724073878826,
+        "sigma_rel_per_point": 0.0004054554785642629,
+        "detectable": true
+      },
+      "high_density": {
+        "contrast": 0.00012895685598832745,
+        "washout_factor": 0.009482017363526548,
+        "margin_over_floor": 111.17879388198834,
+        "sigma_rel_per_point": 0.001798904206608786,
+        "detectable": true
+      },
+      "post_selected": {
+        "contrast": 0.0009451684220583797,
+        "washout_factor": 0.06949691290725754,
+        "margin_over_floor": 814.8669907810433,
+        "sigma_rel_per_point": 0.00024543882899011733,
+        "detectable": true
+      },
+      "post_selected_shimmed": {
+        "contrast": 0.0026330768063651836,
+        "washout_factor": 0.19360645702864826,
+        "margin_over_floor": 2270.079409789709,
+        "sigma_rel_per_point": 8.810264484030856e-05,
+        "detectable": true
+      }
+    },
+    "representative_contrast": 0.0026330768063651836,
+    "detectable": true,
+    "worst_case_scenario": "high_density",
+    "worst_case_detectable": true
+  },
+  "p8_slope_budget": {
+    "rows": [
+      {
+        "platform": "NV optical EIT (single)",
+        "nu": 4.0,
+        "readout": "ZPL absorption contrast vs Gamma(T)",
+        "window_decades": 1.0172803030095403,
+        "sigma_rel": 1.705724092238546e-05,
+        "decades_needed": 1,
+        "class_resolvable": true
+      },
+      {
+        "platform": "NV optical EIT (post_selected_shimmed)",
+        "nu": 4.0,
+        "readout": "ZPL absorption contrast vs Gamma(T)",
+        "window_decades": 0.8390102623853152,
+        "sigma_rel": 8.810264484030856e-05,
+        "decades_needed": 1,
+        "class_resolvable": false
+      },
+      {
+        "platform": "NV optical EIT (high_density)",
+        "nu": 4.0,
+        "readout": "ZPL absorption contrast vs Gamma(T)",
+        "window_decades": 0.511505489576116,
+        "sigma_rel": 0.001798904206608786,
+        "decades_needed": 1,
+        "class_resolvable": false
+      },
+      {
+        "platform": "SC transfer (generic)",
+        "nu": 1.0,
+        "readout": "bus transmission amplitude vs kappa",
+        "window_decades": 2.6989700043360187,
+        "sigma_rel": 0.01,
+        "decades_needed": 1,
+        "class_resolvable": true
+      },
+      {
+        "platform": "SC transfer (protected)",
+        "nu": 2.0,
+        "readout": "bus transmission amplitude vs kappa",
+        "window_decades": 2.6989700043360187,
+        "sigma_rel": 0.01,
+        "decades_needed": 1,
+        "class_resolvable": true
+      },
+      {
+        "platform": "3-mode chain (class 3)",
+        "nu": 3.0,
+        "readout": "marked-port transmission amplitude vs engineered loss",
+        "window_decades": 3.0,
+        "sigma_rel": 0.01,
+        "decades_needed": 1,
+        "class_resolvable": true
+      }
+    ],
+    "any_platform_resolvable": true,
+    "optical_nv_resolvable": true
   },
   "quick": false,
   "gates": {
@@ -211,7 +542,8 @@
     "G_D4_required_gamma_range": true,
     "G_D5_gammaT_platform_reach": true,
     "G_D6_optical_snr_discriminability": true,
+    "G_D7_slope_measurable": true,
     "overall_pass": true
   },
-  "runtime_s": 0.05
+  "runtime_s": 1.51
 }
