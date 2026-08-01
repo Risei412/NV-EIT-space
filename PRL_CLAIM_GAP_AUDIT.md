@@ -18,8 +18,15 @@ and ALL PASSED」と記録しているが、これは各スクリプトが自ら
 | 3 SNR変換鎖 | 5 | 0 | 5 | 0 |
 | 4 閾値の不確かさ帯 | 5 | 3 | 2 | 0 |
 | 5 アンサンブル平均 | 8 | 3 | 4 | 1 |
+| 6 論文図 Fig.1–4 | 4 | 0 | 3 | 1 |
+| 7 テスト | 7 | 7 | 0 | 0 |
+| 7 CI要件 | 3 | 2 | 0 | 1 |
+| 8 投稿凍結 | 5 | 0 | 1 | 4 |
 
-投稿前に**必ず**埋めるべき欠落（主張の成立に直結）は §「Blocker」の5件。
+投稿前に**必ず**埋めるべき欠落（主張の成立に直結）は §「Blocker」の6件。
+
+§7 のテストは7項目すべてが実装済みで、`python -m pytest tests/ -q` は
+**23 passed (1.89 s)**。仕様の中で最も充実している節である。
 
 ---
 
@@ -78,6 +85,26 @@ T_1pct / T_0.1pct / T_0.01pct / T_sign の4つのみで、**T_no-go は定義も
 出力 `gate4_threshold_bands.csv` も4行。
 → no-go 主張そのものの温度境界に区間が付かないと、論文の中心主張が単一数値の
 まま残り、Gate 4 の目的（区間化）を主張の核心部分で満たさない。
+
+### B6. §6 — 論文 Figure 1–4 が1枚も合成されていない
+`scripts/reproduce_prl_figures.py` は仕様どおり「薄いラッパ + assert」だが、
+STEPS (`:17-24`) が呼ぶのは `run_prl_prediction.py` と `gate1`–`gate5` の
+6本のみ、EXPECTED (`:26-40`) の13ファイルもすべて `gate*_*.png/csv/json` で、
+**`fig1`–`fig4` という論文図は1つも assert されていない**。§6 の表が指定する
+`bperp_kernel_map_v2.py` / `bperp_full_lowfield_slope.py` /
+`moment_order_common_pipeline.py` は STEPS に入っておらず、前2者は
+そもそも `savefig` を持たない（json/npz のみ）。
+→ Fig.1（Liouvillian ブロック構造・sector S・Schur 補・B⊥=0 禁制 vs
+B⊥≠0 escape channel）は **完全に未実装**：`src/` を "Schur" /"schematic" /
+"block structure" で grep してヒット0。論文の中核メカニズムを図で
+提示する手段が存在しない。
+
+**混同注意**: `Writing Paper/prl_figures/` の `fig1_classes.py` …
+`fig4_robustness.py` は**別論文の図**である。`NV_EIT_PRA_PRL_Split_Strategy_
+20260724.md` によればこちらは PRA/PRL 分割戦略の「一般理論PRL」
+（Gate A–D: 整数クラス／observable 継承／物質独立性／robustness）の
+Fig.1–4 で、SIMULATION_PLAN §6 が要求する NV-EIT（Gate 1–5）の Fig.1–4 とは
+中身が全く別。「Fig.1–4 は既にある」と誤認しやすいが、§6 の図は依然0枚。
 
 ---
 
@@ -281,6 +308,87 @@ Blocker B5 に加えて:
   軽微な近似として `member_context` (`:67-72`) は phi=0 固定・B⊥ をノルムのみで
   扱うため、各配向で B⊥ と strain 軸の相対方位角が変化しない。
 
+## §6 — 論文 Figure 1–4
+
+Blocker B6 に加えて、図ごとの判定:
+
+| 図 | 判定 | 状況 |
+|---|---|---|
+| Fig.1 | **未実装** | schematic がコード化されておらず、`moment_order_common_pipeline.py` の inset 合成もない |
+| Fig.2 | 部分的（データのみ） | slope は `bperp_kernel_map_v2.py:122-128`, `bperp_full_lowfield_slope.py:33-34` で計算・JSON化されるが両者に `savefig` がなく図は未合成 |
+| Fig.3 | 部分的 | (T,B⊥) contrast カラーマップと 1e−2/1e−3/1e−4 contour は `run_prl_prediction.py:238-244` にある。**符号反転線は同図になく**別の1D図に分離 (`:249` の `axvline` 101.44 K)、**EIT/ATS 境界は未描画**（Gate 1 の Ωc 交差は ΔAIC vs Ωc の1Dのみ）、**visibility 境界（Gate 3由来）は完全に不在**（`gate3_snr_map.py:132` の SNR=5 フロンティアは (density, τ) 面にあり (T,B⊥) 面へ写像されていない） |
+| Fig.4 | 部分的 | on/off スペクトルは `run_prl_prediction.py:253-257`、EIT/ATS フィット重ね描きは `gate1_candidate_aic_bootstrap.py:269-279`（2×2の左上）。**AICc/BIC を並べるパネルはなく**（`:129-131` で計算され JSON に入るだけ）、**透過+SNR パネルも別図**（しかも透過スペクトルではなく density×τ の SNR マップ）。4図とも1枚の PRL 図に組まれていない |
+
+→ Fig.3 の visibility 境界と符号反転線がないと「理論的に開いている領域」と
+「実際に見える領域」の区別＝no-go 主張の定量的な線が読者に示せない。
+Fig.4 の SNR/透過パネルがないと feasibility 主張（Decision B）が本文図で
+裏づけられない。
+
+### 図生成の二重化・出力パス不整合
+
+- **`Writing Paper/prl_figures` はクリーン clone でビルド不能**。
+  `make_figures.py` が
+  `../../../New no-go theory/PhaseO_observable_inheritance/src/gate_a_observable.py`
+  を import し、そこで `import sympy` が失敗する（`No-go theorem/requirements.txt`
+  には sympy があるが、こちらのディレクトリに requirements がなく依存が
+  跨りディレクトリでリンクしている）。
+- **出力パスが二重化している**。`run_prl_prediction.py:84` は
+  `No-go theorem/{outputs,figures,tables}/` に書くが、commit 済みの成果物は
+  `No-go theorem/results/{figures,tables,metadatas}/` にある。クリーン clone で
+  再実行すると `No-go theorem/figures/fig1_branch_resolved_phase_map.png` が
+  新規生成され、`results/figures/` の同名ファイルは更新されないまま二重化する。
+  `reproduce_prl_figures.py` の EXPECTED は `results/` 側の gate 出力しか
+  見ないため、この不整合を検出できない（削除した `results/figures/fig1..fig6`
+  が復元されないまま "all 13 expected outputs present" と成功報告した）。
+  → 投稿版の図がどのディレクトリの版か一意に決まらないと、原稿の図と
+  再現スクリプトの出力が食い違うリスクが残る。
+- `reproduce_prl_figures.py` は `Writing Paper/prl_figures` 側を一切呼ばず、
+  「単一エントリポイント」要求に反する二重系統になっている。
+
+## §7 — 自動テスト（仕様を満たしている）
+
+`No-go theorem/tests/test_core.py`（167行、19テスト関数）。7項目すべて実装済み:
+
+| 要求 | テスト関数 |
+|---|---|
+| 1 trace/Hermiticity 保存 | `test_steady_state_trace_hermiticity_positivity` (`:92-98`) |
+| 2 positivity ≥ −1e−10 | 同上 (`:97`, `min(eigvalsh(rho)) >= -1e-10`) |
+| 3 zero-control / zero-field / cut-sector 極限 | `test_zero_control_limit` (`:100`), `test_zero_field_limit` (`:105`), `test_cut_sector_limit` (`:117`) |
+| 4 weak-probe 有限差分 | `test_finite_difference_response` (`:125-138`) — `first_order` と `steady_state(L+V)` を相対 1e−3 で比較 |
+| 5 周波数グリッド収束 | `test_frequency_grid_convergence` (`:140-144`) — n=401 vs 801 で Cmax 変化 <1 % |
+| 6 signal_chain 単位変換 | `test_signal_chain_units` (`:146-155`) |
+| 7 固定 seed / 判定再現性 | `test_model_comparison_reproducibility` (`:157-162`) — `fit_all` 2回で ΔAIC と verdict が bit-identical |
+
+`python -m pytest tests/ -q` → **23 passed (1.89 s)**。
+軽微な点: 項目5は「グリッドを半分に」でなく「2倍に」（数学的に等価）。
+警告1件 — `test_operational_cut_equivalence.py` の関数が None でなく tuple を
+return（`PytestReturnNotNoneWarning`、assert 忘れの可能性）。
+
+### CI 要件
+
+- `matplotlib.use('Agg')`: **全 gate スクリプトにあり**（gate1–gate5,
+  `run_prl_prediction.py`, および `New no-go theory/` の `run_gate_{a,b,c,d}.py`）。
+- 実行時間: クリーン clone で `reproduce_prl_figures.py --quick` が **86 秒**で
+  完走（laptop 級 <30 分を満たす）。フル実行は未計測。
+- **`--n-samples` フラグは未実装**。`gate4_threshold_uncertainty.py:109` は
+  `n_samples = 60 if quick else 500` のハードコードで、CLI は `--quick` のみ
+  (`:180`)。gate1–5 いずれにも argparse がない。→ Monte Carlo 標本数を外から
+  変えられないと、閾値バンド（T_sign = 102 K [95,109] 等）の収束性を
+  第三者が検証できない。
+
+## §8 — 投稿凍結
+
+| 要求 | 判定 |
+|---|---|
+| コミットの tag | **未実装**（`git tag` の出力が空） |
+| GitHub release | **未実装**（tag がないため） |
+| Zenodo DOI | **未実装**（`.md`/`.tex` に記載なし） |
+| 原稿への commit hash 記録 | **未実装**（`Writing Paper/drafts/*.tex` に記載なし） |
+| クリーン clone からの全論文図再生成 | 部分的 — 実測で clone → `results/figures`,`results/tables` 削除 → `--quick` 実行 → exit 0（86 秒、13 出力すべて存在、T_sign 101.4 K など全 Gate の pass 判定も再現）。ただし再生成されるのは **Gate 診断図のみ**で、論文 Fig.1–4 は対象外なので「every paper figure」は満たしていない |
+
+→ §6 の図合成スクリプトが存在しない限り、§8 の「clean clone で全論文図が出る」
+は原理的に達成不能。
+
 ---
 
 ## 是正の優先順
@@ -298,3 +406,14 @@ Blocker B5 に加えて:
 8. Gate 4 の事前分布3項目追加、全事前分布の文献引用、`priors: null` バグ修正。
 9. `run_prl_prediction.py:222` を含む主張文の有効数字をバンド幅に合わせる。
 10. Gate 1 の窓 +25 %、σ/depth 全水準の合否算入、モデル関数の二重実装の解消。
+11. **B6** NV-EIT 用の `make_prl_fig{1,2,3,4}.py` を新規作成し
+    `reproduce_prl_figures.py` の STEPS/EXPECTED に追加。Fig.1 の Liouvillian
+    schematic が完全に未着手で最大の穴。Fig.3 には符号反転線・EIT/ATS 境界・
+    Gate 3 visibility 境界を (T,B⊥) 面へ写像して重ね描き、Fig.4 は
+    AICc/BIC パネル＋透過スペクトル＋SNR を1枚に合成。
+12. 出力ディレクトリを `results/` に統一（`run_prl_prediction.py:84`）し、
+    `results/figures/fig1..fig6` を EXPECTED に追加。
+    `Writing Paper/prl_figures` に requirements（sympy 含む）を明記し、
+    どちらの PRL の図かを README 冒頭で曖昧さなく宣言。
+13. `gate4_threshold_uncertainty.py` に `--n-samples`（argparse）を追加。
+14. tag / GitHub release / Zenodo DOI / 原稿への hash 記録（上記完了後）。
