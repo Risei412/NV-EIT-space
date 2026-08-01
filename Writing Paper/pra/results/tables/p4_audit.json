@@ -1,0 +1,270 @@
+{
+  "what": "P4 consolidated model audit for the PRA campaign",
+  "A_full_vs_reduced": {
+    "tolerance": 0.1,
+    "n_points": 108,
+    "n_within_tol": 47,
+    "temperatures_with_agreement": [
+      20.0,
+      25.0,
+      30.0,
+      40.0,
+      50.0,
+      60.0,
+      70.0,
+      80.0,
+      90.0,
+      100.0,
+      105.0,
+      110.0
+    ],
+    "fields_with_agreement": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.23226114680059184,
+      0.3,
+      0.4,
+      0.5
+    ],
+    "worst_rel_err": {
+      "T_K": 100.0,
+      "Bx_T": 0.15,
+      "rel_err": 547.737462266881,
+      "C_full": -1.9591368962460627e-05,
+      "C_reduced": 3.5833229501470336e-08
+    },
+    "sign_disagreements": [
+      {
+        "T_K": 20.0,
+        "Bx_T": 0.15,
+        "C_full": -5.383335242454614,
+        "C_reduced": 0.7864342092243495
+      },
+      {
+        "T_K": 20.0,
+        "Bx_T": 0.2,
+        "C_full": -1.6728287002662736,
+        "C_reduced": 0.9993960555500416
+      },
+      {
+        "T_K": 20.0,
+        "Bx_T": 0.23226114680059184,
+        "C_full": -1.5283330939901922,
+        "C_reduced": 0.9993521459318151
+      },
+      {
+        "T_K": 20.0,
+        "Bx_T": 0.3,
+        "C_full": -1.2239448390146368,
+        "C_reduced": 0.9991868943079916
+      },
+      {
+        "T_K": 25.0,
+        "Bx_T": 0.15,
+        "C_full": -8.152677589903538,
+        "C_reduced": 0.8601612035687006
+      },
+      {
+        "T_K": 30.0,
+        "Bx_T": 0.1,
+        "C_full": -26.012333499429417,
+        "C_reduced": 0.06594932881219624
+      },
+      {
+        "T_K": 30.0,
+        "Bx_T": 0.15,
+        "C_full": -3.3728665690644895,
+        "C_reduced": 0.9327459782771292
+      },
+      {
+        "T_K": 40.0,
+        "Bx_T": 0.05,
+        "C_full": -2.893153811488672,
+        "C_reduced": 0.131539511195996
+      },
+      {
+        "T_K": 40.0,
+        "Bx_T": 0.1,
+        "C_full": -2.6159954447273757,
+        "C_reduced": 0.6167299954195724
+      },
+      {
+        "T_K": 50.0,
+        "Bx_T": 0.05,
+        "C_full": -0.2513975097733262,
+        "C_reduced": 0.2100764806747671
+      },
+      {
+        "T_K": 70.0,
+        "Bx_T": 0.0,
+        "C_full": 4.146316513429846e-05,
+        "C_reduced": -6.343033942758713e-07
+      },
+      {
+        "T_K": 100.0,
+        "Bx_T": 0.15,
+        "C_full": -1.9591368962460627e-05,
+        "C_reduced": 3.5833229501470336e-08
+      },
+      {
+        "T_K": 100.0,
+        "Bx_T": 0.2,
+        "C_full": -2.0147724673925704e-05,
+        "C_reduced": 1.2842016096955095e-06
+      }
+    ],
+    "note": "The reduced kernel may be quoted only inside the agreement domain; every PRA number outside it is taken from the full Liouvillian."
+  },
+  "B_truncation": {
+    "rows": [
+      {
+        "T_K": 25.0,
+        "toggle": "isc",
+        "ratio": 0.999829892571272,
+        "sign_kept": true
+      },
+      {
+        "T_K": 25.0,
+        "toggle": "hyperfine",
+        "ratio": 0.9999676745826648,
+        "sign_kept": true
+      },
+      {
+        "T_K": 40.0,
+        "toggle": "isc",
+        "ratio": 0.999190892189085,
+        "sign_kept": true
+      },
+      {
+        "T_K": 40.0,
+        "toggle": "hyperfine",
+        "ratio": 0.9970475496818576,
+        "sign_kept": true
+      },
+      {
+        "T_K": 70.0,
+        "toggle": "isc",
+        "ratio": 1.0018632857811482,
+        "sign_kept": true
+      },
+      {
+        "T_K": 70.0,
+        "toggle": "hyperfine",
+        "ratio": 0.8770430155193158,
+        "sign_kept": true
+      },
+      {
+        "T_K": 90.0,
+        "toggle": "isc",
+        "ratio": 1.0097825139939343,
+        "sign_kept": true
+      },
+      {
+        "T_K": 90.0,
+        "toggle": "hyperfine",
+        "ratio": 0.7273311979129748,
+        "sign_kept": true
+      },
+      {
+        "T_K": 105.0,
+        "toggle": "isc",
+        "ratio": 1.003938941327524,
+        "sign_kept": true
+      },
+      {
+        "T_K": 105.0,
+        "toggle": "hyperfine",
+        "ratio": 0.6973777543166741,
+        "sign_kept": true
+      }
+    ],
+    "max_abs_deviation": 0.30262224568332585
+  },
+  "C_provenance": {
+    "literature parameter manifest (SHA-256 per source)": "No-go theorem/results/tables/literature_manifest.csv",
+    "signal-chain parameters": "No-go theorem/results/tables/signal_chain_parameters.csv",
+    "sign and unit conventions": "No-go theorem/results/tables/convention_table.md",
+    "phonon-rate variants": "No-go theorem/src/phonon_rates.py (k_orb_variants)",
+    "PRA detection chain used here": "Writing Paper/pra/results/tables/p3_summary.json"
+  },
+  "D_sign_convention": {
+    "statement": "C > 0 means the ground-coherence pathway REDUCES the probe absorption (A_full < A_cut); C < 0 is control-induced absorption.",
+    "verified_at": "T=70 K, B_perp=candidate",
+    "ok": true
+  },
+  "E_classification_stability": [
+    {
+      "T_K": 25.0,
+      "Bx_T": 0.23226114680059184,
+      "baseline_verdict": "robust EIT",
+      "baseline_dAIC": 685.3544172852651,
+      "boot_frac_same": 1.0,
+      "init_frac_same": 1.0,
+      "window_frac_same": 1.0,
+      "stable": true
+    },
+    {
+      "T_K": 50.0,
+      "Bx_T": 0.23226114680059184,
+      "baseline_verdict": "robust EIT",
+      "baseline_dAIC": 384.16136128916537,
+      "boot_frac_same": 1.0,
+      "init_frac_same": 1.0,
+      "window_frac_same": 1.0,
+      "stable": true
+    },
+    {
+      "T_K": 70.0,
+      "Bx_T": 0.23226114680059184,
+      "baseline_verdict": "robust EIT",
+      "baseline_dAIC": 327.1172723805498,
+      "boot_frac_same": 1.0,
+      "init_frac_same": 1.0,
+      "window_frac_same": 1.0,
+      "stable": true
+    },
+    {
+      "T_K": 90.0,
+      "Bx_T": 0.23226114680059184,
+      "baseline_verdict": "robust EIT",
+      "baseline_dAIC": 15.385145875174658,
+      "boot_frac_same": 1.0,
+      "init_frac_same": 1.0,
+      "window_frac_same": 0.75,
+      "stable": true
+    },
+    {
+      "T_K": 100.0,
+      "Bx_T": 0.23226114680059184,
+      "baseline_verdict": "inconclusive",
+      "baseline_dAIC": -1.9076247736293226,
+      "boot_frac_same": 1.0,
+      "init_frac_same": 1.0,
+      "window_frac_same": 1.0,
+      "stable": true
+    },
+    {
+      "T_K": 105.0,
+      "Bx_T": 0.23226114680059184,
+      "baseline_verdict": "inconclusive",
+      "baseline_dAIC": -3.2916302690082375,
+      "boot_frac_same": 1.0,
+      "init_frac_same": 1.0,
+      "window_frac_same": 1.0,
+      "stable": true
+    }
+  ],
+  "verdicts": {
+    "full_reduced_agreement_domain_exists": true,
+    "full_reduced_agrees_everywhere": false,
+    "sign_disagreements": 13,
+    "truncation_within_20pct": false,
+    "classification_stable_everywhere": true,
+    "sign_convention_verified": true
+  },
+  "seconds": 208.52763319015503,
+  "quick": false
+}

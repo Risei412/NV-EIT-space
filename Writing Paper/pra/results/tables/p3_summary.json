@@ -1,0 +1,207 @@
+{
+  "what": "P3 one observable axis: low-T positive, transition, 300 K negative",
+  "physics": "full 9-level Liouvillian (P1 machinery), not the reduced kernel",
+  "detection_chain": {
+    "lambda_nm": {
+      "value": 637.0,
+      "unit": "nm",
+      "source": "NV- ZPL",
+      "note": "exact; both sources agree"
+    },
+    "n_refr": {
+      "value": 2.4,
+      "unit": "-",
+      "source": "diamond @ 637 nm",
+      "note": "gate3 used 2.41; 2.40 taken"
+    },
+    "debye_waller": {
+      "value": 0.03,
+      "unit": "-",
+      "source": "Santori 2010 / Doherty review",
+      "note": "gate3 0.035 vs step9 0.030; conservative 0.030 taken"
+    },
+    "gamma_inh_GHz": {
+      "value": 30.0,
+      "unit": "GHz",
+      "source": "ensemble ZPL strain broadening",
+      "note": "gate3 30 vs step9 5; conservative 30 taken (smaller resonant fraction)"
+    },
+    "f_orient": {
+      "value": 0.25,
+      "unit": "-",
+      "source": "one of four NV orientations",
+      "note": "exact"
+    },
+    "f_spin": {
+      "value": 0.3333333333333333,
+      "unit": "-",
+      "source": "unpolarized ground spin, no MW initialization",
+      "note": "up to ~0.9 with initialization"
+    },
+    "power_W": {
+      "value": 1e-06,
+      "unit": "W",
+      "source": "weak probe, below sector saturation",
+      "note": "gate3 1e-6 vs step9 1e-3; the weak-probe value is the one consistent with the linear-response theory used throughout"
+    },
+    "eta_detect": {
+      "value": 0.1,
+      "unit": "-",
+      "source": "collection x detector efficiency",
+      "note": "x/ 3"
+    },
+    "sigma_tech": {
+      "value": 1e-06,
+      "unit": "-",
+      "source": "relative technical-noise floor per sqrt(sample)",
+      "note": "both sources agree; already aggressive"
+    },
+    "L_cm": {
+      "value": 0.05,
+      "unit": "cm",
+      "source": "0.5 mm sample",
+      "note": "design"
+    },
+    "n_nv_cm3": {
+      "value": 1.76e+17,
+      "unit": "cm^-3",
+      "source": "1 ppm",
+      "note": "coherence-preserving upper end"
+    },
+    "target_snr": {
+      "value": 5.0,
+      "unit": "-",
+      "source": "detection criterion",
+      "note": "design"
+    },
+    "tau_ceiling_s": {
+      "value": 86400.0,
+      "unit": "s",
+      "source": "reasonable experiment duration",
+      "note": "step9 ceiling; gate3 used 1 h"
+    },
+    "quantum_yield": {
+      "value": 0.7,
+      "unit": "-",
+      "source": "NV- radiative quantum yield",
+      "note": "0.6-0.8"
+    }
+  },
+  "reconciles": [
+    "No-go theorem/src/gate3_snr_map.py (70 K)",
+    "New no-go theory/RoomT/src/step9_signal_conversion.py (300 K)"
+  ],
+  "B_perp_T": 0.23226114680059184,
+  "highest_T_positive_C": 100.0,
+  "lowest_T_negative_C": 10.0,
+  "primary_axis": "OD-matched sample (sector OD = 1) -- removes the geometry confound; the fixed 1 ppm / 0.5 mm sample spans OD 16 (10 K) to 0.04 (300 K)",
+  "highest_T_detectable_transmission": 110.0,
+  "highest_T_detectable_pl": 105.0,
+  "highlights": {
+    "10K": {
+      "C": -27.369527626849397,
+      "od_sector_fixed_sample": 16.476905700562135,
+      "L_for_od1_cm": 0.0030345503523937856,
+      "matched": {
+        "d_od": -27.369527626849397,
+        "dT_over_T": -0.9999999999987012,
+        "tau_trans_s": 2.1191992452334007e-10,
+        "dPL_over_PL": 0.5819767068685705,
+        "tau_pl_s": 5.201973648780602e-10,
+        "detectable_trans": true,
+        "detectable_pl": true
+      },
+      "fixed_sample": {
+        "d_od": -450.96512577652766,
+        "dT_over_T": -1.0,
+        "tau_trans_s": 0.0011161088024263025,
+        "dPL_over_PL": 6.98507069227381e-08,
+        "tau_pl_s": Infinity,
+        "detectable_trans": true,
+        "detectable_pl": false
+      },
+      "klass": "absorption"
+    },
+    "70K": {
+      "C": 0.013871069386762093,
+      "od_sector_fixed_sample": 6.840703845402247,
+      "L_for_od1_cm": 0.007309189394831914,
+      "matched": {
+        "d_od": 0.013871069386762093,
+        "dT_over_T": 0.013967719030667142,
+        "tau_trans_s": 1.0862276799264262e-06,
+        "dPL_over_PL": -0.008128887123943685,
+        "tau_pl_s": 2.6663510728028652e-06,
+        "detectable_trans": true,
+        "detectable_pl": true
+      },
+      "fixed_sample": {
+        "d_od": 0.09488787769386484,
+        "dT_over_T": 0.09953556575117793,
+        "tau_trans_s": 7.358692640837793e-06,
+        "dPL_over_PL": -0.0001065523465453284,
+        "tau_pl_s": 0.00984181635367245,
+        "detectable_trans": true,
+        "detectable_pl": true
+      },
+      "klass": "transparency"
+    },
+    "100K": {
+      "C": 2.0777754456207517e-05,
+      "od_sector_fixed_sample": 1.3362460827077196,
+      "L_for_od1_cm": 0.037418257495417204,
+      "matched": {
+        "d_od": 2.0777754456207517e-05,
+        "dT_over_T": 2.077797031524266e-05,
+        "tau_trans_s": 0.5210410456378927,
+        "dPL_over_PL": -1.2092294739493542e-05,
+        "tau_pl_s": 1.453423589158654,
+        "detectable_trans": true,
+        "detectable_pl": true
+      },
+      "fixed_sample": {
+        "d_od": 2.776419299957016e-05,
+        "dT_over_T": 2.7764578428343648e-05,
+        "tau_trans_s": 0.39768335348871314,
+        "dPL_over_PL": -9.899184150273492e-06,
+        "tau_pl_s": 2.06978691289191,
+        "detectable_trans": true,
+        "detectable_pl": true
+      },
+      "klass": "unresolved"
+    },
+    "300K": {
+      "C": -1.1074611352654538e-09,
+      "od_sector_fixed_sample": 0.03702800508650879,
+      "L_for_od1_cm": 1.3503292948994863,
+      "matched": {
+        "d_od": -1.1074611352654538e-09,
+        "dT_over_T": -1.1074611346522187e-09,
+        "tau_trans_s": Infinity,
+        "dPL_over_PL": 6.44516584130666e-10,
+        "tau_pl_s": Infinity,
+        "detectable_trans": false,
+        "detectable_pl": false
+      },
+      "fixed_sample": {
+        "d_od": -4.100707654972002e-11,
+        "dT_over_T": -4.100707654887923e-11,
+        "tau_trans_s": Infinity,
+        "dPL_over_PL": 1.0870841282635272e-09,
+        "tau_pl_s": Infinity,
+        "detectable_trans": false,
+        "detectable_pl": false
+      },
+      "klass": "unresolved"
+    }
+  },
+  "gates": {
+    "single_chain_covers_whole_range": true,
+    "positive_and_negative_on_one_axis": true,
+    "pl_readout_present": true,
+    "detectability_boundary_found": true
+  },
+  "all_gates_pass": true,
+  "seconds": 29.60159182548523,
+  "quick": false
+}
