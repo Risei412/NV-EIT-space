@@ -1,4 +1,15 @@
-# PRL主張に必要な計算の網羅性監査 (2026-08-01)
+# PRA主張（NV-EIT Gate 1–5）に必要な計算の網羅性監査 (2026-08-01)
+
+> **この監査の対象**：`SIMULATION_PLAN.md` が定める Gate 1–5、実装は
+> `No-go theorem/src/gate{1..5}_*.py`。`NV_EIT_PRA_PRL_Split_Strategy_20260724.md`
+> の分割では、これは **PRA ライン**（NV中心のEITの温度限界・室温no-go）にあたる。
+>
+> **対象外**：一般理論PRL（経路モーメント応答則、`New no-go theory/` の Gate A–D）。
+> そちらの監査は `GENERAL_PRL_GATE_AUDIT.md` にある。
+>
+> **「Fig.1–4」という名前は2つの論文で衝突している。**
+> 本監査の §6 が要求する NV-EIT の Fig.1–4 は依然0枚（Blocker B6）。
+> `Writing Paper/prl_figures/` にある Fig.1–4 は**別論文**（一般理論PRL）のもの。
 
 `SIMULATION_PLAN.md` が定める Gate 1–5 の**仕様項目**と、`No-go theorem/src/` の
 **実装および実際の出力ファイル**を1対1で突き合わせた結果。

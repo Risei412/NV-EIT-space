@@ -277,15 +277,42 @@ PRLでは、このうち少なくとも一つをEITとは独立したfull physic
 
 最後の点は、kernelの定理だけではPRLが閉じないことを意味する。
 
+> **更新（2026-08-01）**：この点は Gate A で閉じた。observable inheritance は
+> \(\nu_{\mathrm{obs}} = n_{12} + n_{21} - \nu_{\mathrm{den}}\) として定式化され、
+> 合成3クラス族で \(\nu_{\mathrm{obs}} = 2/4/6\)、物理NVで 4 が、moment predictor・
+> 厳密有理次数証明書・log–logフィットの三経路で一致する
+> （`New no-go theory/PhaseO_observable_inheritance/results/tables/gates_summary_gateO.json`）。
+> ただし**次数は正規化に依存する**：signed absorption difference が \(\nu = 4\)、
+> 正規化コントラストは \(\nu = 3\)。本論文は前者を中心主張の observable に取り、
+> 正規化による1次数の低下を本文に明記する。
+
 ### 12.3 現状の限界
 
-- group-IVモデルのphonon normalizationとdipole geometryには模式性が残る。
-- SiV/SnVについてfull physical GKSLでの次数認証が不十分。
-- 物理的witnessがEIT/Ramanとdiamond centerに偏っている。
-- EIT外のfull physical modelによる検証が未完了。
-- observable inheritanceの一般則が未完成。
+- group-IVモデルのphonon normalizationとdipole geometryには模式性が残る。**（未解消）**
+  参照パラメータの出所は `GateC_material_independence/SiV_SnV_phonon_AIC_parameters.md` に記録した。
+- ~~SiV/SnVについてfull physical GKSLでの次数認証が不十分。~~
+  **解消：Gate C P4**（5準位GKSL、reduced==full が 2.8e-16、slope 1.000）。
+- ~~物理的witnessがEIT/Ramanとdiamond centerに偏っている。~~
+  **解消：Gate B**（超伝導 dissipative state transfer）**および Gate C**
+  （3モード鎖、非diamondのクラス3 witness）。
+- ~~EIT外のfull physical modelによる検証が未完了。~~
+  **解消：Gate B**（full 5準位GKSL、reduced==full が 1.4e-16）。
+- ~~observable inheritanceの一般則が未完成。~~ **解消：Gate A**（上記）。
 
-したがって、現状は「一般的な候補法則と有力なEIT witness」がある段階であり、「分野横断則としてPRLに必要な認証が完了した段階」ではない。
+したがって現状は、**構造的普遍性については認証が済み、残るのは主張の範囲設定**である。
+特に次の2点は本文で範囲として明示する必要がある。
+
+- **Gate B の実験窓は未解決**。現実的に調整可能なバス減衰
+  \(\kappa/2\pi \sim 0.1\text{–}50\,\mathrm{MHz}\) の範囲では、応答はまだ \(1/\kappa\)
+  の裾に入っておらず、測定される指数は generic / protected とも ~0 である。漸近的な
+  整数次数が読めるのは物理的なバス減衰より8桁以上高い \(\kappa\) においてのみ。
+  したがって Gate B が主張するのは**構造的普遍性**であって、この素子に対する測定手順ではない。
+- **光学NVでは指数そのものが読めない**。\(\nu_{\mathrm{obs}} = 4\) のため \(\Gamma\) を
+  1桁上げるごとに信号が4桁落ちる。アンサンブル平均後のコントラスト
+  （post-selected + shim で 2.63e-3）から検出限界 \(c_{\min} = 1.16\times10^{-6}\)（70 K）
+  までの使用可能窓は 0.84 decade で、ノイズ入りフィットが必要とする 1 decade に届かない。
+  測定可能な設計則が成立するのは \(\Gamma\) を直接可変にできる engineered-dissipation
+  プラットフォームであり、NV は exact class の**認証**を与える witness である（Gate D §14 参照）。
 
 ---
 
@@ -504,6 +531,20 @@ R(\Gamma,\epsilon)
 
 **Dが合格**：PRLの中心主張が完成する。
 
+**Dが不合格の場合**（2026-08-01 追加。当初この分岐は未定義だった）：
+measurable scaling は「どのプラットフォームで読めるか」の問題なので、不合格の内容に
+応じて主張の範囲を段階的に狭める。
+
+- **一部のプラットフォームでのみ指数が読める場合**：中心主張は維持し、
+  「測定可能な設計則は \(\Gamma\) を直接可変にできる engineered-dissipation
+  プラットフォームで成立し、diamond欠陥中心は exact class の認証を与える witness である」
+  と範囲を明示する。**これが現状の判定である**（Gate D G-D7：超伝導 transfer と
+  3モード鎖は解像可能、光学NVは不可）。
+- **どのプラットフォームでも読めない場合**：§13 Priority 8 の合格条件
+  「単なる漸近数学ではなく、測定可能な設計則になる」が未達となる。この場合は
+  robustness とクラス分類を理論結果として残し、実験識別可能性の主張は撤回して
+  Supplement へ送るか、Gate A 不合格分岐と同様に PRA の設計原理へ統合する。
+
 ---
 
 ## 15. PRLの推奨ストーリー
@@ -658,19 +699,25 @@ full-Liouvillian \(T\)–\(B_\perp\)相図、温度境界の不確かさ、obser
 
 ### PRL
 
-**判定：中心概念は有望だが、未認証。**
+**判定（2026-08-01 更新）：三条件は数値上クリア。範囲を限定した上で成立圏内。**
 
-現時点のままでは、
+当初この節は「未認証」とし、最低限の三条件を挙げていた。Gate A–D でいずれも満たされている。
 
-> 標準的なresolvent展開をdiamond EITへ適用した
+1. ~~observable-levelの次数則~~ → **Gate A**：\(\nu_{\mathrm{obs}} = n_{12}+n_{21}-\nu_{\mathrm{den}}\)、
+   合成族 2/4/6・物理NV 4 が三経路で一致。pre-asymptotic 3 と asymptotic 4 も分離済み。
+2. ~~EIT外のfull physical witness~~ → **Gate B**（超伝導 dissipative state transfer、
+   full GKSL、blind prediction をフル計算前に固定）**および Gate C**（3モード鎖）。
+3. ~~diamond外を含むblind prediction~~ → **Gate B/C**：クラス1・2・3すべてが
+   diamond と非diamond の両方で実現。
 
-と評価される危険がある。次の三条件が最低限必要である。
+robustness と crossover（Gate D P6：NV は exact class、超伝導は
+\(\Gamma_\ast(\epsilon) \propto 1/\epsilon\) の approximate class）も揃っている。
 
-1. observable-levelの次数則
-2. EIT外のfull physical witness
-3. diamond外を含むblind prediction
-
-これにrobustness、crossover、実験識別可能性が加われば、PRLとしての重要性と一般性が明確になる。
+**残る条件は範囲設定であって計算ではない。** 上記 §12.3 の2点、すなわち
+Gate B の実験窓が未解決であることと、光学NVでは指数が読めないことを本文に明記し、
+「測定可能な設計則」の主張を engineered-dissipation プラットフォームに限定する必要がある。
+各ゲートの `overall_pass` が検査していない項目の監査は
+`GENERAL_PRL_GATE_AUDIT.md` に記録している。
 
 ---
 

@@ -43,10 +43,10 @@ independent of the absolute phonon rate, which is swept over decades):
     SnV-: Delta_e = 3000 GHz; ground SO splitting ~850 GHz.
 Sources: Pingault et al., Nat. Commun. 8, 15579 (2017); Jahnke et al.,
 New J. Phys. 17, 043011 (2015) [arXiv:1411.2871]; Trusheim et al., PRX 11,
-041041 (2021); Meesala et al., PRB 97, 205444 (2018). (The parameter file
-group_iv_model.py cites, SiV_SnV_phonon_AIC_parameters.md, is absent from the
-tree; the relevant numbers are the Delta_e in group_iv_model.PARAMS plus the
-anchors above.)
+041041 (2021); Meesala et al., PRB 97, 205444 (2018). The parameter file
+group_iv_model.py cites, SiV_SnV_phonon_AIC_parameters.md, now exists one level
+up (GateC_material_independence/) and tabulates each constant against its
+source, together with what remains schematic in this model.
 
 Reuses group_iv_model (H_groupIV, legs, moments, kernel, GAMMA_RAD) and
 liouvillian_core conventions; numpy only (no qutip).

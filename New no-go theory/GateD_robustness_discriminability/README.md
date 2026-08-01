@@ -52,7 +52,9 @@ phenomenon.
 Reuses, unchanged: Gate B `model_sc_transfer.py` (approximate-class crossover),
 `No-go theorem/src/{nv_reduced_kernel, phonon_rates, group_iv_model, nv_model,
 signal_chain}`, `New no-go theory/src/core.py`, and
-`PhaseN/priority_1_2/phase_n_exact_core.py` (ν(q) fan). No new physics model —
+`New no-go theory/src/phase_n_exact_core.py` (ν(q) fan; the theory-side PhaseN
+tree moved to the SMRT repository, so the old `PhaseN/priority_1_2/` path this
+README used to give no longer exists here). No new physics model —
 this is a robustness/experimental-conversion analysis of the existing kernels.
 numpy/scipy/sympy only (no qutip).
 

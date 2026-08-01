@@ -60,9 +60,11 @@ GHz. Sources: Pingault et al., *Nat. Commun.* **8**, 15579 (2017); Jahnke et al.
 Reuses `No-go theorem/src/{group_iv_model, nv_reduced_kernel,
 verify_nv_3E_graph_distance_PRL, moment_order_common_pipeline, liouvillian_core,
 phonon_rates}`, `New no-go theory/src/core.py`, and Gate B's
-`model_sc_transfer.py`, unchanged. numpy/sympy only (no qutip). The parameter
-file `group_iv_model.py` cites (`SiV_SnV_phonon_AIC_parameters.md`) is absent
-from the tree; the anchors above live as constants in `group_iv_full.py`.
+`model_sc_transfer.py`, unchanged, plus the non-diamond class-3 witness
+`src/chain3_witness.py`. numpy/sympy only (no qutip). The parameter file
+`group_iv_model.py` cites, `SiV_SnV_phonon_AIC_parameters.md`, now exists in
+this directory and records the provenance of the constants used in
+`group_iv_full.py`.
 
 ## Run
 
