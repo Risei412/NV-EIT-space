@@ -1,0 +1,111 @@
+{
+  "what": "P5 transverse-field opening exponent of the sector contrast",
+  "model": "full 9-level Liouvillian (P1 machinery)",
+  "expectation": "C = C_res + a*B_perp^2: one symmetry-breaking insertion per Lambda leg, on top of a field-independent residual pathway through 3E spin mixing",
+  "method": "three-parameter fit C = C_res + a*B^n below saturation",
+  "archived_reference": {
+    "source": "No-go theorem/results/tables/bperp_full_vs_reduced_slopes.json",
+    "reduced_300K": 2.1615,
+    "full_300K": 2.178
+  },
+  "saturation_fraction": 0.3,
+  "fits": {
+    "55": {
+      "n": 2.644263295468869,
+      "n_err": 0.11356183346064248,
+      "C_res": -0.000571873150421718,
+      "a": 584.0047621319097,
+      "r2": 0.9977487251943514,
+      "n_points": 10,
+      "fit_range_T": [
+        0.0015,
+        0.030681
+      ],
+      "C_zero_field_point": 0.0008728559950088241,
+      "C_saturated": 0.3168938022338698,
+      "n_by_window": {
+        "0.0157": {
+          "n": 1.4436275325451755,
+          "n_err": 0.272302061465098,
+          "r2": 0.9912494076194048
+        },
+        "0.0605": {
+          "n": 3.053453386073615,
+          "n_err": 0.2819890200534314,
+          "r2": 0.9917952941599538
+        }
+      },
+      "window_spread": 1.6098258535284395,
+      "window_robust": false
+    },
+    "70": {
+      "n": 2.509096527577804,
+      "n_err": 0.040175369349125196,
+      "C_res": -4.944100645858881e-05,
+      "a": 17.794906727932876,
+      "r2": 0.9996827059866482,
+      "n_points": 10,
+      "fit_range_T": [
+        0.0015,
+        0.030681
+      ],
+      "C_zero_field_point": 4.146316513429846e-05,
+      "C_saturated": 0.013787992701560272,
+      "n_by_window": {
+        "0.0307": {
+          "n": 2.7626616807114974,
+          "n_err": 0.1884268405442038,
+          "r2": 0.9962851788694778
+        },
+        "0.0605": {
+          "n": 2.699770667361522,
+          "n_err": 0.0660299286665227,
+          "r2": 0.9993957557488089
+        }
+      },
+      "window_spread": 0.06289101334997538,
+      "window_robust": true
+    },
+    "85": {
+      "n": 2.1290487812436973,
+      "n_err": 0.056985672793209624,
+      "C_res": -7.76246105995943e-06,
+      "a": 0.1542807510246951,
+      "r2": 0.9991046409292373,
+      "n_points": 10,
+      "fit_range_T": [
+        0.0015,
+        0.030681
+      ],
+      "C_zero_field_point": -8.645231847333135e-06,
+      "C_saturated": 0.00045531781756318035,
+      "n_by_window": {
+        "0.0157": {
+          "n": 0.9776760503021683,
+          "n_err": 0.01384796877347929,
+          "r2": 0.9999869870206282
+        },
+        "0.0605": {
+          "n": 2.0434298458736504,
+          "n_err": 0.12196973440469873,
+          "r2": 0.9964134474128268
+        }
+      },
+      "window_spread": 1.065753795571482,
+      "window_robust": false
+    }
+  },
+  "caveat": "At the temperatures where the transparency island exists the field range between the residual plateau and saturation is less than a decade, so the exponent is window-dependent and the asymptotic quadratic law is NOT verified there; it is quoted only where the window check passes.",
+  "window_robust_temperatures": [
+    "70"
+  ],
+  "gates": {
+    "fits_are_clean": true,
+    "opening_is_superlinear": true,
+    "quadratic_where_window_robust": false,
+    "window_robust_somewhere": true
+  },
+  "all_gates_pass": false,
+  "seconds": 51.84624981880188,
+  "quick": false
+}

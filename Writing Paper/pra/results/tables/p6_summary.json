@@ -1,0 +1,68 @@
+{
+  "what": "P6 full-Liouvillian uncertainty check on the P2 reduced-model bands",
+  "why": "P4 finds the reduced kernel invalid above ~90 K, which is where the P2 sign-reversal band sits",
+  "model": "parameter-exposed 9-level Liouvillian (build_full_p)",
+  "priors": "identical to P2 (p2_threshold_bands.draw)",
+  "B_perp_T": 0.23226114680059184,
+  "n_samples": 80,
+  "temperature_grid": [
+    50.0,
+    60.0,
+    70.0,
+    80.0,
+    85.0,
+    90.0,
+    95.0,
+    100.0,
+    105.0,
+    110.0,
+    120.0,
+    135.0
+  ],
+  "comparison": {
+    "T_1pct": {
+      "full": {
+        "median": 74.29839075601015,
+        "q16": 69.5170782824439,
+        "q84": 78.17001723072481,
+        "n": 80
+      },
+      "reduced": {
+        "median": 71.10919437818936,
+        "q16": 67.24773064699312,
+        "q84": 75.68537049013655,
+        "q02_5": 63.101572217071485,
+        "q97_5": 81.49334712262277,
+        "n_valid": 500
+      },
+      "bands_overlap": true,
+      "median_shift_K": 3.1891963778207923
+    },
+    "T_sign": {
+      "full": {
+        "median": 103.16268373192445,
+        "q16": 96.64801933496972,
+        "q84": 108.24504537686369,
+        "n": 80
+      },
+      "reduced": {
+        "median": 100.34000117184524,
+        "q16": 94.20790407552724,
+        "q84": 107.70734232773114,
+        "q02_5": 88.48469910849913,
+        "q97_5": 117.89776075003661,
+        "n_valid": 500
+      },
+      "bands_overlap": true,
+      "median_shift_K": 2.822682560079201
+    }
+  },
+  "gates": {
+    "both_thresholds_resolved": true,
+    "sign_reversal_band_overlaps_reduced": true,
+    "one_pct_band_overlaps_reduced": true
+  },
+  "all_gates_pass": true,
+  "seconds": 374.53376817703247,
+  "quick": false
+}

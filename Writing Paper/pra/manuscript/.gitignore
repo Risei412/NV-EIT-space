@@ -1,0 +1,13 @@
+# LaTeX build products
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.Notes.bib
+b[0-9].log
+build[0-9].log
+bib.log
