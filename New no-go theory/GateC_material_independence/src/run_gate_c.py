@@ -7,10 +7,14 @@ Two new results plus a material-independence overlay:
         n=1  group-IV orbital-Lambda (M0 != 0)
         n=2  NV ms=0<->-1        (graph distance d=1)
         n=3  NV ms=-1<->+1       (graph distance d=2)
-  Material independence: the SAME integer class appears in diamond AND in the
-  non-diamond superconducting witness of Gate B --
+  Material independence: the SAME integer class appears in diamond AND in a
+  non-diamond host, for EVERY class --
         class 1: group-IV (diamond)  &  SC generic (non-diamond)
         class 2: NV (diamond)        &  SC protected (non-diamond)
+        class 3: NV -1<->+1 (diamond) & three-mode chain (non-diamond)
+  Class 3 used to have the NV realization only, which left the class the PRL
+  leans on hardest resting on a single material; chain3_witness.py supplies
+  the missing non-diamond n=3 witness.
   The plateau VALUE (the first path moment) is material-specific; the integer
   EXPONENT is shared -- that is the universality claim.
 
@@ -21,9 +25,13 @@ Gates (strategy doc Sec.13 P4/P5, Sec.14 Gate C):
         predicted exponent matches the log-log slope for n=1,2,3.
   G-C3  Gamma^n |K| collapses to a plateau (rel spread < 5%), exponent stable
         across fit sub-windows; finite-Gamma correction reported.
-  G-C4  material independence: class 1 slope=1 in group-IV & SC-generic;
-        class 2 slope=2 in NV & SC-protected.
-  G-C5  full/reduced agree (G-C1) and pre-asymptotic vs asymptotic separated.
+  G-C4  material independence: EVERY class n = 1,2,3 is realized in both a
+        diamond and a non-diamond host, each matching its predicted slope.
+  G-C5  full/reduced agree (G-C1, and for the chain witness) and
+        pre-asymptotic vs asymptotic separated.
+  G-C6  the non-diamond class-3 witness is exact: M0 = M1 = 0 identically,
+        M2 = -J12*J23 != 0, full-GKSL amplitude order 3 and fixed-readout
+        population order 6.
 
 Usage:  python run_gate_c.py [--quick] [--smoke]
 Outputs: results/tables/gates_summary_gateC.json, gate_c_collapse.csv,
@@ -52,6 +60,7 @@ for _p in (HERE, PHASE_SRC, NOGO_SRC, GATEB_SRC):
         sys.path.insert(0, _p)
 
 import core                              # noqa: E402
+import chain3_witness as c3              # noqa: E402
 import group_iv_full as gf               # noqa: E402
 import group_iv_model as giv             # noqa: E402
 import nv_reduced_kernel as nvk          # noqa: E402
@@ -140,6 +149,10 @@ def run_p5(quick=False):
         ]),
         (3, [
             ("NV -1<->+1", "diamond", lambda g: k_nv(g, (-1, 1)), (2, 5)),
+            # Class 3 previously had only the NV realization, which makes it a
+            # property of NV until a second material shows it. The three-mode
+            # chain supplies the non-diamond n=3 witness (M0=M1=0, M2=-J12*J23).
+            ("3-mode chain", "non-diamond", lambda g: c3.kernel(g), (2, 5)),
         ]),
     ]
     out = []
@@ -162,6 +175,33 @@ def run_p5(quick=False):
             ))
             curves.append((n, label, mtype, gammas, np.abs(vals)))
     return out, curves
+
+
+# ---- non-diamond class-3 witness audit ---------------------------------
+def run_chain3_audit(quick=False):
+    """Same audit the group-IV systems get in P4, applied to the chain witness:
+    exact moments, reduced == full GKSL, and the fixed-readout population order
+    (2*n = 6) that distinguishes an amplitude class from a power class."""
+    gammas = np.logspace(2, 5, 16 if quick else 32)
+    amps, pops = [], []
+    for g in gammas:
+        a, p = c3.full_response(g)
+        amps.append(abs(a))
+        pops.append(p)
+    M = np.abs(c3.moments(3))
+    first_nonzero = int(np.argmax(M > 1e-9)) if np.any(M > 1e-9) else None
+    return dict(
+        model="three-mode chain, single-excitation manifold, common ground state",
+        exact_certificate=c3.exact_certificate(),
+        M0=float(M[0]), M1=float(M[1]), M2=float(M[2]),
+        first_nonzero_moment_index=first_nonzero,
+        predicted_order=(first_nonzero + 1) if first_nonzero is not None else None,
+        reduced_slope=slope(gammas, np.array([c3.kernel(g) for g in gammas])),
+        full_amplitude_slope=float(-np.polyfit(np.log(gammas), np.log(amps), 1)[0]),
+        full_population_slope=float(-np.polyfit(np.log(gammas), np.log(pops), 1)[0]),
+        reduced_vs_full_max_rel_err=c3.full_vs_reduced_max_rel_err(
+            np.logspace(2, 4, 4 if quick else 6)),
+    )
 
 
 # ---- predicted exponents from moments (graph-distance predictor) -------
@@ -210,6 +250,7 @@ def main():
     p4 = run_p4(quick=quick)
     pred = predicted_exponents()
     p5, curves = run_p5(quick=quick)
+    chain3 = run_chain3_audit(quick=quick)
 
     # -- gates --------------------------------------------------------
     g_c1 = bool(all(
@@ -223,18 +264,43 @@ def main():
 
     g_c3 = bool(all(r["collapse_ok"] and r["window_stable"] for r in p5))
 
-    diamond1 = [r for r in p5 if r["n_class"] == 1 and r["material_type"] == "diamond"]
-    nond1 = [r for r in p5 if r["n_class"] == 1 and r["material_type"] == "non-diamond"]
-    diamond2 = [r for r in p5 if r["n_class"] == 2 and r["material_type"] == "diamond"]
-    nond2 = [r for r in p5 if r["n_class"] == 2 and r["material_type"] == "non-diamond"]
-    g_c4 = bool(
-        diamond1 and nond1 and diamond2 and nond2
-        and all(abs(r["slope"] - 1) < 0.05 for r in diamond1 + nond1)
-        and all(abs(r["slope"] - 2) < 0.05 for r in diamond2 + nond2)
-    )
+    # G-C4: every class must be realized in BOTH a diamond and a non-diamond
+    # host. This used to be asserted for classes 1 and 2 only, so class 3 --
+    # the class the PRL leans on hardest -- rested on NV alone.
+    def _both_hosts(n):
+        dia = [r for r in p5 if r["n_class"] == n and r["material_type"] == "diamond"]
+        non = [r for r in p5 if r["n_class"] == n and r["material_type"] == "non-diamond"]
+        return dia, non
+
+    g_c4 = True
+    material_independence_by_class = {}
+    for n in (1, 2, 3):
+        dia, non = _both_hosts(n)
+        ok = bool(dia and non
+                  and all(abs(r["slope"] - n) < 0.05 for r in dia + non))
+        material_independence_by_class[str(n)] = dict(
+            diamond=[r["system"] for r in dia],
+            non_diamond=[r["system"] for r in non],
+            both_hosts_match_predicted_order=ok,
+        )
+        g_c4 = g_c4 and ok
+    g_c4 = bool(g_c4)
 
     g_c5 = bool(all(r["reduced_vs_full_max_rel_err"] < 1e-7 for r in p4.values())
+                and chain3["reduced_vs_full_max_rel_err"] < 1e-7
                 and all(r["window_stable"] for r in p5))
+
+    # G-C6: the non-diamond class-3 witness is exact, not just a good fit --
+    # M0 = M1 = 0 identically, M2 != 0, and the fixed-readout population order
+    # is 2*n = 6, which separates an amplitude class from a power class.
+    g_c6 = bool(
+        chain3["predicted_order"] == 3
+        and chain3["M0"] < 1e-12 and chain3["M1"] < 1e-12 and chain3["M2"] > 1e-8
+        and abs(chain3["full_amplitude_slope"] - 3.0) < 0.05
+        and abs(chain3["full_population_slope"] - 6.0) < 0.05
+        and chain3["exact_certificate"]["M0"] == "0"
+        and chain3["exact_certificate"]["M1"] == "0"
+    )
 
     gates = dict(
         G_C1_groupIV_full_gksl=g_c1,
@@ -242,6 +308,7 @@ def main():
         G_C3_scaling_collapse=g_c3,
         G_C4_material_independence=g_c4,
         G_C5_full_reduced_and_finite_gamma=g_c5,
+        G_C6_non_diamond_class3_exact=g_c6,
     )
     gates["overall_pass"] = bool(all(gates.values()))
 
@@ -251,6 +318,8 @@ def main():
         p4_group_iv_full_gksl=p4,
         predicted_exponents=pred,
         p5_three_class=p5,
+        non_diamond_class3_witness=chain3,
+        material_independence_by_class=material_independence_by_class,
         quick=quick,
         gates=gates,
         runtime_s=round(time.time() - t0, 2),
