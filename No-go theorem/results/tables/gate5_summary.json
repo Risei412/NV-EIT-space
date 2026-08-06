@@ -1,6 +1,11 @@
 {
   "seed": 20260716,
   "quick": false,
+  "p0_1_observable_export": {
+    "normalized": "Cmax = (Aoff - Aon) / Aoff at the contrast feature",
+    "raw": "dA_at_Cmax = Aoff - Aon at the same feature",
+    "normalization": "Aoff_at_Cmax"
+  },
   "rows": [
     {
       "scenario": "single",
@@ -14,6 +19,12 @@
       "Cmax": 0.01360014974074735,
       "fwhm_MHz": 0.37500000000000033,
       "center_MHz": 0.0,
+      "Aoff_at_Cmax": 0.008676964579288187,
+      "dA_at_Cmax": 0.00011800801757348017,
+      "dAmax": 0.00011800801757348017,
+      "dA_center_MHz": 0.0,
+      "Aoff_at_dAmax": 0.008676964579288187,
+      "C_at_dAmax": 0.01360014974074735,
       "washout_factor": 1.0
     },
     {
@@ -28,6 +39,12 @@
       "Cmax": 0.0005721492074293866,
       "fwhm_MHz": 0.37500000000000033,
       "center_MHz": 0.0,
+      "Aoff_at_Cmax": 0.008691695706301102,
+      "dA_at_Cmax": 4.9729468095775775e-06,
+      "dAmax": 4.9729468095775775e-06,
+      "dA_center_MHz": 0.0,
+      "Aoff_at_dAmax": 0.008691695706301102,
+      "C_at_dAmax": 0.0005721492074293866,
       "washout_factor": 0.04206933146590091
     },
     {
@@ -42,6 +59,12 @@
       "Cmax": 0.00012895685598832745,
       "fwhm_MHz": 4.25,
       "center_MHz": 2.125,
+      "Aoff_at_Cmax": 0.004573414874397722,
+      "dA_at_Cmax": 5.897732033325817e-07,
+      "dAmax": 5.897732033325817e-07,
+      "dA_center_MHz": 2.125,
+      "Aoff_at_dAmax": 0.004573414874397722,
+      "C_at_dAmax": 0.00012895685598832745,
       "washout_factor": 0.009482017363526548
     },
     {
@@ -56,6 +79,12 @@
       "Cmax": 0.0009451684220583797,
       "fwhm_MHz": 6.625000000000001,
       "center_MHz": -0.4375000000000004,
+      "Aoff_at_Cmax": 0.008444632803647555,
+      "dA_at_Cmax": 7.98160026188599e-06,
+      "dAmax": 7.98160026188599e-06,
+      "dA_center_MHz": -0.4375000000000004,
+      "Aoff_at_dAmax": 0.008444632803647555,
+      "C_at_dAmax": 0.0009451684220583797,
       "washout_factor": 0.06949691290725754
     },
     {
@@ -70,13 +99,20 @@
       "Cmax": 0.0026330768063651836,
       "fwhm_MHz": 1.1250000000000002,
       "center_MHz": 0.0,
+      "Aoff_at_Cmax": 0.009030792292108458,
+      "dA_at_Cmax": 2.3778769727452256e-05,
+      "dAmax": 2.3778769727452256e-05,
+      "dA_center_MHz": 0.0,
+      "Aoff_at_dAmax": 0.009030792292108458,
+      "C_at_dAmax": 0.0026330768063651836,
       "washout_factor": 0.19360645702864826
     }
   ],
   "gate5_pass": {
     "post_selection_survives": true,
     "washout_quantified": true,
-    "regimes_distinguished": true
+    "regimes_distinguished": true,
+    "raw_observable_exported": true
   },
   "gate5_all_passed": true
 }
