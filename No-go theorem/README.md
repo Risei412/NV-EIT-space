@@ -15,6 +15,21 @@ The three-tier generalization of this binary criterion lives in
 `../New no-go theory/`; the redefinition of EIT itself lives in
 `../EIT definition equivalence/`.
 
+## Student guide
+
+For a Japanese introduction aimed at students who have completed undergraduate
+linear algebra and quantum mechanics, start with:
+
+- `learning_notes/NV_EIT_no_go_theory_student_guide_draft.md`
+
+The guide follows the frozen v7 theorem structure but explains it in the order
+“question → equation → physical meaning → common misunderstanding.” It covers
+the three meanings of no-go, optical versus stationary dark states, the
+pathway-cut response, Laurent and Neumann expansions, projected Markov
+parameters, the sector-graph theorem, Krylov exact zeros, observable-order
+inheritance, singular damping, NV-specific interpretation, worked examples,
+and exercises.
+
 ## Theorem package revision (2026-08-06)
 
 `Theorem and proofs/eit_nogo_proofs.tex` is the compatibility entry point for
@@ -61,6 +76,8 @@ control on ms = +1). Numbers, caveats, and per-gate discussion:
 
 ## Layout
 
+- `learning_notes/` — student-facing explanations. The current draft is
+  `NV_EIT_no_go_theory_student_guide_draft.md`.
 - `Theorem and proofs/` — the proof documents.
   `eit_nogo_proofs.tex` routes to the canonical v7 technical package;
   `eit_nogo_proofs_v7.tex` contains the Laurent, sector-graph, Krylov,
