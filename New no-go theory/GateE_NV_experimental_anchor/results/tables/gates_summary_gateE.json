@@ -1,0 +1,119 @@
+{
+  "description": "Gate E: can the planned NV experiment identify the integer response class?",
+  "provenance": {
+    "detection_floor": "GateD_robustness_discriminability/results/tables/gates_summary_gateD.json",
+    "ensemble_contrasts": "No-go theorem/results/tables/gate5_ensemble_contrast.csv",
+    "candidate_temperature_K": 70.0
+  },
+  "assumptions": {
+    "Gamma_T_power": 5.0,
+    "true_observable_order": 4,
+    "required_gamma_decades": 1.0,
+    "finite_Gamma_model": "C=A Gamma^-n (1+b/Gamma)+background"
+  },
+  "window_rows": [
+    {
+      "scenario": "single",
+      "contrast": 0.01360014974074735,
+      "margin_over_floor": 11725.22572144276,
+      "intensity_order": 4,
+      "intensity_window_decades": 1.0172803030095403,
+      "amplitude_order": 2,
+      "amplitude_window_decades": 2.0345606060190806,
+      "improvement_to_one_decade": 1.0
+    },
+    {
+      "scenario": "low_density",
+      "contrast": 0.0005721492074293866,
+      "margin_over_floor": 493.2724073878826,
+      "intensity_order": 4,
+      "intensity_window_decades": 0.6732717056573768,
+      "amplitude_order": 2,
+      "amplitude_window_decades": 1.3465434113147536,
+      "improvement_to_one_decade": 20.272773928213145
+    },
+    {
+      "scenario": "high_density",
+      "contrast": 0.00012895685598832745,
+      "margin_over_floor": 111.17879388198834,
+      "intensity_order": 4,
+      "intensity_window_decades": 0.511505489576116,
+      "amplitude_order": 2,
+      "amplitude_window_decades": 1.023010979152232,
+      "improvement_to_one_decade": 89.94521033043931
+    },
+    {
+      "scenario": "post_selected",
+      "contrast": 0.0009451684220583797,
+      "margin_over_floor": 814.8669907810433,
+      "intensity_order": 4,
+      "intensity_window_decades": 0.7277716813616724,
+      "amplitude_order": 2,
+      "amplitude_window_decades": 1.4555433627233447,
+      "improvement_to_one_decade": 12.271941449505865
+    },
+    {
+      "scenario": "post_selected_shimmed",
+      "contrast": 0.0026330768063651836,
+      "margin_over_floor": 2270.079409789709,
+      "intensity_order": 4,
+      "intensity_window_decades": 0.8390102623853152,
+      "amplitude_order": 2,
+      "amplitude_window_decades": 1.6780205247706304,
+      "improvement_to_one_decade": 4.405132242015427
+    }
+  ],
+  "gating_scenario": "post_selected_shimmed",
+  "temperature_ratio_for_one_gamma_decade": 1.5848931924611136,
+  "monte_carlo_constrained_correction": {
+    "window_decades": 0.8390102623853152,
+    "n_points": 16,
+    "n_monte_carlo": 5000,
+    "true_order": 4,
+    "candidate_orders": [3, 4, 5],
+    "first_correction_coefficient": 0.3,
+    "multiplicative_drift": 0.03,
+    "additive_sigma": 2.3198103070844567e-07,
+    "high_end_snr": 4.01331587916707,
+    "correction_constrained": true,
+    "selection_probability": {
+      "3": 0.0,
+      "4": 0.9996,
+      "5": 0.0004
+    },
+    "correct_class_probability": 0.9996
+  },
+  "monte_carlo_unconstrained_correction": {
+    "window_decades": 0.8390102623853152,
+    "n_points": 16,
+    "n_monte_carlo": 5000,
+    "true_order": 4,
+    "candidate_orders": [3, 4, 5],
+    "first_correction_coefficient": 0.3,
+    "multiplicative_drift": 0.03,
+    "additive_sigma": 2.3198103070844567e-07,
+    "high_end_snr": 4.01331587916707,
+    "correction_constrained": false,
+    "selection_probability": {
+      "3": 0.1644,
+      "4": 0.5998,
+      "5": 0.2358
+    },
+    "correct_class_probability": 0.5998
+  },
+  "gates": {
+    "G_E1_signal_detectable": true,
+    "G_E2_one_decade_raw_intensity_window": false,
+    "G_E3_constrained_full_model_identifiability": true,
+    "G_E4_unconstrained_asymptotic_identifiability": false,
+    "G_E5_amplitude_linear_readout_window": true
+  },
+  "verdict": "CONDITIONAL_PASS",
+  "interpretation": {
+    "direct_raw_exponent_claim": "NO-GO with the present ensemble contrast and a free finite-Gamma correction",
+    "model_constrained_NV_anchor": "GO if Gamma_ph(T) and the first finite-Gamma correction are independently fixed before fitting",
+    "amplitude_linear_route": "GO in the same contrast-to-floor budget because the observable order is reduced from 4 to 2",
+    "minimum_margin_improvement_for_one_decade": 4.405132242015427,
+    "paper_role": "NV experiment anchors the mechanism and signed/crossover response; the clean integer-class measurement remains the engineered-dissipation witness unless the extra constraints are met"
+  }
+}
