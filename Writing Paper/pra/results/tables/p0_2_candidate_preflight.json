@@ -1,39 +1,50 @@
 {
-  "description": "P0-2 decisive preflight at the 70 K NV candidate using the archived full four-model fit",
-  "provenance": {
-    "sector_response": "Writing Paper/pra/results/tables/p1_phase_diagram.csv",
-    "spectral_fit": "No-go theorem/results/tables/gate1_aic_bootstrap.json"
-  },
+  "description": "Completed P0-2 candidate audit using the adaptive full-Liouvillian spectrum and the archived broad-window sweep",
   "candidate": {
     "T_K": 70.0,
     "Bx_T": 0.23226114680059184,
     "Bz_T": 0.005,
     "Oc_GHz": 0.1,
     "Cmax": 0.013871069386762093,
+    "center_MHz": -0.03750000000000021,
+    "fwhm_MHz": 0.3750000000000001,
+    "Acut_at_peak": 0.02724291866957222,
+    "Afull_at_peak": 0.026865030254408666,
     "dA_at_peak": 0.0003778884151635527,
     "sector_class": "sector_transparency"
   },
-  "spectral_model_comparison": {
-    "ic": "AIC",
-    "EIT": -23019.393959686033,
-    "ATS": -21117.2349408649,
-    "Lorentzian": -23021.643190616793,
-    "Fano": -23021.970049784468,
+  "adaptive_feature_comparison": {
+    "half_window_MHz": 1.5000000000000013,
+    "ic": "AICc",
     "best_model": "Fano",
     "runner_up_model": "Lorentzian",
-    "best_runner_margin": 0.32685916767484735,
-    "EIT_disadvantage_to_best": 2.576090098434797,
-    "ATS_minus_EIT": 1902.159018821134,
+    "best_runner_margin": 89.45239982222301,
+    "ATS_minus_EIT": 327.1172723805498,
     "robust_threshold": 6.0,
-    "strict_spectral_class": "spectral_ambiguous"
+    "spectral_class": "Fano"
   },
-  "window_sweep_best_models": {
-    "half_10_MHz": "Fano",
-    "half_15_MHz": "Fano",
-    "half_20_MHz": "Fano",
-    "half_30_MHz": "Lorentzian",
-    "half_40_MHz": "Fano"
+  "archived_broad_window_comparison": {
+    "half_20_MHz_AIC": {
+      "EIT": -23019.393959686033,
+      "ATS": -21117.2349408649,
+      "Lorentzian": -23021.643190616793,
+      "Fano": -23021.970049784468,
+      "best_model": "Fano",
+      "runner_up_model": "Lorentzian",
+      "best_runner_margin": 0.32685916767484735,
+      "EIT_disadvantage_to_best": 2.576090098434797,
+      "strict_spectral_class": "spectral_ambiguous"
+    },
+    "window_sweep_best_models": {
+      "half_10_MHz": "Fano",
+      "half_15_MHz": "Fano",
+      "half_20_MHz": "Fano",
+      "half_30_MHz": "Lorentzian",
+      "half_40_MHz": "Fano"
+    }
   },
-  "joint_class": "sector_transparency_spectral_ambiguous",
-  "verdict": "The candidate is not spectroscopically identified as EIT by the four-model comparison. The large positive ATS-minus-EIT value only rejects ATS; it does not establish EIT against Fano or Lorentzian."
+  "joint_class": "Fano_shaped_sector_transparency",
+  "manuscript_label": "positive coherence-sector response with a Fano-shaped narrow feature",
+  "caveat": "The adaptive feature window robustly favors Fano, but broad-window Fano-versus-Lorentzian selection is background-window sensitive. Do not claim a uniquely identified microscopic Fano mechanism.",
+  "verdict": "The 70 K candidate is not spectroscopic EIT. It is a positive selection-rule-controlled sector response whose local narrow feature is Fano-shaped; the large ATS-minus-EIT value rejects ATS but does not establish EIT."
 }
