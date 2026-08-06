@@ -37,10 +37,11 @@ The revision makes four publication-critical changes:
    observable-order inheritance, the Hermitian restriction of singular
    damping, and the higher-pole test for non-semisimple zero modes.
 
-The previous v6.2 technical source remains recoverable from Git history. The
-full v6.2 English write-up and its PDF are retained as historical theory
-artifacts; theorem statements used in a new manuscript should be taken from
-v7 where the two differ.
+The previous source is retained verbatim as
+`Theorem and proofs/eit_nogo_proofs_v6_2_archive.tex` and also remains
+recoverable from Git history. The full v6.2 English write-up and its PDF are
+historical theory artifacts; theorem statements used in a new manuscript
+should be taken from v7 where the two differ.
 
 ## Verification status
 
@@ -64,6 +65,7 @@ control on ms = +1). Numbers, caveats, and per-gate discussion:
   `eit_nogo_proofs.tex` routes to the canonical v7 technical package;
   `eit_nogo_proofs_v7.tex` contains the Laurent, sector-graph, Krylov,
   observable-inheritance, and singular-point proofs;
+  `eit_nogo_proofs_v6_2_archive.tex` is the verbatim pre-revision source;
   `EIT_no_go_go_theory_v6_2_English.tex` (with built PDF) is the historical
   full theory write-up; `eit_nogo_lecture.tex` is the lecture-format
   presentation.
