@@ -1,0 +1,39 @@
+{
+  "description": "P0-2 decisive preflight at the 70 K NV candidate using the archived full four-model fit",
+  "provenance": {
+    "sector_response": "Writing Paper/pra/results/tables/p1_phase_diagram.csv",
+    "spectral_fit": "No-go theorem/results/tables/gate1_aic_bootstrap.json"
+  },
+  "candidate": {
+    "T_K": 70.0,
+    "Bx_T": 0.23226114680059184,
+    "Bz_T": 0.005,
+    "Oc_GHz": 0.1,
+    "Cmax": 0.013871069386762093,
+    "dA_at_peak": 0.0003778884151635527,
+    "sector_class": "sector_transparency"
+  },
+  "spectral_model_comparison": {
+    "ic": "AIC",
+    "EIT": -23019.393959686033,
+    "ATS": -21117.2349408649,
+    "Lorentzian": -23021.643190616793,
+    "Fano": -23021.970049784468,
+    "best_model": "Fano",
+    "runner_up_model": "Lorentzian",
+    "best_runner_margin": 0.32685916767484735,
+    "EIT_disadvantage_to_best": 2.576090098434797,
+    "ATS_minus_EIT": 1902.159018821134,
+    "robust_threshold": 6.0,
+    "strict_spectral_class": "spectral_ambiguous"
+  },
+  "window_sweep_best_models": {
+    "half_10_MHz": "Fano",
+    "half_15_MHz": "Fano",
+    "half_20_MHz": "Fano",
+    "half_30_MHz": "Lorentzian",
+    "half_40_MHz": "Fano"
+  },
+  "joint_class": "sector_transparency_spectral_ambiguous",
+  "verdict": "The candidate is not spectroscopically identified as EIT by the four-model comparison. The large positive ATS-minus-EIT value only rejects ATS; it does not establish EIT against Fano or Lorentzian."
+}
