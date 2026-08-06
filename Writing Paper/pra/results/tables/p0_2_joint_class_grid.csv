@@ -1,0 +1,22 @@
+# E=spectroscopic_EIT; F=Fano_shaped_sector_transparency; A=ATS_with_positive_sector_response; ?=sector_transparency_spectral_ambiguous; N=control_induced_absorption; U=unresolved
+T_K,Bx=0.00000,Bx=0.05000,Bx=0.10000,Bx=0.15000,Bx=0.20000,Bx=0.23226,Bx=0.25000,Bx=0.30000,Bx=0.35000,Bx=0.40000,Bx=0.45000,Bx=0.50000
+20.0,N,N,N,N,N,N,N,N,N,A,A,A
+25.0,U,N,N,N,E,E,E,E,E,E,E,E
+30.0,N,N,N,N,E,F,F,F,F,F,F,F
+35.0,N,N,N,F,F,F,F,F,F,F,F,F
+40.0,N,N,N,F,F,F,F,F,F,F,F,F
+45.0,N,N,N,F,F,F,F,F,F,F,F,F
+50.0,F,N,F,F,F,F,F,F,F,F,F,F
+55.0,F,F,F,F,?,F,F,F,F,F,F,F
+60.0,F,F,F,F,F,F,F,F,F,F,F,F
+65.0,F,F,F,F,F,?,F,F,F,F,F,F
+70.0,F,F,F,F,F,F,F,F,F,F,F,F
+75.0,N,F,F,F,F,F,F,F,?,F,F,F
+80.0,N,F,F,F,F,F,F,F,F,F,F,F
+85.0,N,F,F,F,F,F,F,F,F,F,F,F
+90.0,N,F,F,F,F,F,F,F,F,F,F,F
+95.0,N,F,F,F,F,F,F,F,F,F,F,F
+100.0,N,F,F,N,N,F,F,F,F,F,F,F
+105.0,N,N,N,N,N,N,N,N,N,N,N,N
+110.0,U,N,N,N,N,N,N,N,N,N,N,N
+115.0,U,N,N,N,N,N,N,N,N,N,N,N
