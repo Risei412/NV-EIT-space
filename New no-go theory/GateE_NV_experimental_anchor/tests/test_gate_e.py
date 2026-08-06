@@ -1,4 +1,4 @@
-"""Regression checks for Gate E."""
+"""Regression checks for Gate E P0-1 observable freeze."""
 import importlib.util
 import pathlib
 import sys
@@ -11,18 +11,40 @@ sys.modules[spec.name] = mod
 assert spec.loader is not None
 spec.loader.exec_module(mod)
 
-rows = mod.window_table()
-gating = next(r for r in rows if r.scenario == mod.GATING_SCENARIO)
-assert gating.intensity_window_decades < 1.0
-assert gating.amplitude_window_decades > 1.0
-assert 4.3 < gating.improvement_to_one_decade < 4.5
+points = mod.load_ensemble_points()
+rows = mod.window_table(points)
+gating = {
+    row.observable: row
+    for row in rows
+    if row.scenario == mod.GATING_SCENARIO
+}
+raw = gating["signed_absorption_difference"]
+contrast = gating["normalized_contrast"]
 
-constrained = mod.monte_carlo_identifiability(
-    gating.contrast, gating.intensity_window_decades, True
-)
-unconstrained = mod.monte_carlo_identifiability(
-    gating.contrast, gating.intensity_window_decades, False
-)
-assert constrained["correct_class_probability"] > 0.95
-assert unconstrained["correct_class_probability"] < 0.95
-print("Gate E regression checks: PASS")
+assert raw.order == 4
+assert contrast.order == 3
+assert abs(raw.margin_over_floor - contrast.margin_over_floor) < 1e-9
+assert raw.window_decades < 1.0
+assert contrast.window_decades > 1.0
+assert 4.3 < raw.improvement_to_one_decade < 4.5
+assert contrast.improvement_to_one_decade == 1.0
+
+for row in (raw, contrast):
+    constrained = mod.monte_carlo_identifiability(
+        row.reference_value,
+        row.detection_floor,
+        row.order,
+        row.window_decades,
+        True,
+    )
+    unconstrained = mod.monte_carlo_identifiability(
+        row.reference_value,
+        row.detection_floor,
+        row.order,
+        row.window_decades,
+        False,
+    )
+    assert constrained["correct_class_probability"] > 0.95
+    assert unconstrained["correct_class_probability"] < 0.95
+
+print("Gate E P0-1 regression checks: PASS")
