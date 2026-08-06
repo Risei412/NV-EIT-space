@@ -1,0 +1,142 @@
+{
+  "what": "P0-2 two-layer full-Liouvillian T-B_perp phase classification",
+  "date": "2026-08-07",
+  "model": "9-level NV Lindblad; 20 temperatures x 12 transverse fields; 161-point adaptive spectra",
+  "definitions": {
+    "sector_object": "Delta A = A_cut - A_full at the largest-|C| feature",
+    "sector_rule": "positive, negative, or unresolved independently of the line-shape model",
+    "spectral_object": "A_full(delta_2) fitted to EIT, ATS, Fano, and Lorentzian",
+    "robust_rule": "the best model must beat the runner-up by at least 6 AICc units; EIT and ATS additionally require the matching sign of IC_ATS-IC_EIT"
+  },
+  "grid": {
+    "T_K": [20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0, 105.0, 110.0, 115.0],
+    "Bx_T": [0.0, 0.05, 0.1, 0.15000000000000002, 0.2, 0.23226114680059184, 0.25, 0.30000000000000004, 0.35000000000000003, 0.4, 0.45, 0.5],
+    "n_points": 240
+  },
+  "sector_counts": {
+    "sector_absorption": 68,
+    "sector_transparency": 169,
+    "sector_unresolved": 3
+  },
+  "spectral_counts": {
+    "Fano": 220,
+    "ATS": 8,
+    "EIT": 9,
+    "spectral_ambiguous": 3
+  },
+  "joint_counts": {
+    "control_induced_absorption": 68,
+    "ATS_with_positive_sector_response": 3,
+    "unresolved": 3,
+    "spectroscopic_EIT": 9,
+    "Fano_shaped_sector_transparency": 154,
+    "sector_transparency_spectral_ambiguous": 3
+  },
+  "legacy_classifier_audit": {
+    "old_class_counts": {
+      "transparency": 148,
+      "absorption": 68,
+      "ATS": 3,
+      "unresolved": 21
+    },
+    "old_transparency_rows": 148,
+    "old_transparency_with_nonEIT_best_model": 139,
+    "fraction_old_transparency_mislabelled": 0.9391891891891891
+  },
+  "sector_transparency_upper_T_by_field": {
+    "0.00000": 70.0,
+    "0.05000": 100.0,
+    "0.10000": 100.0,
+    "0.15000": 95.0,
+    "0.20000": 95.0,
+    "0.23226": 100.0,
+    "0.25000": 100.0,
+    "0.30000": 100.0,
+    "0.35000": 100.0,
+    "0.40000": 100.0,
+    "0.45000": 100.0,
+    "0.50000": 100.0
+  },
+  "spectroscopic_EIT_upper_T_by_field": {
+    "0.00000": null,
+    "0.05000": null,
+    "0.10000": null,
+    "0.15000": null,
+    "0.20000": 30.0,
+    "0.23226": 25.0,
+    "0.25000": 25.0,
+    "0.30000": 25.0,
+    "0.35000": 25.0,
+    "0.40000": 25.0,
+    "0.45000": 25.0,
+    "0.50000": 25.0
+  },
+  "Bperp_zero_audit": {
+    "positive_sector_temperatures_K": [50.0, 55.0, 60.0, 65.0, 70.0],
+    "negative_sector_temperatures_K": [20.0, 30.0, 35.0, 40.0, 45.0, 75.0, 80.0, 85.0, 90.0, 95.0, 100.0, 105.0],
+    "unresolved_temperatures_K": [25.0, 110.0, 115.0],
+    "has_robust_spectroscopic_EIT": false,
+    "maximum_positive_sector_temperature_K": 70.0
+  },
+  "candidate_70K": {
+    "T_K": 70.0,
+    "Bx_T": 0.23226114680059184,
+    "Cmax": 0.013871069386762093,
+    "center_MHz": -0.03750000000000021,
+    "fwhm_MHz": 0.3750000000000001,
+    "Acut_at_peak": 0.02724291866957222,
+    "Afull_at_peak": 0.026865030254408666,
+    "dA_at_peak": 0.0003778884151635527,
+    "half_MHz": 1.5000000000000013,
+    "sector_class": "sector_transparency",
+    "spectral_class": "Fano",
+    "best_model": "Fano",
+    "runner_up_model": "Lorentzian",
+    "best_runner_margin_AICc": 89.45239982222301,
+    "delta_AICc_ATS_minus_EIT": 327.1172723805498,
+    "joint_class": "Fano_shaped_sector_transparency"
+  },
+  "candidate_window_context": {
+    "adaptive_result": "Fano-shaped sector transparency",
+    "archived_wide_window_best_models": {
+      "half_10_MHz": "Fano",
+      "half_15_MHz": "Fano",
+      "half_20_MHz": "Fano",
+      "half_30_MHz": "Lorentzian",
+      "half_40_MHz": "Fano"
+    },
+    "interpretation": "The candidate is not EIT. Fano-versus-Lorentzian naming remains window-sensitive on broad backgrounds, so the manuscript should use Fano-shaped rather than claim a uniquely identified Fano mechanism."
+  },
+  "strict_EIT_region": {
+    "n_points": 9,
+    "points": [
+      [25.0, 0.2], [25.0, 0.23226114680059184], [25.0, 0.25], [25.0, 0.30000000000000004],
+      [25.0, 0.35000000000000003], [25.0, 0.4], [25.0, 0.45], [25.0, 0.5], [30.0, 0.2]
+    ]
+  },
+  "ambiguous_positive_points": [
+    {"T_K": 55.0, "Bx_T": 0.2, "best": "Fano", "runner_up": "Lorentzian", "margin_AICc": 0.437522851294716},
+    {"T_K": 65.0, "Bx_T": 0.23226114680059184, "best": "Fano", "runner_up": "Lorentzian", "margin_AICc": 0.6417454755521703},
+    {"T_K": 75.0, "Bx_T": 0.35000000000000003, "best": "Fano", "runner_up": "Lorentzian", "margin_AICc": 5.650332829089166}
+  ],
+  "gates": {
+    "G_P02_1_two_layers_present": true,
+    "G_P02_2_four_model_runner_up_margin_enforced": true,
+    "G_P02_3_no_EIT_nonEIT_best_mixed_label": true,
+    "G_P02_4_Bperp_zero_explicitly_audited": true,
+    "G_P02_5_candidate_resolved": true,
+    "G_P02_6_legacy_mixed_labels_identified": true
+  },
+  "verdict": "PASS",
+  "runtime_seconds": 274.20180463790894,
+  "reproduction": {
+    "workers": 4,
+    "BLAS_threads_per_worker": 1,
+    "quick_grid_matches_archived_P1": true,
+    "full_numeric_csv_sha256": "29acae87046b02c9efbdc2dad3389aaa3a1cad3272fd1ef9340007110f974f3a"
+  },
+  "manuscript_consequence": {
+    "allowed": "A bounded, selection-rule-controlled positive sector-response region exists and reverses sign at high temperature.",
+    "not_allowed": "The entire positive-response region is a genuine EIT island, or transverse field opens an exact zero-response channel."
+  }
+}
