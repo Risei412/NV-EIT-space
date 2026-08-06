@@ -1,6 +1,11 @@
-scenario,contrast,margin_over_floor,intensity_order,intensity_window_decades,amplitude_order,amplitude_window_decades,improvement_to_one_decade
-single,0.01360014974074735,11725.22572144276,4,1.0172803030095403,2,2.0345606060190806,1.0
-low_density,0.0005721492074293866,493.2724073878826,4,0.6732717056573768,2,1.3465434113147536,20.272773928213145
-high_density,0.00012895685598832745,111.17879388198834,4,0.511505489576116,2,1.023010979152232,89.94521033043931
-post_selected,0.0009451684220583797,814.8669907810433,4,0.7277716813616724,2,1.4555433627233447,12.271941449505865
-post_selected_shimmed,0.0026330768063651836,2270.079409789709,4,0.8390102623853152,2,1.6780205247706304,4.405132242015427
+scenario,observable,observable_label,order,reference_value,detection_floor,margin_over_floor,window_decades,improvement_to_one_decade,unit
+single,signed_absorption_difference,raw signed absorption difference Delta A = A_cut - A_full,4,0.00011800801757348017,1.0064455932619743e-08,11725.225721442757,1.0172803030095403,1.0,reduced absorption
+single,normalized_contrast,normalized contrast C = Delta A / A_cut,3,0.01360014974074735,1.1599051535422284e-06,11725.22572144276,1.3563737373460538,1.0,dimensionless
+low_density,signed_absorption_difference,raw signed absorption difference Delta A = A_cut - A_full,4,4.9729468095775775e-06,1.0081542642759507e-08,493.27240738788254,0.6732717056573768,20.272773928213148,reduced absorption
+low_density,normalized_contrast,normalized contrast C = Delta A / A_cut,3,0.0005721492074293866,1.1599051535422284e-06,493.2724073878826,0.8976956075431691,2.027277392821315,dimensionless
+high_density,signed_absorption_difference,raw signed absorption difference Delta A = A_cut - A_full,4,5.897732033325817e-07,5.304727482100602e-09,111.17879388198833,0.511505489576116,89.94521033043932,reduced absorption
+high_density,normalized_contrast,normalized contrast C = Delta A / A_cut,3,0.00012895685598832745,1.1599051535422284e-06,111.17879388198834,0.6820073194348213,8.994521033043931,dimensionless
+post_selected,signed_absorption_difference,raw signed absorption difference Delta A = A_cut - A_full,4,7.98160026188599e-06,9.794973108722556e-09,814.8669907810433,0.7277716813616724,12.271941449505865,reduced absorption
+post_selected,normalized_contrast,normalized contrast C = Delta A / A_cut,3,0.0009451684220583797,1.1599051535422284e-06,814.8669907810433,0.9703622418155632,1.2271941449505865,dimensionless
+post_selected_shimmed,signed_absorption_difference,raw signed absorption difference Delta A = A_cut - A_full,4,2.3778769727452256e-05,1.0474862520186035e-08,2270.0794097897087,0.8390102623853151,4.405132242015428,reduced absorption
+post_selected_shimmed,normalized_contrast,normalized contrast C = Delta A / A_cut,3,0.0026330768063651836,1.1599051535422284e-06,2270.079409789709,1.118680349847087,1.0,dimensionless
