@@ -1,3 +1,4 @@
+# Temporary runner: delete after P0-2 artifacts are collected.
 name: Temporary P0-2 branch runner
 
 on:
