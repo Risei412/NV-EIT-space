@@ -11,6 +11,11 @@ offset, which cancels in the two-photon detuning). The ensemble
 absorption is the equal-weight average and
   C_ens(d2) = (<A_off> - <A_on>)/<A_off>.
 
+P0-1 observable export: the output table carries both the normalized contrast
+C and the raw signed absorption difference Delta A = A_off - A_on at the same
+feature. This prevents downstream gates from assigning the raw-response order
+to normalized contrast.
+
 Distributions: the four tetrahedral NV orientations under the fixed lab
 field (Bz0 along a1, Bx0 along a perpendicular axis), static-field spread,
 optical-transition (strain/spectral-diffusion) offsets, transverse-strain
@@ -138,12 +143,28 @@ def run_scenario(d2s, cfg, rng):
             A_on += on; A_off += off; n += 1
     return A_on/n, A_off/n
 
-def metrics(d_MHz, C):
-    i0 = int(np.argmax(np.abs(C)))
-    cmax = float(C[i0]); half = abs(cmax)/2
+def metrics(d_MHz, A_on, A_off):
+    """Export normalized and raw signed features without mixing their orders."""
+    dA = A_off - A_on
+    C = dA/A_off
+
+    iC = int(np.argmax(np.abs(C)))
+    half = abs(C[iC])/2
     idx = np.where(np.abs(C) >= half)[0]
     fwhm = float(d_MHz[idx[-1]] - d_MHz[idx[0]]) if len(idx) > 1 else np.nan
-    return dict(Cmax=cmax, center_MHz=float(d_MHz[i0]), fwhm_MHz=fwhm)
+
+    idA = int(np.argmax(np.abs(dA)))
+    return dict(
+        Cmax=float(C[iC]),
+        fwhm_MHz=fwhm,
+        center_MHz=float(d_MHz[iC]),
+        Aoff_at_Cmax=float(A_off[iC]),
+        dA_at_Cmax=float(dA[iC]),
+        dAmax=float(dA[idA]),
+        dA_center_MHz=float(d_MHz[idA]),
+        Aoff_at_dAmax=float(A_off[idA]),
+        C_at_dAmax=float(C[idA]),
+    )
 
 def main(quick=False):
     tabdir = ROOT/'results'/'tables'; figdir = ROOT/'results'/'figures'
@@ -157,16 +178,15 @@ def main(quick=False):
     for name, cfg in scen.items():
         A_on, A_off = run_scenario(d2s, cfg, rng)
         C = (A_off - A_on)/A_off
-        m = metrics(d2s*1e3, C)
+        m = metrics(d2s*1e3, A_on, A_off)
         rows.append(dict(scenario=name, **{k: (v if not isinstance(v, list)
                                                else len(v))
                                            for k, v in cfg.items()
                                            if k != 'orientations'},
-                         n_orientations=len(cfg['orientations']),
-                         Cmax=m['Cmax'], fwhm_MHz=m['fwhm_MHz'],
-                         center_MHz=m['center_MHz']))
+                         n_orientations=len(cfg['orientations']), **m))
         spectra[name] = C
-        print(f"{name:14s} Cmax={m['Cmax']:.4g} fwhm={m['fwhm_MHz']:.3f} MHz")
+        print(f"{name:14s} Cmax={m['Cmax']:.4g} "
+              f"dA={m['dA_at_Cmax']:.4g} fwhm={m['fwhm_MHz']:.3f} MHz")
     ref = next(r for r in rows if r['scenario'] == 'single')['Cmax']
     for r in rows:
         r['washout_factor'] = r['Cmax']/ref
@@ -177,6 +197,8 @@ def main(quick=False):
         washout_quantified=all(np.isfinite(r['washout_factor']) for r in rows),
         regimes_distinguished=bool(order['single'] > order['low_density']
                                    > order['high_density']),
+        raw_observable_exported=all(np.isfinite(r['dA_at_Cmax']) and
+                                    np.isfinite(r['Aoff_at_Cmax']) for r in rows),
     )
     with (tabdir/'gate5_ensemble_contrast.csv').open('w', newline='') as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))

@@ -1,119 +1,253 @@
 {
-  "description": "Gate E: can the planned NV experiment identify the integer response class?",
+  "description": "Gate E P0-1: observable-consistent NV exponent-identifiability audit",
   "provenance": {
-    "detection_floor": "GateD_robustness_discriminability/results/tables/gates_summary_gateD.json",
-    "ensemble_contrasts": "No-go theorem/results/tables/gate5_ensemble_contrast.csv",
+    "contrast_floor": "GateD_robustness_discriminability/results/tables/gates_summary_gateD.json",
+    "ensemble_observables": "No-go theorem/results/tables/gate5_ensemble_contrast.csv",
     "candidate_temperature_K": 70.0
+  },
+  "observable_definitions": {
+    "signed_absorption_difference": {
+      "key": "signed_absorption_difference",
+      "label": "raw signed absorption difference Delta A = A_cut - A_full",
+      "numerator_order": 4,
+      "denominator_order": 0,
+      "unit": "reduced absorption",
+      "derived_order": 4
+    },
+    "normalized_contrast": {
+      "key": "normalized_contrast",
+      "label": "normalized contrast C = Delta A / A_cut",
+      "numerator_order": 4,
+      "denominator_order": 1,
+      "unit": "dimensionless",
+      "derived_order": 3
+    }
   },
   "assumptions": {
     "Gamma_T_power": 5.0,
-    "true_observable_order": 4,
     "required_gamma_decades": 1.0,
-    "finite_Gamma_model": "C=A Gamma^-n (1+b/Gamma)+background"
+    "finite_Gamma_model": "O=A Gamma^-n (1+b/Gamma)+background",
+    "finite_Gamma_coefficient_status": "synthetic frozen stress parameter; replace in P0-3",
+    "raw_floor_conversion": "DeltaA_min = C_min * A_cut at the same ensemble feature"
   },
   "window_rows": [
     {
       "scenario": "single",
-      "contrast": 0.01360014974074735,
+      "observable": "signed_absorption_difference",
+      "observable_label": "raw signed absorption difference Delta A = A_cut - A_full",
+      "order": 4,
+      "reference_value": 0.00011800801757348017,
+      "detection_floor": 1.0064455932619743e-08,
+      "margin_over_floor": 11725.225721442757,
+      "window_decades": 1.0172803030095403,
+      "improvement_to_one_decade": 1.0,
+      "unit": "reduced absorption"
+    },
+    {
+      "scenario": "single",
+      "observable": "normalized_contrast",
+      "observable_label": "normalized contrast C = Delta A / A_cut",
+      "order": 3,
+      "reference_value": 0.01360014974074735,
+      "detection_floor": 1.1599051535422284e-06,
       "margin_over_floor": 11725.22572144276,
-      "intensity_order": 4,
-      "intensity_window_decades": 1.0172803030095403,
-      "amplitude_order": 2,
-      "amplitude_window_decades": 2.0345606060190806,
-      "improvement_to_one_decade": 1.0
+      "window_decades": 1.3563737373460538,
+      "improvement_to_one_decade": 1.0,
+      "unit": "dimensionless"
     },
     {
       "scenario": "low_density",
-      "contrast": 0.0005721492074293866,
+      "observable": "signed_absorption_difference",
+      "observable_label": "raw signed absorption difference Delta A = A_cut - A_full",
+      "order": 4,
+      "reference_value": 4.9729468095775775e-06,
+      "detection_floor": 1.0081542642759507e-08,
+      "margin_over_floor": 493.27240738788254,
+      "window_decades": 0.6732717056573768,
+      "improvement_to_one_decade": 20.272773928213148,
+      "unit": "reduced absorption"
+    },
+    {
+      "scenario": "low_density",
+      "observable": "normalized_contrast",
+      "observable_label": "normalized contrast C = Delta A / A_cut",
+      "order": 3,
+      "reference_value": 0.0005721492074293866,
+      "detection_floor": 1.1599051535422284e-06,
       "margin_over_floor": 493.2724073878826,
-      "intensity_order": 4,
-      "intensity_window_decades": 0.6732717056573768,
-      "amplitude_order": 2,
-      "amplitude_window_decades": 1.3465434113147536,
-      "improvement_to_one_decade": 20.272773928213145
+      "window_decades": 0.8976956075431691,
+      "improvement_to_one_decade": 2.027277392821315,
+      "unit": "dimensionless"
     },
     {
       "scenario": "high_density",
-      "contrast": 0.00012895685598832745,
+      "observable": "signed_absorption_difference",
+      "observable_label": "raw signed absorption difference Delta A = A_cut - A_full",
+      "order": 4,
+      "reference_value": 5.897732033325817e-07,
+      "detection_floor": 5.304727482100602e-09,
+      "margin_over_floor": 111.17879388198833,
+      "window_decades": 0.511505489576116,
+      "improvement_to_one_decade": 89.94521033043932,
+      "unit": "reduced absorption"
+    },
+    {
+      "scenario": "high_density",
+      "observable": "normalized_contrast",
+      "observable_label": "normalized contrast C = Delta A / A_cut",
+      "order": 3,
+      "reference_value": 0.00012895685598832745,
+      "detection_floor": 1.1599051535422284e-06,
       "margin_over_floor": 111.17879388198834,
-      "intensity_order": 4,
-      "intensity_window_decades": 0.511505489576116,
-      "amplitude_order": 2,
-      "amplitude_window_decades": 1.023010979152232,
-      "improvement_to_one_decade": 89.94521033043931
+      "window_decades": 0.6820073194348213,
+      "improvement_to_one_decade": 8.994521033043931,
+      "unit": "dimensionless"
     },
     {
       "scenario": "post_selected",
-      "contrast": 0.0009451684220583797,
+      "observable": "signed_absorption_difference",
+      "observable_label": "raw signed absorption difference Delta A = A_cut - A_full",
+      "order": 4,
+      "reference_value": 7.98160026188599e-06,
+      "detection_floor": 9.794973108722556e-09,
       "margin_over_floor": 814.8669907810433,
-      "intensity_order": 4,
-      "intensity_window_decades": 0.7277716813616724,
-      "amplitude_order": 2,
-      "amplitude_window_decades": 1.4555433627233447,
-      "improvement_to_one_decade": 12.271941449505865
+      "window_decades": 0.7277716813616724,
+      "improvement_to_one_decade": 12.271941449505865,
+      "unit": "reduced absorption"
+    },
+    {
+      "scenario": "post_selected",
+      "observable": "normalized_contrast",
+      "observable_label": "normalized contrast C = Delta A / A_cut",
+      "order": 3,
+      "reference_value": 0.0009451684220583797,
+      "detection_floor": 1.1599051535422284e-06,
+      "margin_over_floor": 814.8669907810433,
+      "window_decades": 0.9703622418155632,
+      "improvement_to_one_decade": 1.2271941449505865,
+      "unit": "dimensionless"
     },
     {
       "scenario": "post_selected_shimmed",
-      "contrast": 0.0026330768063651836,
+      "observable": "signed_absorption_difference",
+      "observable_label": "raw signed absorption difference Delta A = A_cut - A_full",
+      "order": 4,
+      "reference_value": 2.3778769727452256e-05,
+      "detection_floor": 1.0474862520186035e-08,
+      "margin_over_floor": 2270.0794097897087,
+      "window_decades": 0.8390102623853151,
+      "improvement_to_one_decade": 4.405132242015428,
+      "unit": "reduced absorption"
+    },
+    {
+      "scenario": "post_selected_shimmed",
+      "observable": "normalized_contrast",
+      "observable_label": "normalized contrast C = Delta A / A_cut",
+      "order": 3,
+      "reference_value": 0.0026330768063651836,
+      "detection_floor": 1.1599051535422284e-06,
       "margin_over_floor": 2270.079409789709,
-      "intensity_order": 4,
-      "intensity_window_decades": 0.8390102623853152,
-      "amplitude_order": 2,
-      "amplitude_window_decades": 1.6780205247706304,
-      "improvement_to_one_decade": 4.405132242015427
+      "window_decades": 1.118680349847087,
+      "improvement_to_one_decade": 1.0,
+      "unit": "dimensionless"
     }
   ],
   "gating_scenario": "post_selected_shimmed",
   "temperature_ratio_for_one_gamma_decade": 1.5848931924611136,
-  "monte_carlo_constrained_correction": {
-    "window_decades": 0.8390102623853152,
-    "n_points": 16,
-    "n_monte_carlo": 5000,
-    "true_order": 4,
-    "candidate_orders": [3, 4, 5],
-    "first_correction_coefficient": 0.3,
-    "multiplicative_drift": 0.03,
-    "additive_sigma": 2.3198103070844567e-07,
-    "high_end_snr": 4.01331587916707,
-    "correction_constrained": true,
-    "selection_probability": {
-      "3": 0.0,
-      "4": 0.9996,
-      "5": 0.0004
+  "identifiability": {
+    "signed_absorption_difference": {
+      "constrained": {
+        "window_decades": 0.8390102623853151,
+        "n_points": 16,
+        "n_monte_carlo": 5000,
+        "true_order": 4,
+        "candidate_orders": [3, 4, 5],
+        "first_correction_coefficient": 0.3,
+        "multiplicative_drift": 0.03,
+        "additive_sigma": 2.094972504037207e-09,
+        "high_end_snr": 4.0133158791670756,
+        "correction_constrained": true,
+        "selection_probability": {
+          "3": 0.0,
+          "4": 0.9996,
+          "5": 0.0004
+        },
+        "correct_class_probability": 0.9996
+      },
+      "unconstrained": {
+        "window_decades": 0.8390102623853151,
+        "n_points": 16,
+        "n_monte_carlo": 5000,
+        "true_order": 4,
+        "candidate_orders": [3, 4, 5],
+        "first_correction_coefficient": 0.3,
+        "multiplicative_drift": 0.03,
+        "additive_sigma": 2.094972504037207e-09,
+        "high_end_snr": 4.0133158791670756,
+        "correction_constrained": false,
+        "selection_probability": {
+          "3": 0.1644,
+          "4": 0.5998,
+          "5": 0.2358
+        },
+        "correct_class_probability": 0.5998
+      }
     },
-    "correct_class_probability": 0.9996
-  },
-  "monte_carlo_unconstrained_correction": {
-    "window_decades": 0.8390102623853152,
-    "n_points": 16,
-    "n_monte_carlo": 5000,
-    "true_order": 4,
-    "candidate_orders": [3, 4, 5],
-    "first_correction_coefficient": 0.3,
-    "multiplicative_drift": 0.03,
-    "additive_sigma": 2.3198103070844567e-07,
-    "high_end_snr": 4.01331587916707,
-    "correction_constrained": false,
-    "selection_probability": {
-      "3": 0.1644,
-      "4": 0.5998,
-      "5": 0.2358
-    },
-    "correct_class_probability": 0.5998
+    "normalized_contrast": {
+      "constrained": {
+        "window_decades": 1.118680349847087,
+        "n_points": 16,
+        "n_monte_carlo": 5000,
+        "true_order": 3,
+        "candidate_orders": [2, 3, 4],
+        "first_correction_coefficient": 0.3,
+        "multiplicative_drift": 0.03,
+        "additive_sigma": 2.3198103070844567e-07,
+        "high_end_snr": 3.9339483961027466,
+        "correction_constrained": true,
+        "selection_probability": {
+          "2": 0.0,
+          "3": 0.9998,
+          "4": 0.0002
+        },
+        "correct_class_probability": 0.9998
+      },
+      "unconstrained": {
+        "window_decades": 1.118680349847087,
+        "n_points": 16,
+        "n_monte_carlo": 5000,
+        "true_order": 3,
+        "candidate_orders": [2, 3, 4],
+        "first_correction_coefficient": 0.3,
+        "multiplicative_drift": 0.03,
+        "additive_sigma": 2.3198103070844567e-07,
+        "high_end_snr": 3.9339483961027466,
+        "correction_constrained": false,
+        "selection_probability": {
+          "2": 0.2186,
+          "3": 0.6538,
+          "4": 0.1276
+        },
+        "correct_class_probability": 0.6538
+      }
+    }
   },
   "gates": {
-    "G_E1_signal_detectable": true,
-    "G_E2_one_decade_raw_intensity_window": false,
-    "G_E3_constrained_full_model_identifiability": true,
-    "G_E4_unconstrained_asymptotic_identifiability": false,
-    "G_E5_amplitude_linear_readout_window": true
+    "G_E1_both_observables_detectable": true,
+    "G_E2_normalized_contrast_one_decade_window": true,
+    "G_E3_raw_signed_difference_one_decade_window": false,
+    "G_E4_model_constrained_identifiability_both": true,
+    "G_E5_unconstrained_identifiability_both": false,
+    "G_E6_observable_orders_derived_consistently": true
   },
   "verdict": "CONDITIONAL_PASS",
   "interpretation": {
-    "direct_raw_exponent_claim": "NO-GO with the present ensemble contrast and a free finite-Gamma correction",
-    "model_constrained_NV_anchor": "GO if Gamma_ph(T) and the first finite-Gamma correction are independently fixed before fitting",
-    "amplitude_linear_route": "GO in the same contrast-to-floor budget because the observable order is reduced from 4 to 2",
-    "minimum_margin_improvement_for_one_decade": 4.405132242015427,
-    "paper_role": "NV experiment anchors the mechanism and signed/crossover response; the clean integer-class measurement remains the engineered-dissipation witness unless the extra constraints are met"
+    "primary_theory_observable": "raw signed absorption difference Delta A, nu=4",
+    "primary_direct_experimental_observable": "normalized contrast C, nu=3",
+    "normalized_contrast_window": "GO for a one-decade signal window (1.119 decades)",
+    "raw_signed_difference_window": "NO-GO for a one-decade signal window (0.839 decades)",
+    "free_exponent_fit": "NO-GO for both observables with a freely refitted finite-Gamma correction/background",
+    "model_constrained_fit": "GO for both observables if the leading correction is fixed independently before fitting",
+    "paper_role": "Use Delta A for the theorem statement and C for direct NV data; connect them by the explicit A_cut normalization law. NV remains a model-constrained experimental anchor until P0-3 supplies the full-model finite-Gamma correction."
   }
 }

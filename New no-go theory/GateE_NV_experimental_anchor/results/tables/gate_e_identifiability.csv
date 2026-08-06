@@ -1,3 +1,5 @@
-fit,correct_class_probability,p_n3,p_n4,p_n5,window_decades,high_end_snr
-constrained,0.9996,0.0,0.9996,0.0004,0.8390102623853152,4.01331587916707
-unconstrained,0.5998,0.1644,0.5998,0.2358,0.8390102623853152,4.01331587916707
+observable,fit,true_order,candidate_orders,correct_class_probability,p_lower,p_true,p_upper,window_decades,high_end_snr
+signed_absorption_difference,constrained,4,3;4;5,0.9996,0.0,0.9996,0.0004,0.8390102623853151,4.0133158791670756
+signed_absorption_difference,unconstrained,4,3;4;5,0.5998,0.1644,0.5998,0.2358,0.8390102623853151,4.0133158791670756
+normalized_contrast,constrained,3,2;3;4,0.9998,0.0,0.9998,0.0002,1.118680349847087,3.9339483961027466
+normalized_contrast,unconstrained,3,2;3;4,0.6538,0.2186,0.6538,0.1276,1.118680349847087,3.9339483961027466
