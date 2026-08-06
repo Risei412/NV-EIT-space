@@ -1,0 +1,43 @@
+name: P0-2 two-layer classification
+
+on:
+  push:
+    branches:
+      - agent/p0-2-spectral-classification-2026-08-07
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  classify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: No-go theorem/requirements.txt
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip && python -m pip install -r 'No-go theorem/requirements.txt' pytest
+      - name: Recompute full P0-2 grid
+        env:
+          OMP_NUM_THREADS: '1'
+          OPENBLAS_NUM_THREADS: '1'
+          MKL_NUM_THREADS: '1'
+        run: python 'Writing Paper/pra/src/p0_2_two_layer_classification.py' --jobs 2
+      - name: Run P0-2 regression checks
+        run: python 'Writing Paper/pra/tests/test_p0_2_two_layer_classification.py'
+      - name: Upload P0-2 outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: p0-2-two-layer-results
+          path: |
+            Writing Paper/pra/results/tables/p0_2_two_layer_phase_diagram.csv
+            Writing Paper/pra/results/tables/p0_2_two_layer_summary.json
+            Writing Paper/pra/results/tables/p0_2_two_layer_phase_diagram.npz
+            Writing Paper/pra/results/figures/fig_p0_2_two_layer_phase_diagram.png
+            Writing Paper/pra/results/figures/fig_p0_2_two_layer_phase_diagram.pdf
+          if-no-files-found: error
