@@ -49,19 +49,47 @@ assert mod.joint_class("sector_transparency", "Fano") == \
 assert mod.joint_class("sector_transparency", "EIT") == "spectroscopic_EIT"
 assert mod.joint_class("sector_absorption", "EIT") == "control_induced_absorption"
 
-summary_path = ROOT / "results" / "tables" / "p0_2_two_layer_summary.json"
-csv_path = ROOT / "results" / "tables" / "p0_2_two_layer_phase_diagram.csv"
-if summary_path.exists() and csv_path.exists():
-    summary = json.loads(summary_path.read_text(encoding="utf-8"))
-    assert summary["verdict"] == "PASS"
-    assert summary["new_mixed_EIT_nonEIT_best_count"] == 0
-    assert all(summary["gates"].values())
+# Frozen full-grid result must remain internally consistent.
+tab = ROOT / "results" / "tables"
+summary = json.loads((tab / "p0_2_two_layer_summary.json").read_text(encoding="utf-8"))
+assert summary["verdict"] == "PASS"
+assert all(summary["gates"].values())
+assert summary["grid"]["n_points"] == 240
+assert sum(summary["sector_counts"].values()) == 240
+assert sum(summary["spectral_counts"].values()) == 240
+assert sum(summary["joint_counts"].values()) == 240
+assert summary["joint_counts"]["spectroscopic_EIT"] == 9
+assert summary["legacy_classifier_audit"]["old_transparency_with_nonEIT_best_model"] == 139
+assert summary["candidate_70K"]["joint_class"] == "Fano_shaped_sector_transparency"
+assert summary["candidate_70K"]["best_model"] == "Fano"
+assert not summary["Bperp_zero_audit"]["has_robust_spectroscopic_EIT"]
+
+# Compact grid encodes exactly 20 x 12 classified points.
+grid_path = tab / "p0_2_joint_class_grid.csv"
+with grid_path.open(encoding="utf-8") as fh:
+    comment = fh.readline().strip()
+    rows = list(csv.DictReader(fh))
+assert comment.startswith("# E=spectroscopic_EIT")
+assert len(rows) == 20
+assert all(len(row) == 13 for row in rows)
+codes = [value for row in rows for key, value in row.items() if key != "T_K"]
+assert len(codes) == 240
+assert codes.count("E") == 9
+assert codes.count("F") == 154
+assert codes.count("A") == 3
+assert codes.count("?") == 3
+assert codes.count("N") == 68
+assert codes.count("U") == 3
+
+# A freshly generated full CSV, when present, must obey the same no-mixing rule.
+csv_path = tab / "p0_2_two_layer_phase_diagram.csv"
+if csv_path.exists():
     with csv_path.open(encoding="utf-8") as fh:
-        rows = list(csv.DictReader(fh))
-    assert rows
+        full_rows = list(csv.DictReader(fh))
+    assert len(full_rows) == 240
     assert not any(r["joint_class"] == "spectroscopic_EIT"
-                   and r["best_model"] != "EIT" for r in rows)
+                   and r["best_model"] != "EIT" for r in full_rows)
     assert not any(r["joint_class"] == "spectroscopic_EIT"
-                   and float(r["best_runner_margin"]) < mod.ROBUST for r in rows)
+                   and float(r["best_runner_margin"]) < mod.ROBUST for r in full_rows)
 
 print("P0-2 two-layer classification regression checks: PASS")
