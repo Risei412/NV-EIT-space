@@ -1,0 +1,171 @@
+{
+ "purpose": "reconcile the 70 K PRL candidate with Step 5/6's E1 verdict",
+ "candidate_geometry": {
+  "Bx_T": 0.23226114680059184,
+  "Bz_T": 0.005,
+  "control_spin_branch": "+1",
+  "probe_polarization": "orbital Y",
+  "control_polarization": "orbital Y",
+  "same_orbital_branch": true,
+  "d_strain_GHz": 1.683,
+  "Oc_GHz": 0.1
+ },
+ "roomT_geometry": {
+  "Bx_T": 0.0,
+  "Bz_T": 0.02,
+  "control_spin_branch": "-1",
+  "probe_polarization": "orbital X",
+  "control_polarization": "orbital Y",
+  "same_orbital_branch": false,
+  "d_strain_GHz": 1.683,
+  "Oc_GHz": 1.0
+ },
+ "model": "gate2_candidate_full_vs_reduced.full_spectrum (full N=9 Lindblad)",
+ "E1_at_70K": {
+  "C_max_signed": 0.013618343413136003,
+  "d2_at_max_signed_MHz": 0.0,
+  "C_at_max_abs": 0.013618343413136003,
+  "d2_at_max_abs_MHz": 0.0,
+  "on_window_edge": false,
+  "A_cut_at_max": 0.027242849805522606,
+  "rho_cp_over_Op": 0.4828721070060131
+ },
+ "E2_control_off": {
+  "max_abs_C": 5.5358029595839705e-15
+ },
+ "E4_control_power_scaling": {
+  "d2_star_MHz": 0.0,
+  "Oc_GHz": [
+   1e-05,
+   3e-05,
+   0.0001,
+   0.0003,
+   0.001,
+   0.003,
+   0.01,
+   0.03,
+   0.1
+  ],
+  "C": [
+   2.5997128783819598e-09,
+   2.339674655848598e-08,
+   2.5987571771124483e-07,
+   2.3319532141371615e-06,
+   2.50921243798033e-05,
+   0.00018588700165413826,
+   0.0013318565984357978,
+   0.00677703190626381,
+   0.013618343413136003
+  ],
+  "loglog_slope_unsaturated": 1.9935104270958044,
+  "n_points_unsaturated": 5,
+  "loglog_slope_all_points_includes_saturation": 1.7522641024220091
+ },
+ "candidate_temperature_sweep": [
+  {
+   "C_max_signed": 0.9998948941683802,
+   "d2_at_max_signed_MHz": -0.16666666666666652,
+   "C_at_max_abs": 0.9998948941683802,
+   "d2_at_max_abs_MHz": -0.16666666666666652,
+   "on_window_edge": false,
+   "A_cut_at_max": 11.104841989921788,
+   "rho_cp_over_Op": 2.713476452358825,
+   "T_K": 4.0
+  },
+  {
+   "C_max_signed": 0.9998805924759876,
+   "d2_at_max_signed_MHz": -0.16666666666666652,
+   "C_at_max_abs": 0.9998805924759876,
+   "d2_at_max_abs_MHz": -0.16666666666666652,
+   "on_window_edge": false,
+   "A_cut_at_max": 9.755339801518112,
+   "rho_cp_over_Op": 2.6964979417347683,
+   "T_K": 10.0
+  },
+  {
+   "C_max_signed": 0.9927863302018779,
+   "d2_at_max_signed_MHz": -0.16666666666666652,
+   "C_at_max_abs": 0.9927863302018779,
+   "d2_at_max_abs_MHz": -0.16666666666666652,
+   "on_window_edge": false,
+   "A_cut_at_max": 0.3202439887148856,
+   "rho_cp_over_Op": 2.569839031359021,
+   "T_K": 30.0
+  },
+  {
+   "C_max_signed": 0.5783485369326115,
+   "d2_at_max_signed_MHz": -0.16666666666666652,
+   "C_at_max_abs": 0.5783485369326115,
+   "d2_at_max_abs_MHz": -0.16666666666666652,
+   "on_window_edge": false,
+   "A_cut_at_max": 0.03536636642499478,
+   "rho_cp_over_Op": 2.1081827852851314,
+   "T_K": 50.0
+  },
+  {
+   "C_max_signed": 0.013618343413136003,
+   "d2_at_max_signed_MHz": 0.0,
+   "C_at_max_abs": 0.013618343413136003,
+   "d2_at_max_abs_MHz": 0.0,
+   "on_window_edge": false,
+   "A_cut_at_max": 0.027242849805522606,
+   "rho_cp_over_Op": 0.4828721070060131,
+   "T_K": 70.0
+  },
+  {
+   "C_max_signed": 0.0025950179101887753,
+   "d2_at_max_signed_MHz": 0.0,
+   "C_at_max_abs": 0.0025950179101887753,
+   "d2_at_max_abs_MHz": 0.0,
+   "on_window_edge": false,
+   "A_cut_at_max": 0.022046269324030532,
+   "rho_cp_over_Op": 0.22738722755698876,
+   "T_K": 77.0
+  },
+  {
+   "C_max_signed": 1.9592941477430164e-05,
+   "d2_at_max_signed_MHz": 0.08333333333333283,
+   "C_at_max_abs": 1.9592941477430164e-05,
+   "d2_at_max_abs_MHz": 0.08333333333333283,
+   "on_window_edge": false,
+   "A_cut_at_max": 0.008268093253425838,
+   "rho_cp_over_Op": 0.025954602163034034,
+   "T_K": 100.0
+  },
+  {
+   "C_max_signed": 1.745422762697094e-08,
+   "d2_at_max_signed_MHz": 0.16666666666666652,
+   "C_at_max_abs": -3.778813154340251e-07,
+   "d2_at_max_abs_MHz": 0.0,
+   "on_window_edge": false,
+   "A_cut_at_max": 0.0017424146636960697,
+   "rho_cp_over_Op": 0.0017265139519974213,
+   "T_K": 150.0
+  },
+  {
+   "C_max_signed": 1.0653170737073864e-12,
+   "d2_at_max_signed_MHz": 0.6666666666666661,
+   "C_at_max_abs": -1.1074634798558065e-09,
+   "d2_at_max_abs_MHz": 0.0,
+   "on_window_edge": false,
+   "A_cut_at_max": 0.00021825160004276792,
+   "rho_cp_over_Op": 3.742484163254127e-05,
+   "T_K": 300.0
+  }
+ ],
+ "candidate_sign_crossover_bracket_K": null,
+ "detection_threshold": 1.5344920423293595e-07,
+ "candidate_detectability_ceiling_bracket_K": [
+  100.0,
+  150.0
+ ],
+ "candidate_detectability_ceiling_K_interp": 134.5245506388458,
+ "gates": {
+  "candidate_passes_E1_at_70K": true,
+  "candidate_passes_E2": true,
+  "candidate_E4_quadratic": true,
+  "candidate_sign_crossover_above_70K": true,
+  "roomT_geometry_differs": true,
+  "overall_pass": true
+ }
+}

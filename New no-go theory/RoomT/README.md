@@ -9,6 +9,40 @@ infrastructure in `No-go theorem/` and `New no-go theory/`.
 
 ## Status
 
+**Step 10 (70 K candidate reconciliation): EXECUTED, all 5 gates PASS.**
+See `results/gates_summary_step10.json`; code:
+`src/step10_candidate_70K_reconciliation.py`. Added after the plan's nine
+steps to close an apparent contradiction between this campaign and the
+binary no-go theory's PRL candidate point.
+
+The candidate (T=70 K, Bx=0.2323 T) reports C ~ 1.4e-2, while Step 5 rejects
+Bx=0.2 T at 300 K on Criterion E1 and brackets the sign crossover at
+[50,77] K. These are NOT the same configuration: the candidate puts probe
+AND control on the SAME orbital branch Y with control on ms=+1, whereas
+Steps 1-9 use orthogonal branches X/Y with control on ms=-1 (and different
+Bz, Omega_c). Step 5's rejected point is the RoomT geometry at large Bx, not
+the candidate, and the sign crossover is a property of the RoomT reference
+configuration only.
+
+Evaluating the CANDIDATE geometry with the same full N=9 Lindblad model and
+the same E1-E4 criteria: at 70 K, C = +1.3618e-2 (E1 passes; matches Gate E's
+anchor 1.360e-2 to 0.13%, an independent-implementation cross-check), E2
+residual 5.5e-15, E4 slope 1.9935 over the five unsaturated decades. The
+candidate geometry shows NO sign crossover over 4-300 K; its ceiling is set
+by detectability instead, crossing the epsilon=1.53e-7 threshold between 100
+and 150 K (log-interpolated ~135 K), and reaching only C ~ 1.1e-12 at 300 K.
+Room-temperature no-go is unchanged under both geometries.
+
+Note for reuse: the candidate's own Omega_c = 0.1 GHz already sits on the
+power-broadening saturation shoulder, so an E4 fit spanning it returns 1.75
+rather than 2. Fit only the unsaturated decades.
+
+Gates certified: `candidate_passes_E1_at_70K`, `candidate_passes_E2`,
+`candidate_E4_quadratic`, `candidate_sign_crossover_above_70K`,
+`roomT_geometry_differs`.
+
+---
+
 **Step 9 (local response to detectable-signal conversion): EXECUTED, all 5 gates PASS.
 This completes all nine steps of the plan.**
 See `results/gates_summary_step9.json` and
