@@ -1,0 +1,46 @@
+{
+  "run": "RCI-20260810-P0-5",
+  "model": "NV ground-state spin-1 Hamiltonian; four tetrahedral orientations; both ODMR transitions summed",
+  "D_GHz": 2.877,
+  "gamma_GHz_per_T": 28.02495164,
+  "basis_invariant_observable": "For each orientation a, Omega_sum,a=f_a,+ + f_a,- = Tr(H_a)-3 lambda_0,a. Average over four orientations. The mean of all eight ODMR lines is half this quantity.",
+  "exact_characteristic_polynomial": "lambda^3 - 2D lambda^2 + (D^2-p^2-q^2)lambda + D p^2 = 0",
+  "local_small_field_m0_branch": "lambda0 = -p^2/D + (p^4-p^2 q^2)/D^3 + O(B^6)",
+  "averaged_transition_sum_formula": "Omega_bar = 2D + (2 gamma^2/D) B^2 - (2 gamma^4/D^3)(B^2)^2 + (4 gamma^4/(3D^3))(Bx^4+By^4+Bz^4) + O(B^6)",
+  "all_eight_line_centroid_formula": "f_centroid = D + (gamma^2/D) B^2 - (gamma^4/D^3)(B^2)^2 + (2 gamma^4/(3D^3))(Bx^4+By^4+Bz^4) + O(B^6)",
+  "tensor_selection": {
+    "rank1": "forbidden",
+    "rank2": "isotropic only",
+    "rank3": "forbidden in this field-even spectral sum",
+    "rank4": "first direction-dependent tensor"
+  },
+  "rank4_coefficients": {
+    "S4_in_Omega_bar_GHz_per_T4": 34538.11556493915,
+    "difference_100_minus_110_per_B4_GHz_per_T4": 17269.057782469576,
+    "S4_in_eight_line_centroid_GHz_per_T4": 17269.057782469576
+  },
+  "direct_diagonalization_validation": [
+    {"B_T":0.0001,"delta_Omega_100_minus_110_GHz":1.7266188478970435e-12,"delta_over_B4_GHz_per_T4":17266.18847897043},
+    {"B_T":0.0005,"delta_Omega_100_minus_110_GHz":1.0792131632797464e-9,"delta_over_B4_GHz_per_T4":17267.41061247594},
+    {"B_T":0.001,"delta_Omega_100_minus_110_GHz":1.726250431488552e-8,"delta_over_B4_GHz_per_T4":17262.504314885515},
+    {"B_T":0.002,"delta_Omega_100_minus_110_GHz":2.7588590079119513e-7,"delta_over_B4_GHz_per_T4":17242.868799449694},
+    {"B_T":0.005,"delta_Omega_100_minus_110_GHz":1.0691451167943455e-5,"delta_over_B4_GHz_per_T4":17106.32186870953}
+  ],
+  "matched_pair": {
+    "fields": "equal magnitude [100] and [110]",
+    "same_lower_aggregate_invariants": "same B^2 and BxByBz=0",
+    "rank4_values": "S4([100])=r^4; S4([110])=r^4/2",
+    "leading_Omega_bar_difference": "(2 gamma^4/(3D^3)) r^4 + O(r^6)",
+    "leading_eight_line_centroid_difference": "(gamma^4/(3D^3)) r^4 + O(r^6)"
+  },
+  "audit_correction": {
+    "P0_4_full_EIT_rank4": "demoted as intrinsic proof because averaging separately labeled ms=+/- control channels near the B=0 doublet retains a basis-label subtlety",
+    "P0_5": "clean basis-invariant replacement using the sum of both physical transition frequencies"
+  },
+  "status": {
+    "mathematical_witness": "VERIFIED analytically and by direct diagonalization",
+    "operational_unresolved_ODMR_witness": "UNVERIFIED",
+    "PRL_novelty": "HOLD",
+    "reason": "The rank-4 formula is a natural consequence of standard spin-1 Hamiltonian plus tetrahedral averaging. A new capability must be demonstrated in an unresolved or orientation-unassigned spectrum."
+  }
+}
