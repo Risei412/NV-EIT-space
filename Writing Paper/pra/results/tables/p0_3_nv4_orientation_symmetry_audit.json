@@ -1,0 +1,49 @@
+{
+  "status": "executed_locally_against_base_commit_and_frozen_for_reproduction",
+  "base_commit": "e5273393fe6fcfb7962c8ac37d014a0075b04126",
+  "model": "9-level full Lindblad, base configuration, branch-summed raw sector response",
+  "T_K": 70.0,
+  "Omega_c_GHz": 0.1,
+  "transverse_strain_GHz": 1.683,
+  "finite_difference_step_T": 0.0001,
+  "observable": "mean over frame orbit of sum_j Im(chi_cut_j-chi_full_j), j=0..5, at d2=0",
+  "V4_four_marked_frames": {
+    "f0": -6.6133634933525365e-06,
+    "hessian": [
+      [1.050261350110659, 0.0, 0.0],
+      [0.0, 0.108442339830095, 0.0],
+      [0.0, 0.0, 2.049720403823896]
+    ],
+    "eigenvalues": [0.108442339830095, 1.050261350110659, 2.049720403823896],
+    "relative_eigen_spread": 1.8151696975782037,
+    "relative_traceless_norm": 0.5954392152956633
+  },
+  "T12_tetrahedral_completion": {
+    "f0": -6.6133634933525365e-06,
+    "hessian": [
+      [1.069473702537163, 0.0, 0.0],
+      [0.0, 1.069470698921402, 0.0],
+      [0.0, 0.0, 1.069484105326904]
+    ],
+    "eigenvalues": [1.069470698921402, 1.069473702537163, 1.069484105326904],
+    "relative_eigen_spread": 1.253548783196626e-05,
+    "relative_traceless_norm": 5.371121587601209e-06
+  },
+  "cubic_mixed_derivative_d3R_dBxdBydBz": {
+    "V4_ctrl_plus": -16.028030031672856,
+    "T12_ctrl_plus": -16.03422660834816,
+    "T12_ctrl_minus": 15.955860909425294,
+    "T12_symmetric_pm": -0.039182849249675154,
+    "plus_to_symmetric_suppression": 409.21543265466056
+  },
+  "analytic_selection": {
+    "V4_degree_le_3": "linear forbidden; diagonal quadratic anisotropy allowed; xyz cubic allowed",
+    "T12_degree_le_3": "linear forbidden; traceless quadratic forbidden; isotropic B^2 allowed; xyz cubic allowed"
+  },
+  "evidence_status": {
+    "base_model": "verified at e527339",
+    "audit_run": "numerically executed in Research CI session; reproduction script committed on this branch",
+    "rank2_selection": "verified numerical witness plus exact group-averaging proof",
+    "rank3_pm_switch": "HOLD: strong suppression but not exact zero in the full model"
+  }
+}
