@@ -133,9 +133,17 @@ The novelty boundary is already drawn in `AUDIT_theorem_and_code_2026-08-01.md`
   ≈ 0 for both generic and protected; integer asymptotics are readable only 8+
   orders above physical bath damping. Gate B's claim is structural universality,
   not a measurement procedure for that device.
-- **`gate_F5B_full_gksl.json` is stale and self-contradictory.** The committed
-  result predates a bug fix; on rerun the gate verdict `any_gain_in_matched`
-  flips `true → false`, contradicting the `F5B_findings.md` shipped beside it.
+- **`gate_F5B_full_gksl.json` was stale and self-contradictory (fixed
+  2026-08-10).** The committed result predated the kron-order / linear-response
+  sign fix documented in `full_gksl_2g3e.py` and in `F5B_findings.md` §0; the
+  gate verdict `any_gain_in_matched` was recorded `true` from the pre-fix run.
+  Rerunning the current (already-fixed) source reproduces
+  `min_Re_chi_matched = +0.012866` at `delta = -6.0`, `any_gain_in_matched =
+  false` — the exact "re-execution" values `AUDIT_theorem_and_code_2026-08-01.md`
+  §A-1 predicted, and consistent with `F5B_findings.md`'s independent 150-trial
+  scan (`min Re(χ_matched) = 0.0029`, no counterexample). The JSON has been
+  regenerated and committed; the artifact and the findings file no longer
+  disagree.
 - **Theorem 1B's proof has an unwritten step.** "A short rearrangement shows
   this equals …" hides a real subtlety: `L_μ|D⟩ = λ_μ|D⟩` gives
   `ρ_D L_μ† = λ_μ* ρ_D` but *not* `ρ_D L_μ = λ_μ* ρ_D`. A route via
