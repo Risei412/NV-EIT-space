@@ -1,0 +1,103 @@
+{
+  "schema": "theory-repository/summary.json",
+  "version": "1.0",
+  "generated": "2026-08-13",
+  "repository": "NV-EIT-space",
+  "title": "EIT in solid-state defect centers: sector-mediated response classification",
+  "one_line": "Transparency redefined as coherent cancellation in the sector-mediated response, classified by an integer suppression index nu \u2014 structurally established, experimentally unmeasurable on the platform it was built for.",
+  "read_in_this_order": [
+    "REPOSITORY_STATE.md",
+    "CLAIMS.md",
+    "NON_CLAIMS.md",
+    "theory/ASSUMPTIONS.md",
+    "theory/LIMITATIONS.md",
+    "NEXT_GATES.md"
+  ],
+  "authority": {
+    "what_may_be_claimed": "CLAIMS.md",
+    "what_may_not_be_claimed": "NON_CLAIMS.md",
+    "regime_of_validity": "theory/ASSUMPTIONS.md",
+    "known_gaps": "theory/LIMITATIONS.md",
+    "permitted_work": "NEXT_GATES.md",
+    "gate_history": "gates/GATE_LEDGER.md",
+    "results_index": "results/summary.json",
+    "rule": "certificates in results/certificates/ outrank prose; CLAIMS.md and NON_CLAIMS.md outrank campaign documents"
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "strength": "believed established",
+      "claim": "exclusive trichotomy of the suppression index nu"
+    },
+    {
+      "id": "C2",
+      "strength": "believed established",
+      "claim": "the sector cut chi - chi_cut^(S), not chi_full, is the object of a no-go statement"
+    },
+    {
+      "id": "C3",
+      "strength": "believed established",
+      "claim": "matched-readout transparency has an identity floor Re chi = x^dag Gamma x >= 0"
+    },
+    {
+      "id": "C4",
+      "strength": "believed established, in declared scope",
+      "claim": "response-theoretic definition of EIT and its equivalent conditions"
+    },
+    {
+      "id": "C5",
+      "strength": "witness",
+      "claim": "dark-state-free EIT in a 2g+2e system"
+    },
+    {
+      "id": "C6",
+      "strength": "believed established, NV, model scope",
+      "claim": "NV binary no-go and the K ~ B_perp^2 transverse-field pathway"
+    },
+    {
+      "id": "C7",
+      "strength": "model-level conditional PASS",
+      "claim": "a finite measurement window exists for a 3-mode engineered-loss chain"
+    },
+    {
+      "id": "C8",
+      "strength": "established",
+      "claim": "reproducibility of the committed artifacts"
+    }
+  ],
+  "non_claims": [
+    "N1 a measurable design rule across engineered-dissipation platforms",
+    "N2 optical NV can measure its own suppression exponent",
+    "N3 Gate B gives a measurement procedure for a superconducting device",
+    "N4 group-IV curves as quantitative predictions",
+    "N5 Gate E's 3-mode PASS as experimentally demonstrated",
+    "N6 T1 Theorem 2.1 as a result of this repository",
+    "N7 T1 Theorem 2.3(ii) as a genericity statement",
+    "N8 manuscript Fig. 4 as a quick=False figure",
+    "N9 random scans as evidence for a positivity claim",
+    "N10 absence from the Zotero library as evidence of novelty"
+  ],
+  "open_questions": [
+    "O1 is there any platform where nu is both large enough to matter and small enough to measure?",
+    "O2 does the sector-cut classification have an observable signature that is not the exponent?",
+    "O3 what is the right genericity statement for T1 Theorem 2.3(ii)?",
+    "O4 can the unmatched escape route (exact zeros with x in ker Gamma) be characterized?"
+  ],
+  "layout": {
+    "theory/": "statements, definitions, theorems, proofs, scope, limits",
+    "calculations/": "analytic, numerics, simulations, tests",
+    "results/": "tables, figures, raw, certificates",
+    "gates/": "GATE_LEDGER.md, active/, closed/",
+    "evidence/": "witnesses, counterexamples, failures, benchmarks",
+    "literature/": "novelty audit, prior-art boundary, references.bib",
+    "manuscript/": "main.tex, main.pdf, drafts, submission notes",
+    "provenance/": "MANIFEST.json, PROVENANCE.json, SHA256SUMS.txt, CHANGELOG.md",
+    "archive/": "superseded claims, retired branches, historical notes"
+  },
+  "reproduce": {
+    "tests": "pytest calculations/tests",
+    "test_count": 70,
+    "status": "passing"
+  },
+  "related_repository": "https://github.com/Risei412/Sector-Master-Resolved-Theory"
+}

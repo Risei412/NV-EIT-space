@@ -31,3 +31,7 @@ hBN papers/*.pdf
 
 # Archives (keep the extracted tree under version control, not the zip)
 *.zip
+
+# test / tooling caches
+.pytest_cache/
+__pycache__/

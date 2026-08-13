@@ -1,0 +1,96 @@
+{
+  "summary_version": "1.0",
+  "generated": "2026-08-13",
+  "description": "Machine-readable index of computed results. Certificates carry the PASS/FAIL verdicts; where a certificate and a prose document disagree, the certificate wins.",
+  "layout": {
+    "tables": "results/tables/ \u2014 .csv and non-verdict .json",
+    "figures": "results/figures/ \u2014 .png and .pdf",
+    "raw": "results/raw/ \u2014 .npz arrays",
+    "certificates": "results/certificates/ \u2014 gate verdicts (gate*.json, gates_summary_*.json)"
+  },
+  "counts": {
+    "tables": 51,
+    "figures": 81,
+    "raw": 6,
+    "certificates": 42
+  },
+  "headline_results": [
+    {
+      "id": "trichotomy",
+      "statement": "nu in {inf} u (0,inf) u {0} is exclusive for finite-dimensional Markovian weak-probe systems",
+      "verdict": "PASS",
+      "certificates": [
+        "certificates/gates_summary_phaseA.json",
+        "certificates/gates_summary_phaseB.json"
+      ]
+    },
+    {
+      "id": "hidden_class_transition",
+      "statement": "a class transition can be invisible in chi_full and visible only in the sector cut",
+      "verdict": "PASS",
+      "certificates": [
+        "certificates/gates_summary_phaseB.json"
+      ]
+    },
+    {
+      "id": "qfi_translation",
+      "statement": "sector-mediated QFI scales as Gamma^-2nu, twice the tangent-vector exponent",
+      "verdict": "PASS",
+      "certificates": [
+        "certificates/gates_summary_phaseM.json"
+      ]
+    },
+    {
+      "id": "matched_floor",
+      "statement": "Re chi_matched = x^dag Gamma x >= 0; exact zeros require x in ker Gamma, unreachable under matched readout",
+      "verdict": "PASS",
+      "certificates": [
+        "certificates/gate_F5C_matched_floor_accretive.json",
+        "certificates/gate_F5B_full_gksl.json"
+      ],
+      "key_values": {
+        "min_Re_chi_matched": 0.012866,
+        "delta": -6.0,
+        "any_gain_in_matched": false
+      }
+    },
+    {
+      "id": "material_independence",
+      "statement": "the same three classes appear across NV, group-IV centers and an engineered-loss chain",
+      "verdict": "PASS on schematic group-IV parameters (not refit)",
+      "certificates": [
+        "certificates/gates_summary_gateC.json"
+      ]
+    },
+    {
+      "id": "experimental_anchor",
+      "statement": "is I_engineerable n I_asymptotic n I_detectable non-empty?",
+      "verdict": "optical NV FAIL; SC transfer FAIL; 3-mode chain model-level conditional PASS",
+      "certificates": [
+        "certificates/gates_summary_gateE.json"
+      ],
+      "key_values": {
+        "nv_usable_window_decades": [
+          1.02,
+          0.84,
+          0.51
+        ],
+        "required_decades": 1.0,
+        "chain3_class3_exponent": 2.9002,
+        "chain3_class3_ci95": [
+          2.8286,
+          2.9779
+        ],
+        "chain3_class2_ci95": [
+          2.068,
+          2.109
+        ]
+      }
+    }
+  ],
+  "reproduce": {
+    "tests": "pytest calculations/tests",
+    "nogo_campaign": "python 'calculations/numerics/No-go theorem/scripts/reproduce_prl_figures.py'",
+    "prl_figures": "python calculations/numerics/manuscript_figures/prl/src/make_figures.py"
+  }
+}

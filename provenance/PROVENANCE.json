@@ -1,0 +1,92 @@
+{
+  "provenance_version": "1.0",
+  "repository": "NV-EIT-space",
+  "owner": "Risei412",
+  "seed": {
+    "seed_id": "nv-eit-sector-response",
+    "title": "When sector-mediated transparency is real but its exponent is unmeasurable",
+    "file": "seed.md"
+  },
+  "related_repositories": [
+    {
+      "name": "Sector-Master-Resolved-Theory",
+      "url": "https://github.com/Risei412/Sector-Master-Resolved-Theory",
+      "relation": "holds the material-independent three-tier theory and its non-NV campaigns; this repository holds the NV-bound campaigns and the manuscript"
+    }
+  ],
+  "software_environment": {
+    "verified_on": [
+      "numpy 2.4",
+      "scipy 1.17",
+      "pandas 3.0",
+      "sympy",
+      "matplotlib"
+    ],
+    "note": "cross-library reproduction: gate JSON/CSV matched exactly apart from runtime_s; PNGs matched pixel-for-pixel"
+  },
+  "artifact_lineage": [
+    {
+      "artifact": "results/certificates/gates_summary_phase{A,B,D,M,P}.json",
+      "produced_by": "calculations/numerics/New no-go theory/src/run_phase_{a,b,d,m,p}.py"
+    },
+    {
+      "artifact": "results/certificates/gates_summary_gate{B,C,D,E,O}.json",
+      "produced_by": "calculations/numerics/New no-go theory/{GateB_superconducting_witness,GateC_material_independence,GateD_robustness_discriminability,GateE_NV_experimental_anchor,PhaseO_observable_inheritance}/src/run_gate_*.py"
+    },
+    {
+      "artifact": "results/certificates/gates_summary_step1..9.json",
+      "produced_by": "calculations/numerics/New no-go theory/RoomT/src/step*.py"
+    },
+    {
+      "artifact": "results/certificates/gate{1..5}_*.json and results/tables/gate{1..5}_*.csv",
+      "produced_by": "calculations/numerics/No-go theorem/src/gate{1..5}_*.py"
+    },
+    {
+      "artifact": "results/certificates/gate_{E1..E4,F0..F5C}*.json",
+      "produced_by": "calculations/numerics/EIT definition equivalence/src/*.py"
+    },
+    {
+      "artifact": "results/tables/p{0_2,1..6}_*.{csv,json,npz} and results/figures/fig{1..6}_*.{png,pdf}",
+      "produced_by": "calculations/numerics/manuscript_figures/pra/src/p*.py, make_figures.py"
+    },
+    {
+      "artifact": "results/figures/fig{1..4}_{classes,inheritance,material_independence,robustness}.{png,pdf}",
+      "produced_by": "calculations/numerics/manuscript_figures/prl/src/make_figures.py"
+    },
+    {
+      "artifact": "evidence/witnesses/2g2e_package/**",
+      "produced_by": "evidence/witnesses/2g2e_package/code/dark_state_free_2g2e_analysis.py",
+      "note": "self-contained package with its own SHA256SUMS.txt and parameters.json"
+    }
+  ],
+  "audits": [
+    {
+      "date": "2026-08-01",
+      "scope": "theory/proofs/eit_nogo_proofs.tex + code",
+      "verdict": "no mathematical error in Theorems 1A-7B",
+      "record": "evidence/benchmarks/AUDIT_theorem_and_code_2026-08-01.md"
+    },
+    {
+      "date": "2026-08-02",
+      "scope": "Gate E experimental anchor",
+      "verdict": "optical NV FAIL, SC transfer FAIL, 3-mode conditional PASS",
+      "record": "results/certificates/gates_summary_gateE.json"
+    },
+    {
+      "date": "2026-08-10",
+      "scope": "gate_F5B_full_gksl.json",
+      "verdict": "stale artifact regenerated; artifact and findings agree",
+      "record": "gates/closed/F5B_findings.md"
+    },
+    {
+      "date": "2026-08-13",
+      "scope": "repository restructure",
+      "verdict": "70/70 tests pass on the new layout; PRL figures regenerate identically",
+      "record": "provenance/CHANGELOG.md"
+    }
+  ],
+  "integrity": {
+    "checksums": "provenance/SHA256SUMS.txt",
+    "manifest": "provenance/MANIFEST.json"
+  }
+}
