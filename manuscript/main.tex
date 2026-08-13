@@ -642,6 +642,18 @@ not contrast magnitudes and fails qualitatively outside
 The author thanks the members of the group for discussions.
 \end{acknowledgments}
 
+% Article titles in the reference list.  The revtex4-2 `longbibliography'
+% class option is declared but never used by the class, so it cannot switch
+% them on; apsrev4-2.bst defaults to title = -1 (disabled).  The working route
+% is the @CONTROL entry at the top of references.bib, which BibTeX only reads
+% if the entry is cited -- hence the \nocite.  It produces no printed entry.
+% The bst consumes the entry without emitting a \bibitem, so natbib would then
+% report the key as undefined; predefining its (empty) label silences that
+% without typesetting anything, since the key is never \cite'd.
+\makeatletter
+\expandafter\gdef\csname b@apsrev42Control\endcsname{}
+\makeatother
+\nocite{apsrev42Control}
 \bibliographystyle{apsrev4-2}
 \bibliography{references}
 
