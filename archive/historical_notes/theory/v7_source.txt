@@ -1,1 +1,0 @@
-Source: agent/no-go-laurent-sector-graph.
