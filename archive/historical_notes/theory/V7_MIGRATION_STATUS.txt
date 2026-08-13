@@ -1,1 +1,0 @@
-Canonical v7 proof source recovered from PR 23 into theory/proofs; pre-v7 source archived here.
