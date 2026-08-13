@@ -197,7 +197,7 @@ $x$ and the targeted ground coherence $s=\rho^{(1)}_{g_{2}g_{1}}$,
 \label{eq:block}
 \end{equation}
 %
-Eliminating $s$ without ever dividing by $G_{g}$ --- so that the ideal
+Eliminating $x$ --- so that $G_{g}$ is never inverted and the ideal
 ground-coherence limit is retained --- gives the probe response as a Schur
 complement. We define the \emph{pathway-cut} counterfactual
 $\chi^{(S)}_{\mathrm{cut}}$ by setting $B=C=0$ while holding $A$, $G_{g}$, the
@@ -231,6 +231,29 @@ $\chi_{\mathrm{full}}=0$ is what \emph{perfect} EIT looks like. In the ideal
 three-level limit the total response vanishes while $\dchi$ is maximal; a
 criterion phrased on the total susceptibility would report that case as an
 absence of EIT.
+
+Both statements are exact in the case where the answer is already known. For
+one excited state and scalar dipoles the blocks are scalars: $A=\gamma_{31}+i
+\delta_{p}$, $G_{g}=\gamma_{21}+i(\delta_{p}-\delta_{c})$,
+$BC=-|\Omega_{c}|^{2}/4\equiv-\beta$ and $b_{p}=i\Omega_{p}/2$, and
+Eq.~\eqref{eq:block} collapses to
+%
+\begin{equation}
+\rho_{e1}=\frac{b_{p}}{A+\beta/G_{g}}
+=\frac{i\Omega_{p}/2}
+{\gamma_{31}+i\delta_{p}
++\dfrac{|\Omega_{c}|^{2}/4}{\gamma_{21}+i(\delta_{p}-\delta_{c})}},
+\label{eq:textbook}
+\end{equation}
+%
+which is the standard weak-probe EIT coherence~\cite{M2005C01} term by term.
+No adiabatic elimination is used in obtaining it. Setting
+$\delta_{p}=\delta_{c}=0$ and $\gamma_{21}\to0$ then gives
+$\chi_{\mathrm{full}}=0$ and $\dchi/\chi^{(S)}_{\mathrm{cut}}=-1$: the total
+response vanishes while the sector-resolved correction is maximal, which is
+the preceding paragraph's claim as an identity rather than an assertion. The
+three reductions are verified symbolically in
+\texttt{calculations/symbolic/verify\_lambda\_reduction.py}.
 
 \subsection{Classification}
 

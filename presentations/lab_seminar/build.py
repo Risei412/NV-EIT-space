@@ -280,8 +280,10 @@ s = add(L_CONTENT)
 title(s, "Outline")
 items = [
     ("Introduction", "What EIT is, why NV, and what we ask"),
-    ("Method", "The no-go criterion and how each operating point is judged"),
-    ("Results", "Sanity check, the island, room temperature, the field"),
+    ("Method", "The criterion, how each point is judged, and the "
+                "check against the literature"),
+    ("Results", "The island, room temperature, the sign reversal, "
+                 "the field"),
     ("Discussion", "What to measure, and why room temperature fails"),
     ("Summary", "Operating window fixed; experiment this year"),
 ]
@@ -504,43 +506,58 @@ bottom(s, "A strong control gives an Autler–Townes doublet even with zero "
 refs(s, ["[9] P. M. Anisimov, J. P. Dowling and B. C. Sanders, "
          "Phys. Rev. Lett. 107, 163604 (2011)."])
 
+# ---- M-4 the kernel against the literature.  This validates the tool, so it
+# closes Method rather than opening Results.
+s = add(L_CONTENT)
+head(s, "Our response kernel returns the density matrix the EIT literature "
+        "derives.")
+title(s, "Method 4: The kernel reproduces the literature result")
+c = card(s, MARGIN, BODY_TOP, BODY_W, 1.62, fill=SOFT)
+tf = c.text_frame
+run(tf.paragraphs[0], "Ideal Λ system, weak probe", size=17,
+    bold=True, color=NAVY)
+p = para(tf); p.space_before = Pt(5)
+rich(p, [("A ρₑ₁ + B ρ₂₁ = b_p", {}),
+         ("   and   ", {"color": GREY}),
+         ("C ρₑ₁ + G_g ρ₂₁ = 0", {})], size=16)
+p = para(tf); p.space_before = Pt(4)
+rich(p, [("Eliminate the optical block — G_g is never inverted: ",
+          {"color": GREY}),
+         ("S_g = G_g − C A⁻¹B", {})], size=16)
+p = para(tf); p.space_before = Pt(4)
+rich(p, [("⟹   ", {"color": BLUE, "bold": True}),
+         ("ρₑ₁ = b_p / (A + β/G_g),    β = |Ω_c|²/4", {})], size=16)
+c = card(s, MARGIN, 3.36, BODY_W, 1.06, fill=TINT)
+tf = c.text_frame
+tf.vertical_anchor = MSO_ANCHOR.MIDDLE
+p = tf.paragraphs[0]
+p.alignment = PP_ALIGN.CENTER
+run(p, "ρₑ₁ = (iΩ_p/2) / [ γ₃₁ + iδ_p + (|Ω_c|²/4) / (γ₂₁ + i(δ_p − δ_c)) ]",
+    size=18, bold=True, color=NAVY)
+p = para(tf)
+p.alignment = PP_ALIGN.CENTER
+run(p, "identical, term by term, to Fleischhauer RMP 77, 633 (2005)",
+    size=16, italic=True, color=GREY)
+tb, tf = textbox(s, MARGIN, 4.54, BODY_W, 0.70)
+p = tf.paragraphs[0]
+rich(p, [("And at δ_p = δ_c = 0 with γ₂₁ → 0:  ", {}),
+         ("χ_full = 0 while δΞₛ = −1", {"bold": True, "color": NAVY}),
+         (" — the Method 1 claim, derived rather than asserted.", {})],
+     size=16)
+bottom(s, "Textbook Λ susceptibility recovered exactly; the full Liouvillian "
+          "reproduces the archived 70 K contrast to 0.25 %.")
+refs(s, ["[1] M. Fleischhauer, A. Imamoğlu and J. P. Marangos, "
+         "Rev. Mod. Phys. 77, 633 (2005).   Symbolic check: "
+         "calculations/symbolic/verify_lambda_reduction.py.   Benchmark: [4]."])
+
 # ================================================== RESULTS
 section("Results", "III")
-
-# ---- R-1 sanity check
-s = add(L_CONTENT)
-head(s, "The general formula reproduces the textbook three-level result as a "
-        "one-line special case.")
-title(s, "Result 1: Reduction to the textbook Λ system")
-c = card(s, MARGIN, BODY_TOP, BODY_W, 1.70, fill=SOFT)
-tf = c.text_frame
-run(tf.paragraphs[0], "General (Schur complement, any number of excited "
-                      "branches)", size=16, bold=True, color=NAVY)
-p = para(tf); p.space_before = Pt(6)
-run(p, "Ξ  =  S₁  −  β K₁₂K₂₁ / (γ_g + β S₂)", size=18, color=INK)
-p = para(tf); p.space_before = Pt(8)
-rich(p, [("One excited state, scalar dipoles ", {"color": GREY}),
-         ("→", {"color": BLUE, "bold": True}),
-         ("   Ξ = γ_g / (Aγ_g + β)   = the standard Λ-system result", {})],
-     size=16)
-bullets(s, MARGIN, 3.48, BODY_W, 1.80, [
-    [("Recovers the published three-level susceptibility exactly — no "
-      "adiabatic approximation is used anywhere.", {})],
-    [("Holds for multi-branch excited manifolds: K₁₂ becomes a coherent sum "
-      "over branches.", {})],
-    [("Full Liouvillian reproduces the archived 70 K benchmark to ", {}),
-     ("0.25 %", {"bold": True, "color": NAVY}), (".", {})],
-])
-bottom(s, "Textbook Λ susceptibility recovered as a special case; 70 K "
-          "contrast C = 0.01387 against the archived 0.01384.")
-refs(s, ["[1] M. Fleischhauer, A. Imamoğlu and J. P. Marangos, "
-         "Rev. Mod. Phys. 77, 633 (2005).   Benchmark: [4]."])
 
 # ---- R-2 phase diagram
 s = add(L_CONTENT)
 head(s, "NV EIT does not simply fade — it occupies a bounded island in the "
         "temperature–field plane.")
-title(s, "Result 2: The temperature–field island")
+title(s, "Result 1: The temperature–field island")
 picture(s, "sf_island.png", top=BODY_TOP, max_h=3.10)
 # the cold edge is where this claim is weakest, so it is stated on the slide
 # rather than left for the questions
@@ -559,7 +576,7 @@ refs(s, ["Phonon-induced orbital hopping: "
 s = add(L_CONTENT)
 head(s, "Room temperature loses nine orders of contrast and lands two "
         "orders below the detection floor.")
-title(s, "Result 3: Room temperature")
+title(s, "Result 2: Room temperature")
 picture(s, "sf_contrast_T.png", top=BODY_TOP, max_h=3.66, max_w=6.80, cx=3.54)
 rows = [("30 K", "0.99", "instant"), ("70 K", "1.4×10⁻²", "1 μs"),
         ("90 K", "1.5×10⁻⁴", "10 ms"),
@@ -583,7 +600,7 @@ refs(s, ["³E structure: [3] M. W. Doherty et al., Phys. Rep. 528, 1 (2013).   "
 s = add(L_CONTENT)
 head(s, "Above 103 K the control stops inducing transparency and starts "
         "inducing absorption.")
-title(s, "Result 4: Sign reversal at 103 K")
+title(s, "Result 3: Sign reversal at 103 K")
 picture(s, "sf_lineshape.png", top=BODY_TOP, max_h=3.66, max_w=4.79, cx=2.54)
 c = card(s, 5.14, BODY_TOP, 4.72, 1.72, fill=TINT)
 tf = c.text_frame
@@ -612,7 +629,7 @@ refs(s, ["Induced absorption in Λ systems: "
 s = add(L_CONTENT)
 head(s, "The transverse field is a switch that opens the pathway, not a dial "
         "that buys temperature.")
-title(s, "Result 5: The role of the transverse field")
+title(s, "Result 4: The role of the transverse field")
 tbl = [("B⊥ (T)", "T₁% (K)", "verdict"),
        ("0 – 0.10", "27 – 33", "no usable window"),
        ("0.15", "70.3", "window opens"),
