@@ -538,20 +538,27 @@ refs(s, ["[1] M. Fleischhauer, A. Imamoğlu and J. P. Marangos, "
 
 # ---- R-2 phase diagram
 s = add(L_CONTENT)
-head(s, "NV EIT does not simply fade — it occupies a closed island in the "
+head(s, "NV EIT does not simply fade — it occupies a bounded island in the "
         "temperature–field plane.")
 title(s, "Result 2: The temperature–field island")
-picture(s, "sf_island.png", max_h=BODY_BOT - BODY_TOP)
-bottom(s, "Transparency needs B⊥ ≳ 0.15 T and 22–95 K: 148 of 240 grid "
-          "points are genuine transparency, 68 induced absorption.")
+picture(s, "sf_island.png", top=BODY_TOP, max_h=3.10)
+# the cold edge is where this claim is weakest, so it is stated on the slide
+# rather than left for the questions
+tb, tf = textbox(s, MARGIN, 4.68, BODY_W, 0.60)
+rich(tf.paragraphs[0], [
+    ("Cold edge: ", {"bold": True, "color": NAVY}),
+    ("30 K at 0.15 T; above 0.3 T it is the 20 K grid floor, closed by "
+     "3 Autler–Townes points.", {})], size=16)
+bottom(s, "Transparency needs B⊥ ≳ 0.15 T: the window runs 30–90 K at that "
+          "field and 20–95 K above 0.3 T.")
 refs(s, ["Phonon-induced orbital hopping: "
          "[10] K.-M. C. Fu et al., Phys. Rev. Lett. 103, 256404 (2009).   "
          "[11] M. L. Goldman et al., Phys. Rev. Lett. 114, 145502 (2015)."])
 
 # ---- R-3 room temperature
 s = add(L_CONTENT)
-head(s, "Room-temperature NV EIT is out of reach by nine orders of "
-        "magnitude.")
+head(s, "Room temperature loses nine orders of contrast and lands two "
+        "orders below the detection floor.")
 title(s, "Result 3: Room temperature")
 picture(s, "sf_contrast_T.png", top=BODY_TOP, max_h=3.66, max_w=6.80, cx=3.54)
 rows = [("30 K", "0.99", "instant"), ("70 K", "1.4×10⁻²", "1 μs"),
@@ -567,8 +574,8 @@ for t, cc, tau in rows:
     run(p, f"{cc}", size=16, color=col)
     p2 = para(tf)
     run(p2, f"          {tau}", size=16, italic=True, color=GREY)
-bottom(s, "At 300 K the residual contrast is 1.1×10⁻⁹ and of the wrong sign; "
-          "no integration time reaches SNR = 5.")
+bottom(s, "At 300 K the contrast is 1.1×10⁻⁹, of the wrong sign, and 140× "
+          "below the 1.5×10⁻⁷ detection floor.")
 refs(s, ["³E structure: [3] M. W. Doherty et al., Phys. Rep. 528, 1 (2013).   "
          "Contrasts and detection chain: this work."])
 
@@ -593,6 +600,8 @@ run(p, "T_sign = ", size=16, color=INK)
 run(p, "103 [97, 108] K", size=18, bold=True, color=RED)
 p = para(tf); p.space_before = Pt(4)
 run(p, "full Liouvillian, 68 % interval, 80 samples", size=16, color=GREY)
+p = para(tf); p.space_before = Pt(3)
+run(p, "reduced kernel not trusted above 90 K", size=16, color=GREY)
 bottom(s, "Peak contrast turns negative between 100 and 105 K above 0.15 T; "
           "at 105 K the transmission signal is −1.2×10⁻⁵.")
 refs(s, ["Induced absorption in Λ systems: "
@@ -644,15 +653,15 @@ section("Discussion", "IV")
 
 # ---- D-1 what to measure
 s = add(L_CONTENT)
-head(s, "The calculation says where to look and which single measurement is "
-        "decisive.")
+head(s, "The decisive measurement is following the fringe through zero at "
+        "103 K.")
 title(s, "Discussion 1: What to measure")
 picture(s, "sf_observables.png", top=BODY_TOP, max_h=3.66, max_w=5.69,
         cx=2.99)
 c1 = card(s, 6.02, BODY_TOP, 3.84, 1.72, fill=TINT)
 tf = c1.text_frame
 run(tf.paragraphs[0], "Where to look", size=17, bold=True, color=NAVY)
-for t in ["25 – 90 K, B⊥ ≳ 0.15 T",
+for t in ["30–90 K at 0.15 T, 20–95 K above 0.3 T",
           "Transmission or fluorescence both work"]:
     p = para(tf); p.space_before = Pt(6)
     run(p, "•  " + t, size=16, color=INK)
@@ -712,8 +721,8 @@ head(s, "We have fixed the operating window and found a falsifiable "
         "prediction to test this year.")
 title(s, "Summary and next step")
 findings = [
-    ("Closed island", "Transparency exists only for 25–90 K and "
-                      "B⊥ ≳ 0.15 T — bounded on both temperature sides."),
+    ("Bounded island", "Transparency needs B⊥ ≳ 0.15 T, and runs 30–90 K "
+                       "at that field, 20–95 K above 0.3 T."),
     ("Room temperature: no", "Residual contrast 1.1×10⁻⁹, wrong sign, "
                              "undetectable at any integration time."),
     ("Sign reversal at 103 K", "Control-induced absorption above "
