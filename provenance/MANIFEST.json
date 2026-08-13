@@ -1,0 +1,81 @@
+{
+  "manifest_version": "1.0",
+  "repository": "NV-EIT-space",
+  "generated": "2026-08-13",
+  "layout": "theory-repository canonical layout",
+  "entry_points": {
+    "machine": "summary.json",
+    "human": "README.md",
+    "state": "REPOSITORY_STATE.md",
+    "claims": "CLAIMS.md",
+    "non_claims": "NON_CLAIMS.md",
+    "next_work": "NEXT_GATES.md"
+  },
+  "directories": {
+    "theory": {
+      "purpose": "statements, definitions, theorems, proofs, scope, limits",
+      "proof_sources": [
+        "EIT_no_go_go_theory_v6_2_English.pdf",
+        "EIT_no_go_go_theory_v6_2_English.tex",
+        "T1_sector_cut_axiomatization.tex",
+        "eit_nogo_lecture.tex",
+        "eit_nogo_proofs.tex",
+        "prl_eit_equivalence_conditions.md"
+      ]
+    },
+    "calculations": {
+      "purpose": "all computation",
+      "subtrees": [
+        "analytic",
+        "numerics",
+        "simulations",
+        "tests"
+      ],
+      "python_files": 110,
+      "notebooks": 2
+    },
+    "results": {
+      "purpose": "machine-readable outputs, split by artifact kind",
+      "tables": 51,
+      "figures": 81,
+      "raw": 6,
+      "certificates": 42
+    },
+    "gates": {
+      "purpose": "gate ledger and gate documents",
+      "active": 5,
+      "closed": 13
+    },
+    "evidence": {
+      "purpose": "witnesses, counterexamples, failures, benchmarks"
+    },
+    "literature": {
+      "purpose": "novelty audit, prior-art boundary, references"
+    },
+    "manuscript": {
+      "purpose": "main text, drafts, submission notes"
+    },
+    "provenance": {
+      "purpose": "manifest, provenance, checksums, changelog"
+    },
+    "archive": {
+      "purpose": "superseded claims, retired branches, historical notes"
+    }
+  },
+  "output_routing": {
+    ".csv, non-gate .json": "results/tables/",
+    ".png, .pdf": "results/figures/",
+    ".npz": "results/raw/",
+    "gate*.json, gates_summary_*.json": "results/certificates/"
+  },
+  "checksums": {
+    "file": "provenance/SHA256SUMS.txt",
+    "algorithm": "sha256",
+    "entries": 444
+  },
+  "tests": {
+    "command": "pytest calculations/tests",
+    "count": 70,
+    "status": "passing"
+  }
+}

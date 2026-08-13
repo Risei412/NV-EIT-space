@@ -41,7 +41,7 @@ Three claims, at different strengths:
 ## Known results
 
 - **Theorems 1A–7B verified.** A full audit (2026-08-01) of
-  `No-go theorem/Theorem and proofs/eit_nogo_proofs.tex` found no mathematical
+  `theory/proofs/eit_nogo_proofs.tex` found no mathematical
   error across Theorems 1A–7B, lemmas and corollaries.
 - **Reproducibility verified.** 47 tests pass on a library generation different
   from the author's (numpy 2.4 / scipy 1.17 / pandas 3.0); Gate A–D, RoomT
@@ -96,21 +96,21 @@ Three claims, at different strengths:
 
 ## Existing calculations
 
-- `EIT definition equivalence/src/matched_floor_accretive_gate.py` →
-  `EIT definition equivalence/results/gate_F5C_matched_floor_accretive.json`
-- `EIT definition equivalence/src/full_gksl_2g3e.py` →
-  `EIT definition equivalence/results/gate_F5B_full_gksl.json`
-- `EIT definition equivalence/results/gate_F4_transparency_floor.json`
-- `EIT definition equivalence/results/gate_E4_FINAL.json`
-- `EIT definition equivalence/2g2e_package/code/dark_state_free_2g2e_analysis.py`
-- `EIT definition equivalence/prl_eit_equivalence_conditions.md` — Theorems 1–2
+- `calculations/numerics/EIT definition equivalence/src/matched_floor_accretive_gate.py` →
+  `results/certificates/gate_F5C_matched_floor_accretive.json`
+- `calculations/numerics/EIT definition equivalence/src/full_gksl_2g3e.py` →
+  `results/certificates/gate_F5B_full_gksl.json`
+- `results/certificates/gate_F4_transparency_floor.json`
+- `results/certificates/gate_E4_FINAL.json`
+- `evidence/witnesses/2g2e_package/code/dark_state_free_2g2e_analysis.py`
+- `theory/proofs/prl_eit_equivalence_conditions.md` — Theorems 1–2
   (sector-mediated absorption cancellation, complex response-zero equivalence)
-- `SIMULATION_PLAN.md`, `GENERAL_PRL_GATE_AUDIT.md`,
-  `AUDIT_theorem_and_code_2026-08-01.md`
+- `gates/active/SIMULATION_PLAN.md`, `gates/closed/GENERAL_PRL_GATE_AUDIT.md`,
+  `evidence/benchmarks/AUDIT_theorem_and_code_2026-08-01.md`
 
 ## Relevant literature
 
-The novelty boundary is already drawn in `AUDIT_theorem_and_code_2026-08-01.md`
+The novelty boundary is already drawn in `evidence/benchmarks/AUDIT_theorem_and_code_2026-08-01.md`
 §I-4, and it is deliberately narrow:
 
 - **Known results in other clothing** — Theorem 1A (rank–nullity / Morris–Shore),
@@ -120,7 +120,7 @@ The novelty boundary is already drawn in `AUDIT_theorem_and_code_2026-08-01.md`
 - **What is claimed as new** — the exclusive trichotomy in `ν`; identifying the
   sector cut `χ − χ^(S)_cut` as the correct object of a no-go statement; and the
   material-independent classification that follows.
-- `EIT_general_theory_literature_2026-07-13/` holds the per-paper notes,
+- `literature/EIT_general_theory_2026-07-13/` holds the per-paper notes,
   claim-to-citation map and `references.bib`.
 
 ## Failure cases / counterexamples
@@ -139,7 +139,7 @@ The novelty boundary is already drawn in `AUDIT_theorem_and_code_2026-08-01.md`
   gate verdict `any_gain_in_matched` was recorded `true` from the pre-fix run.
   Rerunning the current (already-fixed) source reproduces
   `min_Re_chi_matched = +0.012866` at `delta = -6.0`, `any_gain_in_matched =
-  false` — the exact "re-execution" values `AUDIT_theorem_and_code_2026-08-01.md`
+  false` — the exact "re-execution" values `evidence/benchmarks/AUDIT_theorem_and_code_2026-08-01.md`
   §A-1 predicted, and consistent with `F5B_findings.md`'s independent 150-trial
   scan (`min Re(χ_matched) = 0.0029`, no counterexample). The JSON has been
   regenerated and committed; the artifact and the findings file no longer
