@@ -1,1 +1,792 @@
-% Placeholder created during canonical v7 recovery.
+\documentclass[11pt,a4paper]{article}
+
+% ------------------------------------------------------------------
+% Revised proofs of the EIT No-Go/Go theory
+% Version 7.0, 2026-08-06
+%
+% This file replaces the asymptotic core of the v6.2 proof package.
+% The main asymptotic theorem is proved by the Laurent expansion of a
+% finite-dimensional rational resolvent.  The Neumann expansion is retained
+% as a quantitative lemma for a computable convergence domain and remainder.
+% The former sector-graph remark is promoted to a theorem.
+% ------------------------------------------------------------------
+
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[colorlinks=true,linkcolor=blue!60!black]{hyperref}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newtcolorbox{scopebox}[1][Scope]{
+  breakable,enhanced,colback=yellow!5,colframe=yellow!45!black,
+  title=#1,fonttitle=\bfseries}
+\newtcolorbox{claimbox}[1][Claim discipline]{
+  breakable,enhanced,colback=blue!4,colframe=blue!50!black,
+  title=#1,fonttitle=\bfseries}
+
+\newcommand{\im}{\mathrm{i}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\adj}{\operatorname{adj}}
+\newcommand{\spann}{\operatorname{span}}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\braket}[2]{\langle #1|#2\rangle}
+\newcommand{\dchi}{\delta\chi_S}
+
+\title{\bfseries Revised Proofs of the EIT No-Go/Go Theory\\[4pt]
+\large Laurent asymptotics, sector-graph selection, and observable inheritance}
+\author{Quantum Sensing Group}
+\date{August 6, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a finite-dimensional proof package for the no-go/go theory used in the
+NV--EIT and companion PRL programmes.  The large-dissipation expansion is
+proved from the Laurent expansion at infinity of a rational resolvent; no
+operator-norm hypothesis is needed for the asymptotic order theorem.  A
+Neumann-series lemma is retained because it supplies a directly checkable
+convergence condition and an explicit truncation error.  We promote the
+sector-graph selection rule from a remark to a theorem, carefully separating a
+graph-theoretic lower bound from equality, which additionally requires a
+nonvanishing sum of shortest-path amplitudes.  We also close the omitted
+algebra in the pure stationary-state theorem, remove the Neumann dependence
+from the exact-transfer-zero theorem, state the observable-order inheritance
+rule, and make the Hermitian and semisimple restrictions of the singular
+results explicit.
+\end{abstract}
+
+\tableofcontents
+
+% ==================================================================
+\section{Scope, notation, and the three meanings of no-go}
+% ==================================================================
+
+\begin{scopebox}
+The results below assume a finite-dimensional, Markovian, weak-probe linear
+response problem.  The fixed-scaling family is
+\[
+A_\Gamma(z)=\Gamma D+A_0(z),
+\]
+where $\Gamma\to\infty$ is the single large dissipation scale and $z$ denotes
+frequency or other parameters held fixed.  A second scale that itself grows
+with $\Gamma$ is a different two-scale problem and is not silently included in
+these theorems.
+\end{scopebox}
+
+For an invertible $D$, define
+\begin{equation}
+X(z):=-D^{-1}A_0(z),\qquad \nu:=D^{-1}c,
+\qquad K_\Gamma(z):=p^\dagger A_\Gamma(z)^{-1}c.
+\label{eq:standing}
+\end{equation}
+Then
+\begin{equation}
+A_\Gamma=D(\Gamma I-X),
+\qquad
+K_\Gamma=p^\dagger(\Gamma I-X)^{-1}\nu.
+\label{eq:factor}
+\end{equation}
+The path moments are
+\begin{equation}
+M_n(z):=p^\dagger X(z)^n\nu,
+\qquad n=0,1,2,\ldots.
+\label{eq:moments}
+\end{equation}
+
+We distinguish three statements that must not be conflated.
+\begin{enumerate}[label=(\roman*)]
+\item An \emph{exact no-go} is $K_\Gamma\equiv0$ on its regular domain.
+\item An \emph{asymptotic no-go/order statement} is
+      $K_\Gamma=O(\Gamma^{-r})$ as $\Gamma\to\infty$.
+\item An \emph{experimental no-go} says that the engineerable, asymptotic,
+      and detectable parameter windows have empty intersection.
+\end{enumerate}
+Only (i) is a transfer zero.  Statement (ii) permits a nonzero finite-$\Gamma$
+response, and statement (iii) is a property of a measurement budget, not an
+algebraic identity.
+
+% ==================================================================
+\section{Optical dark vectors and stationary pure dark states}
+% ==================================================================
+
+\begin{theorem}[Optical dark-subspace rank]
+Let $\Omega:\mathcal H_g\to\mathcal H_e$ be the optical coupling map.  The
+optical dark subspace is $\ker\Omega$, and
+\[
+\dim\ker\Omega=\dim\mathcal H_g-\rank\Omega.
+\]
+The dimension is invariant under invertible basis changes on either manifold.
+\end{theorem}
+
+\begin{proof}
+This is rank--nullity.  Left or right multiplication by an invertible matrix
+composes $\Omega$ with a bijection and therefore does not change its rank.
+\end{proof}
+
+Let
+\begin{equation}
+\mathcal L(\rho)=-\im[H,\rho]
++\sum_\mu\left(L_\mu\rho L_\mu^\dagger
+-\frac12\{L_\mu^\dagger L_\mu,\rho\}\right).
+\label{eq:gksl}
+\end{equation}
+
+\begin{lemma}[Purity-variance identity]
+For $\rho_D=\ket D\bra D$ with $\braket DD=1$,
+\[
+\frac{d}{dt}\Tr\rho^2\Big|_{\rho_D}
+=-2\sum_\mu\left(
+\bra D L_\mu^\dagger L_\mu\ket D
+-|\bra D L_\mu\ket D|^2\right)\le0.
+\]
+Equality holds iff every $L_\mu\ket D$ is parallel to $\ket D$.
+\end{lemma}
+
+\begin{proof}
+Use $\frac{d}{dt}\Tr\rho^2=2\Tr(\rho\mathcal L\rho)$, cyclicity of the trace,
+and $\rho_D^2=\rho_D$.  The Hamiltonian contribution vanishes, while each
+jump contributes minus twice the squared norm of
+$(L_\mu-\bra D L_\mu\ket D)\ket D$.
+\end{proof}
+
+\begin{theorem}[Stationary pure Lindblad state: corrected proof]
+The rank-one state $\rho_D=\ket D\bra D$ is stationary iff there exist
+$\lambda_\mu\in\mathbb C$ and $h\in\mathbb R$ such that
+\begin{align}
+L_\mu\ket D&=\lambda_\mu\ket D\quad(\forall\mu),
+\label{eq:jump-eig}\\
+\widetilde H\ket D&=h\ket D,
+\qquad
+\widetilde H:=H+\frac{\im}{2}\sum_\mu
+(\lambda_\mu^*L_\mu-\lambda_\mu L_\mu^\dagger).
+\label{eq:Htilde}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+If $\rho_D$ is stationary, its purity is constant.  The preceding lemma gives
+\eqref{eq:jump-eig}.  For one jump satisfying $L\ket D=\lambda\ket D$, set
+\[
+K_\lambda:=\frac{\im}{2}(\lambda^*L-\lambda L^\dagger)=K_\lambda^\dagger.
+\]
+Using only $L\rho_D=\lambda\rho_D$ and
+$\rho_D L^\dagger=\lambda^*\rho_D$, direct multiplication gives
+\begin{align*}
+-\im[K_\lambda,\rho_D]
+&=|\lambda|^2\rho_D
+-\frac{\lambda}{2}L^\dagger\rho_D
+-\frac{\lambda^*}{2}\rho_D L\\
+&=L\rho_D L^\dagger
+-\frac12\{L^\dagger L,\rho_D\}.
+\end{align*}
+Thus, after summing over jumps,
+\[
+\mathcal L(\rho_D)=-\im[\widetilde H,\rho_D].
+\]
+Stationarity is therefore equivalent to
+$[\widetilde H,\rho_D]=0$.  A Hermitian operator commutes with a rank-one
+projector iff its range vector is an eigenvector, yielding
+\eqref{eq:Htilde} with real $h$.  Reversing the calculation proves
+sufficiency.  Notice that the proof never assumes the generally false
+identity $\rho_D L=\lambda^*\rho_D$.
+\end{proof}
+
+\begin{remark}
+An optical dark vector need not be a stationary pure state.  Ground-state
+dephasing can preserve $\Omega\ket D=0$ while violating
+$L_\mu\ket D\parallel\ket D$.
+\end{remark}
+
+% ==================================================================
+\section{The operational no-go object: Schur-complement response}
+% ==================================================================
+
+Let the weak-probe equations be
+\[
+\begin{pmatrix}A&B\\C&G_g\end{pmatrix}
+\begin{pmatrix}x\\s\end{pmatrix}
+=\begin{pmatrix}b_p\\0\end{pmatrix},
+\]
+and let the detector act only on $x$.  The pathway-cut counterfactual removes
+$B$ and $C$ while keeping all other parameters fixed.
+
+\begin{theorem}[Sector-resolved response formula]
+Assume $A$ and $S_g:=G_g-CA^{-1}B$ are invertible.  Then
+\begin{equation}
+\dchi:=\chi_{\rm full}-\chi_{\rm cut}^{(S)}
+=\chi_0 d^\dagger A^{-1}B\,S_g^{-1}C A^{-1}b_p.
+\label{eq:schur-response}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+From $Ax+Bs=b_p$,
+$x=A^{-1}b_p-A^{-1}Bs$.  Substitution into the second row gives
+$S_gs=-CA^{-1}b_p$, and hence
+$s=-S_g^{-1}CA^{-1}b_p$.  Substitute this back into $x$ and subtract the
+cut response $\chi_0d^\dagger A^{-1}b_p$.
+\end{proof}
+
+\begin{claimbox}
+The exact no-go object is the full-minus-cut response $\dchi$, not the total
+response $\chi_{\rm full}$.  Perfect EIT can have $\chi_{\rm full}=0$ while
+$\dchi\ne0$.  Therefore a zero of the total susceptibility is not by itself a
+no-go certificate.
+\end{claimbox}
+
+% ==================================================================
+\section{Laurent expansion at infinity and the first nonzero moment}
+% ==================================================================
+
+\begin{lemma}[Neumann expansion with explicit error]
+\label{lem:neumann-v7}
+For any submultiplicative norm, if
+$q:=\|X\|/|\Gamma|<1$, then
+\begin{equation}
+K_\Gamma=\sum_{n=0}^{m}\frac{M_n}{\Gamma^{n+1}}+R_m(\Gamma),
+\label{eq:neumann-trunc}
+\end{equation}
+with
+\begin{equation}
+|R_m(\Gamma)|\le
+\frac{\|p\|\,\|D^{-1}\|\,\|c\|}{|\Gamma|}
+\frac{q^{m+1}}{1-q}.
+\label{eq:neumann-error}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \eqref{eq:factor},
+\[
+(\Gamma I-X)^{-1}=\Gamma^{-1}(I-X/\Gamma)^{-1}.
+\]
+Apply the matrix geometric series and its standard tail bound, then contract
+with $p^\dagger$ and $\nu=D^{-1}c$.
+\end{proof}
+
+\begin{remark}
+The Neumann condition is a convenient sufficient condition, not the logical
+basis of the asymptotic order theorem.  For a nonnormal $X$, $\|X\|$ can be
+much larger than its spectral radius, so the norm condition may be very
+conservative.
+\end{remark}
+
+\begin{theorem}[Laurent moment expansion]
+\label{thm:laurent}
+For fixed finite-dimensional $X$, the scalar transfer function
+\[
+K_\Gamma=p^\dagger(\Gamma I-X)^{-1}\nu
+\]
+is rational in $\Gamma$ and has a convergent Laurent expansion at infinity,
+\begin{equation}
+K_\Gamma=\sum_{n=0}^{\infty}\frac{M_n}{\Gamma^{n+1}},
+\qquad M_n=p^\dagger X^n\nu,
+\label{eq:laurent}
+\end{equation}
+for all sufficiently large $|\Gamma|$.  Its radius in the variable
+$w=1/\Gamma$ is the distance from $w=0$ to the nearest pole of
+$(I-wX)^{-1}$; no operator-norm hypothesis is required for the existence of
+the expansion.
+\end{theorem}
+
+\begin{proof}
+Cramer's rule gives
+\[
+K_\Gamma=
+\frac{p^\dagger\adj(\Gamma I-X)\nu}{\det(\Gamma I-X)},
+\]
+so $K_\Gamma$ is rational.  Put $w=1/\Gamma$.  Then
+\[
+K_{1/w}=w\,p^\dagger(I-wX)^{-1}\nu.
+\]
+Because $\det(I-wX)=1+O(w)$, the matrix $(I-wX)^{-1}$ is analytic at
+$w=0$.  Let its Taylor series be $\sum_{n\ge0}C_nw^n$.  Multiplying by
+$I-wX$ and comparing powers gives $C_0=I$ and $C_n=XC_{n-1}=X^n$.
+Therefore
+\[
+K_{1/w}=\sum_{n\ge0}(p^\dagger X^n\nu)w^{n+1},
+\]
+which is \eqref{eq:laurent} after returning to $\Gamma$.
+\end{proof}
+
+\begin{corollary}[First nonzero moment selects the order]
+\label{cor:first-moment}
+If
+\[
+M_0=\cdots=M_{m-1}=0,
+\qquad M_m\ne0,
+\]
+then
+\begin{equation}
+K_\Gamma=M_m\Gamma^{-m-1}+O(\Gamma^{-m-2}).
+\label{eq:first-order}
+\end{equation}
+Thus the amplitude order is $m+1$.
+\end{corollary}
+
+\begin{proof}
+Delete the vanishing coefficients from the Laurent series in
+Theorem~\ref{thm:laurent}.  The next coefficient is nonzero.
+\end{proof}
+
+\begin{proposition}[Uniform remainder on compact parameter sets]
+Let $X(z)$, $p(z)$, and $c(z)$ be continuous on a compact set $C$, with
+$D(z)$ invertible there.  Then there is a finite
+$Q_C:=\sup_{z\in C}\|X(z)\|$.  For $|\Gamma|>Q_C$, the Neumann expansion and
+remainder bound are uniform in $z\in C$ after replacing the individual norms
+in \eqref{eq:neumann-error} by their suprema on $C$.
+\end{proposition}
+
+\begin{proof}
+Continuous functions on a compact set are bounded.  Apply
+Lemma~\ref{lem:neumann-v7} with the common ratio $Q_C/|\Gamma|<1$.
+\end{proof}
+
+% ==================================================================
+\section{The sector-graph selection theorem}
+% ==================================================================
+
+Let $\{P_\alpha\}_{\alpha\in\mathcal V}$ be mutually orthogonal projectors
+with $\sum_\alpha P_\alpha=I$.  Suppose
+\begin{equation}
+D=\sum_\alpha P_\alpha D P_\alpha,
+\qquad
+A_0=A_{\rm diag}+V,
+\qquad
+A_{\rm diag}=\sum_\alpha P_\alpha A_{\rm diag}P_\alpha.
+\label{eq:sector-decomp}
+\end{equation}
+Because $D$ is invertible and block diagonal, so is $D^{-1}$.  Define
+\begin{equation}
+X_0:=-D^{-1}A_{\rm diag},
+\qquad
+W:=-D^{-1}V,
+\qquad X=X_0+W.
+\label{eq:X0W}
+\end{equation}
+Construct a directed graph $G$ on the sector labels by drawing
+$\alpha\to\beta$ iff
+\begin{equation}
+P_\beta W P_\alpha\ne0.
+\label{eq:edge}
+\end{equation}
+
+\begin{theorem}[Sector-graph lower bound]
+\label{thm:sector-graph}
+Assume the source and readout are sector supported,
+\[
+P_s\nu=\nu,
+\qquad
+p^\dagger P_t=p^\dagger.
+\]
+Let $d=\dist_G(s,t)$ be the length of the shortest directed path from $s$ to
+$t$, with $d=\infty$ if no path exists.  Then
+\begin{equation}
+M_n=p^\dagger X^n\nu=0
+\qquad\text{for every }n<d.
+\label{eq:graph-moment-zero}
+\end{equation}
+Consequently, if $d<\infty$,
+\begin{equation}
+K_\Gamma=O(\Gamma^{-d-1}).
+\label{eq:graph-order-bound}
+\end{equation}
+If $d=\infty$, then every moment vanishes and the transfer is exactly zero at
+all regular $\Gamma$.
+\end{theorem}
+
+\begin{proof}
+Expand
+\[
+X^n=(X_0+W)^n
+\]
+as a sum of noncommutative words of length $n$ in $X_0$ and $W$.  The block
+diagonal operator $X_0$ never changes sector.  Each factor $W$ can change the
+sector only along one directed edge of $G$.  A word containing $r$ factors of
+$W$ can therefore connect $s$ to $t$ only if there is a directed path of
+length at most $r$.  Every word of total length $n<d$ has $r\le n<d$, so its
+$t$--$s$ block vanishes.  Contracting with $p^\dagger P_t$ and $P_s\nu$
+gives \eqref{eq:graph-moment-zero}.  Equation
+\eqref{eq:graph-order-bound} follows from
+Corollary~\ref{cor:first-moment}, allowing for additional cancellations.  If
+$d=\infty$, the same word argument applies for every $n$; exact vanishing then
+follows from Theorem~\ref{thm:krylov} below.
+\end{proof}
+
+\begin{corollary}[When graph distance equals the dissipation order]
+\label{cor:graph-equality}
+Under the assumptions of Theorem~\ref{thm:sector-graph}, suppose $d<\infty$
+and the sum of all length-$d$ word amplitudes is nonzero, equivalently
+\begin{equation}
+M_d=p^\dagger(X_0+W)^d\nu\ne0.
+\label{eq:Md-nonzero}
+\end{equation}
+Then
+\begin{equation}
+K_\Gamma=M_d\Gamma^{-d-1}+O(\Gamma^{-d-2}).
+\end{equation}
+\end{corollary}
+
+\begin{remark}[Graph distance is a lower bound, not an automatic equality]
+Different shortest paths can interfere and cancel in $M_d$.  In that case the
+first nonzero moment occurs at an order larger than $d$.  Therefore the graph
+determines the minimum possible number of sector-changing insertions, while
+the complex path amplitudes determine whether that minimum survives.  This is
+the precise form of the dissipative selection rule used in the PRL claim.
+\end{remark}
+
+\begin{remark}[Multiple source or detector sectors]
+For sources or detectors supported on several sectors, apply the theorem to
+each nonzero pair $(s,t)$.  The earliest potentially nonzero moment is the
+minimum graph distance over supported pairs, followed by the same amplitude
+cancellation test.
+\end{remark}
+
+% ==================================================================
+\section{Exact transfer zero without Neumann-series dependence}
+% ==================================================================
+
+\begin{definition}
+The reachable Krylov space is
+\[
+\mathcal K(X,\nu):=\spann\{\nu,X\nu,X^2\nu,\ldots\}.
+\]
+Let $r:=\dim\mathcal K(X,\nu)$.  Equivalently, $r$ is the degree of the
+minimal polynomial of $X$ relative to the cyclic vector $\nu$.
+\end{definition}
+
+\begin{theorem}[Exact transfer-zero/Krylov criterion]
+\label{thm:krylov}
+The following are equivalent:
+\begin{enumerate}[label=(\roman*)]
+\item $M_n=p^\dagger X^n\nu=0$ for $n=0,\ldots,r-1$;
+\item $p\perp\mathcal K(X,\nu)$;
+\item $p^\dagger q(X)\nu=0$ for every polynomial $q$;
+\item $p^\dagger(\Gamma I-X)^{-1}\nu=0$ for every
+      $\Gamma\notin\spec X$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Conditions (i) and (ii) are the same statement in a Krylov basis.  By
+definition of $r$, the vectors $X^n\nu$ for $n\ge r$ are linear combinations
+of the first $r$ Krylov vectors, so (i) implies that every moment vanishes and
+hence (iii).
+
+For regular $\Gamma$, the adjugate identity writes
+$(\Gamma I-X)^{-1}$ as a scalar denominator times a matrix polynomial in $X$;
+therefore (iii) implies (iv).
+
+Conversely, the scalar in (iv) is a rational function that vanishes on its
+regular domain.  It is therefore the zero rational function.  Its Laurent
+expansion at infinity, furnished by Theorem~\ref{thm:laurent}, has every
+coefficient zero.  Hence all $M_n$ vanish, in particular the first $r$.
+This direction does not invoke a Neumann norm condition.
+\end{proof}
+
+\begin{remark}
+The older dimension-$N$ test remains correct but is not sharp.  Only $r$
+Krylov moments are needed.  Numerically, $r$ is the rank at which the Krylov
+sequence stabilizes.
+\end{remark}
+
+% ==================================================================
+\section{Symmetry-protected exact zeros}
+% ==================================================================
+
+\begin{theorem}[Commuting-sector transfer zero]
+Let $\{P_\alpha\}$ be orthogonal projectors summing to $I$, and suppose
+$[A(z),P_\alpha]=0$ for every $\alpha$.  If
+$P_\beta c=c$ and $p^\dagger P_\alpha=p^\dagger$ with $\alpha\ne\beta$,
+then
+\[
+p^\dagger A(z)^{-1}c=0
+\]
+at every regular point.
+\end{theorem}
+
+\begin{proof}
+Commutation passes to the inverse.  Therefore
+\[
+p^\dagger A^{-1}c
+=p^\dagger P_\alpha A^{-1}P_\beta c
+=p^\dagger A^{-1}P_\alpha P_\beta c=0.
+\]
+\end{proof}
+
+\begin{remark}[Non-Abelian formulation]
+For a non-Abelian symmetry, replace one-dimensional sector labels by the
+isotypic projectors of the group representation.  Schur's lemma then gives the
+same conclusion when source and detector transform in inequivalent irreducible
+sectors.  This is the appropriate language for point groups such as
+$C_{3v}$; the commuting-projector theorem is its elementary finite-dimensional
+form.
+\end{remark}
+
+% ==================================================================
+\section{Observable-order inheritance}
+% ==================================================================
+
+\begin{lemma}[Arithmetic of nonzero asymptotic factors]
+Suppose
+\[
+f(\Gamma)=a\Gamma^{-r}(1+O(\Gamma^{-1})),\quad
+g(\Gamma)=b\Gamma^{-q}(1+O(\Gamma^{-1})),
+\]
+and
+\[
+h(\Gamma)=c\Gamma^{-s}(1+O(\Gamma^{-1})),
+\qquad abc\ne0.
+\]
+Then
+\[
+f(\Gamma)h(\Gamma)^{-1}g(\Gamma)
+=\frac{ab}{c}\Gamma^{-(r+q-s)}(1+O(\Gamma^{-1})).
+\]
+\end{lemma}
+
+\begin{proof}
+Invert the nonzero leading expansion of $h$ and multiply the three series.
+\end{proof}
+
+\begin{theorem}[Sector-observable inheritance]
+\label{thm:inheritance}
+For the scalar Schur-complement response
+\[
+\dchi=\chi_0 L(\Gamma)S_g(\Gamma)^{-1}R(\Gamma),
+\]
+assume
+\[
+L\sim a\Gamma^{-n_L},\qquad
+R\sim b\Gamma^{-n_R},\qquad
+S_g\sim c\Gamma^{-n_S},
+\qquad abc\ne0.
+\]
+Then
+\begin{equation}
+\dchi\sim\chi_0\frac{ab}{c}
+\Gamma^{-\nu_{\rm obs}},
+\qquad
+\nu_{\rm obs}=n_L+n_R-n_S.
+\label{eq:inheritance}
+\end{equation}
+If the displayed leading coefficient vanishes because of a further matrix or
+path cancellation, the actual observable order is higher and must be found
+from the first nonzero coefficient of the full product.
+\end{theorem}
+
+\begin{remark}[Normalization changes the exponent]
+If a reported contrast is $C=\dchi/\chi_{\rm ref}$ and
+$\chi_{\rm ref}\sim d\Gamma^{-n_{\rm ref}}$, then
+$C$ has order $\nu_{\rm obs}-n_{\rm ref}$, provided $d\ne0$.  Thus signed
+absorption difference and normalized contrast need not have the same integer
+order.  The observable must be named before quoting an exponent.
+\end{remark}
+
+% ==================================================================
+\section{Singular damping: proved scope and nonnormal caveat}
+% ==================================================================
+
+\begin{theorem}[Hermitian singular damping]
+\label{thm:singular-D}
+Let $D=D^\dagger\ge0$, let $P$ be the orthogonal projector onto $\ker D$, and
+$Q=I-P$.  Suppose $PA_0P$ is invertible on $P\mathcal H$.  Then
+\begin{equation}
+p^\dagger(\Gamma D+A_0)^{-1}c
+=p^\dagger P(PA_0P)^{-1}Pc+O(\Gamma^{-1}).
+\label{eq:singular-D}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+In the orthogonal decomposition
+$\ker D\oplus(\ker D)^\perp$, the Hermitian $D$ has blocks
+$0\oplus D_{QQ}$ with $D_{QQ}>0$.  The inverse of
+$\Gamma D_{QQ}+A_{QQ}$ is $\Gamma^{-1}D_{QQ}^{-1}+O(\Gamma^{-2})$.
+The Schur complement on the $P$ block is therefore
+$PA_0P+O(\Gamma^{-1})$, whose inverse is
+$(PA_0P)^{-1}+O(\Gamma^{-1})$.  Solving the block system yields
+\eqref{eq:singular-D}.
+\end{proof}
+
+\begin{scopebox}[Restriction of Theorem~\ref{thm:singular-D}]
+The orthogonal decomposition used above requires $D=D^\dagger\ge0$.  A general
+Liouvillian fast block is non-Hermitian and can be nonnormal; then
+$\ker D$ need not be orthogonal to $\Ran D$.  The same notation must not be
+reused with an orthogonal projector.  A nonnormal extension requires a Riesz
+spectral projector, an invariant complement, and a Drazin inverse, together
+with a semisimplicity/spectral-gap hypothesis.  That extension is not claimed
+by Theorem~\ref{thm:singular-D}.
+\end{scopebox}
+
+% ==================================================================
+\section{Regular domains and singular spectral points}
+% ==================================================================
+
+\begin{theorem}[Adjugate identity on analytic parameter domains]
+Let $A(\theta)$ be analytic on a connected domain $U$ and define
+\[
+N(\theta)=p^\dagger\adj A(\theta)c,
+\qquad
+\Delta(\theta)=\det A(\theta).
+\]
+On the regular set, $K=N/\Delta$.  If $N\equiv0$, then $K=0$ at every regular
+point.  Conversely, if $K$ vanishes on a nonempty open subset of the regular
+set, then $N\equiv0$ on $U$.
+\end{theorem}
+
+\begin{proof}
+The minors defining $N$ and $\Delta$ are analytic.  On the regular set the
+adjugate formula gives $K=N/\Delta$.  If $K=0$ on an open regular subset, then
+$N=0$ there; the identity theorem gives $N\equiv0$ on the connected domain.
+\end{proof}
+
+\begin{theorem}[Semisimple zero mode and pole cancellation]
+Suppose $0$ is a semisimple eigenvalue of $A$, let $P_0$ be its spectral
+projector, and let $A^D$ be the group/Drazin inverse.  Then
+\[
+(A+sI)^{-1}=\frac{P_0}{s}+A^D+O(s),
+\]
+and
+\[
+p^\dagger(A+sI)^{-1}c
+=\frac{p^\dagger P_0c}{s}+p^\dagger A^Dc+O(s).
+\]
+The pole is removable iff $p^\dagger P_0c=0$.
+\end{theorem}
+
+\begin{proof}
+Use the invariant direct sum of the zero eigenspace and the complementary
+range.  On the first block the inverse is $s^{-1}I$; on the second it is the
+regular expansion of an invertible matrix.
+\end{proof}
+
+\begin{proposition}[Non-semisimple zero mode]
+Let $P_0$ be the Riesz projector onto the generalized zero eigenspace, and let
+$N:=AP_0$ be nilpotent of index $k$, so $N^k=0$.  On that subspace,
+\begin{equation}
+(sI+N)^{-1}=\sum_{j=0}^{k-1}(-1)^jN^j s^{-j-1}.
+\label{eq:jordan-principal}
+\end{equation}
+Therefore the transfer principal part contains the coefficients
+\[
+(-1)^j p^\dagger N^jP_0c,
+\qquad j=0,\ldots,k-1.
+\]
+The singularity is removable only if every principal-part coefficient
+vanishes.
+\end{proposition}
+
+\begin{proof}
+Multiply the finite geometric sum in \eqref{eq:jordan-principal} by
+$sI+N$; all intermediate terms cancel and the remainder is
+$I+(-1)^{k-1}N^ks^{-k}=I$.
+\end{proof}
+
+\begin{remark}
+A numerical $0/0$ at a singular point must never be reported as a transfer
+zero before the Laurent principal part has been checked.
+\end{remark}
+
+% ==================================================================
+\section{Rate conversion used in the NV model}
+% ==================================================================
+
+\begin{proposition}[Symmetric orbital hopping]
+For
+\[
+L_1=\sqrt{k}\ket Y\bra X,
+\qquad
+L_2=\sqrt{k}\ket X\bra Y,
+\]
+the population imbalance decays at rate
+$\Gamma_{XY}=2k$, while each optical coherence to a ground state decays at
+rate $k/2=\Gamma_{XY}/4$.
+\end{proposition}
+
+\begin{proof}
+The populations satisfy
+$\dot p_X=-kp_X+kp_Y$ and $\dot p_Y=kp_X-kp_Y$, hence
+$\dot{(p_X-p_Y)}=-2k(p_X-p_Y)$.  For an optical coherence $\bra X\rho\ket g$,
+the recycling term vanishes because the jumps are confined to the excited
+manifold, while the anticommutator from $L_1^\dagger L_1=k\ket X\bra X$
+contributes $-k/2$.  The other coherence is treated symmetrically.
+\end{proof}
+
+% ==================================================================
+\section{PRL-safe theorem statement}
+% ==================================================================
+
+\begin{claimbox}[Central statement supported by the theorems]
+For a finite-dimensional fixed-scaling response
+$K_\Gamma=p^\dagger(\Gamma D+A_0)^{-1}c$ with invertible block-diagonal $D$,
+selection rules can force low path moments to vanish.  The first nonzero
+moment determines the asymptotic integer dissipation order.  A sector graph
+provides a rigorous lower bound through its source-to-readout distance; the
+bound becomes an equality only when the summed shortest-path amplitude is
+nonzero.  Observable exponents follow by applying the product/quotient rule to
+the complete measured response, not to a single kernel in isolation.
+\end{claimbox}
+
+The following stronger sentences are \emph{not} consequences of the present
+theorems without additional hypotheses:
+\begin{itemize}
+\item that graph distance always equals the order, regardless of path
+      interference;
+\item that a reduced-kernel order is automatically the order of normalized
+      contrast;
+\item that an asymptotic class is experimentally resolvable in a finite
+      engineerable window;
+\item that the Hermitian singular-damping theorem applies unchanged to a
+      nonnormal Liouvillian;
+\item that a simplified-model exact zero is an exact zero of the full NV
+      Liouvillian.
+\end{itemize}
+
+% ==================================================================
+\section*{Dependency chart}
+% ==================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{lll}
+\toprule
+Result & Main tool & Logical role\\
+\midrule
+Pure stationary state & purity + exact commutator algebra & closes v6.2 gap\\
+Neumann lemma & matrix geometric series & explicit error bound\\
+Laurent theorem & rational resolvent at infinity & asymptotic order\\
+Sector-graph theorem & noncommutative word expansion & moment lower bound\\
+Krylov theorem & minimal polynomial + rational identity & exact zero\\
+Inheritance theorem & asymptotic product/quotient & observable order\\
+Singular damping & Schur complement & Hermitian $D$ only\\
+Jordan proposition & finite nilpotent series & higher-pole test\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\bigskip
+\noindent
+The only analysis-level input used above is the identity theorem for analytic
+functions.  The large-$\Gamma$ order theorem itself is finite-dimensional
+rational-function algebra; the Neumann series is auxiliary rather than
+foundational.
+
+\end{document}
