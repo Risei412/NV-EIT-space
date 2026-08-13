@@ -1,0 +1,1 @@
+Recovered student guide uses pre-restructure relative paths. Canonical targets: theory/proofs/eit_nogo_proofs_v7.tex; archive/historical_notes/theory/eit_nogo_proofs_v6_2_archive.tex; gates/closed/gate_1_5_report.md; manuscript/NV_EIT_PRA_PRL_Split_Strategy_20260724.md.

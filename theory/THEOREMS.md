@@ -1,32 +1,27 @@
 # THEOREMS.md — statements
 
-An index of what is stated and where. The statements themselves live in the
-proof sources; this file exists so a reader can find the right one without
-opening every `.tex`. Audit status is from
-`../evidence/benchmarks/AUDIT_theorem_and_code_2026-08-01.md` (2026-08-01):
-no mathematical error was found across Theorems 1A–7B, lemmas and corollaries.
+An index of what is stated and where. The statements themselves live in the proof sources; this file exists so a reader can find the right one without opening every source.
 
-## Package A — the no-go theorem package
+## Package A — canonical no-go theorem package
 
-Source: `proofs/eit_nogo_proofs.tex` (proofs),
-`proofs/EIT_no_go_go_theory_v6_2_English.tex` (the theory document),
-`proofs/eit_nogo_lecture.tex` (lecture form).
+Authority: `proofs/eit_nogo_proofs.tex` routes to `proofs/eit_nogo_proofs_v7.tex`. The pre-v7 source is retained at `../archive/historical_notes/theory/eit_nogo_proofs_v6_2_archive.tex`. The August 1 audit predates v7, so it is provenance for the earlier source rather than an audit of the revised file.
 
-| # | Statement | Note |
+| Result | Statement | Note |
 |---|---|---|
-| 1A | Optical dark-subspace rank: `V₊\|v⟩ = 0` characterized by rank–nullity on `Ω`. | Known result in other clothing (rank–nullity / Morris–Shore). |
-| — | Corollary to 1A. | |
-| — | Variance identity (lemma). | |
-| 1B | Stationary pure Lindblad dark state. | Special case of Albert & Jiang, PRA **89**, 022118 (2014). Proof has an unwritten rearrangement — see `LIMITATIONS.md`. |
-| 2A | The reduced susceptibility is a Schur complement. | Known: Feshbach–Fano / Schur. |
-| 2B | Sector-resolved no-go and the block formula. | **Load-bearing:** `χ_full = 0` is not a no-go. |
-| 3 | Moment expansion; the first nonvanishing moment fixes the integer exponent. | Carries Class II. |
-| 4 | Exact transfer zero (Krylov / Cayley–Hamilton). | Carries Class I. |
-| 5 | Symmetry-protected transfer zero, + full-Liouvillian corollary. | Selection rule from weak symmetry. |
-| 6 | Singular damping and protected channels. | Carries Class III. |
-| 7A | Adjugate identity; analytic domains. | |
-| 7B | Semisimple singular point and pole cancellation. | |
-| — | Corollary: hopping-rate map `γ_oc = Γ_XY/4`, with the "excited-confined jumps damp optical coherences" lemma. | Fixes the NV rate normalization. |
+| Optical dark-subspace rank | The optical dark subspace is `ker Ω`; its dimension follows from rank-nullity. | Standard linear algebra / Morris-Shore language. |
+| Stationary pure Lindblad state | Pure stationarity requires common jump-eigenvector conditions and an eigenvector condition for the corrected Hermitian Hamiltonian. | v7 closes the algebraic gap recorded for the pre-v7 proof. |
+| Sector-resolved response formula | The pathway contribution is `χ_full - χ_cut^(S)` and is given by a Schur-complement response formula. | `χ_full = 0` is not a no-go certificate by itself. |
+| Neumann expansion with explicit error | Gives a checkable convergence domain and truncation error. | Auxiliary quantitative lemma in v7. |
+| Laurent moment expansion | For finite-dimensional fixed-scaling response, the rational resolvent has a Laurent expansion at infinity. The first nonzero projected moment fixes the asymptotic integer order. | Main asymptotic theorem; no operator-norm hypothesis is required for existence of the expansion. |
+| Sector-graph lower bound | If source-to-readout graph distance is `d`, then `M_n = 0` for `n < d` and `K_Γ = O(Γ^{-d-1})`. | **Graph distance is a lower bound, not automatic equality.** Equality requires `M_d != 0`; shortest paths can cancel. |
+| Exact transfer-zero / Krylov criterion | Exact transfer zero is equivalent to readout orthogonality to the reachable Krylov space. | Only the reachable Krylov dimension `r` moments are needed. |
+| Commuting-sector transfer zero | Source and readout in inequivalent invariant sectors give exact zero at regular points. | Elementary finite-dimensional symmetry selection rule. |
+| Sector-observable inheritance | For `δχ = χ0 L S_g^{-1} R`, the leading observable order is `n_L + n_R - n_S` when the displayed leading coefficient is nonzero. | Normalization can change the reported exponent. |
+| Hermitian singular damping | For `D = D† >= 0`, a protected kernel channel can leave an `O(1)` response. | The theorem does not claim an unchanged extension to a general nonnormal Liouvillian block. |
+| Adjugate / analytic-domain identity | Regular-domain transfer zeros are controlled by the adjugate numerator. | |
+| Semisimple zero mode | The pole is removable iff the projected residue vanishes. | |
+| Non-semisimple zero mode | All Laurent principal-part coefficients must vanish for removability. | A numerical `0/0` is not a zero certificate. |
+| Symmetric orbital hopping | Population imbalance decays at `Γ_XY = 2k`, while each optical coherence damps at `Γ_XY/4`. | Fixes the NV rate normalization used by the model. |
 
 ## Package B — sector-cut axiomatization (T1)
 
@@ -36,11 +31,11 @@ Source: `proofs/T1_sector_cut_axiomatization.tex`.
 |---|---|---|
 | Def. | The sector cut, defined generally. | |
 | L1.1 | Basis, realization and cut-representation invariance. | |
-| L1.2 | Non-uniqueness across sector choices: the cut depends on the *physical* choice of sector. | |
+| L1.2 | Non-uniqueness across sector choices: the cut depends on the physical choice of sector. | |
 | L1.3 | The absorption functional's sign is convention-independent; canonical absorption angle under passivity. | |
-| 2.1 | **Not proved here** — applied verbatim from an external package. | See `../NON_CLAIMS.md` N6. |
+| 2.1 | **Not proved here**; applied from an external package. | See `../NON_CLAIMS.md` N6. |
 | 2.2 | Counterexample numbers are generated by no code in this repository. | See `../NON_CLAIMS.md` N6. |
-| 2.3(ii) | Argued for a single Lorentzian pole, asserted for "generic `K(z)`". | Genericity undefined — see `../NON_CLAIMS.md` N7. |
+| 2.3(ii) | Argued for a single Lorentzian pole and asserted for generic `K(z)`. | Genericity remains undefined; see `../NON_CLAIMS.md` N7. |
 
 ## Package C — response-theoretic EIT equivalence
 
@@ -49,18 +44,12 @@ Source: `proofs/prl_eit_equivalence_conditions.md`.
 | # | Statement |
 |---|---|
 | Def. | Sector-mediated EIT (perfect / partial). |
-| 1 | **Sector-mediated absorption cancellation.** Equivalence of: (A) perfect sector-mediated EIT; (B) exact cancellation of the absorptive background; (C) transparency destroyed by the sector cut. |
-| 2 | **Complex response-zero equivalence.** Equivalence of: (A) regular full-response zero; (B) exact complex cancellation; (C) numerator zero without a pole. |
-| 3 | **Schur-complement EIT condition.** Explicit criterion in the two-lower-state response: (A) perfect complex EIT; (B) exact direct/sector cancellation. |
+| 1 | Sector-mediated absorption cancellation equivalence. |
+| 2 | Complex response-zero equivalence. |
+| 3 | Schur-complement EIT condition. |
 
-## Package D — the matched-readout floor
+## Package D — matched-readout floor
 
-Source: `../gates/closed/F5C_findings.md`, with the accretive-gate certificate
-`../results/certificates/gate_F5C_matched_floor_accretive.json`.
+Source: `../gates/closed/F5C_findings.md`, with certificate `../results/certificates/gate_F5C_matched_floor_accretive.json`.
 
-> For `A(δ) = Γ + i(H − δI)` with `Γ = Γ† ≥ 0`: `Re χ_matched = x†Γx ≥ 0`.
-> `Γ > 0` gives strict positivity. An exact zero requires `x ∈ ker Γ`, which
-> matched readout cannot reach.
-
-This replaced a 150-draw random scan with a one-line proof; see
-`../NON_CLAIMS.md` N9.
+For `A(δ) = Γ + i(H - δI)` with `Γ = Γ† >= 0`, `Re χ_matched = x† Γ x >= 0`. Strict positivity follows for `Γ > 0`; an exact zero requires access to `ker Γ`.
