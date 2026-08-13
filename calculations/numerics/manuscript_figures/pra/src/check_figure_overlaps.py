@@ -45,6 +45,11 @@ def artists_of(fig):
             if t.get_text().strip():
                 out.append((f"{_axid(fig, ax)}.text {t.get_text()[:22]!r}",
                             t.get_window_extent(r)))
+        for nm, off in (("xoffset", ax.xaxis.get_offset_text()),
+                        ("yoffset", ax.yaxis.get_offset_text())):
+            if off.get_visible() and off.get_text().strip():
+                out.append((f"{_axid(fig, ax)}.{nm} {off.get_text()[:12]!r}",
+                            off.get_window_extent(r)))
         for nm, ticks in (("xtick", ax.get_xticklabels()),
                           ("ytick", ax.get_yticklabels())):
             for t in ticks:

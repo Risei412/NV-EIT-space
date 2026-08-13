@@ -159,7 +159,7 @@ def fig1_level_scheme():
 def fig2_spectra(quick=False):
     import p1_phase_diagram as p1
     import run_prl_prediction as rp
-    fig, axes = plt.subplots(1, 3, figsize=(st.COL_2, 2.4), sharey=False)
+    fig, axes = plt.subplots(1, 3, figsize=(st.COL_2, 2.7), sharey=False)
     shown = [(30.0, "transparency"), (70.0, "transparency"),
              (105.0, "control-induced absorption")]
     for ax, (T, tag) in zip(axes, shown):
@@ -167,16 +167,23 @@ def fig2_spectra(quick=False):
         ax.plot(d, Ac, color=C["gray"], lw=1.1, ls="--",
                 label=r"pathway cut, $A_{\rm cut}$")
         ax.plot(d, Af, color=C["blue"], lw=1.4, label=r"full, $A_{\rm full}$")
-        ax.set_xlabel(r"two-photon detuning $\delta_2$ (MHz)")
+        ax.set_xlabel(r"$\delta_2$ (MHz)")
         ipk = int(np.argmax(np.abs(Cc)))
-        ax.set_title(f"$T$ = {T:.0f} K\n$C$ = {Cc[ipk]:+.3g}", fontsize=8)
+        # pad lifts the title clear of the scientific-notation offset text,
+        # which matplotlib also parks at the top-left of the axes
+        ax.set_title(f"$T$ = {T:.0f} K,  $C$ = {Cc[ipk]:+.3g}", fontsize=8,
+                     pad=13)
         ax.ticklabel_format(axis="y", style="sci", scilimits=(-2, 2))
     axes[0].set_ylabel("absorption (arb.)")
-    axes[0].legend(loc="best", fontsize=6.5)
     for i, ax in enumerate(axes):
         st.panel_label(ax, "abc"[i])
         _trim_corner(ax)
-    fig.tight_layout()
+    # one legend for the three panels, in a reserved band -- inside any panel
+    # it would sit on the transparency dip
+    fig.legend(*axes[0].get_legend_handles_labels(), loc="lower center",
+               ncol=2, fontsize=7, frameon=False,
+               bbox_to_anchor=(0.5, -0.005))
+    fig.tight_layout(rect=(0, 0.075, 1, 1))
     _save(fig, "fig2_spectra")
 
 
@@ -379,8 +386,10 @@ def fig5_bperp_scaling():
                     color=col, ms=3.4, lw=1.1, capsize=2,
                     label=f"{T:.0f} K ({tag})")
     ax.axhline(2.0, color=C["black"], ls=":", lw=1.0)
-    ax.text(ax.get_xlim()[1], 2.04, r"$n=2$", fontsize=6.5, ha="right",
-            va="bottom")
+    # left of the curves, below the guide line: the right-hand end carries the
+    # 55 K point and its error bar
+    ax.text(ax.get_xlim()[0], 1.96, r"$n=2$", fontsize=6.5, ha="left",
+            va="top")
     ax.set_xlabel(r"upper fitting cutoff $B_{\rm max}$ (T)")
     ax.set_ylabel(r"fitted exponent $n$")
     ax.legend(fontsize=6.3, loc="upper right")
