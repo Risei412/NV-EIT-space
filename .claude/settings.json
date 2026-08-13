@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "andrehuang-academic-writing-agents": {
+      "source": {
+        "source": "github",
+        "repo": "andrehuang/academic-writing-agents"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "academic-writing-agents@andrehuang-academic-writing-agents": true
+  }
+}
