@@ -1,1 +1,0 @@
-Source branch: agent/no-go-laurent-sector-graph. Source PR: #23. Canonical recovery branch: cleanup/recover-laurent-v7-complete-20260813.
