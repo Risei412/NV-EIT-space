@@ -538,16 +538,22 @@ p = para(tf)
 p.alignment = PP_ALIGN.CENTER
 run(p, "identical, term by term, to Fleischhauer RMP 77, 633 (2005)",
     size=16, italic=True, color=GREY)
-tb, tf = textbox(s, MARGIN, 4.54, BODY_W, 0.70)
+tb, tf = textbox(s, MARGIN, 4.52, BODY_W, 0.72)
 p = tf.paragraphs[0]
-rich(p, [("And at δ_p = δ_c = 0 with γ₂₁ → 0:  ", {}),
+rich(p, [("N_e branches — the NV case: ", {}),
+         ("K₁₂ = Σⱼ d₁ⱼ* d₂ⱼ / aⱼ", {"bold": True, "color": NAVY}),
+         (", a coherent sum, same Ξ.", {})], size=16)
+p = para(tf); p.space_before = Pt(3)
+rich(p, [("δ_p = δ_c = 0, γ₂₁ → 0:  ", {}),
          ("χ_full = 0 while δΞₛ = −1", {"bold": True, "color": NAVY}),
-         (" — the Method 1 claim, derived rather than asserted.", {})],
-     size=16)
+         (" — Method 1, derived.", {})], size=16)
 bottom(s, "Textbook Λ susceptibility recovered exactly; the full Liouvillian "
           "reproduces the archived 70 K contrast to 0.25 %.")
 refs(s, ["[1] M. Fleischhauer, A. Imamoğlu and J. P. Marangos, "
-         "Rev. Mod. Phys. 77, 633 (2005).   Symbolic check: "
+         "Rev. Mod. Phys. 77, 633 (2005).   Multilevel form: "
+         "[16] O. S. Mishina et al., Phys. Rev. A 83, 053809 (2011); "
+         "group theory note §9.6–9.7.",
+         "Symbolic check (N_e = 1–4): "
          "calculations/symbolic/verify_lambda_reduction.py.   Benchmark: [4]."])
 
 # ================================================== RESULTS
