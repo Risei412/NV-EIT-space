@@ -1,1 +1,0 @@
-Recovery scope: canonical v7 proof package, pre-v7 proof archive, student guide, theorem regression test, and theory index updates. The original branch PR remains unmerged because its old directory layout conflicts with the canonical repository structure.
