@@ -2050,7 +2050,14 @@ s=\rho_{g_2g_1}^{(1)}
 . Assume that the remaining first-order variables either decouple or
 have been eliminated exactly by a Schur complement.
 
-Fix the sign convention as
+Fix the rotating-frame sign convention so that a detuning enters a complex
+generator with a \emph{plus} sign, $A=\gamma_{31}+i\Delta_p$ and
+$\gamma_g=\gamma_{21}+i\delta_2$. This is the convention used throughout the
+manuscript and in the symbolic check
+\texttt{calculations/symbolic/verify\_lambda\_reduction.py}; earlier drafts of
+this note used the complex-conjugate convention, which gives the same physics
+but the conjugate expressions, and the two must not be mixed when reading the
+two documents side by side. With that fixed, the first-order block system is
 
 \[
 \begin{pmatrix}
@@ -2070,7 +2077,7 @@ i\Omega_c^*d_2^\dagger/2 & \gamma_g
   \(A\): effective optical-coherence generator excluding the control; it
   may include self-energies from other blocks when necessary.
 \item
-  \(\gamma_g=\gamma_{12}-i\delta_2\): lower-coherence complex
+  \(\gamma_g=\gamma_{12}+i\delta_2\): lower-coherence complex
   generator。
 \item
   \(d_1,d_2\): probe/control dipole vectors。
@@ -2325,9 +2332,9 @@ d_1=d_2=1
 and set
 
 \[
-A=\gamma_{31}-i\Delta_p,
+A=\gamma_{31}+i\Delta_p,
 \qquad
-\gamma_g=\gamma_{21}-i\delta_2,
+\gamma_g=\gamma_{21}+i\delta_2,
 \qquad
 \beta=\frac{|\Omega_c|^2}{4}
 \]
@@ -2357,13 +2364,15 @@ Therefore, the probe optical coherence is
 \boxed{
 \rho_{eg_1}^{(1)}
 =\frac{i\Omega_p}{2}
-\frac{\gamma_{21}-i\delta_2}
-{(\gamma_{31}-i\Delta_p)(\gamma_{21}-i\delta_2)+|\Omega_c|^2/4}
+\frac{\gamma_{21}+i\delta_2}
+{(\gamma_{31}+i\Delta_p)(\gamma_{21}+i\delta_2)+|\Omega_c|^2/4}
 }
 \]
 
-. This is the standard three-level EIT susceptibility in the adopted
-rotating-frame sign convention.
+. This is the standard three-level EIT susceptibility (Fleischhauer,
+Imamoglu and Marangos, Rev.~Mod.~Phys.~77, 633 (2005)) in the
+convention fixed above, and it is Eq.~(4) of the manuscript written over a
+common denominator.
 
 \begin{itemize}
 \tightlist
@@ -2395,7 +2404,7 @@ A_\lambda
 =\operatorname{diag}
 \left(a_1(\lambda),\ldots,a_{N_e}(\lambda)\right),
 \qquad
-a_j(\lambda)=\gamma_j-i\Delta_j(\lambda)
+a_j(\lambda)=\gamma_j+i\Delta_j(\lambda)
 \]
 
 . For the probe and control dipole vectors
