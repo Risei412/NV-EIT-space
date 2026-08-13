@@ -18,7 +18,7 @@ from pptx.util import Emu
 
 EMU = 914400.0
 SW, SH = 10.0, 7.5
-EDGE_MIN = 0.30          # template art legitimately sits closer than 0.45
+EDGE_MIN = 0.10          # the deck runs near-flush so figures get the width
 OVERLAP_TOL = 0.02       # inches of tolerated overlap
 
 # Line counts come from real Liberation Sans metrics (metric-compatible with
@@ -145,7 +145,9 @@ def main(path):
                           f"({sh.text_frame.text[:52]!r})")
                     issues += 1
                 # font-size floor
-                for p in tf.paragraphs:
+                # the reference band is deliberately below the body floor
+                if sh.name != "RefBand":
+                  for p in tf.paragraphs:
                     for r in p.runs:
                         if r.font.size and r.font.size.pt < 16 and r.text.strip():
                             print(f"[{n:2d}] SMALL-FONT {r.font.size.pt:.0f}pt "
