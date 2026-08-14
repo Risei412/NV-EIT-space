@@ -35,3 +35,5 @@ hBN papers/*.pdf
 # test / tooling caches
 .pytest_cache/
 __pycache__/
+presentations/lab_seminar/prev/
+presentations/lab_seminar/figures/*.npz

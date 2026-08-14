@@ -63,6 +63,23 @@ def _load_csv(p):
         return list(csv.DictReader(fh))
 
 
+def _trim_corner(ax, x_first=True, y_first=False):
+    """Hide the tick label that sits in the axes corner.
+
+    The leftmost x tick and the lowest y tick are drawn at the same corner, so
+    their labels touch whenever both are wide.  Hiding one of them is the
+    standard fix and costs no information -- the axis is still fully scaled.
+    """
+    if x_first:
+        labs = ax.get_xticklabels()
+        if labs:
+            labs[0].set_visible(False)
+    if y_first:
+        labs = ax.get_yticklabels()
+        if labs:
+            labs[0].set_visible(False)
+
+
 def _f(x, default=np.nan):
     try:
         v = float(x)
@@ -77,35 +94,37 @@ def fig1_level_scheme():
 
     ax = axes[0]
     ax.set_xlim(0, 10); ax.set_ylim(0, 10); ax.axis("off")
-    # ground triplet
-    for y, lab in [(1.6, r"$m_s=-1$"), (1.0, r"$m_s=0$"), (2.2, r"$m_s=+1$")]:
+    # ground triplet -- spaced so the mixing arrow has room for two heads
+    for y, lab in [(1.7, r"$m_s=-1$"), (0.8, r"$m_s=0$"), (2.6, r"$m_s=+1$")]:
         ax.plot([1.2, 3.6], [y, y], color=C["black"], lw=1.6)
         ax.text(3.75, y, lab, va="center", fontsize=7.5)
-    ax.text(0.9, 1.6, r"$^3A_2$", ha="right", va="center", fontsize=8.5)
+    ax.text(0.9, 1.7, r"$^3A_2$", ha="right", va="center", fontsize=8.5)
     # excited orbital branches
-    for y, lab, col in [(7.2, r"$E_x$", C["blue"]), (8.2, r"$E_y$", C["vermillion"])]:
+    for y, lab, col in [(6.8, r"$E_x$", C["blue"]), (8.8, r"$E_y$", C["vermillion"])]:
         ax.plot([1.2, 3.6], [y, y], color=col, lw=1.6)
         ax.text(3.75, y, lab, va="center", fontsize=7.5, color=col)
-    ax.text(0.9, 7.7, r"$^3E$", ha="right", va="center", fontsize=8.5)
+    ax.text(0.9, 7.8, r"$^3E$", ha="right", va="center", fontsize=8.5)
     # probe / control legs
-    ax.annotate("", xy=(1.9, 7.15), xytext=(1.9, 1.05),
+    ax.annotate("", xy=(1.9, 6.75), xytext=(1.9, 0.85),
                 arrowprops=dict(arrowstyle="<->", color=C["green"], lw=1.3))
-    ax.text(1.55, 4.1, "probe", rotation=90, va="center", ha="center",
+    ax.text(1.55, 3.8, "probe", rotation=90, va="center", ha="center",
             fontsize=7.5, color=C["green"])
-    ax.annotate("", xy=(2.9, 7.15), xytext=(2.9, 2.25),
+    ax.annotate("", xy=(2.9, 6.75), xytext=(2.9, 2.65),
                 arrowprops=dict(arrowstyle="<->", color=C["purple"], lw=1.3))
     ax.text(3.25, 4.7, "control", rotation=90, va="center", ha="center",
             fontsize=7.5, color=C["purple"])
     # orbital hopping between branches
-    ax.add_patch(FancyArrowPatch((2.4, 7.25), (2.4, 8.15),
-                                 arrowstyle="<->", mutation_scale=9,
-                                 color=C["orange"], lw=1.4))
-    ax.text(2.65, 7.7, r"$\Gamma_{XY}(T)$", fontsize=7.5, color=C["orange"])
+    ax.add_patch(FancyArrowPatch((2.4, 6.9), (2.4, 8.7),
+                                 arrowstyle="<->", mutation_scale=6,
+                                 color=C["orange"], lw=1.3))
+    ax.text(3.00, 9.30, r"$\Gamma_{XY}(T)$", fontsize=7.5,
+            color=C["orange"], ha="center", va="center")
     # transverse field mixing in the ground manifold
-    ax.add_patch(FancyArrowPatch((1.35, 1.05), (1.35, 2.2),
-                                 arrowstyle="<->", mutation_scale=8,
+    ax.add_patch(FancyArrowPatch((1.35, 0.85), (1.35, 2.55),
+                                 arrowstyle="<->", mutation_scale=6,
                                  color=C["sky"], lw=1.2, linestyle="--"))
-    ax.text(0.35, 1.65, r"$B_\perp$", fontsize=7.5, color=C["sky"])
+    ax.text(0.95, 3.05, r"$B_\perp$", fontsize=7.5, color=C["sky"],
+            ha="center", va="center")
     st.panel_label(ax, "a", x=0.02, y=0.94)
     ax.set_title("spin-$\\Lambda$ channel and the paths that close it",
                  fontsize=8.5)
@@ -124,9 +143,10 @@ def fig1_level_scheme():
                     (103, None)]:
         if lab:
             ax.axvline(T0, color=C["gray"], ls="--", lw=0.7)
-            ax.text(T0 + 4, 3e-4, lab, fontsize=6.5, color=C["gray"])
+            ax.text(T0 + 4, 0.995, lab, fontsize=6.5, color=C["gray"],
+                    transform=ax.get_xaxis_transform(), va="top")
     ax.set_xlabel("temperature (K)")
-    ax.set_ylabel(r"optical-coherence damping $\gamma_{\rm oc}$ (GHz)")
+    ax.set_ylabel(r"$\gamma_{\rm oc}$ (GHz)")
     ax.set_xlim(0, 300)
     st.panel_label(ax, "b")
     ax.set_title("phonon-driven damping of the Raman path", fontsize=8.5)
@@ -139,7 +159,7 @@ def fig1_level_scheme():
 def fig2_spectra(quick=False):
     import p1_phase_diagram as p1
     import run_prl_prediction as rp
-    fig, axes = plt.subplots(1, 3, figsize=(st.COL_2, 2.4), sharey=False)
+    fig, axes = plt.subplots(1, 3, figsize=(st.COL_2, 2.7), sharey=False)
     shown = [(30.0, "transparency"), (70.0, "transparency"),
              (105.0, "control-induced absorption")]
     for ax, (T, tag) in zip(axes, shown):
@@ -147,15 +167,23 @@ def fig2_spectra(quick=False):
         ax.plot(d, Ac, color=C["gray"], lw=1.1, ls="--",
                 label=r"pathway cut, $A_{\rm cut}$")
         ax.plot(d, Af, color=C["blue"], lw=1.4, label=r"full, $A_{\rm full}$")
-        ax.set_xlabel(r"two-photon detuning $\delta_2$ (MHz)")
+        ax.set_xlabel(r"$\delta_2$ (MHz)")
         ipk = int(np.argmax(np.abs(Cc)))
-        ax.set_title(f"$T$ = {T:.0f} K\n$C$ = {Cc[ipk]:+.3g}", fontsize=8)
+        # pad lifts the title clear of the scientific-notation offset text,
+        # which matplotlib also parks at the top-left of the axes
+        ax.set_title(f"$T$ = {T:.0f} K,  $C$ = {Cc[ipk]:+.3g}", fontsize=8,
+                     pad=13)
         ax.ticklabel_format(axis="y", style="sci", scilimits=(-2, 2))
     axes[0].set_ylabel("absorption (arb.)")
-    axes[0].legend(loc="best", fontsize=6.5)
     for i, ax in enumerate(axes):
         st.panel_label(ax, "abc"[i])
-    fig.tight_layout()
+        _trim_corner(ax)
+    # one legend for the three panels, in a reserved band -- inside any panel
+    # it would sit on the transparency dip
+    fig.legend(*axes[0].get_legend_handles_labels(), loc="lower center",
+               ncol=2, fontsize=7, frameon=False,
+               bbox_to_anchor=(0.5, -0.005))
+    fig.tight_layout(rect=(0, 0.075, 1, 1))
     _save(fig, "fig2_spectra")
 
 
@@ -191,24 +219,28 @@ def fig3_phase_diagram():
               bbox_to_anchor=(0.5, -0.22), ncol=2)
     st.panel_label(ax, "a")
 
-    # (b) signed contrast, log magnitude, sign by colour
+    # (b) signed contrast on ONE diverging scale: sign is colour (blue =
+    # transparency, red = induced absorption), magnitude is colour depth via
+    # a symmetric-log norm.  An earlier version drew |C| for C>0 as a viridis
+    # heatmap and overlaid the C<0 points as scatter dots; that reads as a
+    # plotting artifact rather than as data, and it puts the sign on a
+    # different visual channel from the magnitude.  A diverging map keeps both
+    # on one scale and matches panel (a)'s red/blue classification directly.
+    from matplotlib.colors import LinearSegmentedColormap, SymLogNorm
+    div_cmap = LinearSegmentedColormap.from_list(
+        "trans_absorb", [C["vermillion"], "#F7F7F7", C["blue"]])
+    Cplot = np.where(np.isfinite(Cg), Cg, 0.0)
     ax = axes[1]
-    mag = np.abs(Cg)
-    mag[~np.isfinite(mag)] = np.nan
-    pos = np.where(Cg > 0, mag, np.nan)
     im = ax.pcolormesh(np.append(B, B[-1] + dB) - dB / 2,
                        np.append(T, T[-1] + dT) - dT / 2,
-                       pos, cmap="viridis",
-                       norm=LogNorm(vmin=1e-6, vmax=1.0), shading="flat")
-    neg = np.isfinite(Cg) & (Cg < 0)
-    Bg, Tg = np.meshgrid(B, T)
-    ax.plot(Bg[neg], Tg[neg], ".", color=C["vermillion"], ms=2.4,
-            label=r"$C<0$")
+                       Cplot, cmap=div_cmap,
+                       norm=SymLogNorm(linthresh=1e-6, vmin=-1.0, vmax=1.0),
+                       shading="flat")
     cb = fig.colorbar(im, ax=ax, pad=0.02)
-    cb.set_label(r"$|C|$  (where $C>0$)", fontsize=7.5)
+    cb.set_label(r"sector contrast $C$", fontsize=7.5)
+    cb.ax.tick_params(labelsize=6)
     ax.set_xlabel(r"transverse field $B_\perp$ (T)")
     ax.set_ylabel("temperature (K)")
-    ax.legend(fontsize=6.5, loc="lower left")
     st.panel_label(ax, "b")
 
     fig.tight_layout()
@@ -277,12 +309,12 @@ def fig4_contrast_vs_T():
                         xerr=[[band["median"] - band["q16"]],
                               [band["q84"] - band["median"]]],
                         fmt="D", color=col, ms=3.2, lw=1.1, capsize=2)
-    ax.text(0.02, 0.04, "diamonds: full-Liouvillian bands (P6)\n"
+    ax.text(0.02, 0.16, "diamonds: full-Liouvillian bands (P6)\n"
                         "shaded: reduced-model bands (P2)",
             transform=ax.transAxes, fontsize=6, va="bottom")
 
     ax.axhline(1.534e-7, color=C["gray"], ls=":", lw=0.9)
-    ax.text(T[-1], 1.9e-7, "detection floor", fontsize=6.3, ha="right",
+    ax.text(T[0], 1.9e-7, "detection floor", fontsize=6.3, ha="left",
             color=C["gray"])
     ax.set_xlabel("temperature (K)")
     ax.set_ylabel(r"sector contrast $|C|$")
@@ -333,6 +365,7 @@ def fig5_bperp_scaling():
     ax.set_xlabel(r"transverse field $B_\perp$ (T)")
     ax.set_ylabel(r"sector contrast $C$")
     ax.legend(fontsize=6.5, loc="lower right")
+    _trim_corner(ax)
     st.panel_label(ax, "a")
 
     # (b) exponent against fitting cutoff -- plateau vs drift
@@ -353,8 +386,10 @@ def fig5_bperp_scaling():
                     color=col, ms=3.4, lw=1.1, capsize=2,
                     label=f"{T:.0f} K ({tag})")
     ax.axhline(2.0, color=C["black"], ls=":", lw=1.0)
-    ax.text(ax.get_xlim()[1], 2.04, r"$n=2$", fontsize=6.5, ha="right",
-            va="bottom")
+    # left of the curves, below the guide line: the right-hand end carries the
+    # 55 K point and its error bar
+    ax.text(ax.get_xlim()[0], 1.96, r"$n=2$", fontsize=6.5, ha="left",
+            va="top")
     ax.set_xlabel(r"upper fitting cutoff $B_{\rm max}$ (T)")
     ax.set_ylabel(r"fitted exponent $n$")
     ax.legend(fontsize=6.3, loc="upper right")
@@ -376,6 +411,7 @@ def fig6_observables():
     ceil = _load_json("p3_summary.json")["detection_chain"]["tau_ceiling_s"]["value"]
 
     fig, axes = plt.subplots(1, 2, figsize=(st.COL_2, 2.8))
+    fig.subplots_adjust(wspace=0.40)
 
     ax = axes[0]
     for y, col, mk, lab in ((dTT, C["blue"], "o", r"$\Delta T/T$"),
@@ -386,8 +422,9 @@ def fig6_observables():
         ax.semilogy(T[n], np.abs(y[n]), mk, color=col, ms=3.4, ls="--", lw=1.1,
                     mfc="none", label=lab + " < 0")
     ax.set_xlabel("temperature (K)")
-    ax.set_ylabel("fractional signal (OD-matched sample)")
+    ax.set_ylabel("fractional signal")
     ax.legend(fontsize=6, loc="lower left")
+    _trim_corner(ax)
     st.panel_label(ax, "a")
 
     ax = axes[1]
@@ -406,6 +443,7 @@ def fig6_observables():
     ax.set_xlabel("temperature (K)")
     ax.set_ylabel(r"integration time for SNR = 5 (s)")
     ax.legend(fontsize=6.5, loc="upper left")
+    _trim_corner(ax, x_first=True, y_first=True)
     st.panel_label(ax, "b")
 
     fig.tight_layout()

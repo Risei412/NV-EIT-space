@@ -197,9 +197,24 @@ $x$ and the targeted ground coherence $s=\rho^{(1)}_{g_{2}g_{1}}$,
 \label{eq:block}
 \end{equation}
 %
-Eliminating $s$ without ever dividing by $G_{g}$ --- so that the ideal
+Eliminating $x$ --- so that $G_{g}$ is never inverted and the ideal
 ground-coherence limit is retained --- gives the probe response as a Schur
-complement. We define the \emph{pathway-cut} counterfactual
+complement. Throughout, $\chi_{\mathrm{full}}=\chi_{0}\,d^{\dagger}x$ is the
+linear probe susceptibility of the operative block: first order in the probe,
+with the control retained to all orders through $\rho^{(0)}$ and through $A$,
+$B$, $C$ and $G_{g}$. Here $d$ is the probe dipole vector and $\chi_{0}$
+collects the number density, the dipole strength and $\varepsilon_{0}\hbar$.
+Two qualifications are worth stating because they bound what a vanishing
+$\chi_{\mathrm{full}}$ can mean. It is a \emph{local} susceptibility:
+inhomogeneous classes are averaged only after it has been formed. And it is
+the susceptibility of the operative manifold alone --- the phonon sideband,
+the singlet and every transition outside that manifold carry their own
+response and are not in $\chi_{\mathrm{full}}$ --- so $\chi_{\mathrm{full}}=0$
+is a statement about the targeted transition, not about the crystal. The
+contrast defined in Eq.~\eqref{eq:contrast} is a ratio of absorptions, so
+$\chi_{0}$ cancels from every number reported below.
+
+We define the \emph{pathway-cut} counterfactual
 $\chi^{(S)}_{\mathrm{cut}}$ by setting $B=C=0$ while holding $A$, $G_{g}$, the
 source, the detector and the zeroth-order state fixed, and the
 sector-resolved correction
@@ -231,6 +246,43 @@ $\chi_{\mathrm{full}}=0$ is what \emph{perfect} EIT looks like. In the ideal
 three-level limit the total response vanishes while $\dchi$ is maximal; a
 criterion phrased on the total susceptibility would report that case as an
 absence of EIT.
+
+Both statements are exact in the case where the answer is already known. For
+one excited state and scalar dipoles the blocks are scalars: $A=\gamma_{31}+i
+\delta_{p}$, $G_{g}=\gamma_{21}+i(\delta_{p}-\delta_{c})$,
+$BC=-|\Omega_{c}|^{2}/4\equiv-\beta$ and $b_{p}=i\Omega_{p}/2$, and
+Eq.~\eqref{eq:block} collapses to
+%
+\begin{equation}
+\rho_{e1}=\frac{b_{p}}{A+\beta/G_{g}}
+=\frac{i\Omega_{p}/2}
+{\gamma_{31}+i\delta_{p}
++\dfrac{|\Omega_{c}|^{2}/4}{\gamma_{21}+i(\delta_{p}-\delta_{c})}},
+\label{eq:textbook}
+\end{equation}
+%
+which is the standard weak-probe EIT coherence~\cite{M2005C01} term by term.
+No adiabatic elimination is used in obtaining it. For $N_{e}$ resolved
+branches with a diagonal optical generator $A=\mathrm{diag}(a_{j})$ the same
+elimination returns the multi-excited-state form~\cite{O2011C04}, in which
+each block becomes a coherent sum over branches,
+%
+\begin{equation}
+K_{12}=\sum_{j}\frac{d_{1j}^{*}d_{2j}}{a_{j}},
+\qquad
+\Xi=S_{1}-\frac{\beta K_{12}K_{21}}{\gamma_{g}+\beta S_{2}},
+\label{eq:multilevel}
+\end{equation}
+%
+which is the case relevant here: the two $^{3}E$ branches contribute to
+$K_{12}$ with a relative phase, and it is that phase which reverses in
+Sec.~\ref{sec:phaseslip}. Setting
+$\delta_{p}=\delta_{c}=0$ and $\gamma_{21}\to0$ then gives
+$\chi_{\mathrm{full}}=0$ and $\dchi/\chi^{(S)}_{\mathrm{cut}}=-1$: the total
+response vanishes while the sector-resolved correction is maximal, which is
+the preceding paragraph's claim as an identity rather than an assertion. The
+three reductions are verified symbolically in
+\texttt{calculations/symbolic/verify\_lambda\_reduction.py}.
 
 \subsection{Classification}
 
@@ -325,6 +377,42 @@ $\Bperp\le\SI{0.25}{\tesla}$ and \SI{95}{\kelvin} above it, with a band of
 lineshape-inconclusive points immediately beyond, so the boundary is not
 sharp; the sign reversal that follows is.
 
+\subsection{Why the sign reverses: a damping-induced phase slip}
+\label{sec:phaseslip}
+
+The sign of $\dchi$ is set by the phase of the Raman vertex product
+$K_{12}K_{21}$ relative to the ground-coherence denominator
+$\gamma_g+\beta S_2$ in Eq.~\eqref{eq:dchi}: writing
+$K_{12}K_{21}/(\gamma_g+\beta S_2)=r\,e^{i\phi}$ with $r>0$, the correction is
+$\dchi\propto-r\cos\phi$, so the pathway is transparency-producing while
+$|\phi|<90^\circ$ and absorption-producing once $|\phi|$ exceeds it. At the
+candidate field, $\arg(K_{12}K_{21})$ runs from $-0.1^\circ$ at
+\SI{30}{\kelvin} through $-17.0^\circ$ at \SI{70}{\kelvin} and $-62.7^\circ$
+at \SI{90}{\kelvin} to $-89.3^\circ$ at \SI{100}{\kelvin}, while the
+denominator's phase stays small ($\lesssim15^\circ$ throughout); the combined
+phase $\phi$ crosses $-90^\circ$ between \SI{100}{\kelvin} and
+\SI{103}{\kelvin}, exactly where the numerically observed sign reversal sits.
+
+The mechanism is the phase lag of a damped driven resonance. $K_{12}$ and
+$K_{21}$ are matrix elements of the resolvent
+$G=[\gamma_{\mathrm{oc}}(T)\,I+i2\pi(H-zI)]^{-1}$: while the
+optical-coherence damping $\gamma_{\mathrm{oc}}(T)$ is small compared with the
+excited-state splittings, $G$ responds essentially in phase with the drive and
+the Raman pathway interferes \emph{destructively} with the direct absorption
+path, which is transparency. As $\gamma_{\mathrm{oc}}(T)$ grows past that
+internal scale --- here the transverse-strain splitting
+$\delta\sim\SI{1.7}{\giga\hertz}$, reached once phonon-induced orbital hopping
+brings $\gamma_{\mathrm{oc}}(T)\gtrsim\delta$ near \SI{100}{\kelvin} --- the
+resolvent lags the drive by more than a quarter cycle, and the same
+interference term that used to cancel absorption now reinforces it:
+destructive interference has become constructive, i.e.\ the coherent pathway
+behaves as electromagnetically induced absorption rather than transparency. No
+new parameter or mechanism is introduced; the reversal is the phase response
+of a resonance being pushed through overdamping by the same
+temperature-dependent rate that drives the amplitude collapse of
+Sec.~\ref{sec:phase}, which is why the two occur within one narrow temperature
+interval rather than as independent features.
+
 \begin{figure*}[t]
 \includegraphics[width=\textwidth]{fig3_phase_diagram.pdf}
 \caption{(a) Classification of the $(T,\Bperp)$ plane from the full nine-level
@@ -333,8 +421,9 @@ comparison jointly. Genuine transparency occupies a closed island: it requires
 $\Bperp\gtrsim\SI{0.15}{\tesla}$, closes below $\sim\SI{22}{\kelvin}$ through
 an Autler--Townes crossover, and closes above
 $\SI{90}{\kelvin}$--$\SI{95}{\kelvin}$ through phonon-driven collapse.
-(b) Magnitude of the contrast where it is positive (colour scale) with the
-sign-reversed region overlaid. Fixed parameters: $B_{z}=\SI{5}{\milli\tesla}$,
+(b) The same plane on a single signed scale: blue is $C>0$ (transparency),
+red is $C<0$ (control-induced absorption), and colour depth is $|C|$ on a
+symmetric-log axis. Fixed parameters: $B_{z}=\SI{5}{\milli\tesla}$,
 $\Omega_{c}=\SI{0.1}{\giga\hertz}$, transverse strain
 $\delta=\SI{1.683}{\giga\hertz}$.}
 \label{fig:phase}
