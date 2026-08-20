@@ -38,12 +38,17 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt        # noqa: E402
 from matplotlib.colors import ListedColormap, BoundaryNorm, LogNorm  # noqa: E402
 from matplotlib.patches import FancyArrowPatch  # noqa: E402
+from matplotlib.collections import LineCollection  # noqa: E402
 
 import prl_style as st                 # noqa: E402
 
 TAB = RES / "tables"
 FIG = RES / "figures"
 C = st.COLORS
+
+# 35% tint of the Okabe-Ito vermillion, so the C<0 region reads as a region
+# without competing with the viridis magnitude field next to it.
+NEG_FILL = "#F0C7A6"
 
 
 def _save(fig, name):
@@ -69,6 +74,36 @@ def _f(x, default=np.nan):
         return v
     except (TypeError, ValueError):
         return default
+
+
+def _edges(v):
+    """Cell edges from centres.  Handles a non-uniform grid (the B_perp axis
+    carries the campaign operating point 0.232 T between 0.2 and 0.25)."""
+    v = np.asarray(v, float)
+    if v.size == 1:
+        return np.array([v[0] - 0.5, v[0] + 0.5])
+    mid = 0.5 * (v[:-1] + v[1:])
+    return np.concatenate(([2 * v[0] - mid[0]], mid, [2 * v[-1] - mid[-1]]))
+
+
+def _region_outline(xe, ye, mask):
+    """Segments along the cell edges bounding `mask`.  contour() would cut
+    across cell centres and disagree with the pcolormesh it outlines."""
+    segs, ny, nx = [], *mask.shape
+    for i in range(ny):
+        for j in range(nx):
+            if not mask[i, j]:
+                continue
+            x0, x1, y0, y1 = xe[j], xe[j + 1], ye[i], ye[i + 1]
+            if j > 0 and not mask[i, j - 1]:
+                segs.append([(x0, y0), (x0, y1)])
+            if j < nx - 1 and not mask[i, j + 1]:
+                segs.append([(x1, y0), (x1, y1)])
+            if i > 0 and not mask[i - 1, j]:
+                segs.append([(x0, y0), (x1, y0)])
+            if i < ny - 1 and not mask[i + 1, j]:
+                segs.append([(x0, y1), (x1, y1)])
+    return segs
 
 
 # --------------------------------------------------------------- Fig. 1
@@ -177,11 +212,8 @@ def fig3_phase_diagram():
         remap[K == code[name]] = i
     cmap = ListedColormap(cols)
     norm = BoundaryNorm(np.arange(-0.5, 4.5, 1), cmap.N)
-    dB = (B[1] - B[0]) if len(B) > 1 else 0.05
-    dT = (T[1] - T[0]) if len(T) > 1 else 5.0
-    ax.pcolormesh(np.append(B, B[-1] + dB) - dB / 2,
-                  np.append(T, T[-1] + dT) - dT / 2,
-                  remap, cmap=cmap, norm=norm, shading="flat")
+    Be, Te = _edges(B), _edges(T)
+    ax.pcolormesh(Be, Te, remap, cmap=cmap, norm=norm, shading="flat")
     ax.set_xlabel(r"transverse field $B_\perp$ (T)")
     ax.set_ylabel("temperature (K)")
     handles = [plt.Rectangle((0, 0), 1, 1, fc=c, ec="none") for c in cols]
@@ -195,20 +227,28 @@ def fig3_phase_diagram():
     ax = axes[1]
     mag = np.abs(Cg)
     mag[~np.isfinite(mag)] = np.nan
-    pos = np.where(Cg > 0, mag, np.nan)
-    im = ax.pcolormesh(np.append(B, B[-1] + dB) - dB / 2,
-                       np.append(T, T[-1] + dT) - dT / 2,
-                       pos, cmap="viridis",
+    # The sign-reversed cells are ~30% of the grid and form two connected
+    # regions; render them as one flat labelled field, not as a scatter of
+    # dots on the same white the "no data" background would use.
+    pos = np.ma.masked_where(~(Cg > 0), mag)
+    negative = np.ma.masked_where(~(Cg < 0), np.ones_like(mag))
+    ax.pcolormesh(Be, Te, negative, cmap=ListedColormap([NEG_FILL]),
+                  vmin=0, vmax=1, shading="flat")
+    im = ax.pcolormesh(Be, Te, pos, cmap="viridis",
                        norm=LogNorm(vmin=1e-6, vmax=1.0), shading="flat")
-    neg = np.isfinite(Cg) & (Cg < 0)
-    Bg, Tg = np.meshgrid(B, T)
-    ax.plot(Bg[neg], Tg[neg], ".", color=C["vermillion"], ms=2.4,
-            label=r"$C<0$")
+    # the fill alone is low-contrast where it meets the bright end of viridis,
+    # so stroke the sign-reversal boundary -- this is the edge of the island
+    ax.add_collection(LineCollection(_region_outline(Be, Te, Cg < 0),
+                                     colors=C["vermillion"], linewidths=0.9))
     cb = fig.colorbar(im, ax=ax, pad=0.02)
     cb.set_label(r"$|C|$  (where $C>0$)", fontsize=7.5)
     ax.set_xlabel(r"transverse field $B_\perp$ (T)")
     ax.set_ylabel("temperature (K)")
-    ax.legend(fontsize=6.5, loc="lower left")
+    ax.legend([plt.Rectangle((0, 0), 1, 1, fc=NEG_FILL,
+                             ec=C["vermillion"], lw=0.8)],
+              [r"$C<0$ (control-induced absorption)"],
+              fontsize=6, loc="upper center",
+              bbox_to_anchor=(0.5, -0.22), handlelength=1.4)
     st.panel_label(ax, "b")
 
     fig.tight_layout()
