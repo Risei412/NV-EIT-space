@@ -70,7 +70,9 @@ $3$ つとも実際に起きる。以下の節でその中身を述べる。
 
 図$2$に、$B\_\perp = 0.232\,\mathrm{T}$ における吸収スペクトルを示す。実線が経路を残した応答 $A\_\mathrm{full}$、破線が経路を切った反実仮想 $A\_\mathrm{cut}$ である。図$2$より、$30\,\mathrm{K}$ では経路がセクター吸収をほぼ全部消すことがわかる。$70\,\mathrm{K}$ ではパーセント級の透明性が残る。$105\,\mathrm{K}$ では $2$ 本が交差済みであり、経路が吸収を足している。
 
-（図の挿入位置：図$1$ は `results/figures/fig1_level_scheme.png`、図$2$ は `results/figures/fig2_spectra.png`）
+![図1: NV$^-$ スピン-$\Lambda$ チャネルと光学コヒーレンス減衰のスケール比較](https://raw.githubusercontent.com/Risei412/NV-EIT-space/main/results/figures/fig1_level_scheme.png)
+
+![図2: $B_\perp = 0.232\,\mathrm{T}$ における吸収スペクトル（30 K / 70 K / 105 K）](https://raw.githubusercontent.com/Risei412/NV-EIT-space/main/results/figures/fig2_spectra.png)
 
 ---
 
@@ -194,7 +196,7 @@ C \simeq C_{\mathrm{res}} + a B_{\perp}^{\,n},
 
 図$5$に、セクターコントラストの $B\_\perp$ 依存性と、フィット上限カットオフに対する指数を示す。図$5$(b)より、$85\,\mathrm{K}$ はプラトーを示し、$70\,\mathrm{K}$ と $55\,\mathrm{K}$ はドリフトすることがわかる。冪則とクロスオーバーの違いがこの図で直接読み取れる。
 
-（図の挿入位置：`results/figures/fig5_bperp_scaling.png`）
+![図5: セクターコントラストの $B_\perp$ 依存性とフィット上限カットオフに対する指数](https://raw.githubusercontent.com/Risei412/NV-EIT-space/main/results/figures/fig5_bperp_scaling.png)
 
 以上より、横磁場はチャネルを持つために必要なだけであり、いったん開いたら境界を決めるのは散逸であるといえる。横磁場は抑制された応答の前置因子を変えるが、抑制が始まる温度は変えない。したがって、横磁場を高温EITの回復手段として設計してはならず、島の内側へ入るためのスイッチとして扱う必要がある。
 
@@ -246,7 +248,9 @@ $B\_\perp = 0.232\,\mathrm{T}$ におけるコントラストの温度依存性�
 
 なお図$4$は `quick=True` で生成したものである（`NON_CLAIMS.md` N8）。図中に印字された数値は full-run の値と一致しないため、引用の対象としない。本文中の $T\_{1\\%}$ と $T\_\mathrm{sign}$ は full-run の値である。
 
-（図の挿入位置：図$3$ は `results/figures/fig3_phase_diagram.png`、図$4$ は `results/figures/fig4_contrast_vs_T.png`）
+![図3: $(T, B_\perp)$ 平面の分類（9準位Liouvillian）](https://raw.githubusercontent.com/Risei412/NV-EIT-space/main/results/figures/fig3_phase_diagram.png)
+
+![図4: 符号付きコントラストの温度依存性（quick=True 生成、数値は参照不可）](https://raw.githubusercontent.com/Risei412/NV-EIT-space/main/results/figures/fig4_contrast_vs_T.png)
 
 ---
 
@@ -277,7 +281,7 @@ $B\_\perp = 0.232\,\mathrm{T}$ におけるコントラストの温度依存性�
 
 図$6$に、OD整合サンプルでの透過と蛍光の分数信号、および各読み出しでSNRを $5$ とするのに必要な積算時間を示す。積算時間は $24$ 時間で打ち切っている。
 
-（図の挿入位置：`results/figures/fig6_observables.png`）
+![図6: OD整合サンプルでの透過・蛍光の分数信号と必要積算時間](https://raw.githubusercontent.com/Risei412/NV-EIT-space/main/results/figures/fig6_observables.png)
 
 ### 6.1 決定的な実験
 
