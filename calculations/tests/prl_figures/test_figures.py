@@ -45,13 +45,39 @@ def test_fig2b_crossover_scales():
 
 def test_fig4a_crossover_power_label():
     """Fig. 4(a)'s inset prints the fitted exponent of Gamma*(eps) ~ eps^p.
-    Pin p = -1 and the monotonicity the fan is drawn from."""
-    res = rd.sc_approximate_class(quick=True)
+    Pin p = -1 and the monotonicity the fan is drawn from.
+
+    quick=False is not optional here: make_figures.py builds the committed
+    figure without --quick, and the two settings print DIFFERENT labels
+    (-1.01 at 90 samples, -1.00 at 140). Testing quick=True while shipping a
+    quick=False figure is exactly the defect recorded as NON_CLAIMS N8, so the
+    test now runs the same setting the figure does and pins the label exactly.
+    """
+    res = rd.sc_approximate_class(quick=False)
     assert abs(res["crossover_power"] + 1.0) < 0.05, res["crossover_power"]
     assert res["law_is_inverse"]
     gstars = [r["gamma_star"] for r in res["rows"]]
     assert all(gstars[i] < gstars[i + 1] for i in range(len(gstars) - 1)), gstars
-    assert f"{res['crossover_power']:.2f}" in ("-1.00", "-0.99", "-1.01")
+    assert f"{res['crossover_power']:.2f}" == "-1.00", res["crossover_power"]
+
+
+def test_fig4a_matches_gate_d_certificate():
+    """The numbers Fig. 4(a) prints must equal the Gate D certificate exactly.
+
+    The certificate was generated with quick=False; the figure must be too.
+    This is the regression that would have caught N8.
+    """
+    import json
+
+    path = os.path.join(HERE, "..", "..", "..", "results", "certificates",
+                        "gates_summary_gateD.json")
+    with open(os.path.abspath(path)) as handle:
+        certified = json.load(handle)
+    assert certified["quick"] is False, certified["quick"]
+    block = certified["p6_sc_approximate_class"]
+    res = rd.sc_approximate_class(quick=False)
+    assert res["crossover_power"] == block["crossover_power"]
+    assert res["nu_protected_eps0"] == block["nu_protected_eps0"]
 
 
 def test_fig4b_platform_reach_labels():
@@ -138,7 +164,11 @@ def test_fig3_outputs_and_collapse():
 
 
 def test_fig4_outputs_and_crossover():
-    pdf, png = fig4_robustness.build(quick=True)
+    # quick=False, matching make_figures.py. build() WRITES into
+    # results/figures/, so a quick=True build here would silently overwrite the
+    # shipped figure with the low-sample one on every test run -- which is how
+    # NON_CLAIMS N8 arose in the first place. Do not change this to quick=True.
+    pdf, png = fig4_robustness.build(quick=False)
     _exists(pdf, png)
     H = nvk.H_3E(xi_x=0.2)
     M = nvk.moments(H, (-1, 1), 3)

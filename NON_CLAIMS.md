@@ -68,13 +68,28 @@ with a single Lorentzian pole".
 
 Record: `theory/LIMITATIONS.md`; open question O3 in `NEXT_GATES.md`.
 
-## N8 — Manuscript Fig. 4 as a `quick=False` figure
+## N8 — Manuscript Fig. 4 as a `quick=False` figure — **RESOLVED 2026-08-26**
 
-**It is a `quick=True` figure** while the README instructs `quick=False`,
-which prints different values in the figure. Do not quote its numbers as the
-full-run numbers until it is regenerated.
+**It was a `quick=True` figure** while the README instructs `quick=False`,
+which prints different values in the figure. Its numbers were not to be quoted
+as the full-run numbers until it was regenerated.
 
-Record: `manuscript/submission_notes.md`.
+**Resolved.** The root cause was not a one-off bad regeneration: the test suite
+rebuilt the figure itself, via `fig4_robustness.build(quick=True)`, and
+`build()` writes into `results/figures/`, so every `pytest` run overwrote the
+shipped figure with the 90-sample version. That call is now `quick=False`.
+Fig. 4 was then regenerated without `--quick`. The inset label moved
+from `-1.01` to `-1.00`, and `crossover_power = -0.9971223021582747` and
+`nu_protected_eps0 = 1.9989602590799627` now match
+`results/certificates/gates_summary_gateD.json` exactly (that certificate
+carries `quick: false`). Two regression tests now pin this, one on the printed
+label at `quick=False` and one against the certificate itself.
+
+The entry is kept rather than deleted, per the repository rule that failures
+are primary assets. It is no longer binding.
+
+Record: `manuscript/submission_notes.md`;
+`calculations/tests/prl_figures/test_figures.py`.
 
 ## N9 — "150 random draws show no counterexample" as evidence for positivity
 

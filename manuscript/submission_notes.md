@@ -54,9 +54,44 @@ it depicts.
 - `figures/` — see that directory's README: manuscript figures are not
   duplicated here, they are read from `../results/figures/`.
 
-## Open defect
+## Closed defect
 
-**Fig. 4 is a `quick=True` figure** while the instructions above say
-`quick=False`, which prints different values in the figure. Its numbers must
-not be quoted as full-run numbers until it is regenerated
+**Fig. 4 was a `quick=True` figure** while the instructions above say
+`quick=False`, which prints different values in the figure. Its numbers were
+not to be quoted as full-run numbers until it was regenerated
 (`../NON_CLAIMS.md` N8).
+
+**Closed 2026-08-26.** `results/figures/fig4_robustness.{pdf,png}` were
+regenerated with `make_figures.py` and no `--quick`. The inset label moved from
+`-1.01` to `-1.00`, and both printed quantities now equal the Gate D
+certificate exactly:
+
+| quantity | figure (`quick=False`) | `gates_summary_gateD.json` |
+|---|---|---|
+| `crossover_power` | `-0.9971223021582747` | `-0.9971223021582747` |
+| `nu_protected_eps0` | `1.9989602590799627` | `1.9989602590799627` |
+
+Figures 1-3 were regenerated in the same run and are byte-identical to the
+committed versions apart from the PDF `/CreationDate`, so they were left
+untouched.
+
+**Root cause.** Regenerating the figure alone would not have closed this. The
+test suite itself rebuilt Fig. 4: `test_fig4_outputs_and_crossover` called
+`fig4_robustness.build(quick=True)`, and `build()` writes into
+`results/figures/`, so every `pytest` run silently overwrote the shipped
+figure with the 90-sample version. That call is now `quick=False`, matching
+`make_figures.py`, with a comment saying why it must not be changed back.
+
+**Observed while closing this, not fixed here.** `build()` writes a fresh
+`/CreationDate` into every PDF, so `results/figures/*.pdf` change on each run
+even when the rendered content is identical (the PNGs are byte-stable). The
+root README's claim that the figure regression tests reproduce the committed
+figures byte-identically therefore holds for the PNGs but not the PDFs.
+Setting `SOURCE_DATE_EPOCH` before building would make the PDFs deterministic.
+
+The regression that would have caught this is now in place:
+`calculations/tests/prl_figures/test_figures.py` runs
+`test_fig4a_crossover_power_label` at `quick=False` (the setting the committed
+figure is built with) and pins the printed label exactly, and
+`test_fig4a_matches_gate_d_certificate` asserts the figure's two numbers equal
+the certificate's.

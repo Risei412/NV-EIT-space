@@ -73,7 +73,7 @@
     "N5 Gate E's 3-mode PASS as experimentally demonstrated",
     "N6 T1 Theorem 2.1 as a result of this repository",
     "N7 T1 Theorem 2.3(ii) as a genericity statement",
-    "N8 manuscript Fig. 4 as a quick=False figure",
+    "N8 manuscript Fig. 4 as a quick=False figure (RESOLVED 2026-08-26: regenerated without --quick; printed values now match gates_summary_gateD.json exactly; two regression tests pin it)",
     "N9 random scans as evidence for a positivity claim",
     "N10 absence from the Zotero library as evidence of novelty"
   ],
