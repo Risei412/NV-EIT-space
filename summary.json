@@ -78,7 +78,7 @@
     "N10 absence from the Zotero library as evidence of novelty"
   ],
   "open_questions": [
-    "O1 is there any platform where nu is both large enough to matter and small enough to measure?",
+    "O1 is there any platform where nu is both large enough to matter and small enough to measure? note: every nu reported here is an ideal-cut value, the corner of the two-scale fan where the exponent is largest; the declared resource path is a second unexploited axis. see theory/NOTE_path_dependence_and_O1.md. this does not reopen non-claim N2.",
     "O2 does the sector-cut classification have an observable signature that is not the exponent?",
     "O3 what is the right genericity statement for T1 Theorem 2.3(ii)?",
     "O4 can the unmatched escape route (exact zeros with x in ker Gamma) be characterized?"

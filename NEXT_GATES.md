@@ -26,6 +26,12 @@ none of them may be assumed answered.
   of `Γ`, which is what closes the NV window. The two requirements pull
   opposite ways; whether the tension is fundamental or an artifact of these
   platforms is open.
+  O1 is posed as a platform-selection question, but the declared resource path
+  `κ = κ₀Γ^q` is a second, unexploited axis: every `ν` this repository reports
+  is an ideal-cut value, which in two-scale language is the corner of the fan
+  where the exponent is largest. See `theory/NOTE_path_dependence_and_O1.md`.
+  This does **not** reopen `NON_CLAIMS.md` N2, and the gate it suggests is a
+  candidate only — it is not in `gates/active/` and is not permitted work.
 - **O2 — Does the sector-cut classification have an observable signature that
   is not the exponent?** If NV can only ever serve as a witness certifying an
   exact class, what certifies it?
