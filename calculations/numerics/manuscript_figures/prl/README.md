@@ -30,8 +30,9 @@ campaigns' functions unchanged; this directory is presentation-only.
   PASS), PRL column widths, panel labels, PDF+PNG export.
 - `src/fig1_classes.py` … `src/fig4_robustness.py` — one figure per file.
 - `src/make_figures.py` — driver, `--quick` for a faster sweep.
-- `tests/test_figures.py` — regression tests (outputs exist; key slopes/values
-  match the certified Gate A–D numbers).
+- `calculations/tests/prl_figures/test_figures.py` — regression tests (path is
+  repo-root relative; outputs exist, key slopes/values match the certified
+  Gate A–D numbers).
 
 Data sources (imported unchanged): `calculations/numerics/No-go theorem/src/nv_reduced_kernel.py`,
 `New no-go theory/GateC_material_independence/src/group_iv_full.py`,
@@ -45,7 +46,7 @@ src/run_gate_d.py`, `calculations/numerics/New no-go theory/src/core.py`.
 ```
 python src/make_figures.py            # full
 python src/make_figures.py --quick    # fast
-python tests/test_figures.py          # regression tests
+pytest calculations/tests/prl_figures/    # regression tests (from repo root)
 ```
 
 Outputs: `figures/fig{1..4}_*.pdf` (vector, for submission) and
