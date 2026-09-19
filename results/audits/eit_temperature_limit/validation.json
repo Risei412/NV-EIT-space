@@ -1,0 +1,11 @@
+{
+  "random_bound_and_zero_control_checks": 200,
+  "vectorization": {
+    "row_residual": 1.7899720668211556,
+    "column_residual": 1.6653345369377348e-16,
+    "conclusion": "liouvillian uses column stacking; vec/unvec use row stacking"
+  },
+  "candidate_column_change_abs": 0.0,
+  "fixed_candidate_T_1pct_K": 71.31455440980204,
+  "power_limited_contrast_bound_crossing_K": 142.97542599495725
+}

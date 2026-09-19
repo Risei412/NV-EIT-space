@@ -1,0 +1,241 @@
+{
+  "vectorization": {
+    "row_residual": 1.7899720668211556,
+    "column_residual": 1.6653345369377348e-16,
+    "conclusion": "liouvillian uses column stacking; vec/unvec use row stacking"
+  },
+  "fixed_candidate_T_1pct_K": 71.31455440980204,
+  "contrast_floor": 0.01,
+  "strain_GHz": 1.683,
+  "strain_azimuth": 0,
+  "spectral_span_bound_GHz": 40.918785070397135,
+  "R_rate_units": 257.1003091419587,
+  "conservative_contrast_bound_crossing_K": 167.62032667890875,
+  "bound_formula": "C <= q*(1+q); q=(2*pi*span_bound/gamma(T))**2",
+  "bound_scope": "reduced response; orthogonal normalized optical legs; z inside excited eigenvalue range; fixed strain; positive ground damping; given field bounds",
+  "upper_temperature_monotonicity": "fixed-energy Bose integral increases with T; see audit note; scope <=300 K",
+  "highest_EIT_temperature_K": null,
+  "witnesses": [
+    {
+      "T_K": 70.0,
+      "C": 0.013668643147581155,
+      "minimum_branch_weight": 0.11293817419637044,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260920,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.233509941020539,
+        "Bz_T": 0.005000964714845197,
+        "probe_theta": 0.051685631647478525,
+        "control_theta": 0.019416462558749625,
+        "probe_phase": -1.5846089509101278,
+        "control_phase": 1.6428540428294358,
+        "Oc_GHz": 0.09999606153501783,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 70.0,
+      "C": 0.013668645164780998,
+      "minimum_branch_weight": 0.11269562664547023,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260921,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.23398996766192537,
+        "Bz_T": 0.00500103430061025,
+        "probe_theta": 0.05249491155445296,
+        "control_theta": 0.020577960639914128,
+        "probe_phase": -1.5355147932862372,
+        "control_phase": 1.540642774399764,
+        "Oc_GHz": 0.09999831277516369,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 80.0,
+      "C": 0.0013116980720405138,
+      "minimum_branch_weight": 0.10001332813088047,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260920,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.26079702301233026,
+        "Bz_T": 0.005020337806879289,
+        "probe_theta": 0.030866960823866196,
+        "control_theta": 0.039760163040012175,
+        "probe_phase": -1.6023194244560321,
+        "control_phase": 1.5103019795352748,
+        "Oc_GHz": 0.09999973269484709,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 80.0,
+      "C": 0.0013096296113178111,
+      "minimum_branch_weight": 0.10044567547306998,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260921,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.2600036153139043,
+        "Bz_T": 0.005214506957717784,
+        "probe_theta": 0.04363842986777289,
+        "control_theta": 0.044346745062980975,
+        "probe_phase": -1.8271656339017983,
+        "control_phase": 2.0442267490325423,
+        "Oc_GHz": 0.09998608663587873,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 90.0,
+      "C": 0.00012465442126865598,
+      "minimum_branch_weight": 0.10003023445687902,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260920,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.2577756241219872,
+        "Bz_T": 0.04999358828084441,
+        "probe_theta": 0.0848981779404786,
+        "control_theta": 0.2279867119945871,
+        "probe_phase": -1.5685029858947948,
+        "control_phase": 1.5789455735958393,
+        "Oc_GHz": 0.09998958077275732,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 90.0,
+      "C": 0.00012460179170233594,
+      "minimum_branch_weight": 0.1000673166361215,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260921,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.25790418222119255,
+        "Bz_T": 0.0499235706214473,
+        "probe_theta": 0.08979774655532302,
+        "control_theta": 0.23671522747368268,
+        "probe_phase": -1.6814938495482676,
+        "control_phase": 1.515503727996181,
+        "Oc_GHz": 0.0999938520692783,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 100.0,
+      "C": 1.556385921179446e-05,
+      "minimum_branch_weight": 0.13566000059723443,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260920,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.1921540716899583,
+        "Bz_T": 0.049992594344632775,
+        "probe_theta": 0.09804771454941608,
+        "control_theta": 0.37148828444759074,
+        "probe_phase": -1.5456903745239856,
+        "control_phase": 1.5698988434769539,
+        "Oc_GHz": 0.0999752024039257,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 100.0,
+      "C": 1.5556849071398647e-05,
+      "minimum_branch_weight": 0.13427157294708508,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260921,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.19415674060412264,
+        "Bz_T": 0.04994737779598696,
+        "probe_theta": 0.0970696679743247,
+        "control_theta": 0.37023780664489797,
+        "probe_phase": -1.7232361694361458,
+        "control_phase": 1.5612119030447027,
+        "Oc_GHz": 0.09997979933548715,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 120.0,
+      "C": 5.629782039253594e-07,
+      "minimum_branch_weight": 0.12081523005238864,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260920,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.1672959978502523,
+        "Bz_T": 0.049921212345270576,
+        "probe_theta": 0.08550688631614267,
+        "control_theta": 0.3772628944090875,
+        "probe_phase": -1.7400238599065028,
+        "control_phase": 1.5713751127734283,
+        "Oc_GHz": 0.09998702546836233,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    },
+    {
+      "T_K": 120.0,
+      "C": 5.641922910989966e-07,
+      "minimum_branch_weight": 0.12833098329554884,
+      "branch": 3,
+      "ctrl": "+1",
+      "seed": 20260921,
+      "nfev": 8190,
+      "optimizer_converged": false,
+      "parameters": {
+        "Bx_T": 0.17141573196721946,
+        "Bz_T": 0.049980179704533306,
+        "probe_theta": 0.07675936566116837,
+        "control_theta": 0.38122253360714936,
+        "probe_phase": -1.6074892747684268,
+        "control_phase": 1.5680574892355625,
+        "Oc_GHz": 0.09992466272900338,
+        "branch": 3.0,
+        "channel_index": 1.0
+      },
+      "is_eit_certified": false
+    }
+  ],
+  "power_limited_contrast_bound_crossing_K": 142.97542599495725
+}

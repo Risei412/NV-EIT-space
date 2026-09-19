@@ -1,0 +1,76 @@
+[
+  {
+    "strain_d_GHz": 100.0,
+    "control_cap_GHz": 0.1,
+    "witness_T_K": 68.5384131324177,
+    "parameters": {
+      "Bx": 0.5,
+      "Bz": 0.05,
+      "probe_theta": 1.5707963267948966,
+      "control_theta": 1.5707963267948966,
+      "probe_phase": -0.5662599897060965,
+      "control_phase": -0.04634646361207473,
+      "strain_phi": 3.1415817446892205,
+      "z_fraction": 0.13914318986443433,
+      "Oc": 0.1
+    },
+    "channel": 1,
+    "witness_certificate": {
+      "passed": true,
+      "C_at_slow_center": 0.010001448407395893,
+      "Aoff": 0.0015747990046497324,
+      "Aon": 0.0015590487336527097,
+      "slow_residue_real": -2.1967591324776414e-08,
+      "slow_residue_imag": 5.424035286815695e-10,
+      "slow_linewidth_rate": 0.001394686776275311,
+      "center_GHz": 6.716704183581044e-05,
+      "optical_min_decay_rate": 70.0233452117047,
+      "decay_disk_margin": 69.39616509033249,
+      "no_ground_optical_pole_collision": true,
+      "negative_narrow_residue": true,
+      "pole_reconstruction_error": 3.309925580683608e-18,
+      "mode_condition_number": 1.0081033936530468
+    },
+    "local_success": true,
+    "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "certified_uniform_exclusion_above_K": 95.66799243880492,
+    "global_optimum_proven": false
+  },
+  {
+    "strain_d_GHz": 100.0,
+    "control_cap_GHz": 0.3,
+    "witness_T_K": 90.33491582605622,
+    "parameters": {
+      "Bx": 0.5,
+      "Bz": 0.0218395736979838,
+      "probe_theta": 0.0014191193567076653,
+      "control_theta": 1.5707963267948966,
+      "probe_phase": -1.3482747208787293,
+      "control_phase": -2.20670939634063,
+      "strain_phi": 0.0006952195591202883,
+      "z_fraction": 0.9779174316275328,
+      "Oc": 0.3
+    },
+    "channel": 0,
+    "witness_certificate": {
+      "passed": true,
+      "C_at_slow_center": 0.01000098881687381,
+      "Aoff": 0.0001256955288536773,
+      "Aon": 0.00012443844927528062,
+      "slow_residue_real": -4.477678243425731e-09,
+      "slow_residue_imag": 2.539245592108716e-11,
+      "slow_linewidth_rate": 0.0035618672771323065,
+      "center_GHz": 9.6311251712485e-05,
+      "optical_min_decay_rate": 250.67176115432125,
+      "decay_disk_margin": 248.79011105494,
+      "no_ground_optical_pole_collision": true,
+      "negative_narrow_residue": true,
+      "pole_reconstruction_error": 1.9545732629329692e-19,
+      "mode_condition_number": 1.0073167455846035
+    },
+    "local_success": true,
+    "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "certified_uniform_exclusion_above_K": 99.02673861403801,
+    "global_optimum_proven": false
+  }
+]

@@ -1,0 +1,49 @@
+{
+  "n_points": 30,
+  "highest_found_K": 31.0,
+  "certified_global_maximum": false,
+  "EIT_points": [
+    {
+      "T_K": 31.0,
+      "Bx_T": 0.2,
+      "Bz_T": 0.005,
+      "Oc_GHz": 0.1,
+      "status": "ok",
+      "half_MHz": 30.0,
+      "attempts": 2,
+      "Cmax": 0.9901653695987597,
+      "center_MHz": 0.0,
+      "fwhm_MHz": 10.500000000000002,
+      "Acut_at_peak": 0.32019976591237037,
+      "Afull_at_peak": 0.003149046352311834,
+      "dA_at_peak": 0.31705071956005854,
+      "at_edge": false,
+      "window_ok": true,
+      "sector_class": "sector_transparency",
+      "sector_reason": "pathway sector lowers absorption",
+      "spectral_class": "EIT",
+      "best_model": "EIT",
+      "runner_up_model": "Fano",
+      "best_runner_margin": 9.304897344628671,
+      "ic_used": "aicc",
+      "delta_ic_ats_eit": 1050.648121247024,
+      "legacy_eit_ats_verdict": "robust EIT",
+      "eit_aicc": -1693.205095941413,
+      "ats_aicc": -642.556974694389,
+      "lorentzian_aicc": -1640.1134145489998,
+      "fano_aicc": -1683.9001985967843,
+      "eit_weight": 0.9905519006789729,
+      "ats_weight": 7.088208695551151e-229,
+      "lorentzian_weight": 2.9320076816907037e-12,
+      "fano_weight": 0.009448099318094932,
+      "joint_class": "spectroscopic_EIT",
+      "seconds": 12.446489572525024,
+      "observable_EIT_1pct": true
+    }
+  ],
+  "limitations": [
+    "fixed branch 3, Y/Y, strain 1.683 GHz, no ISC/hyperfine",
+    "legacy four-model fit; no noise or sampling convergence audit",
+    "coarse grid, no exclusion proof between samples"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "domain": {
+    "Bx": [
+      0,
+      0.5
+    ],
+    "Bz": [
+      0.005,
+      0.05
+    ]
+  },
+  "processed_boxes": 2114,
+  "leaf_boxes": 2115,
+  "mixing_norm_upper_GHz": 4.12999647228917,
+  "mixing_norm_found_GHz": 4.114889554571081,
+  "angular_mixing_bound": 25.949533153390835,
+  "target_reached": true,
+  "enclosure_method": "Weyl + Davis-Kahan + explicit Hungarian assignment margin",
+  "caveat": "floating point with padding; not outward-rounded interval arithmetic"
+}
