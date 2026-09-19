@@ -1,0 +1,181 @@
+{
+  "gate": "F5-C rate-floor sweep",
+  "question": "Does the Part 2 adversarial infimum track RATE_FLOOR (a constraint artifact) or saturate (a scale-free bound stronger than passivity)?",
+  "raised_by": "Research CI run_dceae5b2570e47a3, candidate matched-floor-scale-invariance",
+  "generated_at": "2026-09-07T02:42:09+00:00",
+  "config": {
+    "rate_floors": [
+      0.01,
+      0.001,
+      0.0001,
+      1e-05,
+      1e-06
+    ],
+    "n_starts": 12,
+    "maxiter": 600,
+    "seed": 20260731,
+    "delta_scan": [
+      -6.0,
+      6.0,
+      241
+    ]
+  },
+  "environment": {
+    "python": "3.14.7",
+    "numpy": "2.5.2",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "committed_reference": {
+    "note": "From gate_F5C_matched_floor_accretive.json. n_starts there was 24, so it is not directly comparable to a sweep row; the trend across floors below is internal to one fixed (n_starts, maxiter, seed).",
+    "adversarial_infimum_normalized": 0.0031270095844016937,
+    "rate_floor": 0.001,
+    "n_starts": 24,
+    "random_scan_baseline_F5B_min_Re_chi_UNNORMALIZED": 0.0029,
+    "why_the_two_must_not_be_compared": "The first is min_delta Re chi / max_delta |Re chi| (dimensionless); the second is an unnormalized min Re chi. Agreement to one significant figure is a coincidence of units."
+  },
+  "per_floor": [
+    {
+      "rate_floor": 0.01,
+      "n_starts": 12,
+      "adversarial_infimum_normalized": 0.01525596492729395,
+      "best_start": 10,
+      "f_final_all": [
+        0.01525596492729395,
+        0.015263929998300098,
+        0.018165584132272067,
+        0.020446474943933358,
+        0.02631768225536141,
+        0.029359348735023116,
+        0.03235554281207202,
+        0.03303452062906054,
+        0.03518373465517315,
+        0.04269128009917576,
+        0.05394181002519255,
+        0.09505572941722452
+      ],
+      "seconds_total": 2475.2,
+      "min_Re_chi_matched_unnormalized": 0.005885873009176038,
+      "response_scale_max_abs_Re_chi": 0.385807979844383,
+      "steady_state_eigenvalue": 1.1794375973037424e-15,
+      "smallest_rate": 0.16301231768072905,
+      "smallest_rate_over_floor": 16.301231768072903,
+      "n_rates_within_1pct_of_floor": 0,
+      "n_rates": 11
+    },
+    {
+      "rate_floor": 0.001,
+      "n_starts": 12,
+      "adversarial_infimum_normalized": 0.014438622026136863,
+      "best_start": 10,
+      "f_final_all": [
+        0.014438622026136863,
+        0.015210796165825083,
+        0.018997728878762422,
+        0.019257498633079573,
+        0.024040104495025628,
+        0.026802137551773558,
+        0.030140036259498522,
+        0.031712061104757994,
+        0.03316880525252426,
+        0.04231912243053466,
+        0.05349383145935049,
+        0.0923647989070386
+      ],
+      "seconds_total": 2828.0,
+      "min_Re_chi_matched_unnormalized": 0.00569801416708535,
+      "response_scale_max_abs_Re_chi": 0.394636978291334,
+      "steady_state_eigenvalue": 1.3213141651545773e-15,
+      "smallest_rate": 0.16093402411045898,
+      "smallest_rate_over_floor": 160.93402411045898,
+      "n_rates_within_1pct_of_floor": 0,
+      "n_rates": 11
+    },
+    {
+      "rate_floor": 0.0001,
+      "n_starts": 12,
+      "adversarial_infimum_normalized": 0.014393032088822769,
+      "best_start": 10,
+      "f_final_all": [
+        0.014393032088822769,
+        0.015165029259432859,
+        0.01862456903888125,
+        0.018954201972107305,
+        0.02398726867435435,
+        0.026724175452272927,
+        0.030053712028802724,
+        0.030508614128398944,
+        0.032738572834978684,
+        0.0422184026042719,
+        0.053378643616241866,
+        0.09219941193501772
+      ],
+      "seconds_total": 3248.1,
+      "min_Re_chi_matched_unnormalized": 0.005689958762152338,
+      "response_scale_max_abs_Re_chi": 0.3953273172072619,
+      "steady_state_eigenvalue": 7.779625611476603e-16,
+      "smallest_rate": 0.16003402411045897,
+      "smallest_rate_over_floor": 1600.3402411045897,
+      "n_rates_within_1pct_of_floor": 0,
+      "n_rates": 11
+    },
+    {
+      "rate_floor": 1e-05,
+      "n_starts": 12,
+      "adversarial_infimum_normalized": 0.014388476865909437,
+      "best_start": 10,
+      "f_final_all": [
+        0.014388476865909437,
+        0.01516045617490705,
+        0.018619379965830275,
+        0.018949851985593926,
+        0.023981988011535282,
+        0.026715080034720153,
+        0.03004508563693353,
+        0.03049777459990104,
+        0.03273192177556947,
+        0.04220833612416231,
+        0.05336713018611612,
+        0.09218287754331521
+      ],
+      "seconds_total": 2365.7,
+      "min_Re_chi_matched_unnormalized": 0.005689153334052365,
+      "response_scale_max_abs_Re_chi": 0.3953964958953824,
+      "steady_state_eigenvalue": 2.477725643201529e-15,
+      "smallest_rate": 0.159944024110459,
+      "smallest_rate_over_floor": 15994.402411045898,
+      "n_rates_within_1pct_of_floor": 0,
+      "n_rates": 11
+    },
+    {
+      "rate_floor": 1e-06,
+      "n_starts": 12,
+      "adversarial_infimum_normalized": 0.014388021381330746,
+      "best_start": 10,
+      "f_final_all": [
+        0.014388021381330746,
+        0.015159998902519676,
+        0.018618861095976817,
+        0.01894941701398702,
+        0.023981459974449927,
+        0.026714170570991343,
+        0.03004422305807407,
+        0.0304966907349943,
+        0.03273125670245585,
+        0.042207329531191266,
+        0.0533659788966635,
+        0.09218122414720419
+      ],
+      "seconds_total": 2260.8,
+      "min_Re_chi_matched_unnormalized": 0.005689072792372785,
+      "response_scale_max_abs_Re_chi": 0.3954034152155676,
+      "steady_state_eigenvalue": 1.354271683583089e-15,
+      "smallest_rate": 0.15993502411045898,
+      "smallest_rate_over_floor": 159935.024110459,
+      "n_rates_within_1pct_of_floor": 0,
+      "n_rates": 11
+    }
+  ],
+  "log_log_slope_infimum_vs_rate_floor": 0.0052388138906947455,
+  "reading": "slope near 1 with rates pinned at the floor => the infimum is the search terminating on its own constraint; slope near 0 with rates well above the floor => a floor-independent relative bound.",
+  "wall_clock_seconds": 1106.1
+}

@@ -70,11 +70,16 @@ Record: `theory/LIMITATIONS.md`; open question O3 in `NEXT_GATES.md`.
 
 ## N8 — Manuscript Fig. 4 as a `quick=False` figure
 
-**It is a `quick=True` figure** while the README instructs `quick=False`,
-which prints different values in the figure. Do not quote its numbers as the
-full-run numbers until it is regenerated.
+**RESOLVED 2026-08-28.** Regenerated with `python src/make_figures.py` (no
+`--quick`). The full-run values reproduce the Gate D certificate exactly:
+`crossover_power = -0.997122` (certificate `-0.9971223021582747`) and
+`nu_protected_eps0 = 1.998960` (certificate `1.9989602590799627`). The
+`quick=True` run gave `-1.011236` / `1.999039`, which is what made the figure
+unquotable. `calculations/tests/prl_figures/` 11/11 pass against the
+regenerated figures. Fig. 4 numbers may now be quoted as full-run numbers.
 
-Record: `manuscript/submission_notes.md`.
+Record: `manuscript/submission_notes.md`;
+`Sector-Master-Resolved-Theory/paper_eit_smrt/02_FIGURE_COMPRESSION_PLAN.md` W1.
 
 ## N9 — "150 random draws show no counterexample" as evidence for positivity
 
