@@ -1,0 +1,77 @@
+{
+  "run": "RCI-20260810-P0-4",
+  "parent": "P0-3 NV four-orientation symmetry audit",
+  "base_commit": "e5273393fe6fcfb7962c8ac37d014a0075b04126",
+  "model": "9-level full Lindblad; T12 proper-tetrahedral frame orbit; branch-summed raw sector response",
+  "status": "session-verified numerical follow-up; reproduction script committed",
+  "core_group_result": {
+    "tetrahedral_axes": [
+      [1,1,1], [1,-1,-1], [-1,1,-1], [-1,-1,1]
+    ],
+    "normalization": "each axis divided by sqrt(3)",
+    "first_moment": "zero",
+    "second_moment": "(4/3) delta_ij",
+    "third_moment": "4/(3 sqrt(3)) for permutations of xyz; zero otherwise",
+    "contracted_cubic": "sum_a (n_a.B)^3 = (8/sqrt(3)) Bx By Bz",
+    "proper_tetrahedral_invariant_dimensions_rank_0_to_10": [1,0,1,1,2,1,4,2,5,4,7],
+    "selection": "rank 1 forbidden; rank 2 only isotropic; rank 3 one tetrahedral/octupolar invariant; rank 4 has two scalar invariants and permits first even anisotropy"
+  },
+  "important_correction_to_P0_3": {
+    "issue": "At B=0 the ms=+1 and ms=-1 ground states are degenerate, so a one-sided + or - channel label is basis-sensitive under transverse-field perturbations.",
+    "consequence": "The P0-3 one-sided cubic coefficient is a protocol-resolved quantity, not a basis-invariant property of an unresolved spin doublet.",
+    "action": "Use R_pm=(R_+ + R_-)/2 for the first basis-invariant ensemble audit; separate field/channel parity explicitly before assigning tensor rank."
+  },
+  "basis_invariant_spin_summed_witness": {
+    "observable": "R_pm(B)=(R_+(B)+R_-(B))/2",
+    "hessian_step_T": 0.0001,
+    "hessian": [
+      [1.007078824441859,0,0],
+      [0,1.007075443523742,0],
+      [0,0,1.007085597207191]
+    ],
+    "hessian_eigenvalues": [1.007075443523742,1.007078824441859,1.007085597207191],
+    "interpretation": "rank-2 response is isotropic to numerical precision",
+    "field_reversal_tests": [
+      {"B_T":[0.001,0.001,0.001],"relative_evenness_error":1.7094545485541468e-5},
+      {"B_T":[0.001,-0.0007,0.0004],"relative_evenness_error":3.961193993225916e-5},
+      {"B_T":[0.002,0.001,-0.0015],"relative_evenness_error":1.7201267940233697e-4}
+    ]
+  },
+  "rank4_witness": {
+    "definition": "Compare spin-summed response along [100] and [111] at equal |B|. Their isotropic rank-2 parts cancel; after field-even/channel-summed symmetrization the difference scales as the tetrahedral rank-4 invariant.",
+    "coefficient_convention": "c4 = (R_pm(r e_x)-R_pm(r n_111))/((2/3) r^4)",
+    "samples": [
+      {"r_T":0.0005,"delta_R":-1.0739323636987604e-11,"c4":-257.74376728770244},
+      {"r_T":0.001,"delta_R":-1.5667086016721223e-10,"c4":-235.0062902508183},
+      {"r_T":0.002,"delta_R":-2.3532566881829528e-9,"c4":-220.61781451715177},
+      {"r_T":0.003,"delta_R":-1.0844195681905443e-8,"c4":-200.8184385538045}
+    ],
+    "small_field_extrapolated_c4": -252.5626875643522,
+    "interpretation": "For the basis-invariant spin-summed observable, the first anisotropic magnetic tensor is rank 4, not rank 3."
+  },
+  "one_sided_rank3_witness": {
+    "observable": "orientation/frame-resolved one-sided ms=0<->+1 or ms=0<->-1 control channel",
+    "finite_difference_h_T": 0.0001,
+    "dxyz_plus": -16.03422660834816,
+    "dxyz_minus": 15.955860909425294,
+    "robust_part": "the antisymmetric cubic scale is O(16) and stable against moderate step changes",
+    "nonrobust_part": "the small (+/-)-symmetric residual is step-size sensitive and must not be interpreted as an exact microscopic symmetry breaking term",
+    "reduced_kernel": {
+      "dxyz_plus": 1.0009303647114833,
+      "dxyz_minus": -1.0009303658761537,
+      "symmetric_residual": -5.823351800771093e-10
+    }
+  },
+  "theory_interpretation": {
+    "rank3": "tetrahedral/octupolar invariant Bx By Bz is symmetry-allowed for a proper-tetrahedral, protocol-resolved scalar response; for magnetic B (axial vector) its observability depends on the parity/handedness carried by the full protocol.",
+    "rank4": "once the spin doublet is summed and field-odd response is removed, rank 1 is absent, rank 2 is isotropic, rank 3 is parity-forbidden, so rank 4 is the first anisotropic sector.",
+    "candidate_new_primitive": "protocol-selected tensor-rank accessibility: the same four-orientation NV ensemble exposes different leading anisotropic tensor ranks depending on whether the readout resolves or symmetrizes the spin-channel/field-parity sector."
+  },
+  "novelty_status": {
+    "tetrahedral_rank3_math": "KILL: standard tetrahedral/octupolar tensor physics",
+    "four_NV_orientation_vector_use": "KILL: established NV vector magnetometry",
+    "polarization_marks_orientation": "KILL: established",
+    "NV_specific_rank3_vs_rank4_protocol_selector": "HOLD: no direct prior-art match found in targeted primary-literature search, but natural-specialization risk remains high",
+    "PRL_status": "NOT PASS; requires a capability or theorem beyond standard invariant projection"
+  }
+}
